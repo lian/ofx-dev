@@ -1,0 +1,2 @@
+	From Windows Explorer, drag the libs/objLoader folder (this one, not a copy of it)
+	into the CodeWarrior project's libs/externalLibs folder, found in the codewarrior `Files` tab.

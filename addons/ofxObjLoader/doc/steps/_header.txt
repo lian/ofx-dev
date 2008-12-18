@@ -1,0 +1,20 @@
+       _     _ 
+  ___ | |__ (_)
+ / _ \| '_ \| |
+| (_) | |_) | |
+ \___/|_.__// |
+          |__/ 
+
+IMPORTING GEOMETRY
+IN OPENFRAMEWORKS
+originally from jttoolkit
+by JTNIMOY
+
+
+INSTALLATION GUIDE
+
+1. open ./libs and drag `objLoader` into the openFrameworks `libs` folder.
+
+2. open ./app and drag `objLoaderExample` into the openFrameworks
+`app` folder.
+

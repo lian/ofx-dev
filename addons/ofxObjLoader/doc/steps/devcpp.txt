@@ -1,0 +1,9 @@
+	From the Project menu, choose Project Options.
+	Select the `Directories` main tab.
+	Select the `Include Directories` sub-tab.
+	In the bottom single-line text-field, type `../../libs/objLoader`
+	Press `Add` then `OK`.
+	From the Project menu, choose `Add to Project.`
+	In the file dialog, choose ../../libs/objLoader.cpp and press `Open`.
+	objLoader.cpp should show up as part of your Dev-Cpp project.
+	Consider creating the folder structure libs/objLoader/objLoader.cpp as in objLoaderExample.dev

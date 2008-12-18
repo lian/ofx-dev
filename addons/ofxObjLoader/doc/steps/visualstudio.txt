@@ -1,0 +1,6 @@
+	From the `Project` menu, select the bottom item.
+	it's probably called `openFrameworksApp_Properties...`
+	Change the `Configuration` drop-down combo value to `All Configurations`.
+	In the left-hand tree view, find `Configuration Properties`, then its child branch `C/C++`.
+	Click `General` and look at the right hand pane, in the field called `Additional Include Directories`
+	Add `../../libs/objLoader;`to the beginning of this field.

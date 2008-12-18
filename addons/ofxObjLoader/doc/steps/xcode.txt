@@ -1,0 +1,2 @@
+	From the Finder, drag the libs/objLoader folder onto the xcode
+	project's `requiredLibs` folder. Be sure to add your obj files
