@@ -1,0 +1,49 @@
+<install>
+	<author>theo watson</author>
+	<version>0.01</version>
+
+	
+	<!-- ========================================================================= 	-->
+	<!--	setting for the "installation" of OF 					-->
+	<!-- ========================================================================= 	-->
+	
+	
+	<toAddAddonsH>
+
+//-------------------------------------------- xml settings
+#ifdef OF_ADDON_USING_OFXTUIO
+	#include "ofxTuio.h"
+#endif
+
+	</toAddAddonsH>
+	
+	
+	
+	<!-- ========================================================================= 	-->
+	<!--	setting per project 							-->
+	<!-- ========================================================================= 	-->
+	
+	<toAddPerProject>
+	
+		<folder name="addons/ofxTuio/src">
+			<src>../../../addons/ofxTuio/src/ofxTuio.h</src>
+			<src>../../../addons/ofxTuio/src/ofxTuioClient.h</src>
+			<src>../../../addons/ofxTuio/src/ofxTuioCursor.h</src>
+			<src>../../../addons/ofxTuio/src/ofxTuioContainer.h</src>
+			<src>../../../addons/ofxTuio/src/ofxTuioObject.h</src>
+			<src>../../../addons/ofxTuio/src/ofxTuioPoint.h</src>
+		</folder>
+	
+	</toAddPerProject>
+	
+	<includePath>
+		<path>../../../addons/ofxTuio/src</path>
+	</includePath>
+				
+	<!-- ========================================================================= 	-->
+	<!--	any requirements?							-->
+	<!-- ========================================================================= 	-->
+	
+	<requires></requires>
+	
+</install>
