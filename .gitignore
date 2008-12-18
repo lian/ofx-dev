@@ -5,6 +5,10 @@
 
 apps/*/*/*.app
 apps/*/*.app
+addons/*/*/*.app
+addons/*/*.app
 
 apps/*/build
 apps/*/*/build
+addons/*/build
+addons/*/*/build
