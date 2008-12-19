@@ -64,7 +64,7 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
-	sprintf(eventString, "mouseReleased");
+void testApp::mouseReleased(int x, int y, int button){
+	sprintf(eventString, "mouseReleased = (%i,%i - button %i)", x, y, button);
 
 }

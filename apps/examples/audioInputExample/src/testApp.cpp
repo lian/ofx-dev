@@ -15,7 +15,7 @@ void testApp::setup(){
 	// 256 samples per buffer
 	// 4 num buffers (latency)
 	
-	ofSoundStreamSetup(0,2,this, 44100, 256, 4);	
+	ofSoundStreamSetup(0, 2, 44100, 256, 4);	
 	left = new float[256];
 	right = new float[256];
 	
@@ -93,7 +93,7 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::mouseReleased(int x, int y, int button){
 
 }
 

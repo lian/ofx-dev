@@ -3,10 +3,13 @@
 
 
 #include "ofConstants.h"
+
+#ifndef TARGET_LINUX
+
 #include "ofGraphics.h" 	
 
 
-#if TARGET_OS_MAC
+#ifdef TARGET_OSX
 	#include <Quicktime/QuickTime.h>
 	#include <CoreServices/CoreServices.h>
 	#include <ApplicationServices/ApplicationServices.h>
@@ -37,10 +40,18 @@ void 		initializeQuicktime();
 void 		closeQuicktime();
 void 		convertPixels(unsigned char * gWorldPixels, unsigned char * rgbPixels, int w, int h);
 Boolean 	SeqGrabberModalFilterUPP(DialogPtr theDialog, const EventRecord *theEvent, short *itemHit, long refCon);
+OSErr           IsMPEGMediaHandler(MediaHandler inMediaHandler, Boolean *outIsMPEG);
+ComponentResult MPEGMediaGetStaticFrameRate(MediaHandler inMPEGMediaHandler, Fixed *outStaticFrameRate);
+OSErr           MediaGetStaticFrameRate(Media inMovieMedia, double *outFPS);
+void            MovieGetVideoMediaAndMediaHandler(Movie inMovie, Media *outMedia, 
+				MediaHandler *outMediaHandler);
+void            MovieGetStaticFrameRate(Movie inMovie, double *outStaticFrameRate);
 
 #ifdef TARGET_OSX
 	OSErr	GetSettingsPreference(CFStringRef inKey, UserData *outUserData);
 	OSErr	SaveSettingsPreference(CFStringRef inKey, UserData inUserData);
+#endif
+
 #endif
 
 #endif

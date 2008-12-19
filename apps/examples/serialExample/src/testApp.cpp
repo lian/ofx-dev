@@ -107,5 +107,5 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::mouseReleased(int x, int y, int button){
 }

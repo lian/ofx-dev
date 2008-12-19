@@ -22,7 +22,7 @@ void testApp::setup(){
 	bNoise 				= false;
 	lAudio = new float[256];
 	rAudio = new float[256];
-	ofSoundStreamSetup(2,0,this, sampleRate,256, 4);
+	ofSoundStreamSetup(2, 0, sampleRate,256, 4);
 
 	ofSetFrameRate(60);
 
@@ -102,7 +102,7 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::mouseReleased(int x, int y, int button){
 	bNoise = false;
 }
 

@@ -50,7 +50,7 @@ void testApp::draw(){
 
 
 	//Lets enable blending!
-	//We are going to use a blend mode that adds
+	//We are going to use a blend mode that addmus
 	//all the colors to white.
 	ofEnableAlphaBlending();	
 	glBlendFunc(GL_SRC_COLOR, GL_ONE);
@@ -241,6 +241,6 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::mouseReleased(int x, int y, int button){
 
 }
