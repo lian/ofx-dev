@@ -1,0 +1,36 @@
+<install>
+	
+	<version>1.2</version>
+	<author>memo akten</author>
+	<url>www.memo.tv</url>
+	<requires>ofxVectorMath</requires>
+	<requires>ofxObjCPointer</requires>
+	
+	<add>	
+		<!-- 	=====================================================================	-->
+		<!--	========================== add for the "installation" of OF =========	-->
+		<!-- 	=====================================================================	-->
+	
+		<addons_h>
+		#ifdef OF_ADDON_USING_OFXMSAPHYSICS
+			#include "ofxMSAPhysics.h"
+		#endif
+		</addons_h>
+		
+		<!-- 	=====================================================================	-->
+		<!--	========================== add per project using this addon =========	-->
+		<!-- 	=====================================================================	-->
+	
+		<src>
+		</src>
+		
+		<include>
+		</include>
+		
+	</add>
+	 
+</install>
+
+
+
+
