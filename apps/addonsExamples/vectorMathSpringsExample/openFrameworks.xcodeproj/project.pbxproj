@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C3EE2C40EFAD3AE00162FF4 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EE2BA0EFAD3AE00162FF4 /* particle.cpp */; };
-		3C3EE2C50EFAD3AE00162FF4 /* particleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EE2BC0EFAD3AE00162FF4 /* particleManager.cpp */; };
-		3C3EE2C60EFAD3AE00162FF4 /* simulationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EE2BF0EFAD3AE00162FF4 /* simulationManager.cpp */; };
-		3C3EE2C70EFAD3AE00162FF4 /* spring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C3EE2C20EFAD3AE00162FF4 /* spring.cpp */; };
+		29616F1F0EFBD8DE00FF6FA3 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F150EFBD8DE00FF6FA3 /* particle.cpp */; };
+		29616F200EFBD8DE00FF6FA3 /* particleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F170EFBD8DE00FF6FA3 /* particleManager.cpp */; };
+		29616F210EFBD8DE00FF6FA3 /* simulationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F1A0EFBD8DE00FF6FA3 /* simulationManager.cpp */; };
+		29616F220EFBD8DE00FF6FA3 /* spring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F1D0EFBD8DE00FF6FA3 /* spring.cpp */; };
 		E43121A80C7DEC2700E7BC7C /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121860C7DEC2700E7BC7C /* ofAppRunner.cpp */; };
 		E43121A90C7DEC2700E7BC7C /* ofSerial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431218A0C7DEC2700E7BC7C /* ofSerial.cpp */; };
 		E43121AA0C7DEC2700E7BC7C /* ofGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431218D0C7DEC2700E7BC7C /* ofGraphics.cpp */; };
@@ -27,25 +27,29 @@
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
 		E4B6FCAE0C3E899E008CF71C /* openFrameworks-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */; };
+		E4FFB1220E6BDCE80086A0A2 /* ofAppEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */; };
+		E4FFB1230E6BDCE80086A0A2 /* ofAudioEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */; };
+		E4FFB1240E6BDCE80086A0A2 /* ofKeyEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB11E0E6BDCE80086A0A2 /* ofKeyEvents.cpp */; };
+		E4FFB1250E6BDCE80086A0A2 /* ofMouseEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB1200E6BDCE80086A0A2 /* ofMouseEvents.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3C3EE2BA0EFAD3AE00162FF4 /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = particle.cpp; sourceTree = "<group>"; };
-		3C3EE2BB0EFAD3AE00162FF4 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
-		3C3EE2BC0EFAD3AE00162FF4 /* particleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = particleManager.cpp; sourceTree = "<group>"; };
-		3C3EE2BD0EFAD3AE00162FF4 /* particleManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = particleManager.h; sourceTree = "<group>"; };
-		3C3EE2BF0EFAD3AE00162FF4 /* simulationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = simulationManager.cpp; sourceTree = "<group>"; };
-		3C3EE2C00EFAD3AE00162FF4 /* simulationManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = simulationManager.h; sourceTree = "<group>"; };
-		3C3EE2C20EFAD3AE00162FF4 /* spring.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = spring.cpp; sourceTree = "<group>"; };
-		3C3EE2C30EFAD3AE00162FF4 /* spring.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = spring.h; sourceTree = "<group>"; };
-		3C3EE2E30EFAD43600162FF4 /* ofxMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxMatrix3x3.h; sourceTree = "<group>"; };
-		3C3EE2E40EFAD43600162FF4 /* ofxPoint2f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxPoint2f.h; sourceTree = "<group>"; };
-		3C3EE2E50EFAD43600162FF4 /* ofxPoint3f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxPoint3f.h; sourceTree = "<group>"; };
-		3C3EE2E60EFAD43600162FF4 /* ofxPoint4f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxPoint4f.h; sourceTree = "<group>"; };
-		3C3EE2E70EFAD43600162FF4 /* ofxVec2f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxVec2f.h; sourceTree = "<group>"; };
-		3C3EE2E80EFAD43600162FF4 /* ofxVec3f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxVec3f.h; sourceTree = "<group>"; };
-		3C3EE2E90EFAD43600162FF4 /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxVec4f.h; sourceTree = "<group>"; };
-		3C3EE2EA0EFAD43600162FF4 /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxVectorMath.h; sourceTree = "<group>"; };
+		29616F150EFBD8DE00FF6FA3 /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particle.cpp; sourceTree = "<group>"; };
+		29616F160EFBD8DE00FF6FA3 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
+		29616F170EFBD8DE00FF6FA3 /* particleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particleManager.cpp; sourceTree = "<group>"; };
+		29616F180EFBD8DE00FF6FA3 /* particleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particleManager.h; sourceTree = "<group>"; };
+		29616F1A0EFBD8DE00FF6FA3 /* simulationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulationManager.cpp; sourceTree = "<group>"; };
+		29616F1B0EFBD8DE00FF6FA3 /* simulationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulationManager.h; sourceTree = "<group>"; };
+		29616F1D0EFBD8DE00FF6FA3 /* spring.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spring.cpp; sourceTree = "<group>"; };
+		29616F1E0EFBD8DE00FF6FA3 /* spring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spring.h; sourceTree = "<group>"; };
+		29616F250EFBD90300FF6FA3 /* ofxMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMatrix3x3.h; sourceTree = "<group>"; };
+		29616F260EFBD90300FF6FA3 /* ofxPoint2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPoint2f.h; sourceTree = "<group>"; };
+		29616F270EFBD90300FF6FA3 /* ofxPoint3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPoint3f.h; sourceTree = "<group>"; };
+		29616F280EFBD90300FF6FA3 /* ofxPoint4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPoint4f.h; sourceTree = "<group>"; };
+		29616F290EFBD90300FF6FA3 /* ofxVec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec2f.h; sourceTree = "<group>"; };
+		29616F2A0EFBD90300FF6FA3 /* ofxVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec3f.h; sourceTree = "<group>"; };
+		29616F2B0EFBD90300FF6FA3 /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec4f.h; sourceTree = "<group>"; };
+		29616F2C0EFBD90300FF6FA3 /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVectorMath.h; sourceTree = "<group>"; };
 		E411BE020CFA279F007A1F4A /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
 		E43121850C7DEC2700E7BC7C /* ofAppGlutGlue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAppGlutGlue.h; path = ../../../libs/openFrameworks/app/ofAppGlutGlue.h; sourceTree = SOURCE_ROOT; };
 		E43121860C7DEC2700E7BC7C /* ofAppRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppRunner.cpp; path = ../../../libs/openFrameworks/app/ofAppRunner.cpp; sourceTree = SOURCE_ROOT; };
@@ -77,11 +81,19 @@
 		E43121A50C7DEC2700E7BC7C /* ofVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofVideoGrabber.h; path = ../../../libs/openFrameworks/video/ofVideoGrabber.h; sourceTree = SOURCE_ROOT; };
 		E43121A60C7DEC2700E7BC7C /* ofVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofVideoPlayer.cpp; path = ../../../libs/openFrameworks/video/ofVideoPlayer.cpp; sourceTree = SOURCE_ROOT; };
 		E43121A70C7DEC2700E7BC7C /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofVideoPlayer.h; path = ../../../libs/openFrameworks/video/ofVideoPlayer.h; sourceTree = SOURCE_ROOT; };
-		E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* openFrameworksDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworksDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
-		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppEvents.cpp; path = ../../../libs/openFrameworks/events/ofAppEvents.cpp; sourceTree = SOURCE_ROOT; };
+		E4FFB11B0E6BDCE80086A0A2 /* ofAppEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppEvents.h; path = ../../../libs/openFrameworks/events/ofAppEvents.h; sourceTree = SOURCE_ROOT; };
+		E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAudioEvents.cpp; path = ../../../libs/openFrameworks/events/ofAudioEvents.cpp; sourceTree = SOURCE_ROOT; };
+		E4FFB11D0E6BDCE80086A0A2 /* ofAudioEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAudioEvents.h; path = ../../../libs/openFrameworks/events/ofAudioEvents.h; sourceTree = SOURCE_ROOT; };
+		E4FFB11E0E6BDCE80086A0A2 /* ofKeyEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofKeyEvents.cpp; path = ../../../libs/openFrameworks/events/ofKeyEvents.cpp; sourceTree = SOURCE_ROOT; };
+		E4FFB11F0E6BDCE80086A0A2 /* ofKeyEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofKeyEvents.h; path = ../../../libs/openFrameworks/events/ofKeyEvents.h; sourceTree = SOURCE_ROOT; };
+		E4FFB1200E6BDCE80086A0A2 /* ofMouseEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofMouseEvents.cpp; path = ../../../libs/openFrameworks/events/ofMouseEvents.cpp; sourceTree = SOURCE_ROOT; };
+		E4FFB1210E6BDCE80086A0A2 /* ofMouseEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofMouseEvents.h; path = ../../../libs/openFrameworks/events/ofMouseEvents.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,46 +107,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3C3EE2B90EFAD3AE00162FF4 /* particles */ = {
+		29616F140EFBD8DE00FF6FA3 /* particles */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EE2BA0EFAD3AE00162FF4 /* particle.cpp */,
-				3C3EE2BB0EFAD3AE00162FF4 /* particle.h */,
-				3C3EE2BC0EFAD3AE00162FF4 /* particleManager.cpp */,
-				3C3EE2BD0EFAD3AE00162FF4 /* particleManager.h */,
+				29616F150EFBD8DE00FF6FA3 /* particle.cpp */,
+				29616F160EFBD8DE00FF6FA3 /* particle.h */,
+				29616F170EFBD8DE00FF6FA3 /* particleManager.cpp */,
+				29616F180EFBD8DE00FF6FA3 /* particleManager.h */,
 			);
 			path = particles;
 			sourceTree = "<group>";
 		};
-		3C3EE2BE0EFAD3AE00162FF4 /* simulation */ = {
+		29616F190EFBD8DE00FF6FA3 /* simulation */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EE2BF0EFAD3AE00162FF4 /* simulationManager.cpp */,
-				3C3EE2C00EFAD3AE00162FF4 /* simulationManager.h */,
+				29616F1A0EFBD8DE00FF6FA3 /* simulationManager.cpp */,
+				29616F1B0EFBD8DE00FF6FA3 /* simulationManager.h */,
 			);
 			path = simulation;
 			sourceTree = "<group>";
 		};
-		3C3EE2C10EFAD3AE00162FF4 /* springs */ = {
+		29616F1C0EFBD8DE00FF6FA3 /* springs */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EE2C20EFAD3AE00162FF4 /* spring.cpp */,
-				3C3EE2C30EFAD3AE00162FF4 /* spring.h */,
+				29616F1D0EFBD8DE00FF6FA3 /* spring.cpp */,
+				29616F1E0EFBD8DE00FF6FA3 /* spring.h */,
 			);
 			path = springs;
 			sourceTree = "<group>";
 		};
-		3C3EE2E20EFAD43600162FF4 /* ofxVectorMath */ = {
+		29616F240EFBD90300FF6FA3 /* ofxVectorMath */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EE2E30EFAD43600162FF4 /* ofxMatrix3x3.h */,
-				3C3EE2E40EFAD43600162FF4 /* ofxPoint2f.h */,
-				3C3EE2E50EFAD43600162FF4 /* ofxPoint3f.h */,
-				3C3EE2E60EFAD43600162FF4 /* ofxPoint4f.h */,
-				3C3EE2E70EFAD43600162FF4 /* ofxVec2f.h */,
-				3C3EE2E80EFAD43600162FF4 /* ofxVec3f.h */,
-				3C3EE2E90EFAD43600162FF4 /* ofxVec4f.h */,
-				3C3EE2EA0EFAD43600162FF4 /* ofxVectorMath.h */,
+				29616F250EFBD90300FF6FA3 /* ofxMatrix3x3.h */,
+				29616F260EFBD90300FF6FA3 /* ofxPoint2f.h */,
+				29616F270EFBD90300FF6FA3 /* ofxPoint3f.h */,
+				29616F280EFBD90300FF6FA3 /* ofxPoint4f.h */,
+				29616F290EFBD90300FF6FA3 /* ofxVec2f.h */,
+				29616F2A0EFBD90300FF6FA3 /* ofxVec3f.h */,
+				29616F2B0EFBD90300FF6FA3 /* ofxVec4f.h */,
+				29616F2C0EFBD90300FF6FA3 /* ofxVectorMath.h */,
 			);
 			name = ofxVectorMath;
 			path = ofxVectorMath/src;
@@ -143,7 +155,7 @@
 		E411BE010CFA279F007A1F4A /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EE2E20EFAD43600162FF4 /* ofxVectorMath */,
+				29616F240EFBD90300FF6FA3 /* ofxVectorMath */,
 				E411BE020CFA279F007A1F4A /* ofAddons.h */,
 			);
 			name = addons;
@@ -155,6 +167,7 @@
 			children = (
 				E43121950C7DEC2700E7BC7C /* ofMain.h */,
 				E43121840C7DEC2700E7BC7C /* app */,
+				E4FFB1190E6BDCE70086A0A2 /* events */,
 				E43121890C7DEC2700E7BC7C /* communication */,
 				E431218C0C7DEC2700E7BC7C /* graphics */,
 				E43121960C7DEC2700E7BC7C /* sound */,
@@ -255,7 +268,7 @@
 		E4B69B5C0A3A1756003C02F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */,
+				E4B69B5B0A3A1756003C02F2 /* openFrameworksDebug.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -272,14 +285,30 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				3C3EE2B90EFAD3AE00162FF4 /* particles */,
-				3C3EE2BE0EFAD3AE00162FF4 /* simulation */,
-				3C3EE2C10EFAD3AE00162FF4 /* springs */,
+				29616F140EFBD8DE00FF6FA3 /* particles */,
+				29616F190EFBD8DE00FF6FA3 /* simulation */,
+				29616F1C0EFBD8DE00FF6FA3 /* springs */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 			);
 			path = src;
+			sourceTree = SOURCE_ROOT;
+		};
+		E4FFB1190E6BDCE70086A0A2 /* events */ = {
+			isa = PBXGroup;
+			children = (
+				E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */,
+				E4FFB11B0E6BDCE80086A0A2 /* ofAppEvents.h */,
+				E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */,
+				E4FFB11D0E6BDCE80086A0A2 /* ofAudioEvents.h */,
+				E4FFB11E0E6BDCE80086A0A2 /* ofKeyEvents.cpp */,
+				E4FFB11F0E6BDCE80086A0A2 /* ofKeyEvents.h */,
+				E4FFB1200E6BDCE80086A0A2 /* ofMouseEvents.cpp */,
+				E4FFB1210E6BDCE80086A0A2 /* ofMouseEvents.h */,
+			);
+			name = events;
+			path = ../../../libs/openFrameworks/events;
 			sourceTree = SOURCE_ROOT;
 		};
 		F5C26FB40D9AF9EC00D485F4 /* plist */ = {
@@ -309,7 +338,7 @@
 			);
 			name = openFrameworks;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* openFrameworksDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -377,10 +406,14 @@
 				E43121B20C7DEC2700E7BC7C /* ofQtUtils.cpp in Sources */,
 				E43121B30C7DEC2700E7BC7C /* ofVideoGrabber.cpp in Sources */,
 				E43121B40C7DEC2700E7BC7C /* ofVideoPlayer.cpp in Sources */,
-				3C3EE2C40EFAD3AE00162FF4 /* particle.cpp in Sources */,
-				3C3EE2C50EFAD3AE00162FF4 /* particleManager.cpp in Sources */,
-				3C3EE2C60EFAD3AE00162FF4 /* simulationManager.cpp in Sources */,
-				3C3EE2C70EFAD3AE00162FF4 /* spring.cpp in Sources */,
+				E4FFB1220E6BDCE80086A0A2 /* ofAppEvents.cpp in Sources */,
+				E4FFB1230E6BDCE80086A0A2 /* ofAudioEvents.cpp in Sources */,
+				E4FFB1240E6BDCE80086A0A2 /* ofKeyEvents.cpp in Sources */,
+				E4FFB1250E6BDCE80086A0A2 /* ofMouseEvents.cpp in Sources */,
+				29616F1F0EFBD8DE00FF6FA3 /* particle.cpp in Sources */,
+				29616F200EFBD8DE00FF6FA3 /* particleManager.cpp in Sources */,
+				29616F210EFBD8DE00FF6FA3 /* simulationManager.cpp in Sources */,
+				29616F220EFBD8DE00FF6FA3 /* spring.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +435,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
+					../../../libs/poco/include,
 					../../../libs/fmodex/inc,
 					"../../../libs/openFrameworks/**",
 					"../../../libs/freeimage/include/**",
@@ -439,6 +473,7 @@
 					CoreServices,
 					"-framework",
 					AGL,
+					../../../libs/poco/lib/libPocoFoundation.a,
 				);
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -462,6 +497,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
+					../../../libs/poco/include,
 					../../../libs/fmodex/inc,
 					"../../../libs/openFrameworks/**",
 					"../../../libs/freeimage/include/**",
@@ -499,6 +535,7 @@
 					CoreServices,
 					"-framework",
 					AGL,
+					../../../libs/poco/lib/libPocoFoundation.a,
 				);
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
