@@ -2,6 +2,7 @@
 
 *.pbxuser
 *.mode1v3
+*.mode1
 
 apps/*/*/*.app
 apps/*/*.app
