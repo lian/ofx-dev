@@ -11,14 +11,14 @@ class ofSimpleApp : public ofAppListener, public ofKeyListener,
                     public ofMouseListener, public ofAudioListener {
 	
 	public:
-    
+	
         ofSimpleApp() {
             ofAppEvents.addListener(this);
             ofKeyEvents.addListener(this);
             ofMouseEvents.addListener(this);
             ofAudioEvents.addListener(this);
-        }
-    	
+		}
+
 		virtual ~ofSimpleApp(){}
 		
 		virtual void setup(){}
