@@ -10,9 +10,6 @@
 		296170CD0EFBEB6B00FF6FA3 /* cv100.dll in Resources */ = {isa = PBXBuildFile; fileRef = 296170A00EFBEB6B00FF6FA3 /* cv100.dll */; };
 		296170CE0EFBEB6B00FF6FA3 /* cxcore100.dll in Resources */ = {isa = PBXBuildFile; fileRef = 296170A10EFBEB6B00FF6FA3 /* cxcore100.dll */; };
 		296170CF0EFBEB6B00FF6FA3 /* libOpenCV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296170B40EFBEB6B00FF6FA3 /* libOpenCV.a */; };
-		296170D00EFBEB6B00FF6FA3 /* cv.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 296170B60EFBEB6B00FF6FA3 /* cv.lib */; };
-		296170D10EFBEB6B00FF6FA3 /* cvaux.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 296170B70EFBEB6B00FF6FA3 /* cvaux.lib */; };
-		296170D20EFBEB6B00FF6FA3 /* cxcore.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 296170B80EFBEB6B00FF6FA3 /* cxcore.lib */; };
 		296170D30EFBEB6B00FF6FA3 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296170BB0EFBEB6B00FF6FA3 /* ofxCvColorImage.cpp */; };
 		296170D40EFBEB6B00FF6FA3 /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296170BE0EFBEB6B00FF6FA3 /* ofxCvContourFinder.cpp */; };
 		296170D50EFBEB6B00FF6FA3 /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296170C00EFBEB6B00FF6FA3 /* ofxCvFloatImage.cpp */; };
@@ -60,9 +57,6 @@
 		296170B00EFBEB6B00FF6FA3 /* cxmisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxmisc.h; sourceTree = "<group>"; };
 		296170B10EFBEB6B00FF6FA3 /* cxtypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxtypes.h; sourceTree = "<group>"; };
 		296170B40EFBEB6B00FF6FA3 /* libOpenCV.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOpenCV.a; sourceTree = "<group>"; };
-		296170B60EFBEB6B00FF6FA3 /* cv.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = cv.lib; sourceTree = "<group>"; };
-		296170B70EFBEB6B00FF6FA3 /* cvaux.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = cvaux.lib; sourceTree = "<group>"; };
-		296170B80EFBEB6B00FF6FA3 /* cxcore.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = cxcore.lib; sourceTree = "<group>"; };
 		296170BA0EFBEB6B00FF6FA3 /* ofxCvBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
 		296170BB0EFBEB6B00FF6FA3 /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
 		296170BC0EFBEB6B00FF6FA3 /* ofxCvColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
@@ -109,11 +103,11 @@
 		E43121A50C7DEC2700E7BC7C /* ofVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofVideoGrabber.h; path = ../../../libs/openFrameworks/video/ofVideoGrabber.h; sourceTree = SOURCE_ROOT; };
 		E43121A60C7DEC2700E7BC7C /* ofVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofVideoPlayer.cpp; path = ../../../libs/openFrameworks/video/ofVideoPlayer.cpp; sourceTree = SOURCE_ROOT; };
 		E43121A70C7DEC2700E7BC7C /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofVideoPlayer.h; path = ../../../libs/openFrameworks/video/ofVideoPlayer.h; sourceTree = SOURCE_ROOT; };
-		E4B69B5B0A3A1756003C02F2 /* openFrameworksDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworksDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
-		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppEvents.cpp; path = ../../../libs/openFrameworks/events/ofAppEvents.cpp; sourceTree = SOURCE_ROOT; };
 		E4FFB11B0E6BDCE80086A0A2 /* ofAppEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppEvents.h; path = ../../../libs/openFrameworks/events/ofAppEvents.h; sourceTree = SOURCE_ROOT; };
 		E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAudioEvents.cpp; path = ../../../libs/openFrameworks/events/ofAudioEvents.cpp; sourceTree = SOURCE_ROOT; };
@@ -130,9 +124,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				296170CF0EFBEB6B00FF6FA3 /* libOpenCV.a in Frameworks */,
-				296170D00EFBEB6B00FF6FA3 /* cv.lib in Frameworks */,
-				296170D10EFBEB6B00FF6FA3 /* cvaux.lib in Frameworks */,
-				296170D20EFBEB6B00FF6FA3 /* cxcore.lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				296170B30EFBEB6B00FF6FA3 /* osx */,
-				296170B50EFBEB6B00FF6FA3 /* win32 */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -220,16 +210,6 @@
 				296170B40EFBEB6B00FF6FA3 /* libOpenCV.a */,
 			);
 			path = osx;
-			sourceTree = "<group>";
-		};
-		296170B50EFBEB6B00FF6FA3 /* win32 */ = {
-			isa = PBXGroup;
-			children = (
-				296170B60EFBEB6B00FF6FA3 /* cv.lib */,
-				296170B70EFBEB6B00FF6FA3 /* cvaux.lib */,
-				296170B80EFBEB6B00FF6FA3 /* cxcore.lib */,
-			);
-			path = win32;
 			sourceTree = "<group>";
 		};
 		296170B90EFBEB6B00FF6FA3 /* src */ = {
@@ -378,7 +358,7 @@
 		E4B69B5C0A3A1756003C02F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4B69B5B0A3A1756003C02F2 /* openFrameworksDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -445,7 +425,7 @@
 			);
 			name = openFrameworks;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* openFrameworksDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

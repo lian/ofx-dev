@@ -8,8 +8,8 @@
 
 #include "ofConstants.h" 
 #include "ofMain.h" 
-#include "ofxProcessing.h"
-#include "ofxMemoUtils.h"
+// #include "ofxProcessing.h"
+// #include "ofxMemoUtils.h"
 
 //-------------------------------------------------- Graphic Utils 
 
@@ -20,7 +20,7 @@ void   ofDrawFPS(int x=15, int y=ofGetHeight()-35);
 float   ofNorm(float value, float start, float stop); 
 float   ofMap(float value, float istart, float istop, float ostart, float ostop); 
 float   ofDist(float a, float b, float c, float d); 
-int      ofConstrain(int amt, int low, int high); 
+int     ofConstrain(int amt, int low, int high); 
 float   ofSq(float n); 
 float   ofDegrees(float radians); 
 float   ofRadians(float degrees); 
@@ -31,6 +31,6 @@ float   dist(float x1, float y1, float z1, float x2, float y2, float z2);
 //-------------------------------------------------- Other Utils 
 
 float ofRanWidth(); 
-float ofRanHeight()
+float ofRanHeight();
 
 #endif

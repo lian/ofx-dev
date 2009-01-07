@@ -1,6 +1,6 @@
 
 
-#include "of3D.h"
+#include "ofx3D.h"
 #include "ofMath.h"
 //-------------------------------------------------------------- NOTES
 /*

@@ -6,17 +6,17 @@
 
 //-------------------------------------------------- Graphic Utils 
 
-void ofDrawFPS(int x=15, int y=ofGetHeight()-35) { 
-   glPushMatrix(); 
-   glTranslatef(x, y, 0); 
-   ofSetRectMode(OF_RECTMODE_CORNER); 
-   ofFill(); 
-   ofSetColor(0x000000); 
-   ofSetColor(0, 255, 0); 
-   string fpsStr = "FPS: "+ofToString(ofGetFrameRate(), 2); 
-   ofDrawBitmapString(fpsStr, 0, 0); 
-   glPopMatrix(); 
-} 
+// void ofDrawFPS(int x=15, int y=ofGetHeight()-35) { 
+//    glPushMatrix(); 
+//    glTranslatef(x, y, 0); 
+//    ofSetRectMode(OF_RECTMODE_CORNER); 
+//    ofFill(); 
+//    ofSetColor(0x000000); 
+//    ofSetColor(0, 255, 0); 
+//    string fpsStr = "FPS: "+ofToString(ofGetFrameRate(), 2); 
+//    ofDrawBitmapString(fpsStr, 0, 0); 
+//    glPopMatrix(); 
+// } 
 
 //-------------------------------------------------- Math Utils 
 
@@ -28,13 +28,13 @@ float ofMap(float value, float istart, float istop, float ostart, float ostop) {
    return ostart + (ostop - ostart) * ((value - istart) / (istop - istart)); 
 } 
 
-float ofDist(float a, float b, float c, float d) { 
-   return sqrt(double((a - c) * (a - c) + (b - d) * (b - d))); 
-} 
+// float ofDist(float a, float b, float c, float d) { 
+//   return sqrt(double((a - c) * (a - c) + (b - d) * (b - d))); 
+// }
 
-int ofConstrain(int amt, int low, int high) { 
-   return (amt < low) ? low : ((amt > high) ? high : amt); 
-} 
+// int ofConstrain(int amt, int low, int high) { 
+//   return (amt < low) ? low : ((amt > high) ? high : amt); 
+// } 
 
 float ofSq(float n) { 
    return n*n; 

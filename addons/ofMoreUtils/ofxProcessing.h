@@ -5,6 +5,8 @@
 #ifndef OFX_PROCESSING_H
 #define OFX_PROCESSING_H
 
+#include "ofMain.h"
+
 //--------------------------------------------------------- Output
 //------------------------ Text Area: print() and println() 
 
@@ -94,28 +96,28 @@ float ofEllipse(float x, float y, float w, float h, int mode) {
 
 //------------------------------------------------------ Transform 
 
-void ofRotate(float r) { 
-   glRotatef(ofDegrees(r), 0, 0, 1); 
-} 
+// void ofRotate(float r) { 
+//    glRotatef(ofDegrees(r), 0, 0, 1); 
+// } 
 
-void ofRotateX(float r) { 
-   glRotatef(ofDegrees(r), 1, 0, 0); 
-} 
+// void ofRotateX(float r) { 
+//    glRotatef(ofDegrees(r), 1, 0, 0); 
+// } 
 
-void ofRotateY(float r) { 
-   glRotatef(ofDegrees(r), 0, 1, 0); 
-} 
+// void ofRotateY(float r) { 
+//    glRotatef(ofDegrees(r), 0, 1, 0); 
+// } 
 
-void ofRotateZ(float r) { 
-   glRotatef(ofDegrees(r), 0, 0, 1); 
-} 
+// void ofRotateZ(float r) { 
+//    glRotatef(ofDegrees(r), 0, 0, 1); 
+// } 
 
 //------------------------------------------------------ Math
 //-- Calculation: map(), sq(), constrain(), dist(), mag() 
 
-float ofMap(float x, float lowIn, float highIn, float lowOut, float highOut) { 
-   return ((x - lowIn) / (highIn - lowIn)) * (highOut - lowOut) + lowOut; 
-} 
+// float ofMap(float x, float lowIn, float highIn, float lowOut, float highOut) { 
+//    return ((x - lowIn) / (highIn - lowIn)) * (highOut - lowOut) + lowOut; 
+// } 
 
 float ofConstrain(float x, float low, float high) { 
    return x < low ? low : x > high ? high : x; 

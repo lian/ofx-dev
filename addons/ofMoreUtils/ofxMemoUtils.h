@@ -6,10 +6,10 @@
 #define OFX_MEMO_UTILS_H
 
 
-// return sign of the number 
-int ofSign(float n) { 
-   return n < 0 ? -1 : n > 0 : 1 : 0; 
-} 
+// // return sign of the number 
+// int ofSign(float n) { 
+//    return n < 0 ? -1 : n > 0 : 1 : 0; 
+// } 
 
 // checks to see if number is in range 
 bool ofInRange(float t, float min, float max) { 
@@ -30,22 +30,22 @@ float ofClamp(float x, float max) {
 } 
 
 
-// smooth normalized number 
-// with hermite interpolation 
-// only really works if t is 0...1 but best not to clamp here 
-float ofSmooth(t) { 
-   return  t * t * (3 – 2 * t); 
-} 
+// // smooth normalized number 
+// // with hermite interpolation 
+// // only really works if t is 0...1 but best not to clamp here 
+// float ofSmooth(t) { 
+//    return  t * t * (3 – 2 * t); 
+// } 
 
 
-// clamp a number between min, max 
-// and smooth with hermite interpolation 
-float ofSmoothClamp(t, min, max) { 
-   float clamped = ofClamp(t, min, max); 
-   float normed  = ofNorm(clamped, min, max); 
-   float smoothed = ofSmooth(normed); 
-   return ofLerp(min, max, smoothed); 
-} 
+// // clamp a number between min, max 
+// // and smooth with hermite interpolation 
+// float ofSmoothClamp(t, min, max) { 
+//    float clamped = ofClamp(t, min, max); 
+//    float normed  = ofNorm(clamped, min, max); 
+//    float smoothed = ofSmooth(normed); 
+//    return ofLerp(min, max, smoothed); 
+// } 
 
 
 // square of distance between two points 
@@ -56,11 +56,11 @@ float ofDist2(float x1, float y1, float x2, float y2) {
    return dx*dx + dy*dy; 
 } 
 
-float ofDist2(float x1, float y1, float z1, float x2, float y2, float z3) { 
-   float dx = x2 - x1; 
-   float dy = y2 - y1; 
-   float dz = z2 - z1; 
-   return dx*dx + dy*dy + dz*dz; 
-}
+// float ofDist2(float x1, float y1, float z1, float x2, float y2, float z3) { 
+//    float dx = x2 - x1; 
+//    float dy = y2 - y1; 
+//    float dz = z2 - z1; 
+//    return dx*dx + dy*dy + dz*dz; 
+// }
 
 #endif

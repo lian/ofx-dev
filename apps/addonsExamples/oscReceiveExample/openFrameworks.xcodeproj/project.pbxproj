@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		296174050EFBF8A100FF6FA3 /* libOsc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296173F20EFBF8A100FF6FA3 /* libOsc.a */; };
-		296174060EFBF8A100FF6FA3 /* oscpack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296173F40EFBF8A100FF6FA3 /* oscpack.a */; };
-		296174070EFBF8A100FF6FA3 /* oscpack.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 296173F50EFBF8A100FF6FA3 /* oscpack.lib */; };
-		296174080EFBF8A100FF6FA3 /* oscpack_cw.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 296173F60EFBF8A100FF6FA3 /* oscpack_cw.lib */; };
 		296174090EFBF8A100FF6FA3 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296173FA0EFBF8A100FF6FA3 /* ofxOscMessage.cpp */; };
 		2961740A0EFBF8A100FF6FA3 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296173FC0EFBF8A100FF6FA3 /* ofxOscReceiver.cpp */; };
 		2961740B0EFBF8A100FF6FA3 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296173FE0EFBF8A100FF6FA3 /* ofxOscSender.cpp */; };
@@ -51,9 +48,6 @@
 		296173EE0EFBF8A100FF6FA3 /* OscReceivedElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscReceivedElements.h; sourceTree = "<group>"; };
 		296173EF0EFBF8A100FF6FA3 /* OscTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscTypes.h; sourceTree = "<group>"; };
 		296173F20EFBF8A100FF6FA3 /* libOsc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOsc.a; sourceTree = "<group>"; };
-		296173F40EFBF8A100FF6FA3 /* oscpack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = oscpack.a; sourceTree = "<group>"; };
-		296173F50EFBF8A100FF6FA3 /* oscpack.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = oscpack.lib; sourceTree = "<group>"; };
-		296173F60EFBF8A100FF6FA3 /* oscpack_cw.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = oscpack_cw.lib; sourceTree = "<group>"; };
 		296173F80EFBF8A100FF6FA3 /* ofxOsc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOsc.h; sourceTree = "<group>"; };
 		296173F90EFBF8A100FF6FA3 /* ofxOscArg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscArg.h; sourceTree = "<group>"; };
 		296173FA0EFBF8A100FF6FA3 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscMessage.cpp; sourceTree = "<group>"; };
@@ -97,7 +91,7 @@
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
-		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
 		E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppEvents.cpp; path = ../../../libs/openFrameworks/events/ofAppEvents.cpp; sourceTree = SOURCE_ROOT; };
 		E4FFB11B0E6BDCE80086A0A2 /* ofAppEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppEvents.h; path = ../../../libs/openFrameworks/events/ofAppEvents.h; sourceTree = SOURCE_ROOT; };
 		E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAudioEvents.cpp; path = ../../../libs/openFrameworks/events/ofAudioEvents.cpp; sourceTree = SOURCE_ROOT; };
@@ -114,9 +108,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				296174050EFBF8A100FF6FA3 /* libOsc.a in Frameworks */,
-				296174060EFBF8A100FF6FA3 /* oscpack.a in Frameworks */,
-				296174070EFBF8A100FF6FA3 /* oscpack.lib in Frameworks */,
-				296174080EFBF8A100FF6FA3 /* oscpack_cw.lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				296173F10EFBF8A100FF6FA3 /* osx */,
-				296173F30EFBF8A100FF6FA3 /* win32 */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -200,16 +190,6 @@
 				296173F20EFBF8A100FF6FA3 /* libOsc.a */,
 			);
 			path = osx;
-			sourceTree = "<group>";
-		};
-		296173F30EFBF8A100FF6FA3 /* win32 */ = {
-			isa = PBXGroup;
-			children = (
-				296173F40EFBF8A100FF6FA3 /* oscpack.a */,
-				296173F50EFBF8A100FF6FA3 /* oscpack.lib */,
-				296173F60EFBF8A100FF6FA3 /* oscpack_cw.lib */,
-			);
-			path = win32;
 			sourceTree = "<group>";
 		};
 		296173F70EFBF8A100FF6FA3 /* src */ = {
