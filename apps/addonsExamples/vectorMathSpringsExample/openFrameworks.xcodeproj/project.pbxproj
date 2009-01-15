@@ -11,26 +11,25 @@
 		29616F200EFBD8DE00FF6FA3 /* particleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F170EFBD8DE00FF6FA3 /* particleManager.cpp */; };
 		29616F210EFBD8DE00FF6FA3 /* simulationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F1A0EFBD8DE00FF6FA3 /* simulationManager.cpp */; };
 		29616F220EFBD8DE00FF6FA3 /* spring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29616F1D0EFBD8DE00FF6FA3 /* spring.cpp */; };
-		E43121A80C7DEC2700E7BC7C /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121860C7DEC2700E7BC7C /* ofAppRunner.cpp */; };
-		E43121A90C7DEC2700E7BC7C /* ofSerial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431218A0C7DEC2700E7BC7C /* ofSerial.cpp */; };
-		E43121AA0C7DEC2700E7BC7C /* ofGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431218D0C7DEC2700E7BC7C /* ofGraphics.cpp */; };
-		E43121AB0C7DEC2700E7BC7C /* ofImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431218F0C7DEC2700E7BC7C /* ofImage.cpp */; };
-		E43121AC0C7DEC2700E7BC7C /* ofTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121910C7DEC2700E7BC7C /* ofTexture.cpp */; };
-		E43121AD0C7DEC2700E7BC7C /* ofTrueTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121930C7DEC2700E7BC7C /* ofTrueTypeFont.cpp */; };
-		E43121AE0C7DEC2700E7BC7C /* ofSoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121970C7DEC2700E7BC7C /* ofSoundPlayer.cpp */; };
-		E43121AF0C7DEC2700E7BC7C /* ofSoundStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121990C7DEC2700E7BC7C /* ofSoundStream.cpp */; };
-		E43121B00C7DEC2700E7BC7C /* ofMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431219D0C7DEC2700E7BC7C /* ofMath.cpp */; };
-		E43121B10C7DEC2700E7BC7C /* ofUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E431219F0C7DEC2700E7BC7C /* ofUtils.cpp */; };
-		E43121B20C7DEC2700E7BC7C /* ofQtUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121A20C7DEC2700E7BC7C /* ofQtUtils.cpp */; };
-		E43121B30C7DEC2700E7BC7C /* ofVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121A40C7DEC2700E7BC7C /* ofVideoGrabber.cpp */; };
-		E43121B40C7DEC2700E7BC7C /* ofVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E43121A60C7DEC2700E7BC7C /* ofVideoPlayer.cpp */; };
+		3C6C5DF70F1EEBE100FE185F /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DCA0F1EEBE100FE185F /* ofAppRunner.cpp */; };
+		3C6C5DF80F1EEBE100FE185F /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DCE0F1EEBE100FE185F /* ofArduino.cpp */; };
+		3C6C5DF90F1EEBE100FE185F /* ofSerial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DD00F1EEBE100FE185F /* ofSerial.cpp */; };
+		3C6C5DFA0F1EEBE100FE185F /* ofStandardFirmata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DD20F1EEBE100FE185F /* ofStandardFirmata.cpp */; };
+		3C6C5DFB0F1EEBE100FE185F /* ofGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DD80F1EEBE100FE185F /* ofGraphics.cpp */; };
+		3C6C5DFC0F1EEBE100FE185F /* ofImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DDA0F1EEBE100FE185F /* ofImage.cpp */; };
+		3C6C5DFD0F1EEBE100FE185F /* ofTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DDC0F1EEBE100FE185F /* ofTexture.cpp */; };
+		3C6C5DFE0F1EEBE100FE185F /* ofTrueTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DDE0F1EEBE100FE185F /* ofTrueTypeFont.cpp */; };
+		3C6C5DFF0F1EEBE100FE185F /* ofSoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DE20F1EEBE100FE185F /* ofSoundPlayer.cpp */; };
+		3C6C5E000F1EEBE100FE185F /* ofSoundStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DE40F1EEBE100FE185F /* ofSoundStream.cpp */; };
+		3C6C5E010F1EEBE100FE185F /* ofMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DE80F1EEBE100FE185F /* ofMath.cpp */; };
+		3C6C5E020F1EEBE100FE185F /* ofUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DEB0F1EEBE100FE185F /* ofUtils.cpp */; };
+		3C6C5E030F1EEBE100FE185F /* ofQtUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DEE0F1EEBE100FE185F /* ofQtUtils.cpp */; };
+		3C6C5E040F1EEBE100FE185F /* ofUCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DF00F1EEBE100FE185F /* ofUCUtils.cpp */; };
+		3C6C5E050F1EEBE100FE185F /* ofVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DF30F1EEBE100FE185F /* ofVideoGrabber.cpp */; };
+		3C6C5E060F1EEBE100FE185F /* ofVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6C5DF50F1EEBE100FE185F /* ofVideoPlayer.cpp */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
 		E4B6FCAE0C3E899E008CF71C /* openFrameworks-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */; };
-		E4FFB1220E6BDCE80086A0A2 /* ofAppEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */; };
-		E4FFB1230E6BDCE80086A0A2 /* ofAudioEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */; };
-		E4FFB1240E6BDCE80086A0A2 /* ofKeyEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB11E0E6BDCE80086A0A2 /* ofKeyEvents.cpp */; };
-		E4FFB1250E6BDCE80086A0A2 /* ofMouseEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFB1200E6BDCE80086A0A2 /* ofMouseEvents.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,50 +49,52 @@
 		29616F2A0EFBD90300FF6FA3 /* ofxVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec3f.h; sourceTree = "<group>"; };
 		29616F2B0EFBD90300FF6FA3 /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVec4f.h; sourceTree = "<group>"; };
 		29616F2C0EFBD90300FF6FA3 /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxVectorMath.h; sourceTree = "<group>"; };
+		3C6C5DC90F1EEBE100FE185F /* ofAppGlutGlue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppGlutGlue.h; sourceTree = "<group>"; };
+		3C6C5DCA0F1EEBE100FE185F /* ofAppRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppRunner.cpp; sourceTree = "<group>"; };
+		3C6C5DCB0F1EEBE100FE185F /* ofAppRunner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppRunner.h; sourceTree = "<group>"; };
+		3C6C5DCC0F1EEBE100FE185F /* ofBaseApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofBaseApp.h; sourceTree = "<group>"; };
+		3C6C5DCE0F1EEBE100FE185F /* ofArduino.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofArduino.cpp; sourceTree = "<group>"; };
+		3C6C5DCF0F1EEBE100FE185F /* ofArduino.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofArduino.h; sourceTree = "<group>"; };
+		3C6C5DD00F1EEBE100FE185F /* ofSerial.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofSerial.cpp; sourceTree = "<group>"; };
+		3C6C5DD10F1EEBE100FE185F /* ofSerial.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofSerial.h; sourceTree = "<group>"; };
+		3C6C5DD20F1EEBE100FE185F /* ofStandardFirmata.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofStandardFirmata.cpp; sourceTree = "<group>"; };
+		3C6C5DD30F1EEBE100FE185F /* ofStandardFirmata.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofStandardFirmata.h; sourceTree = "<group>"; };
+		3C6C5DD50F1EEBE100FE185F /* ofEvents.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofEvents.h; sourceTree = "<group>"; };
+		3C6C5DD60F1EEBE100FE185F /* ofEventUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofEventUtils.h; sourceTree = "<group>"; };
+		3C6C5DD80F1EEBE100FE185F /* ofGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofGraphics.cpp; sourceTree = "<group>"; };
+		3C6C5DD90F1EEBE100FE185F /* ofGraphics.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofGraphics.h; sourceTree = "<group>"; };
+		3C6C5DDA0F1EEBE100FE185F /* ofImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofImage.cpp; sourceTree = "<group>"; };
+		3C6C5DDB0F1EEBE100FE185F /* ofImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofImage.h; sourceTree = "<group>"; };
+		3C6C5DDC0F1EEBE100FE185F /* ofTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofTexture.cpp; sourceTree = "<group>"; };
+		3C6C5DDD0F1EEBE100FE185F /* ofTexture.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofTexture.h; sourceTree = "<group>"; };
+		3C6C5DDE0F1EEBE100FE185F /* ofTrueTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofTrueTypeFont.cpp; sourceTree = "<group>"; };
+		3C6C5DDF0F1EEBE100FE185F /* ofTrueTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofTrueTypeFont.h; sourceTree = "<group>"; };
+		3C6C5DE00F1EEBE100FE185F /* ofMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofMain.h; sourceTree = "<group>"; };
+		3C6C5DE20F1EEBE100FE185F /* ofSoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofSoundPlayer.cpp; sourceTree = "<group>"; };
+		3C6C5DE30F1EEBE100FE185F /* ofSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofSoundPlayer.h; sourceTree = "<group>"; };
+		3C6C5DE40F1EEBE100FE185F /* ofSoundStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofSoundStream.cpp; sourceTree = "<group>"; };
+		3C6C5DE50F1EEBE100FE185F /* ofSoundStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofSoundStream.h; sourceTree = "<group>"; };
+		3C6C5DE70F1EEBE100FE185F /* ofConstants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofConstants.h; sourceTree = "<group>"; };
+		3C6C5DE80F1EEBE100FE185F /* ofMath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofMath.cpp; sourceTree = "<group>"; };
+		3C6C5DE90F1EEBE100FE185F /* ofMath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofMath.h; sourceTree = "<group>"; };
+		3C6C5DEA0F1EEBE100FE185F /* ofTypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofTypes.h; sourceTree = "<group>"; };
+		3C6C5DEB0F1EEBE100FE185F /* ofUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofUtils.cpp; sourceTree = "<group>"; };
+		3C6C5DEC0F1EEBE100FE185F /* ofUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofUtils.h; sourceTree = "<group>"; };
+		3C6C5DEE0F1EEBE100FE185F /* ofQtUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofQtUtils.cpp; sourceTree = "<group>"; };
+		3C6C5DEF0F1EEBE100FE185F /* ofQtUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofQtUtils.h; sourceTree = "<group>"; };
+		3C6C5DF00F1EEBE100FE185F /* ofUCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofUCUtils.cpp; sourceTree = "<group>"; };
+		3C6C5DF10F1EEBE100FE185F /* ofUCUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofUCUtils.h; sourceTree = "<group>"; };
+		3C6C5DF20F1EEBE100FE185F /* ofV4LUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofV4LUtils.h; sourceTree = "<group>"; };
+		3C6C5DF30F1EEBE100FE185F /* ofVideoGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofVideoGrabber.cpp; sourceTree = "<group>"; };
+		3C6C5DF40F1EEBE100FE185F /* ofVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofVideoGrabber.h; sourceTree = "<group>"; };
+		3C6C5DF50F1EEBE100FE185F /* ofVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofVideoPlayer.cpp; sourceTree = "<group>"; };
+		3C6C5DF60F1EEBE100FE185F /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofVideoPlayer.h; sourceTree = "<group>"; };
 		E411BE020CFA279F007A1F4A /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
-		E43121850C7DEC2700E7BC7C /* ofAppGlutGlue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAppGlutGlue.h; path = ../../../libs/openFrameworks/app/ofAppGlutGlue.h; sourceTree = SOURCE_ROOT; };
-		E43121860C7DEC2700E7BC7C /* ofAppRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppRunner.cpp; path = ../../../libs/openFrameworks/app/ofAppRunner.cpp; sourceTree = SOURCE_ROOT; };
-		E43121870C7DEC2700E7BC7C /* ofAppRunner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAppRunner.h; path = ../../../libs/openFrameworks/app/ofAppRunner.h; sourceTree = SOURCE_ROOT; };
-		E43121880C7DEC2700E7BC7C /* ofSimpleApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofSimpleApp.h; path = ../../../libs/openFrameworks/app/ofSimpleApp.h; sourceTree = SOURCE_ROOT; };
-		E431218A0C7DEC2700E7BC7C /* ofSerial.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofSerial.cpp; path = ../../../libs/openFrameworks/communication/ofSerial.cpp; sourceTree = SOURCE_ROOT; };
-		E431218B0C7DEC2700E7BC7C /* ofSerial.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofSerial.h; path = ../../../libs/openFrameworks/communication/ofSerial.h; sourceTree = SOURCE_ROOT; };
-		E431218D0C7DEC2700E7BC7C /* ofGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofGraphics.cpp; path = ../../../libs/openFrameworks/graphics/ofGraphics.cpp; sourceTree = SOURCE_ROOT; };
-		E431218E0C7DEC2700E7BC7C /* ofGraphics.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofGraphics.h; path = ../../../libs/openFrameworks/graphics/ofGraphics.h; sourceTree = SOURCE_ROOT; };
-		E431218F0C7DEC2700E7BC7C /* ofImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofImage.cpp; path = ../../../libs/openFrameworks/graphics/ofImage.cpp; sourceTree = SOURCE_ROOT; };
-		E43121900C7DEC2700E7BC7C /* ofImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofImage.h; path = ../../../libs/openFrameworks/graphics/ofImage.h; sourceTree = SOURCE_ROOT; };
-		E43121910C7DEC2700E7BC7C /* ofTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofTexture.cpp; path = ../../../libs/openFrameworks/graphics/ofTexture.cpp; sourceTree = SOURCE_ROOT; };
-		E43121920C7DEC2700E7BC7C /* ofTexture.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofTexture.h; path = ../../../libs/openFrameworks/graphics/ofTexture.h; sourceTree = SOURCE_ROOT; };
-		E43121930C7DEC2700E7BC7C /* ofTrueTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofTrueTypeFont.cpp; path = ../../../libs/openFrameworks/graphics/ofTrueTypeFont.cpp; sourceTree = SOURCE_ROOT; };
-		E43121940C7DEC2700E7BC7C /* ofTrueTypefont.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofTrueTypefont.h; path = ../../../libs/openFrameworks/graphics/ofTrueTypefont.h; sourceTree = SOURCE_ROOT; };
-		E43121950C7DEC2700E7BC7C /* ofMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofMain.h; path = ../../../libs/openFrameworks/ofMain.h; sourceTree = SOURCE_ROOT; };
-		E43121970C7DEC2700E7BC7C /* ofSoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofSoundPlayer.cpp; path = ../../../libs/openFrameworks/sound/ofSoundPlayer.cpp; sourceTree = SOURCE_ROOT; };
-		E43121980C7DEC2700E7BC7C /* ofSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofSoundPlayer.h; path = ../../../libs/openFrameworks/sound/ofSoundPlayer.h; sourceTree = SOURCE_ROOT; };
-		E43121990C7DEC2700E7BC7C /* ofSoundStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofSoundStream.cpp; path = ../../../libs/openFrameworks/sound/ofSoundStream.cpp; sourceTree = SOURCE_ROOT; };
-		E431219A0C7DEC2700E7BC7C /* ofSoundStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofSoundStream.h; path = ../../../libs/openFrameworks/sound/ofSoundStream.h; sourceTree = SOURCE_ROOT; };
-		E431219C0C7DEC2700E7BC7C /* ofConstants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofConstants.h; path = ../../../libs/openFrameworks/utils/ofConstants.h; sourceTree = SOURCE_ROOT; };
-		E431219D0C7DEC2700E7BC7C /* ofMath.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofMath.cpp; path = ../../../libs/openFrameworks/utils/ofMath.cpp; sourceTree = SOURCE_ROOT; };
-		E431219E0C7DEC2700E7BC7C /* ofMath.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofMath.h; path = ../../../libs/openFrameworks/utils/ofMath.h; sourceTree = SOURCE_ROOT; };
-		E431219F0C7DEC2700E7BC7C /* ofUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofUtils.cpp; path = ../../../libs/openFrameworks/utils/ofUtils.cpp; sourceTree = SOURCE_ROOT; };
-		E43121A00C7DEC2700E7BC7C /* ofUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofUtils.h; path = ../../../libs/openFrameworks/utils/ofUtils.h; sourceTree = SOURCE_ROOT; };
-		E43121A20C7DEC2700E7BC7C /* ofQtUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofQtUtils.cpp; path = ../../../libs/openFrameworks/video/ofQtUtils.cpp; sourceTree = SOURCE_ROOT; };
-		E43121A30C7DEC2700E7BC7C /* ofQtUtils.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofQtUtils.h; path = ../../../libs/openFrameworks/video/ofQtUtils.h; sourceTree = SOURCE_ROOT; };
-		E43121A40C7DEC2700E7BC7C /* ofVideoGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofVideoGrabber.cpp; path = ../../../libs/openFrameworks/video/ofVideoGrabber.cpp; sourceTree = SOURCE_ROOT; };
-		E43121A50C7DEC2700E7BC7C /* ofVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofVideoGrabber.h; path = ../../../libs/openFrameworks/video/ofVideoGrabber.h; sourceTree = SOURCE_ROOT; };
-		E43121A60C7DEC2700E7BC7C /* ofVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = ofVideoPlayer.cpp; path = ../../../libs/openFrameworks/video/ofVideoPlayer.cpp; sourceTree = SOURCE_ROOT; };
-		E43121A70C7DEC2700E7BC7C /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofVideoPlayer.h; path = ../../../libs/openFrameworks/video/ofVideoPlayer.h; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "openFrameworks-Info.plist"; sourceTree = SOURCE_ROOT; };
-		E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppEvents.cpp; path = ../../../libs/openFrameworks/events/ofAppEvents.cpp; sourceTree = SOURCE_ROOT; };
-		E4FFB11B0E6BDCE80086A0A2 /* ofAppEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppEvents.h; path = ../../../libs/openFrameworks/events/ofAppEvents.h; sourceTree = SOURCE_ROOT; };
-		E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAudioEvents.cpp; path = ../../../libs/openFrameworks/events/ofAudioEvents.cpp; sourceTree = SOURCE_ROOT; };
-		E4FFB11D0E6BDCE80086A0A2 /* ofAudioEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAudioEvents.h; path = ../../../libs/openFrameworks/events/ofAudioEvents.h; sourceTree = SOURCE_ROOT; };
-		E4FFB11E0E6BDCE80086A0A2 /* ofKeyEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofKeyEvents.cpp; path = ../../../libs/openFrameworks/events/ofKeyEvents.cpp; sourceTree = SOURCE_ROOT; };
-		E4FFB11F0E6BDCE80086A0A2 /* ofKeyEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofKeyEvents.h; path = ../../../libs/openFrameworks/events/ofKeyEvents.h; sourceTree = SOURCE_ROOT; };
-		E4FFB1200E6BDCE80086A0A2 /* ofMouseEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofMouseEvents.cpp; path = ../../../libs/openFrameworks/events/ofMouseEvents.cpp; sourceTree = SOURCE_ROOT; };
-		E4FFB1210E6BDCE80086A0A2 /* ofMouseEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofMouseEvents.h; path = ../../../libs/openFrameworks/events/ofMouseEvents.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +153,110 @@
 			path = ofxVectorMath/src;
 			sourceTree = "<group>";
 		};
+		3C6C5DC70F1EEBE100FE185F /* openFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DC80F1EEBE100FE185F /* app */,
+				3C6C5DCD0F1EEBE100FE185F /* communication */,
+				3C6C5DD40F1EEBE100FE185F /* events */,
+				3C6C5DD70F1EEBE100FE185F /* graphics */,
+				3C6C5DE00F1EEBE100FE185F /* ofMain.h */,
+				3C6C5DE10F1EEBE100FE185F /* sound */,
+				3C6C5DE60F1EEBE100FE185F /* utils */,
+				3C6C5DED0F1EEBE100FE185F /* video */,
+			);
+			name = openFrameworks;
+			path = ../../../libs/openFrameworks;
+			sourceTree = SOURCE_ROOT;
+		};
+		3C6C5DC80F1EEBE100FE185F /* app */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DC90F1EEBE100FE185F /* ofAppGlutGlue.h */,
+				3C6C5DCA0F1EEBE100FE185F /* ofAppRunner.cpp */,
+				3C6C5DCB0F1EEBE100FE185F /* ofAppRunner.h */,
+				3C6C5DCC0F1EEBE100FE185F /* ofBaseApp.h */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
+		3C6C5DCD0F1EEBE100FE185F /* communication */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DCE0F1EEBE100FE185F /* ofArduino.cpp */,
+				3C6C5DCF0F1EEBE100FE185F /* ofArduino.h */,
+				3C6C5DD00F1EEBE100FE185F /* ofSerial.cpp */,
+				3C6C5DD10F1EEBE100FE185F /* ofSerial.h */,
+				3C6C5DD20F1EEBE100FE185F /* ofStandardFirmata.cpp */,
+				3C6C5DD30F1EEBE100FE185F /* ofStandardFirmata.h */,
+			);
+			path = communication;
+			sourceTree = "<group>";
+		};
+		3C6C5DD40F1EEBE100FE185F /* events */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DD50F1EEBE100FE185F /* ofEvents.h */,
+				3C6C5DD60F1EEBE100FE185F /* ofEventUtils.h */,
+			);
+			path = events;
+			sourceTree = "<group>";
+		};
+		3C6C5DD70F1EEBE100FE185F /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DD80F1EEBE100FE185F /* ofGraphics.cpp */,
+				3C6C5DD90F1EEBE100FE185F /* ofGraphics.h */,
+				3C6C5DDA0F1EEBE100FE185F /* ofImage.cpp */,
+				3C6C5DDB0F1EEBE100FE185F /* ofImage.h */,
+				3C6C5DDC0F1EEBE100FE185F /* ofTexture.cpp */,
+				3C6C5DDD0F1EEBE100FE185F /* ofTexture.h */,
+				3C6C5DDE0F1EEBE100FE185F /* ofTrueTypeFont.cpp */,
+				3C6C5DDF0F1EEBE100FE185F /* ofTrueTypeFont.h */,
+			);
+			path = graphics;
+			sourceTree = "<group>";
+		};
+		3C6C5DE10F1EEBE100FE185F /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DE20F1EEBE100FE185F /* ofSoundPlayer.cpp */,
+				3C6C5DE30F1EEBE100FE185F /* ofSoundPlayer.h */,
+				3C6C5DE40F1EEBE100FE185F /* ofSoundStream.cpp */,
+				3C6C5DE50F1EEBE100FE185F /* ofSoundStream.h */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
+		3C6C5DE60F1EEBE100FE185F /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DE70F1EEBE100FE185F /* ofConstants.h */,
+				3C6C5DE80F1EEBE100FE185F /* ofMath.cpp */,
+				3C6C5DE90F1EEBE100FE185F /* ofMath.h */,
+				3C6C5DEA0F1EEBE100FE185F /* ofTypes.h */,
+				3C6C5DEB0F1EEBE100FE185F /* ofUtils.cpp */,
+				3C6C5DEC0F1EEBE100FE185F /* ofUtils.h */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		3C6C5DED0F1EEBE100FE185F /* video */ = {
+			isa = PBXGroup;
+			children = (
+				3C6C5DEE0F1EEBE100FE185F /* ofQtUtils.cpp */,
+				3C6C5DEF0F1EEBE100FE185F /* ofQtUtils.h */,
+				3C6C5DF00F1EEBE100FE185F /* ofUCUtils.cpp */,
+				3C6C5DF10F1EEBE100FE185F /* ofUCUtils.h */,
+				3C6C5DF20F1EEBE100FE185F /* ofV4LUtils.h */,
+				3C6C5DF30F1EEBE100FE185F /* ofVideoGrabber.cpp */,
+				3C6C5DF40F1EEBE100FE185F /* ofVideoGrabber.h */,
+				3C6C5DF50F1EEBE100FE185F /* ofVideoPlayer.cpp */,
+				3C6C5DF60F1EEBE100FE185F /* ofVideoPlayer.h */,
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
 		E411BE010CFA279F007A1F4A /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,99 +265,6 @@
 			);
 			name = addons;
 			path = ../../../addons;
-			sourceTree = SOURCE_ROOT;
-		};
-		E43121830C7DEC2700E7BC7C /* openFrameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E43121950C7DEC2700E7BC7C /* ofMain.h */,
-				E43121840C7DEC2700E7BC7C /* app */,
-				E4FFB1190E6BDCE70086A0A2 /* events */,
-				E43121890C7DEC2700E7BC7C /* communication */,
-				E431218C0C7DEC2700E7BC7C /* graphics */,
-				E43121960C7DEC2700E7BC7C /* sound */,
-				E431219B0C7DEC2700E7BC7C /* utils */,
-				E43121A10C7DEC2700E7BC7C /* video */,
-			);
-			name = openFrameworks;
-			path = ../../../libs/openFrameworks;
-			sourceTree = SOURCE_ROOT;
-		};
-		E43121840C7DEC2700E7BC7C /* app */ = {
-			isa = PBXGroup;
-			children = (
-				E43121850C7DEC2700E7BC7C /* ofAppGlutGlue.h */,
-				E43121860C7DEC2700E7BC7C /* ofAppRunner.cpp */,
-				E43121870C7DEC2700E7BC7C /* ofAppRunner.h */,
-				E43121880C7DEC2700E7BC7C /* ofSimpleApp.h */,
-			);
-			name = app;
-			path = ../../../libs/openFrameworks/app;
-			sourceTree = SOURCE_ROOT;
-		};
-		E43121890C7DEC2700E7BC7C /* communication */ = {
-			isa = PBXGroup;
-			children = (
-				E431218A0C7DEC2700E7BC7C /* ofSerial.cpp */,
-				E431218B0C7DEC2700E7BC7C /* ofSerial.h */,
-			);
-			name = communication;
-			path = ../../../libs/openFrameworks/communication;
-			sourceTree = SOURCE_ROOT;
-		};
-		E431218C0C7DEC2700E7BC7C /* graphics */ = {
-			isa = PBXGroup;
-			children = (
-				E431218D0C7DEC2700E7BC7C /* ofGraphics.cpp */,
-				E431218E0C7DEC2700E7BC7C /* ofGraphics.h */,
-				E431218F0C7DEC2700E7BC7C /* ofImage.cpp */,
-				E43121900C7DEC2700E7BC7C /* ofImage.h */,
-				E43121910C7DEC2700E7BC7C /* ofTexture.cpp */,
-				E43121920C7DEC2700E7BC7C /* ofTexture.h */,
-				E43121930C7DEC2700E7BC7C /* ofTrueTypeFont.cpp */,
-				E43121940C7DEC2700E7BC7C /* ofTrueTypefont.h */,
-			);
-			name = graphics;
-			path = ../../../libs/openFrameworks/graphics;
-			sourceTree = SOURCE_ROOT;
-		};
-		E43121960C7DEC2700E7BC7C /* sound */ = {
-			isa = PBXGroup;
-			children = (
-				E43121970C7DEC2700E7BC7C /* ofSoundPlayer.cpp */,
-				E43121980C7DEC2700E7BC7C /* ofSoundPlayer.h */,
-				E43121990C7DEC2700E7BC7C /* ofSoundStream.cpp */,
-				E431219A0C7DEC2700E7BC7C /* ofSoundStream.h */,
-			);
-			name = sound;
-			path = ../../../libs/openFrameworks/sound;
-			sourceTree = SOURCE_ROOT;
-		};
-		E431219B0C7DEC2700E7BC7C /* utils */ = {
-			isa = PBXGroup;
-			children = (
-				E431219C0C7DEC2700E7BC7C /* ofConstants.h */,
-				E431219D0C7DEC2700E7BC7C /* ofMath.cpp */,
-				E431219E0C7DEC2700E7BC7C /* ofMath.h */,
-				E431219F0C7DEC2700E7BC7C /* ofUtils.cpp */,
-				E43121A00C7DEC2700E7BC7C /* ofUtils.h */,
-			);
-			name = utils;
-			path = ../../../libs/openFrameworks/utils;
-			sourceTree = SOURCE_ROOT;
-		};
-		E43121A10C7DEC2700E7BC7C /* video */ = {
-			isa = PBXGroup;
-			children = (
-				E43121A20C7DEC2700E7BC7C /* ofQtUtils.cpp */,
-				E43121A30C7DEC2700E7BC7C /* ofQtUtils.h */,
-				E43121A40C7DEC2700E7BC7C /* ofVideoGrabber.cpp */,
-				E43121A50C7DEC2700E7BC7C /* ofVideoGrabber.h */,
-				E43121A60C7DEC2700E7BC7C /* ofVideoPlayer.cpp */,
-				E43121A70C7DEC2700E7BC7C /* ofVideoPlayer.h */,
-			);
-			name = video;
-			path = ../../../libs/openFrameworks/video;
 			sourceTree = SOURCE_ROOT;
 		};
 		E4B69B4A0A3A1720003C02F2 = {
@@ -276,7 +288,7 @@
 		E4B69E160A3A1A8B003C02F2 /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				E43121830C7DEC2700E7BC7C /* openFrameworks */,
+				3C6C5DC70F1EEBE100FE185F /* openFrameworks */,
 				E411BE010CFA279F007A1F4A /* addons */,
 			);
 			name = libs;
@@ -293,22 +305,6 @@
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 			);
 			path = src;
-			sourceTree = SOURCE_ROOT;
-		};
-		E4FFB1190E6BDCE70086A0A2 /* events */ = {
-			isa = PBXGroup;
-			children = (
-				E4FFB11A0E6BDCE80086A0A2 /* ofAppEvents.cpp */,
-				E4FFB11B0E6BDCE80086A0A2 /* ofAppEvents.h */,
-				E4FFB11C0E6BDCE80086A0A2 /* ofAudioEvents.cpp */,
-				E4FFB11D0E6BDCE80086A0A2 /* ofAudioEvents.h */,
-				E4FFB11E0E6BDCE80086A0A2 /* ofKeyEvents.cpp */,
-				E4FFB11F0E6BDCE80086A0A2 /* ofKeyEvents.h */,
-				E4FFB1200E6BDCE80086A0A2 /* ofMouseEvents.cpp */,
-				E4FFB1210E6BDCE80086A0A2 /* ofMouseEvents.h */,
-			);
-			name = events;
-			path = ../../../libs/openFrameworks/events;
 			sourceTree = SOURCE_ROOT;
 		};
 		F5C26FB40D9AF9EC00D485F4 /* plist */ = {
@@ -393,27 +389,26 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
-				E43121A80C7DEC2700E7BC7C /* ofAppRunner.cpp in Sources */,
-				E43121A90C7DEC2700E7BC7C /* ofSerial.cpp in Sources */,
-				E43121AA0C7DEC2700E7BC7C /* ofGraphics.cpp in Sources */,
-				E43121AB0C7DEC2700E7BC7C /* ofImage.cpp in Sources */,
-				E43121AC0C7DEC2700E7BC7C /* ofTexture.cpp in Sources */,
-				E43121AD0C7DEC2700E7BC7C /* ofTrueTypeFont.cpp in Sources */,
-				E43121AE0C7DEC2700E7BC7C /* ofSoundPlayer.cpp in Sources */,
-				E43121AF0C7DEC2700E7BC7C /* ofSoundStream.cpp in Sources */,
-				E43121B00C7DEC2700E7BC7C /* ofMath.cpp in Sources */,
-				E43121B10C7DEC2700E7BC7C /* ofUtils.cpp in Sources */,
-				E43121B20C7DEC2700E7BC7C /* ofQtUtils.cpp in Sources */,
-				E43121B30C7DEC2700E7BC7C /* ofVideoGrabber.cpp in Sources */,
-				E43121B40C7DEC2700E7BC7C /* ofVideoPlayer.cpp in Sources */,
-				E4FFB1220E6BDCE80086A0A2 /* ofAppEvents.cpp in Sources */,
-				E4FFB1230E6BDCE80086A0A2 /* ofAudioEvents.cpp in Sources */,
-				E4FFB1240E6BDCE80086A0A2 /* ofKeyEvents.cpp in Sources */,
-				E4FFB1250E6BDCE80086A0A2 /* ofMouseEvents.cpp in Sources */,
 				29616F1F0EFBD8DE00FF6FA3 /* particle.cpp in Sources */,
 				29616F200EFBD8DE00FF6FA3 /* particleManager.cpp in Sources */,
 				29616F210EFBD8DE00FF6FA3 /* simulationManager.cpp in Sources */,
 				29616F220EFBD8DE00FF6FA3 /* spring.cpp in Sources */,
+				3C6C5DF70F1EEBE100FE185F /* ofAppRunner.cpp in Sources */,
+				3C6C5DF80F1EEBE100FE185F /* ofArduino.cpp in Sources */,
+				3C6C5DF90F1EEBE100FE185F /* ofSerial.cpp in Sources */,
+				3C6C5DFA0F1EEBE100FE185F /* ofStandardFirmata.cpp in Sources */,
+				3C6C5DFB0F1EEBE100FE185F /* ofGraphics.cpp in Sources */,
+				3C6C5DFC0F1EEBE100FE185F /* ofImage.cpp in Sources */,
+				3C6C5DFD0F1EEBE100FE185F /* ofTexture.cpp in Sources */,
+				3C6C5DFE0F1EEBE100FE185F /* ofTrueTypeFont.cpp in Sources */,
+				3C6C5DFF0F1EEBE100FE185F /* ofSoundPlayer.cpp in Sources */,
+				3C6C5E000F1EEBE100FE185F /* ofSoundStream.cpp in Sources */,
+				3C6C5E010F1EEBE100FE185F /* ofMath.cpp in Sources */,
+				3C6C5E020F1EEBE100FE185F /* ofUtils.cpp in Sources */,
+				3C6C5E030F1EEBE100FE185F /* ofQtUtils.cpp in Sources */,
+				3C6C5E040F1EEBE100FE185F /* ofUCUtils.cpp in Sources */,
+				3C6C5E050F1EEBE100FE185F /* ofVideoGrabber.cpp in Sources */,
+				3C6C5E060F1EEBE100FE185F /* ofVideoPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

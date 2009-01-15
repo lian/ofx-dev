@@ -6,7 +6,7 @@
 #include "ofGraphics.h"
 #include "ofAppRunner.h"		// for height()
 #include "FreeImage.h"
-
+#include "ofUtils.h"
 
 typedef struct {
 	
@@ -29,7 +29,7 @@ void 	ofCloseFreeImage();		// when we exit, we shut down ofImage
 
 
 //----------------------------------------------------
-class 	ofImage {
+class ofImage : public ofBaseDraw{
 
 	public :
 

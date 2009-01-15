@@ -10,7 +10,7 @@
 
 #define MAX_N_PTS         1500
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 	public:
 		

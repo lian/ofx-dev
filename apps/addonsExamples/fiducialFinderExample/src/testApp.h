@@ -6,7 +6,7 @@
 #include "ofxCvMain.h"
 #include "ofxFidMain.h"
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 	public:
 	

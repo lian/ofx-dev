@@ -117,8 +117,8 @@ ofVideoPlayer::ofVideoPlayer (){
 	pixels						= NULL;
 	nFrames						= 0;
 	bPaused						= false;
-	
-	
+
+
 
 	//--------------------------------------------------------------
     #ifndef  TARGET_LINUX  // !linux = quicktime...
@@ -157,6 +157,11 @@ bool ofVideoPlayer::isFrameNew(){
 
 }
 
+//--------------------------------------------------------------------
+void ofVideoPlayer::update(){
+	idleMovie();
+}
+
 //---------------------------------------------------------------------------
 void ofVideoPlayer::idleMovie(){
 
@@ -173,8 +178,8 @@ void ofVideoPlayer::idleMovie(){
 		//--------------------------------------------------------------
 		#else // linux.
 		//--------------------------------------------------------------
-				
-			
+
+
 			float currentTime = (float)ofGetElapsedTimeMillis();
 			diffTime = currentTime - timeLastIdle;
 			timeLastIdle = currentTime;
@@ -184,34 +189,35 @@ void ofVideoPlayer::idleMovie(){
             if (!bPaused) {
             	positionPct += (pctDone * speed); //speed;
 
-				//------------------------------------- now, let's do different things if we are looping or not:
-				if (loopMode == OF_LOOP_NONE){
-				  if (positionPct > 1) positionPct = 1;
-				  if (positionPct < 0) positionPct = 0;
-				} else if (loopMode == OF_LOOP_PALINDROME) {
-				  if (positionPct > 1) {
-				      float diff = positionPct - 1.0f;
-				      positionPct = 1 - diff;
-				      speed *= -1;
-				  }
-				  if (positionPct < 0){
-				      float diff = -positionPct;
-				      positionPct = 0 + diff;
-				      speed *= -1;
-				  }
-				} else {
-				    while (positionPct < 0) positionPct += 1;
-				    while (positionPct > 1) positionPct -= 1;
-				}
-            }
-			
+			//------------------------------------- now, let's do different things if we are looping or not:
+			if (loopMode == OF_LOOP_NONE){
+			  if (positionPct > 1) positionPct = 1;
+			  if (positionPct < 0) positionPct = 0;
+			} else if (loopMode == OF_LOOP_PALINDROME) {
+			  if (positionPct > 1) {
+			      float diff = positionPct - 1.0f;
+			      positionPct = 1 - diff;
+			      speed *= -1;
+			  }
+			  if (positionPct < 0){
+			      float diff = -positionPct;
+			      positionPct = 0 + diff;
+			      speed *= -1;
+			  }
+			} else {
+			    while (positionPct < 0) positionPct += 1;
+			    while (positionPct > 1) positionPct -= 1;
+			}
+
             fobsDecoder->setPosition((omnividea::fobs::TimeStamp)(positionPct * durationMillis));
-            
+
+            }
 			int curFrameIndex =  fobsDecoder->getFrameIndex();
             bHavePixelsChanged = curFrameIndex != lastFrameIndex;
 			if (bHavePixelsChanged){
 			    unsigned char *rgb = fobsDecoder->getRGB(width,height);
 			    memcpy(pixels, rgb, width*height*3);
+			    if(bUseTexture)
 			    tex.loadData(pixels, width, height, GL_RGB);
 			}
 
@@ -352,7 +358,7 @@ bool ofVideoPlayer::loadMovie(string name){
 		closeMovie();					// if we have a movie open, close it
 		bLoaded 				= false;	// try to load now
 
-		if( name.substr(0, 7) == "http://"){
+		if( name.substr(0, 7) == "http://" || name.substr(0,7) == "rtsp://" ){
 			if(! createMovieFromURL(name, moviePtr) ) return false;
 		}else{
 			name 					= ofToDataPath(name);
@@ -431,7 +437,7 @@ bool ofVideoPlayer::loadMovie(string name){
 	//--------------------------------------
 	#else
 	//--------------------------------------
-	
+
 		bLoaded      		= false;
 		bPaused 			= true;
 		speed 				= 1.0f;
@@ -440,7 +446,7 @@ bool ofVideoPlayer::loadMovie(string name){
 		fobsDecoder 		= new omnividea::fobs::Decoder(name.c_str());
 		omnividea::fobs::ReturnCode error = fobsDecoder->open();
 
-		
+
 		if( error != omnividea::fobs::OkCode ){
 			printf("error loading movie\n");
 			return false;
@@ -463,7 +469,7 @@ bool ofVideoPlayer::loadMovie(string name){
 			tex.loadData(pixels, width, height, GL_RGB);
 		}
 
-		
+
 		error = fobsDecoder->setFrame(0);
 
 		if(error == omnividea::fobs::NoFrameError) {
@@ -478,7 +484,7 @@ bool ofVideoPlayer::loadMovie(string name){
 				printf("load movie: getRGB error\n");
 				error = omnividea::fobs::GenericError;
 			}
-			if(isOk(error))
+			if(isOk(error) && bUseTexture)
 			{
 				memcpy(pixels, rgb, width*height*3);
 				tex.loadData(pixels, width, height, GL_RGB);
@@ -537,16 +543,16 @@ void ofVideoPlayer::start(){
 		bStarted = true;
 		bPlaying = true;
 	}
-	
+
 	//--------------------------------------
 	#else
 	//--------------------------------------
-	
+
 		bHavePixelsChanged = true;
 		bStarted = true;
 		bPlaying = true;
 		setPaused(false);
-		
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
@@ -581,12 +587,12 @@ void ofVideoPlayer::play(){
 		}else {
 			setPaused(false);
 		}
-		
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
 
-	
+
 
 }
 
@@ -605,7 +611,7 @@ void ofVideoPlayer::stop(){
 	//--------------------------------------
 
 	setPaused(true);
-	
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
@@ -698,7 +704,7 @@ void ofVideoPlayer::setPosition(float pct){
         //pct = CLAMP(pct, 0,1);
         positionPct = pct;  // check between 0 and 1;
 	unlock();
-		
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
@@ -712,7 +718,7 @@ void ofVideoPlayer::setFrame(int frame){
 	//--------------------------------------
 	#ifdef OF_VIDEO_PLAYER_QUICKTIME
 	//--------------------------------------
-	
+
 	// frame 0 = first frame...  
 	
 	// this is the simple way...
@@ -737,18 +743,18 @@ void ofVideoPlayer::setFrame(int frame){
 	}
 	
    if (!bPaused) SetMovieRate(moviePtr, X2Fix(speed));
-   
+
    //--------------------------------------
-	#else
+#else
    //--------------------------------------
-   
+
    lock();
    		//fobsDecoder->setFrame(frame);
    		positionPct = ((float)frame) / (float)iTotalFrames;
    unlock();
-   
+
    //--------------------------------------
-	#endif
+#endif
    //--------------------------------------
 	
 }
@@ -819,18 +825,18 @@ int ofVideoPlayer::getCurrentFrame(){
 	//frame = (int)ceil((getTotalNumFrames() * getPosition()));
 	frame = framePosInInt;
 	return frame;
-	
+
 	//--------------------------------------
 	#else
 	//--------------------------------------
-	
+
 	return lastFrameIndex;
-	
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
-	
-	
+
+
 }
 
 				
@@ -853,19 +859,19 @@ bool ofVideoPlayer::getIsMovieDone(){
 	lock();
 		bool bIsMovieDone = (lastFrameIndex == iTotalFrames);
 	unlock();
-	
+
 		return bIsMovieDone;
 	//--------------------------------------
 	#endif
 	//--------------------------------------
-		
+
 }
 
 //---------------------------------------------------------------------------
 void ofVideoPlayer::firstFrame(){
-	
+
 	setFrame(0);
-	
+
 }
 
 //---------------------------------------------------------------------------
@@ -873,18 +879,18 @@ void ofVideoPlayer::nextFrame(){
 	//--------------------------------------
 	#ifdef OF_VIDEO_PLAYER_QUICKTIME
 	//--------------------------------------
-	
+
 	setFrame(getCurrentFrame() + 1);
-	
+
 	//--------------------------------------
 	#else
 	//--------------------------------------
-	
+
 	lock();
 		//fobsDecoder->nextFrame();
-		positionPct += (fobsDecoder->getNextFrameTime() - fobsDecoder->getFrameTime()) / getDuration(); 
+		positionPct += (fobsDecoder->getNextFrameTime() - fobsDecoder->getFrameTime()) / getDuration();
 	unlock();
-	
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
@@ -895,18 +901,18 @@ void ofVideoPlayer::previousFrame(){
 	//--------------------------------------
 	#ifdef OF_VIDEO_PLAYER_QUICKTIME
 	//--------------------------------------
-	
+
 	setFrame(getCurrentFrame() - 1);
-	
+
 	//--------------------------------------
 	#else
 	//--------------------------------------
-	
+
 	lock();
 		//fobsDecoder->prevFrame();
-		positionPct -= (fobsDecoder->getNextFrameTime() - fobsDecoder->getFrameTime()) / getDuration(); 
+		positionPct -= (fobsDecoder->getNextFrameTime() - fobsDecoder->getFrameTime()) / getDuration();
 	unlock();
-	
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------

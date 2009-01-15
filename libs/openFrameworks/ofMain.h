@@ -11,6 +11,8 @@
 //--------------------------
 // communication
 #include "ofSerial.h"
+#include "ofStandardFirmata.h"
+#include "ofArduino.h"
 
 //--------------------------
 // graphics
@@ -21,7 +23,7 @@
 
 //--------------------------
 // app
-#include "ofSimpleApp.h"
+#include "ofBaseApp.h"
 #include "ofAppRunner.h"
 
 //--------------------------
@@ -33,5 +35,10 @@
 // video
 #include "ofVideoGrabber.h"
 #include "ofVideoPlayer.h"
+
+//--------------------------
+// events
+#include "ofEvents.h"
+
 
 #endif

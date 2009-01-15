@@ -168,7 +168,13 @@
 	#define OF_VIDEO_PLAYER_QUICKTIME
 #endif
 
+// comment out this line to disable all poco related code
+#define OF_USING_POCO
 
+//we don't want to break old code that uses ofSimpleApp
+//so we forward declare ofBaseApp and make ofSimpleApp mean the same thing
+class ofBaseApp;
+typedef ofBaseApp ofSimpleApp;
 
 // core: ---------------------------
 #include <stdio.h>
@@ -241,6 +247,7 @@ using namespace std;
 #define 	OF_IMAGE_COLOR_ALPHA	0x02
 #define 	OF_IMAGE_UNDEFINED		0x03
 
+#define		OF_MAX_STYLE_HISTORY	32
 
 // these are straight out of glu, but renamed and included here
 // for convenience

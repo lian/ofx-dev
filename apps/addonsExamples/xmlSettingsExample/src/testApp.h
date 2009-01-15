@@ -8,7 +8,7 @@
 
 #define NUM_PTS 800
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 	public:
 		

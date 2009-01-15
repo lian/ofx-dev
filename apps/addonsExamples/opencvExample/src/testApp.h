@@ -11,7 +11,7 @@
 								// otherwise, we'll use a movie file
 
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 
 	public:
 

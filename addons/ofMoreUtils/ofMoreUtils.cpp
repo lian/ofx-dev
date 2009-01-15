@@ -24,10 +24,6 @@ float ofNorm(float value, float start, float stop) {
    return (value - start) / (stop - start); 
 } 
 
-float ofMap(float value, float istart, float istop, float ostart, float ostop) { 
-   return ostart + (ostop - ostart) * ((value - istart) / (istop - istart)); 
-} 
-
 // float ofDist(float a, float b, float c, float d) { 
 //   return sqrt(double((a - c) * (a - c) + (b - d) * (b - d))); 
 // }
@@ -46,10 +42,6 @@ float ofDegrees(float radians) {
 
 float ofRadians(float degrees) { 
     return degrees * DEG_TO_RAD; 
-} 
-
-float ofLerp(float start, float stop, float amt) { 
-    return start + (stop-start) * amt; 
 } 
 
 float dist(float x1, float y1, float x2, float y2) { 

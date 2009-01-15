@@ -7,7 +7,7 @@
 #include "simulationManager.h"
 
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 	public:
 		

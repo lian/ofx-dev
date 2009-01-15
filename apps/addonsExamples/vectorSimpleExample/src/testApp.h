@@ -6,7 +6,7 @@
 
 #include "Thingy.h"
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 public:
 	

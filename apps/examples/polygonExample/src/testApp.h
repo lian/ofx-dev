@@ -17,7 +17,7 @@ typedef struct {
 }	draggableVertex;
 
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 	public:
 		

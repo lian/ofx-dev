@@ -21,7 +21,7 @@
 
 //---------------------------------------------
 
-class ofVideoPlayer{
+class ofVideoPlayer : public ofBaseUpdate, public ofBaseDraw{
 	
 	public:
 	
@@ -32,7 +32,8 @@ class ofVideoPlayer{
 		bool 				loadMovie(string name);
 		void 				closeMovie();
 		
-		void 				idleMovie();				// rename to updateMovie?
+		void				update();			//same as idleMovie
+		void 				idleMovie();		// rename to updateMovie?
 		void 				play();				
 		void 				stop();
 		
@@ -105,12 +106,12 @@ class ofVideoPlayer{
 		bool 				bPlaying;
 		bool 				bPaused;
 		bool 				bIsFrameNew;			// if we are new
-		
+
 		//--------------------------------------
 		#ifdef OF_VIDEO_PLAYER_FOBS
 		//--------------------------------------
 		pthread_mutex_t			time_mutex;
-		
+
 		void 					lock();
 		void 					unlock();
 		//--------------------------------------

@@ -9,11 +9,10 @@
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 
-//this is not part of the addon yet
-//so include it seperately
+//this is not part of the addon yet, so include it seperately
 #include "ofxCvHaarFinder.h"
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 
 	public:
 
