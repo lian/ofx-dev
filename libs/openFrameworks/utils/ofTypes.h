@@ -23,28 +23,28 @@ class ofPoint {
         x = _x;
         y = _y;
         z = _z;
-    } 
+    }
 
     ofPoint( const ofPoint & pnt){
         x = pnt.x;
         y = pnt.y;
         z = pnt.z;
-    } 
-	    
+    }
+
     void set(float _x, float _y, float _z = 0){
         x = _x;
         y = _y;
         z = _z;
-    }   
-	
-	
+    }
+
+
 	//------ Operators:
-  
+
   	//Negative
     ofPoint operator-() const {
         return ofPoint( -x, -y, -z );
     }
-   
+
     //equality
     bool operator==( const ofPoint& pnt ) {
         return (x == pnt.x) && (y == pnt.y) && (z == pnt.z);
@@ -54,8 +54,8 @@ class ofPoint {
     bool operator!=( const ofPoint& pnt ) {
         return (x != pnt.x) || (y != pnt.y) || (z != pnt.z);
     }
-	
-	//Set 
+
+	//Set
 	ofPoint & operator=( const ofPoint& pnt ){
 		x = pnt.x;
 		y = pnt.y;
@@ -67,7 +67,6 @@ class ofPoint {
 		x = val;
 		y = val;
 		z = val;
-		printf("yes\n");
 		return *this;
 	}
 
@@ -98,7 +97,7 @@ class ofPoint {
     ofPoint operator-(const ofPoint& pnt) const {
         return ofPoint( x-pnt.x, y-pnt.y, z-pnt.z );
     }
-	
+
     ofPoint operator-(const float& val) const {
         return ofPoint( x-val, y-val, z-val);
     }
@@ -121,11 +120,11 @@ class ofPoint {
     ofPoint operator*( const ofPoint& pnt ) const {
         return ofPoint( x*pnt.x, y*pnt.y, z*pnt.z );
     }
-	
+
     ofPoint operator*(const float& val) const {
         return ofPoint( x*val, y*val, z*val);
     }
-	
+
     ofPoint & operator*=( const ofPoint& pnt ) {
         x*=pnt.x;
         y*=pnt.y;
@@ -167,14 +166,14 @@ class ofPoint {
 			y /= val;
 			z /= val;
 		}
-		
+
 		return *this;
-    }   
-      	
+    }
+
 	// union allows us to access the coordinates through
     // both an array 'v' and 'x', 'y', 'z' member varibles
     union  {
-        struct {   
+        struct {
             float x;
             float y;
             float z;
@@ -196,38 +195,14 @@ class ofRectangle {
 		y = _y;
 		width = _w;
 		height = _h;
-	}  
+	}
 	virtual ~ofRectangle(){}
 
    float x;
    float y;
    float width;
-   float height;   
+   float height;
 
-};
-
-//----------------------------------------------------------
-// ofBaseDraw
-//----------------------------------------------------------
-
-class ofBaseDraw{
-public:	
-	virtual ~ofBaseDraw(){}
-	virtual void draw(){};
-	virtual void draw(float x,float y){};
-	virtual void draw(float x,float y,float w, float h){};
-	int height;
-	int width;
-};
-
-//----------------------------------------------------------
-// ofBaseUpdate
-//----------------------------------------------------------
-
-class ofBaseUpdate{
-public:
-	virtual ~ofBaseUpdate(){}
-	virtual void update(){};
 };
 
 //----------------------------------------------------------
@@ -242,6 +217,7 @@ class ofColor{
 			b = 255;
 			a = 255;
 		}
+		virtual ~ofColor(){}
 		int r, g, b, a;
 };
 
@@ -258,7 +234,9 @@ class ofStyle{
 			circleResolution	= 20;
 			lineWidth			= 1.0;
 		}
-	
+
+		virtual ~ofStyle(){}
+
 		ofColor color;
 		int bFill;
 		int blending;
@@ -266,6 +244,42 @@ class ofStyle{
 		int circleResolution;
 		float lineWidth;
 };
+
+
+//----------------------------------------------------------
+// ofBaseDraws
+//----------------------------------------------------------
+
+class ofBaseDraws{
+public:
+	virtual ~ofBaseDraws(){}
+	virtual void draw(float x,float y)=0;
+	virtual void draw(float x,float y,float w, float h)=0;
+	virtual float getHeight()=0;
+	virtual float getWidth()=0;
+};
+
+//----------------------------------------------------------
+// ofBaseUpdates
+//----------------------------------------------------------
+
+class ofBaseUpdates{
+public:
+	virtual ~ofBaseUpdates(){}
+	virtual void update()=0;
+};
+
+//----------------------------------------------------------
+// ofBaseHasTexture
+//----------------------------------------------------------
+class ofTexture;
+
+class ofBaseHasTexture{
+public:
+	virtual ~ofBaseHasTexture(){}
+	virtual ofTexture & getTextureReference()=0;
+};
+
 
 
 #endif

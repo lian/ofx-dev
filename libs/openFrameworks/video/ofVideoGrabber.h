@@ -25,12 +25,12 @@
 // 		image decompress options ala mung...
 
 
-class ofVideoGrabber : public ofBaseUpdate, public ofBaseDraw{
+class ofVideoGrabber : public ofBaseUpdates, public ofBaseDraws, public ofBaseHasTexture{
 
 	public :
 
 		ofVideoGrabber();
-		~ofVideoGrabber();
+		virtual ~ofVideoGrabber();
 
 		void 			listDevices();
 		bool 			isFrameNew();
@@ -39,12 +39,19 @@ class ofVideoGrabber : public ofBaseUpdate, public ofBaseDraw{
 		bool			initGrabber(int w, int h, bool bTexture = true);
 		void			videoSettings();
 		unsigned char 	* getPixels();
+		ofTexture &		getTextureReference();
 		void 			setVerbose(bool bTalkToMe);
 		void			setDeviceID(int _deviceID);
 		void 			setUseTexture(bool bUse);
 		void 			draw(float x, float y, float w, float h);
 		void 			draw(float x, float y);
 		void			update();
+
+		float 			getHeight();
+		float 			getWidth();
+
+		int			height;
+		int			width;
 
 	protected:
 
@@ -70,7 +77,7 @@ class ofVideoGrabber : public ofBaseUpdate, public ofBaseDraw{
 			Rect				videoRect;
 			bool 				bSgInited;
 			string				deviceName;
-			
+
 			bool				qtInitSeqGrabber();
 			bool				qtCloseSeqGrabber();
 			bool				qtSelectDevice(int deviceNumber, bool didWeChooseADevice);

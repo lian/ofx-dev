@@ -9,14 +9,14 @@
 //------------------------------------
    // needed for serial bus enumeration:
    //4d36e978-e325-11ce-bfc1-08002be10318}
-   DEFINE_GUID (GUID_SERENUM_BUS_ENUMERATOR, 0x4D36E978, 0xE325, 
+   DEFINE_GUID (GUID_SERENUM_BUS_ENUMERATOR, 0x4D36E978, 0xE325,
    0x11CE, 0xBF, 0xC1, 0x08, 0x00, 0x2B, 0xE1, 0x03, 0x18);
-//------------------------------------	       
+//------------------------------------
 
 void ofSerial::enumerateWin32Ports(){
 
     // thanks joerg for fixes...
-    
+
 	if (bPortsEnumerated == true) return;
 
 	HDEVINFO hDevInfo = NULL;
@@ -85,19 +85,19 @@ void ofSerial::enumerateWin32Ports(){
 
 //----------------------------------------------------------------
 ofSerial::ofSerial(){
-	
+
 	//---------------------------------------------
 	#ifdef TARGET_WIN32
 	//---------------------------------------------
 		nPorts 				= 0;
 		bPortsEnumerated 	= false;
-		
+
 		portNamesShort = new char * [MAX_SERIAL_PORTS];
 		portNamesFriendly = new char * [MAX_SERIAL_PORTS];
 		for (int i = 0; i < MAX_SERIAL_PORTS; i++){
 			portNamesShort[i] = new char[10];
 			portNamesFriendly[i] = new char[MAX_PATH];
-		}	
+		}
 	//---------------------------------------------
 	#endif
 	//---------------------------------------------
@@ -106,17 +106,17 @@ ofSerial::ofSerial(){
 
 //----------------------------------------------------------------
 ofSerial::~ofSerial(){
-	
+
 	close();
 
-	
+
 
 	//---------------------------------------------
 	#ifdef TARGET_WIN32
 	//---------------------------------------------
 		nPorts 				= 0;
 		bPortsEnumerated 	= false;
-	
+
 		for (int i = 0; i < MAX_SERIAL_PORTS; i++) {
 			delete [] portNamesShort[i];
 			delete [] portNamesFriendly[i];
@@ -127,7 +127,7 @@ ofSerial::~ofSerial(){
 	//---------------------------------------------
 	#endif
 	//---------------------------------------------
-	
+
 	bVerbose = false;
 	bInited = false;
 }
@@ -142,7 +142,7 @@ void ofSerial::enumerateDevices(){
 
 		//----------------------------------------------------
 		//We will find serial devices by listing the directory
-		
+
 		DIR *dir;
 		struct dirent *entry;
 		dir = opendir("/dev");
@@ -151,18 +151,18 @@ void ofSerial::enumerateDevices(){
 		int deviceCount		= 0;
 
 		if (dir == NULL){
-			printf("ofSerial: error listing devices in /dev\n");
+			ofLog(OF_ERROR,"ofSerial: error listing devices in /dev");
 		} else {
-			printf("ofSerial: listing devices\n");
-			while ((entry = readdir(dir)) != NULL){	
+			ofLog(OF_NOTICE,"ofSerial: listing devices");
+			while ((entry = readdir(dir)) != NULL){
 				str = (char *)entry->d_name;
 				if( str.substr(0,3) == "cu." ){
-					printf("device %i - %s  \n", deviceCount, str.c_str());
+					ofLog(OF_NOTICE,"device %i - %s", deviceCount, str.c_str());
 					deviceCount++;
 				}
 			}
 		}
-		
+
 	//---------------------------------------------
     #endif
     //---------------------------------------------
@@ -182,13 +182,13 @@ void ofSerial::enumerateDevices(){
 		int deviceCount		= 0;
 
 		if (dir == NULL){
-			printf("ofSerial: error listing devices in /dev\n");
+			ofLog(OF_ERROR,"ofSerial: error listing devices in /dev");
 		} else {
-			printf("ofSerial: listing devices\n");
+			ofLog(OF_NOTICE,"ofSerial: listing devices");
 			while ((entry = readdir(dir)) != NULL){
 				str = (char *)entry->d_name;
 				if( str.substr(0,3) == "tty" || str.substr(0,3) == "rfc" ){
-					printf("device %i - %s  \n", deviceCount, str.c_str());
+					ofLog(OF_NOTICE,"device %i - %s", deviceCount, str.c_str());
 					deviceCount++;
 				}
 			}
@@ -201,22 +201,22 @@ void ofSerial::enumerateDevices(){
 	//---------------------------------------------
 	#ifdef TARGET_WIN32
 	//---------------------------------------------
-		
+
 		enumerateWin32Ports();
-		printf("ofSerial: listing devices (%i total)\n", nPorts);
+		ofLog(OF_NOTICE,"ofSerial: listing devices (%i total)\n", nPorts);
 		for (int i = 0; i < nPorts; i++){
-			printf("device %i -- %s\n", i, portNamesFriendly[i]);
+			ofLog(OF_ERROR,"device %i -- %s", i, portNamesFriendly[i]);
 		}
-		
+
 	//---------------------------------------------
     #endif
     //---------------------------------------------
 
 }
-		
-//----------------------------------------------------------------				
+
+//----------------------------------------------------------------
 void ofSerial::close(){
-	
+
 	//---------------------------------------------
 	#ifdef TARGET_WIN32
 	//---------------------------------------------
@@ -227,7 +227,7 @@ void ofSerial::close(){
 			bInited 	= false;
 		}
 	//---------------------------------------------
-    #else 
+    #else
     //---------------------------------------------
     	if (bInited){
     		tcsetattr(fd,TCSANOW,&oldoptions);
@@ -237,54 +237,54 @@ void ofSerial::close(){
     //---------------------------------------------
     #endif
     //---------------------------------------------
-    
-}	
-	 
-//----------------------------------------------------------------		
+
+}
+
+//----------------------------------------------------------------
 bool ofSerial::setup(){
 	return setup(0,9600);		// the first one, at 9600 is a good choice...
 }
 
 //----------------------------------------------------------------
 bool ofSerial::setup(int deviceNumber, int baud){
-	
+
 	int deviceCount = 0;
-	
+
 	string str			= "";
 	string device		= "";
 	bool deviceFound	= false;
-		
+
 	//---------------------------------------------
 	#if defined( TARGET_OSX ) || defined( TARGET_LINUX )
 	//---------------------------------------------
 
 		//----------------------------------------------------
 		//We will find serial devices by listing the directory
-		
+
 		DIR *dir;
 		struct dirent *entry;
 		dir = opendir("/dev");
 
 		if (dir == NULL){
-			printf("ofSerial: error listing devices in /dev\n");
+			ofLog(OF_ERROR,"ofSerial: error listing devices in /dev");
 		}
-		
-		while ((entry = readdir(dir)) != NULL){	
+
+		while ((entry = readdir(dir)) != NULL){
 			str = (char *)entry->d_name;
 			if( str.substr(0,3) == "cu." ){
 				if(deviceCount == deviceNumber){
 					device = "/dev/"+str;
 					deviceFound = true;
-					printf("ofSerial device %i - /dev/%s  <--selected\n", deviceCount, str.c_str());
-				}else printf("ofSerial device %i - /dev/%s\n", deviceCount, str.c_str());
+					ofLog(OF_NOTICE,"ofSerial device %i - /dev/%s  <--selected", deviceCount, str.c_str());
+				}else ofLog(OF_NOTICE,"ofSerial device %i - /dev/%s", deviceCount, str.c_str());
 				deviceCount++;
 			}
 		}
-		
+
         if(deviceFound){
             return setup(device, baud);
         }else{
-            printf("ofSerial: could not find device %i - only %i devices found\n", deviceNumber, deviceCount);
+            ofLog(OF_ERROR,"ofSerial: could not find device %i - only %i devices found", deviceNumber, deviceCount);
             return false;
         }
 
@@ -305,7 +305,7 @@ bool ofSerial::setup(int deviceNumber, int baud){
         if(deviceFound){
             return setup(device, baud);
         }else{
-            printf("ofSerial: could not find device %i - only %i devices found\n", deviceNumber, nPorts);
+            ofLog(OF_ERROR,"ofSerial: could not find device %i - only %i devices found", deviceNumber, nPorts);
             return false;
         }
 
@@ -324,11 +324,11 @@ bool ofSerial::setup(string portName, int baud){
 	//---------------------------------------------
 	#if defined( TARGET_OSX ) || defined( TARGET_LINUX )
 	//---------------------------------------------
-	
-	    printf("ofSerialInit: opening port %s @ %d bps\n", portName.c_str(), baud);
+
+	    ofLog(OF_NOTICE,"ofSerialInit: opening port %s @ %d bps", portName.c_str(), baud);
 		fd = open(portName.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK);
 		if(fd == -1){
-			printf("ofSerial: unable to open port\n");
+			ofLog(OF_ERROR,"ofSerial: unable to open port");
 			return false;
 		}
 
@@ -341,19 +341,19 @@ bool ofSerial::setup(string portName, int baud){
 						break;
 		   case 1200: 	cfsetispeed(&options,B1200);
 						cfsetospeed(&options,B1200);
-						break;		   
+						break;
 		   case 2400: 	cfsetispeed(&options,B2400);
 						cfsetospeed(&options,B2400);
-						break;		
+						break;
 		   case 4800: 	cfsetispeed(&options,B4800);
 						cfsetospeed(&options,B4800);
-						break;	
+						break;
 		   case 9600: 	cfsetispeed(&options,B9600);
 						cfsetospeed(&options,B9600);
 						break;
 		   case 14400: 	cfsetispeed(&options,B14400);
 						cfsetospeed(&options,B14400);
-						break;						
+						break;
 		   case 19200: 	cfsetispeed(&options,B19200);
 						cfsetospeed(&options,B19200);
 						break;
@@ -365,14 +365,14 @@ bool ofSerial::setup(string portName, int baud){
 						break;
 		   case 57600:  cfsetispeed(&options,B57600);
 						cfsetospeed(&options,B57600);
-						break;		
+						break;
 		   case 115200: cfsetispeed(&options,B115200);
 						cfsetospeed(&options,B115200);
-						break;								
-									
+						break;
+
 			default:	cfsetispeed(&options,B9600);
 						cfsetospeed(&options,B9600);
-						printf("ofSerialInit: cannot set %i baud setting baud to 9600\n", baud); 
+						ofLog(OF_ERROR,"ofSerialInit: cannot set %i baud setting baud to 9600\n", baud);
 						break;
 		}
 
@@ -384,7 +384,7 @@ bool ofSerial::setup(string portName, int baud){
 		tcsetattr(fd,TCSANOW,&options);
 
 		bInited = true;
-		printf("sucess in opening serial connection\n");
+		ofLog(OF_NOTICE,"sucess in opening serial connection");
 
 	    return true;
 	//---------------------------------------------
@@ -403,7 +403,7 @@ bool ofSerial::setup(string portName, int baud){
 					OPEN_EXISTING,0,0);
 
 	if(hComm==INVALID_HANDLE_VALUE){
-		printf("ofSerial: unable to open port\n");
+		ofLog(OF_ERROR,"ofSerial: unable to open port");
 		return false;
 	}
 
@@ -412,32 +412,32 @@ bool ofSerial::setup(string portName, int baud){
 	COMMCONFIG cfg;
 	DWORD cfgSize;
 	char  buf[80];
-	
+
 	cfgSize=sizeof(cfg);
 	GetCommConfig(hComm,&cfg,&cfgSize);
 	int bps = baud;
 	sprintf(buf,"baud=%d parity=N data=8 stop=1",bps);
-	
+
 	#if (_MSC_VER)       // microsoft visual studio
-		// msvc doesn't like BuildCommDCB, 
+		// msvc doesn't like BuildCommDCB,
 		//so we need to use this version: BuildCommDCBA
-		if(!BuildCommDCBA(buf,&cfg.dcb)){				
-			printf("ofSerial: unable to build comm dcb; (%s) \n",buf);
+		if(!BuildCommDCBA(buf,&cfg.dcb)){
+			ofLog(OF_ERROR,"ofSerial: unable to build comm dcb; (%s)",buf);
 		}
 	#else
 		if(!BuildCommDCB(buf,&cfg.dcb)){
-			printf("ofSerial: Can't build comm dcb; %s\n",buf);
+			ofLog(OF_ERROR,"ofSerial: Can't build comm dcb; %s",buf);
 		}
 	#endif
 
-	
+
 	// Set baudrate and bits etc.
 	// Note that BuildCommDCB() clears XON/XOFF and hardware control by default
-	
+
 	if(!SetCommState(hComm,&cfg.dcb)){
-		printf("ofSerial: Can't set comm state\n");
+		ofLog(OF_ERROR,"ofSerial: Can't set comm state");
 	}
-	//printf(buf,"bps=%d, xio=%d/%d\n",cfg.dcb.BaudRate,cfg.dcb.fOutX,cfg.dcb.fInX);
+	//ofLog(OF_NOTICE,buf,"bps=%d, xio=%d/%d",cfg.dcb.BaudRate,cfg.dcb.fOutX,cfg.dcb.fInX);
 
 	// Set communication timeouts (NT)
 	COMMTIMEOUTS tOut;
@@ -462,20 +462,20 @@ bool ofSerial::setup(string portName, int baud){
 int ofSerial::writeBytes(unsigned char * buffer, int length){
 
 	if (!bInited){
-		printf("ofSerial: serial not inited\n");
-		return 0;
+		ofLog(OF_ERROR,"ofSerial: serial not inited");
+		return OF_SERIAL_ERROR;
 	}
 
 	//---------------------------------------------
 	#if defined( TARGET_OSX ) || defined( TARGET_LINUX )
 	    int numWritten = write(fd, buffer, length);
-		if(numWritten <= 0) printf("ofSerial: Can't write to com port\n");
-		else{
-			if (bVerbose){
-			 	printf("ofSerial: numWritten %i \n", numWritten);
-	    	}
-	    }
-	    
+		if(numWritten <= 0){
+			ofLog(OF_ERROR,"ofSerial: Can't write to com port");
+			return OF_SERIAL_ERROR;
+		}
+
+		ofLog(OF_VERBOSE,"ofSerial: numWritten %i", numWritten);
+
 	    return numWritten;
     #endif
     //---------------------------------------------
@@ -484,13 +484,10 @@ int ofSerial::writeBytes(unsigned char * buffer, int length){
 	#ifdef TARGET_WIN32
 		DWORD written;
 		if(!WriteFile(hComm, buffer, length, &written,0)){
-			 printf("ofSerial: Can't write to com port");
-			 return 0;
-		}else{
-			if (bVerbose){
-			 	printf("ofSerial: numWritten %i \n", (int)written);
-	    	}
-	    }
+			 ofLog(OF_ERROR,"ofSerial: Can't write to com port");
+			 return OF_SERIAL_ERROR;
+		}
+		ofLog(OF_VERBOSE,"ofSerial: numWritten %i", (int)written);
 		return (int)written;
 	#endif
 	//---------------------------------------------
@@ -501,17 +498,17 @@ int ofSerial::writeBytes(unsigned char * buffer, int length){
 int ofSerial::readBytes(unsigned char * buffer, int length){
 
 	if (!bInited){
-		printf("ofSerial: serial not inited\n");
-		return 0;
+		ofLog(OF_ERROR,"ofSerial: serial not inited");
+		return OF_SERIAL_ERROR;
 	}
-	
+
 	//---------------------------------------------
 	#if defined( TARGET_OSX ) || defined( TARGET_LINUX )
-		int nRead = read(fd, buffer, length);	
-		/*if(nRead <= 0){
-			if (nRead == -1) printf("ofSerial: trouble reading from port\n");
-			return 0;
-		}*/
+		int nRead = read(fd, buffer, length);
+		if(nRead < 0){
+			ofLog(OF_ERROR,"ofSerial: trouble reading from port");
+			return OF_SERIAL_ERROR;
+		}
 		return nRead;
     #endif
     //---------------------------------------------
@@ -520,7 +517,8 @@ int ofSerial::readBytes(unsigned char * buffer, int length){
 	#ifdef TARGET_WIN32
 		DWORD nRead = 0;
 		if (!ReadFile(hComm,buffer,length,&nRead,0)){
-			printf("ofSerial: trouble reading from port\n");
+			ofLog(OF_ERROR,"ofSerial: trouble reading from port");
+			return OF_SERIAL_ERROR;
 		}
 		return (int)nRead;
 	#endif
@@ -533,8 +531,8 @@ int ofSerial::readBytes(unsigned char * buffer, int length){
 bool ofSerial::writeByte(unsigned char singleByte){
 
 	if (!bInited){
-		printf("ofSerial: serial not inited\n");
-		return 0;
+		ofLog(OF_ERROR,"ofSerial: serial not inited");
+		return OF_SERIAL_ERROR;
 	}
 
 	unsigned char tmpByte[1];
@@ -545,12 +543,12 @@ bool ofSerial::writeByte(unsigned char singleByte){
 	    int numWritten = 0;
 	    numWritten = write(fd, tmpByte, 1);
 		if(numWritten <= 0 ){
-			 printf("ofSerial: Can't write to com port");
-		} else{
-			if (bVerbose){
-			 	printf("ofSerial: written byte \n");
-	    	}
-	    }
+			 ofLog(OF_ERROR,"ofSerial: Can't write to com port");
+			 return OF_SERIAL_ERROR;
+		}
+		ofLog(OF_VERBOSE,"ofSerial: written byte");
+
+
 		return (numWritten > 0 ? true : false);
     #endif
     //---------------------------------------------
@@ -559,13 +557,12 @@ bool ofSerial::writeByte(unsigned char singleByte){
 	#ifdef TARGET_WIN32
 		DWORD written = 0;
 		if(!WriteFile(hComm, tmpByte, 1, &written,0)){
-			 printf("ofSerial: Can't write to com port");
-			 return 0;
-		} else{
-			if (bVerbose){
-			 	printf("ofSerial: written byte \n");
-	    	}
-	    }
+			 ofLog(OF_ERROR,"ofSerial: Can't write to com port");
+			 return OF_SERIAL_ERROR;;
+		}
+
+		ofLog(OF_VERBOSE,"ofSerial: written byte");
+
 		return ((int)written > 0 ? true : false);
 	#endif
 	//---------------------------------------------
@@ -576,20 +573,22 @@ bool ofSerial::writeByte(unsigned char singleByte){
 int ofSerial::readByte(){
 
 	if (!bInited){
-		printf("ofSerial: serial not inited\n");
-		return -1;
+		ofLog(OF_ERROR,"ofSerial: serial not inited");
+		return OF_SERIAL_ERROR;
 	}
 
 	unsigned char tmpByte[1];
 	memset(tmpByte, 0, 1);
-	
+
 	//---------------------------------------------
 	#if defined( TARGET_OSX ) || defined( TARGET_LINUX )
-		int nRead = read(fd, tmpByte, 1);	
-		/*if(nRead <= 0){
-			if (nRead == -1) printf("ofSerial: trouble reading from port\n");
-            		return -1;
-        	}*/
+		int nRead = read(fd, tmpByte, 1);
+		if(nRead < 0){
+			ofLog(OF_ERROR,"ofSerial: trouble reading from port");
+            return OF_SERIAL_ERROR;
+		}
+		if(nRead == 0)
+			return 0;
     #endif
     //---------------------------------------------
 
@@ -597,12 +596,12 @@ int ofSerial::readByte(){
 	#ifdef TARGET_WIN32
 		DWORD nRead;
 		if (!ReadFile(hComm, tmpByte, 1, &nRead, 0)){
-		printf("ofSerial: trouble reading from port\n");
-		  return -1;
+			ofLog(OF_ERROR,"ofSerial: trouble reading from port");
+			return OF_SERIAL_ERROR;
 		}
 	#endif
 	//---------------------------------------------
-	
+
 	return (int)(tmpByte[0]);
 }
 
@@ -611,7 +610,7 @@ int ofSerial::readByte(){
 void ofSerial::flush(bool flushIn, bool flushOut){
 
 	if (!bInited){
-		printf("ofSerial: serial not inited\n");
+		ofLog(OF_ERROR,"ofSerial: serial not inited");
 		return;
 	}
 
@@ -623,7 +622,7 @@ void ofSerial::flush(bool flushIn, bool flushOut){
 		else if(flushIn) flushType = TCIFLUSH;
 		else if(flushOut) flushType = TCOFLUSH;
 		else return;
-		
+
 		tcflush(fd, flushType);
     #endif
     //---------------------------------------------
@@ -634,21 +633,21 @@ void ofSerial::flush(bool flushIn, bool flushOut){
 		else if(flushIn) flushType = PURGE_RXCLEAR;
 		else if(flushOut) flushType = PURGE_TXCLEAR;
 		else return;
-	
+
 		PurgeComm(hComm, flushType)
 	#endif
 	//---------------------------------------------
-	
+
 }
 
 //-------------------------------------------------------------
 int ofSerial::available(){
 
 	if (!bInited){
-		printf("ofSerial: serial not inited\n");
-		return 0;
+		ofLog(OF_ERROR,"ofSerial: serial not inited");
+		return OF_SERIAL_ERROR;
 	}
-	
+
 	int numBytes = 0;
 
 	//---------------------------------------------
@@ -656,7 +655,7 @@ int ofSerial::available(){
 		ioctl(fd,FIONREAD,&numBytes);
 	#endif
     //---------------------------------------------
-	
+
     //---------------------------------------------
 	#ifdef TARGET_WIN32
 	COMSTAT stat;
@@ -672,7 +671,7 @@ int ofSerial::available(){
        	}
 	#endif
     //---------------------------------------------
-	
+
 	return numBytes;
 }
 
