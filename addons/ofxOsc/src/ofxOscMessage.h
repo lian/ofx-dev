@@ -48,6 +48,9 @@ public:
 	void addFloatArg( float argument );
 	void addStringArg( const char* argument );
 
+	/// remoteAddress  aka. IpEndpointName
+	char remoteAddress;
+
 private:
 
 	std::string address;
