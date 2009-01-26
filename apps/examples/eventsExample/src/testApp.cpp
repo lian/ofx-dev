@@ -44,7 +44,7 @@ void testApp::keyPressed  (int key){
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){ 
-	
+	sprintf(eventString, "keyReleased = (%i)", key);
 }
 
 //--------------------------------------------------------------

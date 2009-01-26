@@ -19,48 +19,39 @@
  along with ofxOsc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef _ofxOscSENDER_H
-#define _ofxOscSENDER_H
-
-/**
-
-ofxOscSender
-
-an ofxOscSender sends messages to a single host/port
-
-*/
-
-class UdpTransmitSocket;
-#include <string>
-#include "OscTypes.h"
-#include "OscOutboundPacketStream.h"
-
 #include "ofxOscBundle.h"
-#include "ofxOscMessage.h"
 
 
-class ofxOscSender
+ofxOscBundle::ofxOscBundle()
 {
-public:
-	ofxOscSender();
-	~ofxOscSender();
+}
 
-	/// send messages to hostname and port
-	void setup( std::string hostname, int port );
+ofxOscBundle::~ofxOscBundle()
+{
+}
 
-	/// send the given message
-	void sendMessage( ofxOscMessage& message );
-	/// send the given bundle
-	void sendBundle( ofxOscBundle& bundle );
+ofxOscBundle& ofxOscBundle::copy( const ofxOscBundle& other )
+{
+	for ( int i=0; i<other.bundles.size(); i++ )
+	{
+		bundles.push_back( other.bundles[i] );
+	}
+	for ( int i=0; i<other.messages.size(); i++ )
+	{
+		messages.push_back( other.messages[i] );
+	}
+	return *this;
+}
 
-private:
-		
-	// helper methods for constructing messages
-	void appendBundle( ofxOscBundle& bundle, osc::OutboundPacketStream& p );
-	void appendMessage( ofxOscMessage& message, osc::OutboundPacketStream& p );
 
-	UdpTransmitSocket* socket;
-};
 
-#endif
+void ofxOscBundle::addBundle( const ofxOscBundle& bundle )
+{
+	bundles.push_back( bundle );
+}
+
+void ofxOscBundle::addMessage( const ofxOscMessage& message )
+{
+	messages.push_back( message );
+}
+
