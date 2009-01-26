@@ -84,7 +84,7 @@ void ofxOscReceiver::ProcessMessage( const osc::ReceivedMessage &m, const IpEndp
 	ofMessage->setAddress( m.AddressPattern() );
 
 	// set the remote address
-	remoteEndpoint.AddressAndPortAsString( &ofMessage->remoteAddress );
+	remoteEndpoint.AddressAndPortAsString( ofMessage->remoteAddress );
 
 	// transfer the arguments
 	for ( osc::ReceivedMessage::const_iterator arg = m.ArgumentsBegin();

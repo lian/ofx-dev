@@ -49,7 +49,7 @@ public:
 	void addStringArg( const char* argument );
 
 	/// remoteAddress  aka. IpEndpointName
-	char remoteAddress;
+	char remoteAddress[ 23 ];
 
 private:
 
