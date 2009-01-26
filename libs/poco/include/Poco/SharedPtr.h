@@ -1,7 +1,7 @@
 //
 // SharedPtr.h
 //
-// $Id: //poco/1.3/Foundation/include/Poco/SharedPtr.h#2 $
+// $Id: //poco/1.3/Foundation/include/Poco/SharedPtr.h#6 $
 //
 // Library: Foundation
 // Package: Core
@@ -9,7 +9,7 @@
 //
 // Definition of the SharedPtr template class.
 //
-// Copyright (c) 2005-2006, Applied Informatics Software Engineering GmbH.
+// Copyright (c) 2005-2008, Applied Informatics Software Engineering GmbH.
 // and Contributors.
 //
 // Permission is hereby granted, free of charge, to any person or organization
@@ -50,7 +50,7 @@ namespace Poco {
 
 
 class ReferenceCounter
-		/// Simple ReferenceCounter object, does not delete itself when count reaches 0
+	/// Simple ReferenceCounter object, does not delete itself when count reaches 0.
 {
 public:
 	ReferenceCounter(): _cnt(1)
@@ -68,6 +68,11 @@ public:
 		FastMutex::ScopedLock lock(_mutex);
 		return --_cnt;
 	}
+	
+	int referenceCount() const
+	{
+		return _cnt;
+	}
 
 private:
 	FastMutex _mutex;
@@ -76,6 +81,21 @@ private:
 
 
 template <class C>
+class ReleasePolicy
+	/// The default release policy for SharedPtr, which
+	/// simply uses the delete operator to delete an object.
+{
+public:
+	static void release(C* pObj)
+		/// Delete the object.
+		/// Note that pObj can be 0.
+	{
+		delete pObj;
+	}
+};
+
+
+template <class C, class RC = ReferenceCounter, class RP = ReleasePolicy<C> >
 class SharedPtr
 	/// SharedPtr is a "smart" pointer for classes implementing
 	/// reference counting based garbage collection.
@@ -104,16 +124,16 @@ class SharedPtr
 	/// is required.
 {
 public:
-	SharedPtr(): _pCounter(new ReferenceCounter), _ptr(0)
+	SharedPtr(): _pCounter(new RC), _ptr(0)
 	{
 	}
 
-	SharedPtr(C* ptr): _pCounter(new ReferenceCounter), _ptr(ptr)
+	SharedPtr(C* ptr): _pCounter(new RC), _ptr(ptr)
 	{
 	}
 
-	template <class Other> 
-	SharedPtr(const SharedPtr<Other>& ptr): _pCounter(ptr._pCounter), _ptr(const_cast<Other*>(ptr.get()))
+	template <class Other, class OtherRP> 
+	SharedPtr(const SharedPtr<Other, RC, OtherRP>& ptr): _pCounter(ptr._pCounter), _ptr(const_cast<Other*>(ptr.get()))
 	{
 		_pCounter->duplicate();
 	}
@@ -132,7 +152,7 @@ public:
 	{
 		if (get() != ptr)
 		{
-			ReferenceCounter* pTmp = new ReferenceCounter;
+			RC* pTmp = new RC;
 			release();
 			_pCounter = pTmp;
 			_ptr = ptr;
@@ -150,8 +170,8 @@ public:
 		return *this;
 	}
 	
-	template <class Other>
-	SharedPtr& assign(const SharedPtr<Other>& ptr)
+	template <class Other, class OtherRP>
+	SharedPtr& assign(const SharedPtr<Other, RC, OtherRP>& ptr)
 	{
 		if (ptr.get() != _ptr)
 		{
@@ -171,8 +191,8 @@ public:
 		return assign(ptr);
 	}
 
-	template <class Other>
-	SharedPtr& operator = (const SharedPtr<Other>& ptr)
+	template <class Other, class OtherRP>
+	SharedPtr& operator = (const SharedPtr<Other, RC, OtherRP>& ptr)
 	{
 		return assign<Other>(ptr);
 	}
@@ -184,7 +204,7 @@ public:
 	}
 
 	template <class Other> 
-	SharedPtr<Other> cast() const
+	SharedPtr<Other, RC, RP> cast() const
 		/// Casts the SharedPtr via a dynamic cast to the given type.
 		/// Returns an SharedPtr containing NULL if the cast fails.
 		/// Example: (assume class Sub: public Super)
@@ -194,12 +214,12 @@ public:
 	{
 		Other* pOther = dynamic_cast<Other*>(_ptr);
 		if (pOther)
-			return SharedPtr<Other>(_pCounter, pOther);
-		return SharedPtr<Other>();
+			return SharedPtr<Other, RC, RP>(_pCounter, pOther);
+		return SharedPtr<Other, RC, RP>();
 	}
 
 	template <class Other> 
-	SharedPtr<Other> unsafeCast() const
+	SharedPtr<Other, RC, RP> unsafeCast() const
 		/// Casts the SharedPtr via a static cast to the given type.
 		/// Example: (assume class Sub: public Super)
 		///    SharedPtr<Super> super(new Sub());
@@ -207,7 +227,7 @@ public:
 		///    poco_assert (sub.get());
 	{
 		Other* pOther = static_cast<Other*>(_ptr);
-		return SharedPtr<Other>(_pCounter, pOther);
+		return SharedPtr<Other, RC, RP>(_pCounter, pOther);
 	}
 
 	C* operator -> ()
@@ -349,6 +369,11 @@ public:
 	{
 		return get() >= ptr;
 	}
+	
+	int referenceCount() const
+	{
+		return _pCounter->referenceCount();
+	}
 
 private:
 	C* deref() const
@@ -365,8 +390,7 @@ private:
 		int i = _pCounter->release();
 		if (i == 0)
 		{
-			if (_ptr)
-				delete _ptr;
+			RP::release(_ptr);
 			_ptr = 0;
 
 			delete _pCounter;
@@ -374,7 +398,7 @@ private:
 		}
 	}
 
-	SharedPtr(ReferenceCounter* pCounter, C* ptr): _pCounter(pCounter), _ptr(ptr)
+	SharedPtr(RC* pCounter, C* ptr): _pCounter(pCounter), _ptr(ptr)
 		/// for cast operation
 	{
 		poco_assert_dbg (_pCounter);
@@ -382,15 +406,15 @@ private:
 	}
 
 private:
-	ReferenceCounter* _pCounter;
-	C*                _ptr;
+	RC* _pCounter;
+	C*  _ptr;
 
-	template <class Other> friend class SharedPtr;
+	template <class OtherC, class OtherRC, class OtherRP> friend class SharedPtr;
 };
 
 
-template <class C>
-inline void swap(SharedPtr<C>& p1, SharedPtr<C>& p2)
+template <class C, class RC, class RP>
+inline void swap(SharedPtr<C, RC, RP>& p1, SharedPtr<C, RC, RP>& p2)
 {
 	p1.swap(p2);
 }

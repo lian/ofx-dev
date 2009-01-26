@@ -1,7 +1,7 @@
 //
 // FIFOStrategy.h
 //
-// $Id: //poco/1.3/Foundation/include/Poco/FIFOStrategy.h#1 $
+// $Id: //poco/1.3/Foundation/include/Poco/FIFOStrategy.h#5 $
 //
 // Library: Foundation
 // Package: Events
@@ -42,6 +42,7 @@
 #include "Poco/NotificationStrategy.h"
 #include <map>
 #include <list>
+#include <memory>
 
 
 namespace Poco {
@@ -108,7 +109,7 @@ public:
 		}
 		std::auto_ptr<TDelegate> pDelegate(delegate.clone());
 		_observers.push_back(pDelegate.get());
-		bool tmp = _observerIndex.insert(make_pair(pDelegate.get(), --_observers.end())).second;
+		bool tmp = _observerIndex.insert(std::make_pair(pDelegate.get(), --_observers.end())).second;
 		poco_assert (tmp);
 		pDelegate.release();
 	}
@@ -146,6 +147,11 @@ public:
 
 		_observers.clear();
 		_observerIndex.clear();
+	}
+
+	bool empty() const
+	{
+		return _observers.empty();
 	}
 
 protected:

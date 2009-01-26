@@ -1,7 +1,7 @@
 //
 // UniqueExpireStrategy.h
 //
-// $Id: //poco/1.3/Foundation/include/Poco/UniqueExpireStrategy.h#1 $
+// $Id: //poco/1.3/Foundation/include/Poco/UniqueExpireStrategy.h#2 $
 //
 // Library: Foundation
 // Package: Cache
@@ -130,6 +130,8 @@ public:
 				args.invalidate();
 			}
 		}
+		else //not found: probably removed by onReplace
+			args.invalidate();
 	}
 
 	void onReplace(const void*, std::set<TKey>& elemsToRemove)
@@ -146,7 +148,7 @@ public:
 		}
 	}
 
-private:
+protected:
 	Keys      _keys;     /// For faster replacement of keys, the iterator points to the _keyIndex map
 	TimeIndex _keyIndex; /// Maps time to key value
 };

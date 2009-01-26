@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// $Id: //poco/1.3/Foundation/include/Poco/Buffer.h#1 $
+// $Id: //poco/1.3/Foundation/include/Poco/Buffer.h#3 $
 //
 // Library: Foundation
 // Package: Core
@@ -102,14 +102,14 @@ public:
 	
 	T& operator [] (std::size_t index)
 	{
-		poco_assert (index >= 0 && index < _size);
+		poco_assert (index < _size);
 		
 		return _ptr[index];
 	}
 
 	const T& operator [] (std::size_t index) const
 	{
-		poco_assert (index >= 0 && index < _size);
+		poco_assert (index < _size);
 		
 		return _ptr[index];
 	}

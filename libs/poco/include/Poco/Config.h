@@ -1,7 +1,7 @@
 //
 // Config.h
 //
-// $Id: //poco/1.3/Foundation/include/Poco/Config.h#6 $
+// $Id: //poco/1.3/Foundation/include/Poco/Config.h#8 $
 //
 // Library: Foundation
 // Package: Core
@@ -58,6 +58,11 @@
 
 // Define to disable shared memory
 // #define POCO_NO_SHAREDMEMORY
+
+
+// Define to desired default thread stack size
+// Zero means OS default
+#define POCO_THREAD_STACK_SIZE 0
 
 
 #endif // Foundation_Config_INCLUDED
