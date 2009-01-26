@@ -160,7 +160,7 @@ void TestWorld::draw() {
 		b2Vec2 dbPosition = bodies[i]->GetPosition();
 		float32 dbAngle = bodies[i]->GetAngle();
 		
-		ofEllipse(m2p(dbPosition.x),m2p(dbPosition.y),5, 5);
+		ofEllipse(m2p(dbPosition.x),m2p(dbPosition.y),10, 10);
 		
 		// yellow angle pointer
 		ofSetColor(255,255,0);
@@ -170,7 +170,7 @@ void TestWorld::draw() {
 	// draw the obstacle
 	b2Vec2 dbPosition = obstacle->GetPosition();
 	ofSetColor(127,127,127);
-	ofEllipse(m2p(dbPosition.x),m2p(dbPosition.y),100,100);
+	ofEllipse(m2p(dbPosition.x),m2p(dbPosition.y),200,200);
 	
 	
 	// draw the stage (the red bounding box)
