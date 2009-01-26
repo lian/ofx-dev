@@ -14,9 +14,9 @@
 #define SLIDER2D_W		100
 #define	SLIDER2D_H		90
 
-#define SLIDER_R		82
-#define SLIDER_G		183
-#define SLIDER_B		200
+#define SLIDER_R		255
+#define SLIDER_G		255
+#define SLIDER_B		10
 
 #define GUI_OVER_R		255
 #define GUI_OVER_G		10

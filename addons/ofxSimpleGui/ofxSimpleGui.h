@@ -61,7 +61,7 @@ public:
 	bool							mouseup;
 	float							mx, my;
 	int								key;
-	float							xspace, yspace;
+	float							xspace, yspace, xpos;
 	int								guiFocus;
 	int								guiCount;
 	
@@ -76,6 +76,7 @@ public:
 	ofxSimpleGui();
 	
 	void	setFromXML(string file);
+	void	addFromXML(string file);
 	void	saveToXML(string file);	
 	void	setTitle(string name);
 	void	setVerbose(bool v);
@@ -87,6 +88,7 @@ public:
 	
 	void	renderFocus(float x, float y);
 	void    toggleRender();
+	void    render(float xpos, float ypos);
 	
 	
 	void	addSlider(string _name, int *_value, int _min, int _max);

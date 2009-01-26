@@ -130,6 +130,59 @@ void ofxSimpleGui::setFromXML(string file) {
 	else cout << " --- ERROR IN XML (no settings or missing file) ---\n";
 }
 
+void ofxSimpleGui::addFromXML(string file) {
+	xmlFile = file;
+	
+	if(XML.loadFile(file)) {
+// --- Float Sliders
+		int numSliderFTags = XML.getNumTags("slidersF");
+		if(numSliderFTags > 0) {
+			XML.pushTag("slidersF", numSliderFTags-1);
+			int numElements  = XML.getNumTags("element");
+			for(int i=0; i<numElements; i++) {
+				
+				int node_id		 =  XML.getValue("element:id", 0, i);
+				string node_name =  XML.getValue("element:name", "Name", i);
+				float value = XML.getValue("element:value", 0.0, i);
+				
+				slidersF.push_back(new ofxSliderFloat(node_name, &value, XML.getValue("element:min", 0.0, i), XML.getValue("element:max", 0.0, i), node_id));
+				/*
+				for(int j=0; j<slidersF.size(); j++) {
+					if(slidersF[j]->guiID == node_id) {
+						slidersF[j]->set(XML.getValue("element:value", 0.0, i));
+					}
+				}*/
+				
+			}
+		}
+		XML.popTag();
+		
+		// --- Int Sliders
+		int numSliderITags = XML.getNumTags("slidersI");
+		if(numSliderITags > 0) {
+			XML.pushTag("slidersI", numSliderITags-1);
+			int numElements  = XML.getNumTags("element");
+			for(int i=0; i<numElements; i++) {
+				
+				int node_id		 =  XML.getValue("element:id", 0, i);
+				string node_name =  XML.getValue("element:name", "Name", i);
+				int value = XML.getValue("element:value", 0.0, i);
+				
+				slidersI.push_back(new ofxSliderInt(node_name, &value, (int)(XML.getValue("element:min", 0.0, i)), (int)(XML.getValue("element:max", 0.0, i)), node_id));
+
+				/*
+				for(int j=0; j<slidersI.size(); j++) {
+					if(slidersI[j]->guiID == node_id) {
+						slidersI[j]->set(XML.getValue("element:value", 0.0, i));
+					}
+				}*/
+			}
+		}
+		XML.popTag();
+} else cout << " --- ERROR IN XML (no settings or missing file) ---\n";
+
+}
+
 //------------------------------------------------------------------------------ save to xml
 void ofxSimpleGui::saveToXML(string file) {
 	
@@ -338,11 +391,13 @@ void ofxSimpleGui::renderFocus(float x, float y) {
 	ofRect(0, 0, 10, 10);
 	glPopMatrix();
 }
-//------------------------------------------------------------------------------ draw		
+//------------------------------------------------------------------------------ draw	
 void ofxSimpleGui::draw() {
+}	
+void ofxSimpleGui::render(float xpos, float ypos) {
 	
 	if(!doRender) return;
-	
+	//ofSetupScreen();
 	glPushMatrix();
 	glTranslatef(0, 0, 0);
 	
@@ -353,17 +408,17 @@ void ofxSimpleGui::draw() {
 	int sp = 50;
 	
 	//Gui Title
-	guiTitle.render(GUI_OFFSET_X, GUI_OFFSET_Y);
+	guiTitle.render(xpos, GUI_OFFSET_Y+ypos);
 	//Save XML Button
-	saveButton->render(GUI_OFFSET_X, GUI_OFFSET_Y+42);
+	saveButton->render(xpos, GUI_OFFSET_Y+42+ypos);
 	
 	yspace += sp;
 	
 	//Sliders 2d
 	ofPoint slider2d_pos(0, 0);
 	for(int i=0; i<sliders2d.size(); i++) {
-		slider2d_pos.x = 260 + ((i%3) * (SLIDER2D_W+5));
-		slider2d_pos.y = GUI_OFFSET_Y+77 + (floor(i/3) * (SLIDER2D_H+50));
+		slider2d_pos.x = xpos+260 + ((i%3) * (SLIDER2D_W+5));
+		slider2d_pos.y = ypos+GUI_OFFSET_Y+77 + (floor(i/3) * (SLIDER2D_H+50));
 		sliders2d[i]->render(slider2d_pos.x, slider2d_pos.y);
 		if(guiFocus == sliders2d[i]->guiID) sliders2d[i]->focused = true;
 		else							   sliders2d[i]->focused = false;
@@ -377,8 +432,9 @@ void ofxSimpleGui::draw() {
 	}
 	
 	//Int Slider
-	ofPoint slider_pos(GUI_OFFSET_X, GUI_OFFSET_Y+40);
+	ofPoint slider_pos(GUI_OFFSET_X, GUI_OFFSET_Y+40+ypos);
 	for(int i=0; i<slidersI.size(); i++) {
+	    slider_pos.x = xpos;
 		slider_pos.y += SLIDER_H+25;
 		slidersI[i]->render(slider_pos.x, slider_pos.y);
 		if(guiFocus == slidersI[i]->guiID) slidersI[i]->focused = true;
@@ -387,6 +443,7 @@ void ofxSimpleGui::draw() {
 	
 	//Float Slider
 	for(int i=0; i<slidersF.size(); i++) {
+		slider_pos.x = xpos;
 		slider_pos.y += SLIDER_H+25;
 		slidersF[i]->render(slider_pos.x, slider_pos.y);
 		if(guiFocus == slidersF[i]->guiID) slidersF[i]->focused = true;
@@ -396,6 +453,7 @@ void ofxSimpleGui::draw() {
 	//Toggles
 	ofPoint toggle_pos(GUI_OFFSET_X, slider_pos.y+45);
 	for(int i=0; i<toggles.size(); i++) {		
+	    toggle_pos.x = xpos;
 		toggles[i]->render(toggle_pos.x, toggle_pos.y);
 		if(guiFocus == toggles[i]->guiID) toggles[i]->focused = true;
 		else							  toggles[i]->focused = false;
@@ -459,7 +517,7 @@ void ofxSimpleGui::keyReleased(int key) {
 
 //------------------------------------------------------------------------ key press
 void ofxSimpleGui::keyPressed(int key) {
-	if(key == OF_KEY_DOWN) {
+/*	if(key == OF_KEY_DOWN) {
 		if(guiFocus <= guiCount) guiFocus ++;
 		else guiFocus = 0; 
 	}
@@ -493,5 +551,5 @@ void ofxSimpleGui::keyPressed(int key) {
 			if(guiFocus == toggles[i]->guiID) toggles[i]->toggle();   			
 		}
 	}
-	
+	*/
 }
