@@ -33,6 +33,8 @@
 *
 ***************************************************************************/
 
+#include "GLHandles.h"
+
 #ifndef __glee_h_
 #define __glee_h_
 
@@ -717,8 +719,10 @@ GLEE_EXTERN GLboolean _GLEE_SGIX_texture_range;
 #endif
 
 #ifndef GL_ARB_shader_objects
-	typedef int GLhandleARB;
-	typedef char GLcharARB;
+	#ifndef GL_GLEXT_LEGACY
+		typedef int GLhandleARB;
+		typedef char GLcharARB;
+	#endif
 #endif
 
 #ifndef GL_EXT_timer_query

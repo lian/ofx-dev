@@ -2,7 +2,7 @@
 #define _OFX_TOUCHAPP
 
 
-#include "ofApp.h"
+// #include "ofApp.h"
 #include "ofxTouchBlobListener.h"
 #include "ofVideoGrabber.h"
 #include "ofxTouchContourFinder.h"
