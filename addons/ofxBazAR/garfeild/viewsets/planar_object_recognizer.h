@@ -21,6 +21,7 @@ Street, Fifth Floor, Boston, MA 02110-1301, USA
 #ifndef PLANAR_OBJECT_RECOGNIZER_H
 #define PLANAR_OBJECT_RECOGNIZER_H
 
+#include "ofxCvMain.h"
 #include "../keypoints/keypoint.h"
 #include "../keypoints/yape.h"
 #include <starter.h>

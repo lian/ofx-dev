@@ -435,9 +435,15 @@ int mcvSaveImage(const char * filename, IplImage * image, bool verbose)
 
   int result;
 
-  if (image->depth == IPL_DEPTH_8U)
-//    result = cvSaveImage(filename, image);
+  if (image->depth == IPL_DEPTH_8U) {
+
+	  ofImage _img = ofImage();
+	  _img.setFromPixels( ((unsigned char*) image->imageData) , 320, 240, OF_IMAGE_GRAYSCALE, true );
+	  // _img.saveImage( ofToDataPath(filename) );
+	  _img.saveImage( filename );
+	  printf("saved pixels set!");
 	  result = true;
+  }
   else
   {
     IplImage * tempImage;
@@ -490,7 +496,8 @@ IplImage * mcvLoadImage(const char * filename, int code, bool verbose)
 
 //  IplImage * result = cvLoadImage(filename, code);
 	ofImage _img = ofImage();
-	_img.loadImage(filename);
+	// _img.loadImage( ofToDataPath(filename) );
+	_img.loadImage( filename );
 	ofxCvColorImage _im = ofxCvColorImage();
 	_im = _img.getPixels();
 	IplImage * result = _im.getCvImage();

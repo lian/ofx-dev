@@ -168,6 +168,8 @@ bool planar_object_recognizer::build_with_cache(string filename,
                                                 LEARNPROGRESSION LearnProgress)
 {
   new_images_generator.set_patch_size(patch_size);
+  
+  filename = ofToDataPath( filename );
 
   string dirname(filename + ".classifier");
   if (load(dirname)) return true;
@@ -226,12 +228,6 @@ bool planar_object_recognizer::load(string directory_name)
   new_images_generator.set_level_number(nbLev);
   new_images_generator.set_gaussian_smoothing_kernel_size(yape_radius);
 
-  // Read original image:
-  char image_name[1000];
-  sprintf(image_name, "%s/original_image.bmp", directory_name.data());
-  IplImage * original_image = mcvLoadImage(image_name, 0);
-  if (original_image == 0) return false;
-
   // Read object corner positions in this original image:
   char corner_filename[1000];
   sprintf(corner_filename, "%s/corners.txt", directory_name.data());
@@ -244,9 +240,23 @@ bool planar_object_recognizer::load(string directory_name)
   cf >> u_corner3 >> v_corner3;
   cf >> u_corner4 >> v_corner4;
   cf.close();
-  new_images_generator.set_original_image(original_image, 
+
+
+  //    // Read original image:
+  char image_name[1000];
+  sprintf(image_name, "%s/original_image.bmp", directory_name.data());
+  ofImage _img = ofImage();
+  _img.loadImage(image_name);
+  _img.setImageType(OF_IMAGE_GRAYSCALE);
+  
+  ofxCvGrayscaleImage _im; _im.allocate(320,240); _im = _img.getPixels();
+  IplImage * original_image = cvCloneImage( _im.getCvImage() );
+  
+  
+  new_images_generator.set_original_image( original_image , 
     u_corner1, v_corner1, u_corner2, v_corner2, u_corner3, v_corner3, u_corner4, v_corner4);
   cvReleaseImage(&original_image);
+
 
   // Read keypoints in this original image:
   char point_filename[1000];
@@ -363,6 +373,8 @@ void planar_object_recognizer::learn(int max_point_number_on_model, int patch_si
 
 void planar_object_recognizer::save(string directory_name)
 {
+directory_name = ofToDataPath( directory_name );
+	
 #ifndef WIN32
   mkdir(directory_name.data(), S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IWOTH);
 #else
