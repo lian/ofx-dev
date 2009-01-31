@@ -39,15 +39,11 @@
 		3C0EA4810F33878C000BB62E /* ls_minimizer2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA45D0F33878C000BB62E /* ls_minimizer2.cpp */; };
 		3C0EA4820F33878C000BB62E /* ls_step_solver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA45F0F33878C000BB62E /* ls_step_solver.cpp */; };
 		3C0EA4C70F33879E000BB62E /* libOpenCV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0EA4A50F33879E000BB62E /* libOpenCV.a */; };
-		3C0EA4CB0F33879E000BB62E /* ofCvOpticalFlowBM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4AB0F33879E000BB62E /* ofCvOpticalFlowBM.cpp */; };
-		3C0EA4CC0F33879E000BB62E /* ofCvOpticalFlowLK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4AD0F33879E000BB62E /* ofCvOpticalFlowLK.cpp */; };
 		3C0EA4CD0F33879E000BB62E /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4B00F33879E000BB62E /* ofxCvColorImage.cpp */; };
 		3C0EA4CE0F33879E000BB62E /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4B30F33879E000BB62E /* ofxCvContourFinder.cpp */; };
-		3C0EA4CF0F33879E000BB62E /* ofxCvConvexHull_hand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4B50F33879E000BB62E /* ofxCvConvexHull_hand.cpp */; };
 		3C0EA4D00F33879E000BB62E /* ofxCvFloatImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4B70F33879E000BB62E /* ofxCvFloatImage.cpp */; };
 		3C0EA4D10F33879E000BB62E /* ofxCvGrayscaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4B90F33879E000BB62E /* ofxCvGrayscaleImage.cpp */; };
 		3C0EA4D20F33879E000BB62E /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4BB0F33879E000BB62E /* ofxCvImage.cpp */; };
-		3C0EA4D30F33879E000BB62E /* ofxCvMain.h.bak in Resources */ = {isa = PBXBuildFile; fileRef = 3C0EA4BE0F33879E000BB62E /* ofxCvMain.h.bak */; };
 		3CEFAE580F1EDB5400F21D9C /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CEFAE2B0F1EDB5400F21D9C /* ofAppRunner.cpp */; };
 		3CEFAE590F1EDB5400F21D9C /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CEFAE2F0F1EDB5400F21D9C /* ofArduino.cpp */; };
 		3CEFAE5A0F1EDB5400F21D9C /* ofSerial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CEFAE310F1EDB5400F21D9C /* ofSerial.cpp */; };
@@ -160,18 +156,12 @@
 		3C0EA4A10F33879E000BB62E /* cxmisc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = cxmisc.h; sourceTree = "<group>"; };
 		3C0EA4A20F33879E000BB62E /* cxtypes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = cxtypes.h; sourceTree = "<group>"; };
 		3C0EA4A50F33879E000BB62E /* libOpenCV.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOpenCV.a; sourceTree = "<group>"; };
-		3C0EA4AB0F33879E000BB62E /* ofCvOpticalFlowBM.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofCvOpticalFlowBM.cpp; sourceTree = "<group>"; };
-		3C0EA4AC0F33879E000BB62E /* ofCvOpticalFlowBM.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofCvOpticalFlowBM.h; sourceTree = "<group>"; };
-		3C0EA4AD0F33879E000BB62E /* ofCvOpticalFlowLK.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofCvOpticalFlowLK.cpp; sourceTree = "<group>"; };
-		3C0EA4AE0F33879E000BB62E /* ofCvOpticalFlowLK.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofCvOpticalFlowLK.h; sourceTree = "<group>"; };
 		3C0EA4AF0F33879E000BB62E /* ofxCvBlob.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvBlob.h; sourceTree = "<group>"; };
 		3C0EA4B00F33879E000BB62E /* ofxCvColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorImage.cpp; sourceTree = "<group>"; };
 		3C0EA4B10F33879E000BB62E /* ofxCvColorImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvColorImage.h; sourceTree = "<group>"; };
 		3C0EA4B20F33879E000BB62E /* ofxCvConstants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvConstants.h; sourceTree = "<group>"; };
 		3C0EA4B30F33879E000BB62E /* ofxCvContourFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvContourFinder.cpp; sourceTree = "<group>"; };
 		3C0EA4B40F33879E000BB62E /* ofxCvContourFinder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvContourFinder.h; sourceTree = "<group>"; };
-		3C0EA4B50F33879E000BB62E /* ofxCvConvexHull_hand.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvConvexHull_hand.cpp; sourceTree = "<group>"; };
-		3C0EA4B60F33879E000BB62E /* ofxCvConvexHull_hand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvConvexHull_hand.h; sourceTree = "<group>"; };
 		3C0EA4B70F33879E000BB62E /* ofxCvFloatImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvFloatImage.cpp; sourceTree = "<group>"; };
 		3C0EA4B80F33879E000BB62E /* ofxCvFloatImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvFloatImage.h; sourceTree = "<group>"; };
 		3C0EA4B90F33879E000BB62E /* ofxCvGrayscaleImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvGrayscaleImage.cpp; sourceTree = "<group>"; };
@@ -179,7 +169,6 @@
 		3C0EA4BB0F33879E000BB62E /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
 		3C0EA4BC0F33879E000BB62E /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
 		3C0EA4BD0F33879E000BB62E /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
-		3C0EA4BE0F33879E000BB62E /* ofxCvMain.h.bak */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ofxCvMain.h.bak; sourceTree = "<group>"; };
 		3C98C1790F346FBF00188E3F /* ofxBazARDetector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxBazARDetector.h; sourceTree = "<group>"; };
 		3CEFAE2A0F1EDB5400F21D9C /* ofAppGlutGlue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppGlutGlue.h; sourceTree = "<group>"; };
 		3CEFAE2B0F1EDB5400F21D9C /* ofAppRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppRunner.cpp; sourceTree = "<group>"; };
@@ -478,18 +467,12 @@
 		3C0EA4AA0F33879E000BB62E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				3C0EA4AB0F33879E000BB62E /* ofCvOpticalFlowBM.cpp */,
-				3C0EA4AC0F33879E000BB62E /* ofCvOpticalFlowBM.h */,
-				3C0EA4AD0F33879E000BB62E /* ofCvOpticalFlowLK.cpp */,
-				3C0EA4AE0F33879E000BB62E /* ofCvOpticalFlowLK.h */,
 				3C0EA4AF0F33879E000BB62E /* ofxCvBlob.h */,
 				3C0EA4B00F33879E000BB62E /* ofxCvColorImage.cpp */,
 				3C0EA4B10F33879E000BB62E /* ofxCvColorImage.h */,
 				3C0EA4B20F33879E000BB62E /* ofxCvConstants.h */,
 				3C0EA4B30F33879E000BB62E /* ofxCvContourFinder.cpp */,
 				3C0EA4B40F33879E000BB62E /* ofxCvContourFinder.h */,
-				3C0EA4B50F33879E000BB62E /* ofxCvConvexHull_hand.cpp */,
-				3C0EA4B60F33879E000BB62E /* ofxCvConvexHull_hand.h */,
 				3C0EA4B70F33879E000BB62E /* ofxCvFloatImage.cpp */,
 				3C0EA4B80F33879E000BB62E /* ofxCvFloatImage.h */,
 				3C0EA4B90F33879E000BB62E /* ofxCvGrayscaleImage.cpp */,
@@ -497,7 +480,6 @@
 				3C0EA4BB0F33879E000BB62E /* ofxCvImage.cpp */,
 				3C0EA4BC0F33879E000BB62E /* ofxCvImage.h */,
 				3C0EA4BD0F33879E000BB62E /* ofxCvMain.h */,
-				3C0EA4BE0F33879E000BB62E /* ofxCvMain.h.bak */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -708,7 +690,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B6FCAE0C3E899E008CF71C /* openFrameworks-Info.plist in Resources */,
-				3C0EA4D30F33879E000BB62E /* ofxCvMain.h.bak in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,11 +765,8 @@
 				3C0EA4800F33878C000BB62E /* polynom_solver.cpp in Sources */,
 				3C0EA4810F33878C000BB62E /* ls_minimizer2.cpp in Sources */,
 				3C0EA4820F33878C000BB62E /* ls_step_solver.cpp in Sources */,
-				3C0EA4CB0F33879E000BB62E /* ofCvOpticalFlowBM.cpp in Sources */,
-				3C0EA4CC0F33879E000BB62E /* ofCvOpticalFlowLK.cpp in Sources */,
 				3C0EA4CD0F33879E000BB62E /* ofxCvColorImage.cpp in Sources */,
 				3C0EA4CE0F33879E000BB62E /* ofxCvContourFinder.cpp in Sources */,
-				3C0EA4CF0F33879E000BB62E /* ofxCvConvexHull_hand.cpp in Sources */,
 				3C0EA4D00F33879E000BB62E /* ofxCvFloatImage.cpp in Sources */,
 				3C0EA4D10F33879E000BB62E /* ofxCvGrayscaleImage.cpp in Sources */,
 				3C0EA4D20F33879E000BB62E /* ofxCvImage.cpp in Sources */,
