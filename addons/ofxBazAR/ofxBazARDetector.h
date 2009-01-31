@@ -249,8 +249,8 @@ class ofxBazARDetector {
 		}
 		
 		void processNextImage(unsigned char * _pixels, int _w, int _h, int _type=OF_IMAGE_COLOR) {
-		if (frameTick >= frameSkip) {
-				frameTick = 0;
+		// if (frameTick >= frameSkip) {
+		// 		frameTick = 0;
 
 				colorImg.setFromPixels( _pixels, 320,240);
 				detectImage = colorImg;
@@ -272,9 +272,9 @@ class ofxBazARDetector {
 					}
 				}
 				
-		} else {
-			frameTick++;
-		}
+		// } else {
+		// 	frameTick++;
+		// }
 		}
 
 };
