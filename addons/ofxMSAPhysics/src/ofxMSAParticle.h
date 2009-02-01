@@ -23,6 +23,7 @@
 #define OF_ADDON_USING_OFXOBJCPOINTER
 #include "ofMain.h"
 #include "ofAddons.h"
+#include "ofxObjCPointer.h"
 
 #include "ofxMSAPhysicsParams.h"
 

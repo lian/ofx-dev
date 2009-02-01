@@ -27,9 +27,10 @@
 
 #define OF_ADDON_USING_OFXVECTORMATH
 #define OF_ADDON_USING_OFXOBJCPOINTER
-#define OF_ADDON_USING_OFMSADATARECORDER
+// #define OF_ADDON_USING_OFMSADATARECORDER
 #include "ofMain.h"
 #include "ofAddons.h"
+#include "ofxMSADataRecorder.h"
 
 #include <vector>
 
