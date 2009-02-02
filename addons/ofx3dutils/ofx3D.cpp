@@ -84,6 +84,30 @@ void ofSphere(float _r, float _x, float _y) {
 	glPopMatrix();
 	//drawsphere(3.0, 65.0);	
 }
+
+//-------------------------------------------------------------- GLUT Sphere	
+void ofSphere(float _r, float _x, float _y, float _res) {
+
+	glPushMatrix();
+		glTranslatef(_x, _y, 0.0); 
+		// glColor3f(1.0, 0.0, 0.0);
+		
+		if(OF_POLY_MODE == 0) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		if(OF_POLY_MODE == 1) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		if(OF_POLY_MODE == 2) glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+		
+		ofLightsOn();
+		glColor3f(ofRandom(0,255), ofRandom(0,255), ofRandom(0,255));
+		glutSolidSphere(_r, _res, _res);
+		ofLightsOff();
+		
+		//Turn back to normal for 2d object
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
+	glPopMatrix();
+	//drawsphere(3.0, 65.0);	
+}
+
 //-------------------------------------------------------------- Fog
 void ofFog() {
 	glEnable(GL_FOG);

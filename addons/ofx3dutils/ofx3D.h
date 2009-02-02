@@ -12,6 +12,7 @@
 	//------------------------------------------------------------------- 3D
 	void ofCube(float d, float x, float y);
 	void ofSphere(float _r, float _x, float _y);
+	void ofSphere(float _r, float _x, float _y, float _res);
 	void ofTeaPot(float d, float x, float y);
 	
 	//------------------------------------------------------------------- Nurb
