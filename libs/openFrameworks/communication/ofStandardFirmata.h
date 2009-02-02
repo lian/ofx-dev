@@ -159,10 +159,17 @@ class ofStandardFirmata{
 				bool isInitialized();
                 // returns true if a succesfull connection has been established and the Arduino has reported a firmware
 
+	#ifdef TARGET_WIN32
+                void setDigitalHistoryLength(int length);
+                void setAnalogHistoryLength(int length);
+                void setStringHistoryLength(int length);
+                void setSysExHistoryLength(int nSysEx);
+	#else
                 void setDigitalHistoryLength(uint length);
                 void setAnalogHistoryLength(uint length);
                 void setStringHistoryLength(uint length);
                 void setSysExHistoryLength(uint nSysEx);
+	#endif
 
                 // --- senders
 

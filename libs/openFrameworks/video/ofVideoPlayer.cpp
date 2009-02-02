@@ -189,7 +189,10 @@ void ofVideoPlayer::idleMovie(){
 		#ifndef  TARGET_LINUX  // !linux = quicktime...
 		//--------------------------------------------------------------
 
-			#ifdef TARGET_WIN32 || QT_USE_MOVIETASK
+			#ifdef TARGET_WIN32
+				MoviesTask(moviePtr,0);
+			#endif
+			#ifdef QT_USE_MOVIETASK
 				MoviesTask(moviePtr,0);
 			#endif
 
@@ -422,7 +425,11 @@ bool ofVideoPlayer::loadMovie(string name){
 		TimeValue			curMovieTime;
 		curMovieTime		= 0;
 		TimeValue			duration;
-		OSType whichMediaType	= VIDEO_TYPE;
+		#ifdef TARGET_WIN32
+			OSType whichMediaType	= FOUR_CHAR_CODE('vide');
+		#else
+			OSType whichMediaType	= VIDEO_TYPE; // mingw chokes on this
+		#endif
 		short flags				= nextTimeMediaSample + nextTimeEdgeOK;
 
 		while( curMovieTime >= 0 ) {

@@ -18,7 +18,11 @@ void ofSeedRandom() {
 	gettimeofday(&tv, 0);
 
 	// use XOR'd second, microsecond precision AND pid as seed
-	long int n = (tv.tv_sec ^ tv.tv_usec) ^ getpid();
+	#ifdef TARGET_WIN32
+	  long int n = (tv.tv_sec ^ tv.tv_usec); // ^ getpid();
+	#else
+	  long int n = (tv.tv_sec ^ tv.tv_usec) ^ getpid();
+	#endif
 	srand(n);
 
 }

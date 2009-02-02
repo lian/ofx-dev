@@ -3,5 +3,10 @@ openframeworks.cc - unofficial (pre-release) - Development-Bundle
 
 ..mostly for tinkering with openframeworks at it's early release stage.
 
+## platforms
+
+  - Mac OSX (xcode)
+  - Windows (codeblocks)
+  - Linux (..comming soon)
 
 ## openFrameworks subversion gets merged frequently into this bundle.

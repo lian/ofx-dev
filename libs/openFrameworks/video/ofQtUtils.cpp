@@ -1,6 +1,10 @@
 #include "ofQtUtils.h"
 #include "ofUtils.h"
 
+#ifdef TARGET_WIN32
+  #include "MediaHandlers.h"
+#endif
+
 #ifndef TARGET_LINUX
 static bool bQuicktimeInitialized = false;
 
@@ -256,7 +260,9 @@ OSErr MediaGetStaticFrameRate(Media inMovieMedia, double *outFPS)
   if (sampleCount && err == noErr)
   {
       /* find the media duration */
-    TimeValue64 duration = GetMediaDisplayDuration(inMovieMedia);
+    // TimeValue64 duration = GetMediaDisplayDuration(inMovieMedia);
+    TimeValue64 duration = GetMediaDuration(inMovieMedia);
+
     err = GetMoviesError();
     if (err == noErr)
     {
