@@ -251,6 +251,9 @@ void ofxCvGrayscaleImage::threshold( int value, bool invert) {
 	else cvThreshold( cvImage, cvImageTemp, value, 255, CV_THRESH_BINARY );
 	swapTemp();
 }
+void ofxCvGrayscaleImage::thresholdMSA( int value, int type) {		// MSA
+	cvThreshold( cvImage, cvImageTemp, value, 255, type ); swapTemp();
+}
 
 //--------------------------------------------------------------------------------
 void ofxCvGrayscaleImage::invert(){

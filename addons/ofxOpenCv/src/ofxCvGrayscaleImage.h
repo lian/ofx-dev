@@ -49,6 +49,7 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     // Image Filter Operations
     void contrastStretch();
     void threshold( int value, bool invert = false);
+	void thresholdMSA( int value, int type = CV_THRESH_BINARY); // MSA
 
     // Image Transformation Operations
     void resize( int w, int h );
