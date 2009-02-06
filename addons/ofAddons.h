@@ -48,3 +48,78 @@
 #ifdef OF_ADDON_USING_OFXXMLSETTINGS
 	#include "ofxXmlSettings.h"
 #endif
+
+//-------------------------------------------- ofShader
+#ifdef OF_ADDON_USING_OFSHADER
+	#include "ofShader.h"
+#endif
+
+//-------------------------------------------- ofTodd
+#ifdef OF_ADDON_USING_OFXTODD
+	#include "ofTodd.h"
+#endif
+
+//-------------------------------------------- ofxTuio
+#ifdef OF_ADDON_USING_OFXMOREUTILS
+	#include "ofMoreUtils.h"
+#endif
+
+//-------------------------------------------- ofxGui
+#ifdef OF_ADDON_USING_OFXGUI
+	#include "ofxGui.h"
+#endif
+
+//-------------------------------------------- ofxSimpleGui
+#ifdef OF_ADDON_USING_OFXSIMPLEGUI
+	#include "ofxSimpleGui.h"
+#endif
+
+//-------------------------------------------- ofxMSAPhysics
+#ifdef OF_ADDON_USING_OFXMSAPHYSICS
+	#include "ofxMSAPhysics.h"
+#endif
+
+//-------------------------------------------- ofxMSAShape3D
+#ifdef OF_ADDON_USING_OFXMSASHAPE3D
+	#include "MSAShape3D.h"
+#endif
+
+//-------------------------------------------- ofxMSASpline
+#ifdef OF_ADDON_USING_OFXMSASPLINE
+	#include "ofxMSASpline.h"
+#endif
+
+//-------------------------------------------- ofxQRCodes
+#ifdef OF_ADDON_USING_OFXQRCODES
+	#include "ofxQRCodes.h"
+#endif
+
+//-------------------------------------------- ofxTuio
+#ifdef OF_ADDON_USING_OFXTUIO
+	#include "ofxTuio.h"
+#endif
+
+//-------------------------------------------- ofxFiducialFinder
+#ifdef OF_ADDON_USING_OFXFIDUCIALFINDER
+	#include "ofxFidMain.h"
+#endif
+
+//-------------------------------------------- ofxCvHaarFinder
+#ifdef OF_ADDON_USING_OFXCVHAARFINDER
+	#include "ofxCvHaarFinder.h"
+#endif
+
+//-------------------------------------------- ofxBox2D
+#ifdef OF_ADDON_USING_OFXBOX2D
+	#include "ofxBox2D.h"
+#endif
+
+//-------------------------------------------- ofxBazAR
+#ifdef OF_ADDON_USING_OFXBAZAR
+	#include "ofxBazAR.h"
+#endif
+
+//-------------------------------------------- ofxFreeFrame
+#ifdef OF_ADDON_USING_OFXFREEFRAME
+	#include "ofxFreeFrame.h"
+#endif

@@ -3,14 +3,12 @@
 
 
 #define OF_ADDON_USING_OFXOPENCV
+#define OF_ADDON_USING_OFXCVHAARFINDER
 
 #include "ofMain.h"
 #include "ofAddons.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
-
-//this is not part of the addon yet, so include it seperately
-#include "ofxCvHaarFinder.h"
 
 class testApp : public ofBaseApp {
 
@@ -20,7 +18,7 @@ class testApp : public ofBaseApp {
 		void update();
 		void draw();
 
-		void keyPressed  (int key);
+		void keyPressed(int key);
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);

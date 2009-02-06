@@ -8,11 +8,10 @@
 #ifndef _TEST_WORLD
 #define _TEST_WORLD
 
-#include "ofxBox2D.h"
+#define OF_ADDON_USING_OFXBOX2D
 
 #include "ofMain.h"
 #include "ofAddons.h"
-
 
 class TestWorld {
 

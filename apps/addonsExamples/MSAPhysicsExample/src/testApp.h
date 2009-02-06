@@ -1,10 +1,10 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
+#define OF_ADDON_USING_OFXMSAPHYSICS
 
 #include "ofMain.h"
-#include "ofxMSAPhysics.h"
-
+#include "ofAddons.h"
 
 #define	WIDTH		1280
 #define HEIGHT		720
@@ -33,4 +33,3 @@ public:
 };
 
 #endif
-

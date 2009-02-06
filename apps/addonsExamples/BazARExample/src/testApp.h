@@ -2,8 +2,10 @@
 #define _TEST_APP
 
 
+#define OF_ADDON_USING_OFXBAZAR
+
 #include "ofMain.h"
-#include "ofxBazAR.h"
+#include "ofAddons.h"
 
 class testApp : public ofBaseApp {
 	

@@ -1,12 +1,13 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
+// #define USE_LIVE_VIDEO
 #define MARGIN 10
 
-// #define USE_LIVE_VIDEO
+#define OF_ADDON_USING_OFXFREEFRAME
 
 #include "ofMain.h"
-#include "ofxFreeFrame.h"
+#include "ofAddons.h"
 
 class testApp : public ofBaseApp {
 

@@ -1,11 +1,7 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-#include "ofMain.h"
-#include "ofAddons.h"
-
 #include "TestWorld.h"
-
 
 class testApp : public ofBaseApp {
 	
@@ -27,4 +23,3 @@ class testApp : public ofBaseApp {
 };
 
 #endif
-	
