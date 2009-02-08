@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>This project builds an openFrameworks-based application.</string>
+	<key>FilesToMacroExpand</key>
+	<array>
+		<string>Info.plist</string>
+		<string>English.lproj/InfoPlist.strings</string>
+		<string>main.cpp</string>
+		<string>___PROJECTNAMEASIDENTIFIER___App.h</string>
+		<string>___PROJECTNAMEASIDENTIFIER___App.cpp</string>
+	</array>
+</dict>
+</plist>

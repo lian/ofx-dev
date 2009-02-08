@@ -1,0 +1,565 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C0009D093BD00EBEB88 /* OpenGL.framework */; };
+		002F3C6109D0951E00EBEB88 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002F3C6009D0951E00EBEB88 /* GLUT.framework */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		D80C1A470F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D80C1A450F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.cpp */; };
+		D842B7810F3AE6540005BDA6 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B77C0F3AE6540005BDA6 /* AGL.framework */; };
+		D842B7820F3AE6540005BDA6 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B77D0F3AE6540005BDA6 /* ApplicationServices.framework */; };
+		D842B7830F3AE6540005BDA6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B77E0F3AE6540005BDA6 /* Carbon.framework */; };
+		D842B7840F3AE6540005BDA6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B77F0F3AE6540005BDA6 /* CoreFoundation.framework */; };
+		D842B7850F3AE6540005BDA6 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B7800F3AE6540005BDA6 /* QuickTime.framework */; };
+		D842B7950F3AE6860005BDA6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B7920F3AE6860005BDA6 /* AudioToolbox.framework */; };
+		D842B7960F3AE6860005BDA6 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B7930F3AE6860005BDA6 /* CoreAudio.framework */; };
+		D842B7970F3AE6860005BDA6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D842B7940F3AE6860005BDA6 /* CoreServices.framework */; };
+		D842BC3F0F3AE6EA0005BDA6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BC3E0F3AE6EA0005BDA6 /* main.cpp */; };
+		D842BD490F3AEDAF0005BDA6 /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD1C0F3AEDAF0005BDA6 /* ofAppRunner.cpp */; };
+		D842BD4A0F3AEDAF0005BDA6 /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD200F3AEDAF0005BDA6 /* ofArduino.cpp */; };
+		D842BD4B0F3AEDAF0005BDA6 /* ofSerial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD220F3AEDAF0005BDA6 /* ofSerial.cpp */; };
+		D842BD4C0F3AEDAF0005BDA6 /* ofStandardFirmata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD240F3AEDAF0005BDA6 /* ofStandardFirmata.cpp */; };
+		D842BD4D0F3AEDAF0005BDA6 /* ofGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD2A0F3AEDAF0005BDA6 /* ofGraphics.cpp */; };
+		D842BD4E0F3AEDAF0005BDA6 /* ofImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD2C0F3AEDAF0005BDA6 /* ofImage.cpp */; };
+		D842BD4F0F3AEDAF0005BDA6 /* ofTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD2E0F3AEDAF0005BDA6 /* ofTexture.cpp */; };
+		D842BD500F3AEDAF0005BDA6 /* ofTrueTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD300F3AEDAF0005BDA6 /* ofTrueTypeFont.cpp */; };
+		D842BD510F3AEDAF0005BDA6 /* ofSoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD340F3AEDAF0005BDA6 /* ofSoundPlayer.cpp */; };
+		D842BD520F3AEDAF0005BDA6 /* ofSoundStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD360F3AEDAF0005BDA6 /* ofSoundStream.cpp */; };
+		D842BD530F3AEDAF0005BDA6 /* ofMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD3A0F3AEDAF0005BDA6 /* ofMath.cpp */; };
+		D842BD540F3AEDAF0005BDA6 /* ofUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD3D0F3AEDAF0005BDA6 /* ofUtils.cpp */; };
+		D842BD550F3AEDAF0005BDA6 /* ofQtUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD400F3AEDAF0005BDA6 /* ofQtUtils.cpp */; };
+		D842BD560F3AEDAF0005BDA6 /* ofUCUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD420F3AEDAF0005BDA6 /* ofUCUtils.cpp */; };
+		D842BD570F3AEDAF0005BDA6 /* ofVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD450F3AEDAF0005BDA6 /* ofVideoGrabber.cpp */; };
+		D842BD580F3AEDAF0005BDA6 /* ofVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D842BD470F3AEDAF0005BDA6 /* ofVideoPlayer.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Copy Frameworks into .app bundle";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		002F3C0009D093BD00EBEB88 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		002F3C6009D0951E00EBEB88 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* ___PROJECTNAME___.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "___PROJECTNAME___.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D80C1A450F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "___PROJECTNAMEASIDENTIFIER___App.cpp"; sourceTree = "<group>"; };
+		D80C1A460F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___App.h"; sourceTree = "<group>"; };
+		D842B77C0F3AE6540005BDA6 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		D842B77D0F3AE6540005BDA6 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		D842B77E0F3AE6540005BDA6 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		D842B77F0F3AE6540005BDA6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
+		D842B7800F3AE6540005BDA6 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
+		D842B7920F3AE6860005BDA6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
+		D842B7930F3AE6860005BDA6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		D842B7940F3AE6860005BDA6 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
+		D842BC3E0F3AE6EA0005BDA6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D842BCD40F3AED650005BDA6 /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
+		D842BD1B0F3AEDAF0005BDA6 /* ofAppGlutGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppGlutGlue.h; path = ../../../libs/openFrameworks/app/ofAppGlutGlue.h; sourceTree = SOURCE_ROOT; };
+		D842BD1C0F3AEDAF0005BDA6 /* ofAppRunner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppRunner.cpp; path = ../../../libs/openFrameworks/app/ofAppRunner.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD1D0F3AEDAF0005BDA6 /* ofAppRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppRunner.h; path = ../../../libs/openFrameworks/app/ofAppRunner.h; sourceTree = SOURCE_ROOT; };
+		D842BD1E0F3AEDAF0005BDA6 /* ofBaseApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofBaseApp.h; path = ../../../libs/openFrameworks/app/ofBaseApp.h; sourceTree = SOURCE_ROOT; };
+		D842BD200F3AEDAF0005BDA6 /* ofArduino.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofArduino.cpp; path = ../../../libs/openFrameworks/communication/ofArduino.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD210F3AEDAF0005BDA6 /* ofArduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofArduino.h; path = ../../../libs/openFrameworks/communication/ofArduino.h; sourceTree = SOURCE_ROOT; };
+		D842BD220F3AEDAF0005BDA6 /* ofSerial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofSerial.cpp; path = ../../../libs/openFrameworks/communication/ofSerial.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD230F3AEDAF0005BDA6 /* ofSerial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofSerial.h; path = ../../../libs/openFrameworks/communication/ofSerial.h; sourceTree = SOURCE_ROOT; };
+		D842BD240F3AEDAF0005BDA6 /* ofStandardFirmata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofStandardFirmata.cpp; path = ../../../libs/openFrameworks/communication/ofStandardFirmata.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD250F3AEDAF0005BDA6 /* ofStandardFirmata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofStandardFirmata.h; path = ../../../libs/openFrameworks/communication/ofStandardFirmata.h; sourceTree = SOURCE_ROOT; };
+		D842BD270F3AEDAF0005BDA6 /* ofEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofEvents.h; path = ../../../libs/openFrameworks/events/ofEvents.h; sourceTree = SOURCE_ROOT; };
+		D842BD280F3AEDAF0005BDA6 /* ofEventUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofEventUtils.h; path = ../../../libs/openFrameworks/events/ofEventUtils.h; sourceTree = SOURCE_ROOT; };
+		D842BD2A0F3AEDAF0005BDA6 /* ofGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofGraphics.cpp; path = ../../../libs/openFrameworks/graphics/ofGraphics.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD2B0F3AEDAF0005BDA6 /* ofGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofGraphics.h; path = ../../../libs/openFrameworks/graphics/ofGraphics.h; sourceTree = SOURCE_ROOT; };
+		D842BD2C0F3AEDAF0005BDA6 /* ofImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofImage.cpp; path = ../../../libs/openFrameworks/graphics/ofImage.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD2D0F3AEDAF0005BDA6 /* ofImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofImage.h; path = ../../../libs/openFrameworks/graphics/ofImage.h; sourceTree = SOURCE_ROOT; };
+		D842BD2E0F3AEDAF0005BDA6 /* ofTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofTexture.cpp; path = ../../../libs/openFrameworks/graphics/ofTexture.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD2F0F3AEDAF0005BDA6 /* ofTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofTexture.h; path = ../../../libs/openFrameworks/graphics/ofTexture.h; sourceTree = SOURCE_ROOT; };
+		D842BD300F3AEDAF0005BDA6 /* ofTrueTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofTrueTypeFont.cpp; path = ../../../libs/openFrameworks/graphics/ofTrueTypeFont.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD310F3AEDAF0005BDA6 /* ofTrueTypeFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofTrueTypeFont.h; path = ../../../libs/openFrameworks/graphics/ofTrueTypeFont.h; sourceTree = SOURCE_ROOT; };
+		D842BD320F3AEDAF0005BDA6 /* ofMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofMain.h; path = ../../../libs/openFrameworks/ofMain.h; sourceTree = SOURCE_ROOT; };
+		D842BD340F3AEDAF0005BDA6 /* ofSoundPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofSoundPlayer.cpp; path = ../../../libs/openFrameworks/sound/ofSoundPlayer.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD350F3AEDAF0005BDA6 /* ofSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofSoundPlayer.h; path = ../../../libs/openFrameworks/sound/ofSoundPlayer.h; sourceTree = SOURCE_ROOT; };
+		D842BD360F3AEDAF0005BDA6 /* ofSoundStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofSoundStream.cpp; path = ../../../libs/openFrameworks/sound/ofSoundStream.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD370F3AEDAF0005BDA6 /* ofSoundStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofSoundStream.h; path = ../../../libs/openFrameworks/sound/ofSoundStream.h; sourceTree = SOURCE_ROOT; };
+		D842BD390F3AEDAF0005BDA6 /* ofConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofConstants.h; path = ../../../libs/openFrameworks/utils/ofConstants.h; sourceTree = SOURCE_ROOT; };
+		D842BD3A0F3AEDAF0005BDA6 /* ofMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofMath.cpp; path = ../../../libs/openFrameworks/utils/ofMath.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD3B0F3AEDAF0005BDA6 /* ofMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofMath.h; path = ../../../libs/openFrameworks/utils/ofMath.h; sourceTree = SOURCE_ROOT; };
+		D842BD3C0F3AEDAF0005BDA6 /* ofTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofTypes.h; path = ../../../libs/openFrameworks/utils/ofTypes.h; sourceTree = SOURCE_ROOT; };
+		D842BD3D0F3AEDAF0005BDA6 /* ofUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofUtils.cpp; path = ../../../libs/openFrameworks/utils/ofUtils.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD3E0F3AEDAF0005BDA6 /* ofUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofUtils.h; path = ../../../libs/openFrameworks/utils/ofUtils.h; sourceTree = SOURCE_ROOT; };
+		D842BD400F3AEDAF0005BDA6 /* ofQtUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofQtUtils.cpp; path = ../../../libs/openFrameworks/video/ofQtUtils.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD410F3AEDAF0005BDA6 /* ofQtUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofQtUtils.h; path = ../../../libs/openFrameworks/video/ofQtUtils.h; sourceTree = SOURCE_ROOT; };
+		D842BD420F3AEDAF0005BDA6 /* ofUCUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofUCUtils.cpp; path = ../../../libs/openFrameworks/video/ofUCUtils.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD430F3AEDAF0005BDA6 /* ofUCUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofUCUtils.h; path = ../../../libs/openFrameworks/video/ofUCUtils.h; sourceTree = SOURCE_ROOT; };
+		D842BD440F3AEDAF0005BDA6 /* ofV4LUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofV4LUtils.h; path = ../../../libs/openFrameworks/video/ofV4LUtils.h; sourceTree = SOURCE_ROOT; };
+		D842BD450F3AEDAF0005BDA6 /* ofVideoGrabber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofVideoGrabber.cpp; path = ../../../libs/openFrameworks/video/ofVideoGrabber.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD460F3AEDAF0005BDA6 /* ofVideoGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofVideoGrabber.h; path = ../../../libs/openFrameworks/video/ofVideoGrabber.h; sourceTree = SOURCE_ROOT; };
+		D842BD470F3AEDAF0005BDA6 /* ofVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofVideoPlayer.cpp; path = ../../../libs/openFrameworks/video/ofVideoPlayer.cpp; sourceTree = SOURCE_ROOT; };
+		D842BD480F3AEDAF0005BDA6 /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofVideoPlayer.h; path = ../../../libs/openFrameworks/video/ofVideoPlayer.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002F3C6109D0951E00EBEB88 /* GLUT.framework in Frameworks */,
+				002F3C0109D093BD00EBEB88 /* OpenGL.framework in Frameworks */,
+				D842B7810F3AE6540005BDA6 /* AGL.framework in Frameworks */,
+				D842B7820F3AE6540005BDA6 /* ApplicationServices.framework in Frameworks */,
+				D842B7830F3AE6540005BDA6 /* Carbon.framework in Frameworks */,
+				D842B7840F3AE6540005BDA6 /* CoreFoundation.framework in Frameworks */,
+				D842B7850F3AE6540005BDA6 /* QuickTime.framework in Frameworks */,
+				D842B7950F3AE6860005BDA6 /* AudioToolbox.framework in Frameworks */,
+				D842B7960F3AE6860005BDA6 /* CoreAudio.framework in Frameworks */,
+				D842B7970F3AE6860005BDA6 /* CoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D842B77E0F3AE6540005BDA6 /* Carbon.framework */,
+				002F3C6009D0951E00EBEB88 /* GLUT.framework */,
+				D842B77F0F3AE6540005BDA6 /* CoreFoundation.framework */,
+				002F3C0009D093BD00EBEB88 /* OpenGL.framework */,
+				D842B7800F3AE6540005BDA6 /* QuickTime.framework */,
+				D842B77D0F3AE6540005BDA6 /* ApplicationServices.framework */,
+				D842B7920F3AE6860005BDA6 /* AudioToolbox.framework */,
+				D842B7930F3AE6860005BDA6 /* CoreAudio.framework */,
+				D842B7940F3AE6860005BDA6 /* CoreServices.framework */,
+				D842B77C0F3AE6540005BDA6 /* AGL.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* ___PROJECTNAME___.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* ___PROJECTNAMEASXML___ */ = {
+			isa = PBXGroup;
+			children = (
+				29B97315FDCFA39411CA2CEA /* Source */,
+				D842BC860F3AEC510005BDA6 /* Libraries */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = "___PROJECTNAMEASXML___";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				D842BC3E0F3AE6EA0005BDA6 /* main.cpp */,
+				D80C1A460F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.h */,
+				D80C1A450F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D842BC860F3AEC510005BDA6 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD190F3AEDAF0005BDA6 /* openFrameworks */,
+				D842BCD20F3AED380005BDA6 /* addons */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		D842BCD20F3AED380005BDA6 /* addons */ = {
+			isa = PBXGroup;
+			children = (
+				D842BCD40F3AED650005BDA6 /* ofAddons.h */,
+			);
+			name = addons;
+			sourceTree = "<group>";
+		};
+		D842BD190F3AEDAF0005BDA6 /* openFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD1A0F3AEDAF0005BDA6 /* app */,
+				D842BD1F0F3AEDAF0005BDA6 /* communication */,
+				D842BD260F3AEDAF0005BDA6 /* events */,
+				D842BD290F3AEDAF0005BDA6 /* graphics */,
+				D842BD320F3AEDAF0005BDA6 /* ofMain.h */,
+				D842BD330F3AEDAF0005BDA6 /* sound */,
+				D842BD380F3AEDAF0005BDA6 /* utils */,
+				D842BD3F0F3AEDAF0005BDA6 /* video */,
+			);
+			name = openFrameworks;
+			path = ../../../libs/openFrameworks;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD1A0F3AEDAF0005BDA6 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD1B0F3AEDAF0005BDA6 /* ofAppGlutGlue.h */,
+				D842BD1C0F3AEDAF0005BDA6 /* ofAppRunner.cpp */,
+				D842BD1D0F3AEDAF0005BDA6 /* ofAppRunner.h */,
+				D842BD1E0F3AEDAF0005BDA6 /* ofBaseApp.h */,
+			);
+			name = app;
+			path = ../../../libs/openFrameworks/app;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD1F0F3AEDAF0005BDA6 /* communication */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD200F3AEDAF0005BDA6 /* ofArduino.cpp */,
+				D842BD210F3AEDAF0005BDA6 /* ofArduino.h */,
+				D842BD220F3AEDAF0005BDA6 /* ofSerial.cpp */,
+				D842BD230F3AEDAF0005BDA6 /* ofSerial.h */,
+				D842BD240F3AEDAF0005BDA6 /* ofStandardFirmata.cpp */,
+				D842BD250F3AEDAF0005BDA6 /* ofStandardFirmata.h */,
+			);
+			name = communication;
+			path = ../../../libs/openFrameworks/communication;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD260F3AEDAF0005BDA6 /* events */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD270F3AEDAF0005BDA6 /* ofEvents.h */,
+				D842BD280F3AEDAF0005BDA6 /* ofEventUtils.h */,
+			);
+			name = events;
+			path = ../../../libs/openFrameworks/events;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD290F3AEDAF0005BDA6 /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD2A0F3AEDAF0005BDA6 /* ofGraphics.cpp */,
+				D842BD2B0F3AEDAF0005BDA6 /* ofGraphics.h */,
+				D842BD2C0F3AEDAF0005BDA6 /* ofImage.cpp */,
+				D842BD2D0F3AEDAF0005BDA6 /* ofImage.h */,
+				D842BD2E0F3AEDAF0005BDA6 /* ofTexture.cpp */,
+				D842BD2F0F3AEDAF0005BDA6 /* ofTexture.h */,
+				D842BD300F3AEDAF0005BDA6 /* ofTrueTypeFont.cpp */,
+				D842BD310F3AEDAF0005BDA6 /* ofTrueTypeFont.h */,
+			);
+			name = graphics;
+			path = ../../../libs/openFrameworks/graphics;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD330F3AEDAF0005BDA6 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD340F3AEDAF0005BDA6 /* ofSoundPlayer.cpp */,
+				D842BD350F3AEDAF0005BDA6 /* ofSoundPlayer.h */,
+				D842BD360F3AEDAF0005BDA6 /* ofSoundStream.cpp */,
+				D842BD370F3AEDAF0005BDA6 /* ofSoundStream.h */,
+			);
+			name = sound;
+			path = ../../../libs/openFrameworks/sound;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD380F3AEDAF0005BDA6 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD390F3AEDAF0005BDA6 /* ofConstants.h */,
+				D842BD3A0F3AEDAF0005BDA6 /* ofMath.cpp */,
+				D842BD3B0F3AEDAF0005BDA6 /* ofMath.h */,
+				D842BD3C0F3AEDAF0005BDA6 /* ofTypes.h */,
+				D842BD3D0F3AEDAF0005BDA6 /* ofUtils.cpp */,
+				D842BD3E0F3AEDAF0005BDA6 /* ofUtils.h */,
+			);
+			name = utils;
+			path = ../../../libs/openFrameworks/utils;
+			sourceTree = SOURCE_ROOT;
+		};
+		D842BD3F0F3AEDAF0005BDA6 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				D842BD400F3AEDAF0005BDA6 /* ofQtUtils.cpp */,
+				D842BD410F3AEDAF0005BDA6 /* ofQtUtils.h */,
+				D842BD420F3AEDAF0005BDA6 /* ofUCUtils.cpp */,
+				D842BD430F3AEDAF0005BDA6 /* ofUCUtils.h */,
+				D842BD440F3AEDAF0005BDA6 /* ofV4LUtils.h */,
+				D842BD450F3AEDAF0005BDA6 /* ofVideoGrabber.cpp */,
+				D842BD460F3AEDAF0005BDA6 /* ofVideoGrabber.h */,
+				D842BD470F3AEDAF0005BDA6 /* ofVideoPlayer.cpp */,
+				D842BD480F3AEDAF0005BDA6 /* ofVideoPlayer.h */,
+			);
+			name = video;
+			path = ../../../libs/openFrameworks/video;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* ___PROJECTNAME___ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "___PROJECTNAME___" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				002F39FD09D0883400EBEB88 /* Copy Frameworks into .app bundle */,
+				D842BD5A0F3AEDD70005BDA6 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "___PROJECTNAME___";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "___PROJECTNAME___";
+			productReference = 8D1107320486CEB800E47090 /* ___PROJECTNAME___.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "___PROJECTNAME___" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* ___PROJECTNAMEASXML___ */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* ___PROJECTNAME___ */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D842BD5A0F3AEDD70005BDA6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -f ../../../libs/fmodex/lib/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"\ninstall_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D842BC3F0F3AE6EA0005BDA6 /* main.cpp in Sources */,
+				D842BD490F3AEDAF0005BDA6 /* ofAppRunner.cpp in Sources */,
+				D842BD4A0F3AEDAF0005BDA6 /* ofArduino.cpp in Sources */,
+				D842BD4B0F3AEDAF0005BDA6 /* ofSerial.cpp in Sources */,
+				D842BD4C0F3AEDAF0005BDA6 /* ofStandardFirmata.cpp in Sources */,
+				D842BD4D0F3AEDAF0005BDA6 /* ofGraphics.cpp in Sources */,
+				D842BD4E0F3AEDAF0005BDA6 /* ofImage.cpp in Sources */,
+				D842BD4F0F3AEDAF0005BDA6 /* ofTexture.cpp in Sources */,
+				D842BD500F3AEDAF0005BDA6 /* ofTrueTypeFont.cpp in Sources */,
+				D842BD510F3AEDAF0005BDA6 /* ofSoundPlayer.cpp in Sources */,
+				D842BD520F3AEDAF0005BDA6 /* ofSoundStream.cpp in Sources */,
+				D842BD530F3AEDAF0005BDA6 /* ofMath.cpp in Sources */,
+				D842BD540F3AEDAF0005BDA6 /* ofUtils.cpp in Sources */,
+				D842BD550F3AEDAF0005BDA6 /* ofQtUtils.cpp in Sources */,
+				D842BD560F3AEDAF0005BDA6 /* ofUCUtils.cpp in Sources */,
+				D842BD570F3AEDAF0005BDA6 /* ofVideoGrabber.cpp in Sources */,
+				D842BD580F3AEDAF0005BDA6 /* ofVideoPlayer.cpp in Sources */,
+				D80C1A470F3B913A0063E0FF /* ___PROJECTNAMEASIDENTIFIER___App.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "___PROJECTNAME___";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "___PROJECTNAME___";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../libs/openFrameworks/**",
+					"../../../libs/freetype/include/**",
+					"../../../libs/freeimage/include/**",
+					../../../libs/fmodex/inc,
+					../../../libs/GLee/include,
+					../../../libs/rtAudio/include,
+					../../../libs/poco/include,
+					"$(HEADER_SEARCH_PATHS)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-lpthread",
+				);
+				OTHER_LDFLAGS = (
+					../../../libs/freetype/lib/freetype.a,
+					../../../libs/freeimage/lib/freeimage.a,
+					../../../libs/fmodex/lib/libfmodex.dylib,
+					../../../libs/GLee/lib/GLee.a,
+					../../../libs/rtAudio/lib/rtAudio.a,
+					../../../libs/poco/lib/libPocoFoundation.a,
+				);
+				SYMROOT = $SRCROOT/build;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_MODEL_TUNING = G5;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../libs/openFrameworks/**",
+					"../../../libs/freetype/include/**",
+					"../../../libs/freeimage/include/**",
+					../../../libs/fmodex/inc,
+					../../../libs/GLee/include,
+					../../../libs/rtAudio/include,
+					../../../libs/poco/include,
+					"$(HEADER_SEARCH_PATHS)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-lpthread",
+				);
+				OTHER_LDFLAGS = (
+					../../../libs/freetype/lib/freetype.a,
+					../../../libs/freeimage/lib/freeimage.a,
+					../../../libs/fmodex/lib/libfmodex.dylib,
+					../../../libs/GLee/lib/GLee.a,
+					../../../libs/rtAudio/lib/rtAudio.a,
+					../../../libs/poco/lib/libPocoFoundation.a,
+				);
+				SYMROOT = $SRCROOT/build;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "___PROJECTNAME___" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "___PROJECTNAME___" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
