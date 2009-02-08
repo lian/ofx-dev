@@ -15,3 +15,18 @@ namespace :clean do
     # ..
   end
 end
+
+XCODE_TEMPLATE_DIRECTORY = '/Library/Application Support/Developer/Shared/Xcode/Project Templates'
+GROUP_DIRECTORY_NAME = 'Application'
+TEMPLATE_NAME = 'openFrameworks Application'
+namespace :install do
+  desc 'install Xcode openFrameworks project template'
+  task :xcode_template do
+    path = File.join(XCODE_TEMPLATE_DIRECTORY, GROUP_DIRECTORY_NAME)
+    FileUtils.mkdir_p(path) unless File.exists? path
+    path = File.join(path, TEMPLATE_NAME)
+    # NB - perhaps should remove old version when present
+    # FileUtils.rm_r(path) if File.exists? path
+    FileUtils.cp_r('other/xcode_template', path)
+  end
+end
