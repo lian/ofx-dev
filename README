@@ -7,6 +7,51 @@ openframeworks.cc - unofficial (pre-release) - Development-Bundle
 
   - Mac OSX (xcode)
   - Windows (codeblocks)
-  - Linux (..comming soon)
+  - Linux (codeblocks)
 
 ## openFrameworks subversion gets merged frequently into this bundle.
+
+
+
+## usage/install
+
+  before using this bundle make sure to follow the setup-
+  guide according to your running operation system!
+
+  ## Mac Xcode
+	
+  - install git
+      "port install git-core +svn"
+  - install Xcode
+      "http://developer.apple.com/TOOLS/xcode/"
+	
+  ## Windows Codeblocks
+	
+  - install git
+      "http://code.google.com/p/msysgit/"
+  - install quicktime
+      "http://www.apple.com/de/quicktime/download/"
+  - install codeblocks
+      "http://www.openframeworks.cc/setup/codeblocks_setup_guide"
+
+	
+  ## Linux Codeblocks - Debian (lenny)
+	
+  - install debian with installer
+      "debian-Lenny-DI-rc2-i386-businesscard.iso"
+		
+  - install build-essential, git and xfce4
+      "apt-get install screen sudo build-essential subversion"
+      "apt-get install git-core git-svn xorg xfce4 mesa-utils"
+
+  - install codeblocks, and dependencies
+      "apt-get install gdb libwxgtk2.8-0 libwxgtk2.8-dev wx2.8-headers wx-common"
+      "wget http://mesh.dl.sourceforge.net/sourceforge/codeblocks/codeblocks-8.02debian-i386.tar.gz"
+      "tar -zxf codeblocks-8.02debian-i386.tar.gz -c codeblocks_install"
+      "dpkg -i codeblocks_install/lib*.deb"
+      "dpkg -i codeblocks_install/codeblocks*.deb"
+
+  - install openframeworks dependencies for codeblocks
+      "apt-get install zlib1g-dev libpoco5-dev libasound2-dev libraw1394-dev"
+      "apt-get install freeglut3 freeglut3-dev libxmu-dev libxxf86vm-dev"
+

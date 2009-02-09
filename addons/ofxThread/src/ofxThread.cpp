@@ -3,6 +3,7 @@
 //-------------------------------------------------
 ofxThread::ofxThread(){
 	threadRunning = false;
+	verbose=false;
 }
 
 //-------------------------------------------------
@@ -13,8 +14,7 @@ ofxThread::~ofxThread(){
 //-------------------------------------------------
 bool ofxThread::isThreadRunning(){
 	//should be thread safe - no writing of vars here
-	if(threadRunning) return true;
-	else return false;
+	return threadRunning;
 }
 
 //-------------------------------------------------
@@ -32,7 +32,6 @@ void ofxThread::startThread(bool _blocking, bool _verbose){
 		pthread_create(&myThread, NULL, thread, (void *)this);
 	#endif
 
-	locked			= false;
 	blocking		=	_blocking;
 	verbose			= _verbose;
 }
@@ -42,11 +41,6 @@ void ofxThread::startThread(bool _blocking, bool _verbose){
 bool ofxThread::lock(){
 	if(!threadRunning){
 		if(verbose)printf("ofxThread: need to call startThread first\n");
-		return false;
-	}
-
-	if(locked){
-		if(verbose)printf("ofxThread: already locked! \n");
 		return false;
 	}
 
@@ -61,7 +55,8 @@ bool ofxThread::lock(){
 		if(verbose)printf("ofxThread: we are in -- mutext is now locked \n");
 	#else
 
-		if(!blocking){
+		if(blocking){
+			if(verbose)printf("ofxThread: waiting till mutext is unlocked\n");
 			pthread_mutex_lock(&myMutex);
 			if(verbose)printf("ofxThread: we are in -- mutext is now locked \n");
 		}else{
@@ -70,13 +65,12 @@ bool ofxThread::lock(){
 				if(verbose)printf("ofxThread: we are in -- mutext is now locked \n");
 			}
 			else{
-				if(verbose)printf("ofxThread: mutext is busy locked =  %i \n",locked );
+				if(verbose)printf("ofxThread: mutext is busy - already locked\n");
 				return false;
 			}
 		}
 	#endif
 
-	locked = true;
 	return true;
 }
 
@@ -94,7 +88,6 @@ bool ofxThread::unlock(){
 		pthread_mutex_unlock(&myMutex);
 	#endif
 
-	locked = false;
 	if(verbose)printf("ofxThread: we are out -- mutext is now unlocked \n");
 
 	return true;
@@ -115,4 +108,3 @@ void ofxThread::stopThread(){
 		if(verbose)printf("ofxThread: thread already stopped\n");
 	}
 }
-

@@ -56,7 +56,6 @@ class ofxThread{
 	#endif
 
 	bool threadRunning;
-	bool locked;
 	bool blocking;
 	bool verbose;
 };
