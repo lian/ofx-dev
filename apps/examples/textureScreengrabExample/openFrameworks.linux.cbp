@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="textureScreengrabExample" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="addons/;libs/;src/;libs/openframeworks/;libs/openframeworks/app/;libs/openframeworks/communication/;libs/openframeworks/graphics/;libs/openframeworks/sound/;libs/openframeworks/utils/;libs/openframeworks/video/;" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/textureScreengrabExample_debug" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
+				<Option object_output="build/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/textureScreengrabExample" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
+				<Option object_output="build/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Environment>
+				<Variable name="target" value="textureScreengrabExample" />
+				<Variable name="nautilusOnBuild" value="false" />
+				<Variable name="runOnBuild" value="false" />
+			</Environment>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../../../addons/" />
+			<Add directory="../../../libs/openFrameworks/" />
+			<Add directory="../../../libs/openFrameworks/events" />
+			<Add directory="../../../libs/openFrameworks/app" />
+			<Add directory="../../../libs/openFrameworks/communication" />
+			<Add directory="../../../libs/openFrameworks/graphics" />
+			<Add directory="../../../libs/openFrameworks/video" />
+			<Add directory="../../../libs/openFrameworks/utils" />
+			<Add directory="../../../libs/openFrameworks/sound" />
+			<Add directory="../../../libs/rtAudio/include" />
+			<Add directory="../../../libs/fmodex/inc" />
+			<Add directory="../../../libs/GLee/include" />
+			<Add directory="../../../libs/freeimage/Source" />
+			<Add directory="../../../libs/freeimage/include" />
+			<Add directory="../../../libs/fobs/inc" />
+			<Add directory="../../../libs/alsa/include" />
+			<Add directory="../../../libs/alsa/include/alsa" />
+			<Add directory="../../../libs/freetype/include/linux" />
+			<Add directory="../../../libs/freetype/include/linux/freetype2" />
+			<Add directory="../../../libs/freetype/include/linux/freetype2/freetype" />
+			<Add directory="../../../libs/unicap/include" />
+			<Add directory="/usr/include" />
+			<Add directory="/usr/include/GL" />
+			<Add directory="../../../addons" />
+			<Add directory="../../../libs/ffmpeg" />
+			<Add directory="../../../libs/ffmpeg/libavcodec" />
+			<Add directory="../../../libs/ffmpeg/libavformat" />
+			<Add directory="../../../libs/ffmpeg/libavutil" />
+			<Add directory="../../../libs/ffmpeg/libswscale" />
+			<Add directory="../../../libs/poco/include" />
+		</Compiler>
+		<Linker>
+			<Add library="fmodex" />
+			<Add library="raw1394" />
+			<Add library="glut" />
+			<Add library="GL" />
+			<Add library="GLU" />
+			<Add library="Xxf86vm" />
+			<Add library="asound" />
+			<Add library="PocoFoundation" />
+			<Add library="PocoUtil" />
+			<Add library="z" />
+			<Add library="../../../libs/freetype/lib/linux/libfreetype.a" />
+			<Add library="../../../libs/freeimage/lib/libfreeimage.a" />
+			<Add library="../../../libs/rtAudio/lib/libRtAudio.a" />
+			<Add library="../../../libs/fobs/lib/libfobscore.a" />
+			<Add library="../../../libs/GLee/lib/libGLee.a" />
+			<Add library="avcodec" />
+			<Add library="avformat" />
+			<Add library="avutil" />
+			<Add library="swscale" />
+			<Add library="dcam" />
+			<Add library="unicap" />
+			<Add library="v4l" />
+			<Add library="v4l2" />
+			<Add library="vid21394" />
+			<Add directory="../../../libs/fmodex/lib/linux" />
+			<Add directory="../../../libs/ffmpeg/libavcodec" />
+			<Add directory="../../../libs/ffmpeg/libavformat" />
+			<Add directory="../../../libs/ffmpeg/libavutil" />
+			<Add directory="../../../libs/ffmpeg/libswscale" />
+			<Add directory="../../../libs/unicap/lib" />
+			<Add directory="../../../libs/poco/lib/linux" />
+		</Linker>
+		<ExtraCommands>
+			<Add after="#" />
+			<Add after="#      copy libs and shell script to bin directory:" />
+			<Add after="#" />
+<!--			<Add after="cp -r ../../../export/libs $(PROJECT_DIR)bin/" /> -->
+
+			<Add after="mkdir -p $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp ../../../libs/freetype/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp ../../../libs/freeimage/lib/*.so* $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp ../../../libs/fmodex/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp ../../../libs/unicap/lib/*.so* $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp ../../../libs/ffmpeg/*/*.so* $(PROJECT_DIR)bin/libs/" />
+
+<!--
+			<Add after="cp ../../../addons/ofxOpenCv/libs/opencv/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp ../../../addons/ofxOsc/libs/oscpack/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
+-->
+			<Add after="cp ../../../addons/*/libs/*/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
+			
+			<Add after="cp ../../../other/codeblocks/linux_clickToLaunchApp.sh $(PROJECT_DIR)bin/clickToLaunchApp_$(TARGET_NAME).sh" />
+			<Add after="sed -i s/applicationName/$(TARGET_OUTPUT_BASENAME)/g  $(PROJECT_DIR)bin/clickToLaunchApp_$(TARGET_NAME).sh" />
+<!--
+			<Add after="#" />
+			<Add after="#    this is a shell script that can either (a) run the app or (b) launch nautilus to a good directory for you to run the app" />
+			<Add after="#" />
+			<Add after="./cb_build_runner.sh $(TARGET_OUTPUT_BASENAME) $runOnBuild $nautilusOnBuild" />
+			<Add after="#" />
+			<Add after="#     to enable either, change the custom variables in project-&gt;build options-&gt;custom variables" />
+			<Add after="#     to true / false." />
+			<Add after="#" />
+			<Add after="#     currently this is disabled, but allows you to run the app from w/in CB." />
+			<Add after="#" />
+-->
+			<Add after="#" />
+			<Add after="#      DONE" />
+			<Add after="#" />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="../../../addons/ofAddons.h">
+			<Option virtualFolder="addons/" />
+		</Unit>
+		<Unit filename="src/main.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/testApp.cpp">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/testApp.h">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/app/ofAppGlutGlue.h">
+			<Option virtualFolder="libs/openframeworks/app/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/app/ofAppRunner.cpp">
+			<Option virtualFolder="libs/openframeworks/app/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/app/ofAppRunner.h">
+			<Option virtualFolder="libs/openframeworks/app/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/app/ofSimpleApp.h">
+			<Option virtualFolder="libs/openframeworks/app/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/communication/ofSerial.cpp">
+			<Option virtualFolder="libs/openframeworks/communication/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/communication/ofSerial.h">
+			<Option virtualFolder="libs/openframeworks/communication/" />
+		</Unit>
+<!--
+		<Unit filename="../../../libs/openFrameworks/events/ofAppEvents.cpp">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofAppEvents.h">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofAudioEvents.cpp">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofAudioEvents.h">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofKeyEvents.cpp">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofKeyEvents.h">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofMouseEvents.cpp">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/events/ofMouseEvents.h">
+			<Option virtualFolder="libs/openframeworks/events/" />
+		</Unit>
+-->
+		<Unit filename="../../../libs/openFrameworks/graphics/ofGraphics.cpp">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofGraphics.h">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofImage.cpp">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofImage.h">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofTexture.cpp">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofTexture.h">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofTrueTypeFont.cpp">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/graphics/ofTrueTypeFont.h">
+			<Option virtualFolder="libs/openframeworks/graphics/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/ofMain.h">
+			<Option virtualFolder="libs/openframeworks/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/sound/ofSoundPlayer.cpp">
+			<Option virtualFolder="libs/openframeworks/sound/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/sound/ofSoundPlayer.h">
+			<Option virtualFolder="libs/openframeworks/sound/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/sound/ofSoundStream.cpp">
+			<Option virtualFolder="libs/openframeworks/sound/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/sound/ofSoundStream.h">
+			<Option virtualFolder="libs/openframeworks/sound/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/utils/ofConstants.h">
+			<Option virtualFolder="libs/openframeworks/utils/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/utils/ofMath.cpp">
+			<Option virtualFolder="libs/openframeworks/utils/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/utils/ofMath.h">
+			<Option virtualFolder="libs/openframeworks/utils/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/utils/ofTypes.h">
+			<Option virtualFolder="libs/openframeworks/utils/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/utils/ofUtils.cpp">
+			<Option virtualFolder="libs/openframeworks/utils/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/utils/ofUtils.h">
+			<Option virtualFolder="libs/openframeworks/utils/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/video/ofUCUtils.cpp">
+			<Option virtualFolder="libs/openframeworks/video/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/video/ofUCUtils.h">
+			<Option virtualFolder="libs/openframeworks/video/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/video/ofVideoGrabber.cpp">
+			<Option virtualFolder="libs/openframeworks/video/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/video/ofVideoGrabber.h">
+			<Option virtualFolder="libs/openframeworks/video/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/video/ofVideoPlayer.cpp">
+			<Option virtualFolder="libs/openframeworks/video/" />
+		</Unit>
+		<Unit filename="../../../libs/openFrameworks/video/ofVideoPlayer.h">
+			<Option virtualFolder="libs/openframeworks/video/" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

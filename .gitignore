@@ -1,4 +1,6 @@
 .DS_Store
+*._*
+.svn
 
 *.pbxuser
 *.mode1v3
@@ -14,3 +16,8 @@ apps/*/build
 apps/*/*/build
 addons/*/build
 addons/*/*/build
+
+apps/*/*/*linux.layout
+apps/*/*/*linux.depend
+
+apps/*/*/bin
