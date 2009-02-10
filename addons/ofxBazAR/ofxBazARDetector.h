@@ -66,14 +66,11 @@ struct ofxBazARGroundModel
 	string	nameID;
 	planar_object_recognizer		por;
 	ofxCvGrayscaleImage 			mImage;
-	ofxCvGrayscaleImage 			mImageCache;
 	CamCalibration					calib;
-	// static vector<CamCalibration::s_struct_points> 	pts;
-	vector<CamCalibration::s_struct_points> 	pts;
+	vector<CamCalibration::s_struct_points> 	pts; // static ?
 
-	bool							doHomographies;
+	bool							doHomographies, isCalibrated;
 	int								nbHomography;
-	bool							isCalibrated;
 
 
 	void resetGround() {
@@ -101,9 +98,9 @@ struct ofxBazARGroundModel
 	}
 	
 	// void processNextImage(ofxCvGrayscaleImage _newImage) {
-	void processNextImage(ofImage* _newImage) {
+	void processNextImage(ofxCvGrayscaleImage & _newImage) {
 		//  mImageCache = _newImage;
-		mImageCache = (*_newImage).getPixels();
+		
 		if (nbHomography != -1) {
             
 			if (!doHomographies) {
@@ -111,7 +108,7 @@ struct ofxBazARGroundModel
 
 					printf("\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!! train\n\n\n");
 					isTrained = false;
-					mImage = mImageCache;
+					mImage = _newImage;
 					
 					if( por.build(
 								mImage.getCvImage(), 		// mode image file name
@@ -133,7 +130,7 @@ struct ofxBazARGroundModel
 			} else {
 				printf("\n\n\n!!!!!!!!!!!!!!!!!!!!!!!!!! %i homographies\n\n\n", nbHomography);
 				
-				if (por.detect( mImageCache.getCvImage() ) ) {
+				if (por.detect( _newImage.getCvImage() ) ) {
 				// if (por.detect( _newImage.getCvImage() ) ) {
             	
 					add_detected_homography(por, calib);
@@ -192,11 +189,10 @@ struct ofxBazARGroundModel
 		
 		doHomographies = false;
 		isCalibrated = false;
-		nbHomography = 0;
+		nbHomography = -1;
 		isActive = true;
 
 		mImage.allocate(320, 240);
-		mImageCache.allocate(320, 240);
 		calib.AddCamera(320, 240);
 		isTrained = false;
 	}
@@ -287,45 +283,46 @@ struct ofxBazARAugmentation {
 	
 	bool				doGround;
 	
-	// static std::vector<CamCalibration::s_struct_points> pts;
-	vector<CamCalibration::s_struct_points> pts;
-	ofxCvGrayscaleImage 			detectImage;
+	vector<CamCalibration::s_struct_points> pts; // static ?
 	
 	void setup() {
-		augment.LoadOptimalStructureFromFile("camera_c.txt", "camera_r_t.txt");
+		// augment.LoadOptimalStructureFromFile("camera_c.txt", "camera_r_t.txt");
 		detectors.setup(320,240);
 		mGround.init();
 	}
 
-	void generateGround(ofImage* _newImage) {
-		mGround.processNextImage( _newImage );
+	void generateGround() {
+		mGround.processNextImage( detectors.detectImage );
 		if (mGround.nbHomography == -1) {
 			augment.LoadOptimalStructureFromFile("camera_c.txt", "camera_r_t.txt");
 			// augment.Clear();		
 		}
 	}
 	
-	void updateGround(ofImage* _newImage) {
-		// if ( mGround.por.detect( detectImage.getCvImage() ) ) {
+	void updateGround() {
+		// if ( mGround.por.detect( detectors.detectImage.getCvImage() ) ) {
 		// 	add_detected_homography(mGround.por, augment);
 		// }
 	}
 
-	void processNextImage(ofImage* _newImage) {
-		detectImage = (*_newImage).getPixels();
-		// augment.Clear();
+	void processNextImage(unsigned char * _pixels, int _w, int _h, int _type=OF_IMAGE_COLOR) {
 		
-		if (mGround.nbHomography != -1)			generateGround( _newImage );
-		else if (mGround.nbHomography == -1)	updateGround( _newImage );
+		detectors.colorImg.setFromPixels( _pixels, 320,240);
+		detectors.detectImage = detectors.colorImg;
+		
+		augment.Clear();
+		
+		if (mGround.nbHomography != -1)			generateGround();
+		else if (mGround.nbHomography == -1)	updateGround();
 
 		for( int i = 0; i < detectors.mBazARModels.size(); i += 1 ) {
 			
 			if (detectors.mBazARModels[i]->isActive) {
-				if ( detectors.mBazARModels[i]->por.detect( detectImage.getCvImage() ) ) {
+				if ( detectors.mBazARModels[i]->por.detect( detectors.detectImage.getCvImage() ) ) {
         
 					add_detected_homography(detectors.mBazARModels[i]->por, augment);
 					// augment.Accomodate(4, 1e-4);
-					detectors.mBazARModels[i]->isDetected = true;                         
+					detectors.mBazARModels[i]->isDetected = true;
         
 				} else {
 					detectors.mBazARModels[i]->isDetected = false;
@@ -334,7 +331,6 @@ struct ofxBazARAugmentation {
 			}
         
 		}
-		
 		
 		augment.Accomodate(4, 1e-4);
 
