@@ -8,197 +8,221 @@
 
 
 //--------------------------------------------------------------------------------
-ofxCvColorImage::ofxCvColorImage( const ofxCvColorImage& mom ) {
+ofxCvColorImage::ofxCvColorImage() {
+    ipldepth = IPL_DEPTH_8U;
+    iplchannels = 3;
+    gldepth = GL_UNSIGNED_BYTE;
+    glchannels = GL_RGB;
+    cvGrayscaleImage = NULL;
+}
+
+//--------------------------------------------------------------------------------
+ofxCvColorImage::ofxCvColorImage( const ofxCvColorImage& _mom ) {
+    // cast non-const,  to get read access to the mon::cvImage
+    ofxCvColorImage& mom = const_cast<ofxCvColorImage&>(_mom); 
+    allocate(mom.width, mom.height);    
     cvCopy( mom.getCvImage(), cvImage, 0 );
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::allocate( int w, int h ) {
-	
-	if (bAllocated == true){
-		printf ("warning: reallocating cvImage in ofxCvColorImage\n");
-		clear();
-	}
-	
-	cvImage = cvCreateImage( cvSize(w,h), IPL_DEPTH_8U, 3 );
-	cvImageTemp	= cvCreateImage( cvSize(w,h), IPL_DEPTH_8U, 3 );
-	pixels = new unsigned char[w*h*3];
-	width = w;
-	height = h;
-	bAllocated = true;
-    if( bUseTexture ) {
-        tex.allocate( width, height, GL_RGB );
+void ofxCvColorImage::clear() {
+    if (bAllocated == true && cvGrayscaleImage != NULL){
+        cvReleaseImage( &cvGrayscaleImage );
     }
+    ofxCvImage::clear();    //call clear in base class    
 }
 
+
+
+
+// Set Pixel Data
+
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::set(int value){
+void ofxCvColorImage::set( float value ){
     cvSet(cvImage, cvScalar(value, value, value));
+    flagImageChanged();
 }
 
 //--------------------------------------------------------------------------------
 void ofxCvColorImage::set(int valueR, int valueG, int valueB){
     cvSet(cvImage, cvScalar(valueR, valueG, valueB));
+    flagImageChanged();
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::convertRgbToHsv(){
-    cvCvtColor( cvImage, cvImageTemp, CV_RGB2HSV);
-    swapTemp();
+void ofxCvColorImage::operator -= ( float value ) {
+	cvSubS( cvImage, cvScalar(value, value, value), cvImageTemp );
+	swapTemp();
+    flagImageChanged();
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::convertHsvToRgb(){
-    cvCvtColor( cvImage, cvImageTemp, CV_HSV2RGB);
-    swapTemp();
+void ofxCvColorImage::operator += ( float value ) {
+	cvAddS( cvImage, cvScalar(value, value, value), cvImageTemp );
+	swapTemp();
+    flagImageChanged();
 }
 
-//--------------------------------------------------------------------------------
-void ofxCvColorImage::setFromGrayscalePlanarImages(ofxCvGrayscaleImage& red, ofxCvGrayscaleImage& green, ofxCvGrayscaleImage& blue){
-     cvCvtPlaneToPix(red.getCvImage(), green.getCvImage(), blue.getCvImage(),NULL, cvImage);
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvColorImage::convertToGrayscalePlanarImages(ofxCvGrayscaleImage& red, ofxCvGrayscaleImage& green, ofxCvGrayscaleImage& blue){
-    cvCvtPixToPlane(cvImage, red.getCvImage(), green.getCvImage(), blue.getCvImage(), NULL);
-}
-
-
-// Set Pixel Data - Arrays
 //--------------------------------------------------------------------------------
 void ofxCvColorImage::setFromPixels( unsigned char* _pixels, int w, int h ) {
-	for( int i = 0; i < h; i++ ) {
-		memcpy( cvImage->imageData+(i*cvImage->widthStep), _pixels+(i*width*3), width*3 );
-	}
+    ofRectangle roi = getROI();
+    ofRectangle inputROI = ofRectangle( roi.x, roi.y, w, h);
+    ofRectangle iRoi = getIntersectionROI( roi, inputROI );
+        
+    if( iRoi.width > 0 && iRoi.height > 0 ) {
+        // copy pixels from _pixels, however many we have or will fit in cvImage
+        for( int i=0; i < iRoi.height; i++ ) {
+            memcpy( cvImage->imageData + ((i+(int)iRoi.y)*cvImage->widthStep) + (int)iRoi.x*3,
+                    _pixels + (i*w*3),
+                    iRoi.width*3 );
+        }
+        flagImageChanged();
+    } else {
+        ofLog(OF_ERROR, "in setFromPixels, ROI mismatch");
+    }    
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::operator =	( unsigned char* _pixels ) {
+void ofxCvColorImage::setFromGrayscalePlanarImages( ofxCvGrayscaleImage& red, ofxCvGrayscaleImage& green, ofxCvGrayscaleImage& blue){     
+	if( red.width == width && red.height == height &&
+        green.width == width && green.height == height &&
+        blue.width == width && blue.height == height )
+    {
+         cvCvtPlaneToPix(red.getCvImage(), green.getCvImage(), blue.getCvImage(),NULL, cvImage);
+         flagImageChanged();
+	} else {
+        ofLog(OF_ERROR, "in setFromGrayscalePlanarImages, images are different sizes");
+	}     
+}
+
+
+//--------------------------------------------------------------------------------
+void ofxCvColorImage::operator = ( unsigned char* _pixels ) {
     setFromPixels( _pixels, width, height );
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::operator =	( ofxCvGrayscaleImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
+void ofxCvColorImage::operator = ( const ofxCvGrayscaleImage& _mom ) {
+    // cast non-const,  no worries, we will reverse any chages
+    ofxCvGrayscaleImage& mom = const_cast<ofxCvGrayscaleImage&>(_mom);
+	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
 		cvCvtColor( mom.getCvImage(), cvImage, CV_GRAY2RGB );
+        popROI();       //restore prevoius ROI
+        mom.popROI();   //restore prevoius ROI         
+        flagImageChanged();
 	} else {
-        cout << "error in =, images are different sizes" << endl;
+        ofLog(OF_ERROR, "in =, ROI mismatch");
 	}
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::operator =	( ofxCvColorImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvCopy( mom.getCvImage(), cvImage, 0 );
+void ofxCvColorImage::operator = ( const ofxCvColorImage& _mom ) {
+    if(this != &_mom) {  //check for self-assignment
+        // cast non-const,  no worries, we will reverse any chages
+        ofxCvColorImage& mom = const_cast<ofxCvColorImage&>(_mom);    
+        if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+            cvCopy( mom.getCvImage(), cvImage, 0 );
+            popROI();       //restore prevoius ROI
+            mom.popROI();   //restore prevoius ROI              
+            flagImageChanged();
+        } else {
+            ofLog(OF_ERROR, "in =, ROI mismatch");
+        }
+    } else {
+        ofLog(OF_WARNING, "in =, you are assigning a ofxCvColorImage to itself");
+    }
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvColorImage::operator = ( const ofxCvFloatImage& _mom ) {
+    // cast non-const,  no worries, we will reverse any chages
+    ofxCvFloatImage& mom = const_cast<ofxCvFloatImage&>(_mom); 
+	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+        if( cvGrayscaleImage == NULL ) {
+            cvGrayscaleImage = cvCreateImage( cvSize(cvImage->width,cvImage->height), IPL_DEPTH_8U, 1 );
+        }
+        cvSetImageROI(cvGrayscaleImage, cvRect(roiX,roiY,width,height));
+		cvConvertScale( mom.getCvImage(), cvGrayscaleImage, 1, 0 );
+		cvCvtColor( cvGrayscaleImage, cvImage, CV_GRAY2RGB );
+        popROI();       //restore prevoius ROI
+        mom.popROI();   //restore prevoius ROI          
+        cvSetImageROI(cvGrayscaleImage, cvRect(roiX,roiY,width,height));
+        flagImageChanged();
 	} else {
-        cout << "error in =, images are different sizes" << endl;
+        ofLog(OF_ERROR, "in =, ROI mismatch");
 	}
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::operator =	( ofxCvFloatImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		//cvCopy(mom.getCvImage(), cvImage, 0);
-		//cvConvertScale( mom.getCvImage(), cvImage, 1, 0 );
-		cvConvert( mom.getCvImage(), cvImage ); // same as above but optimized
-	} else {
-        cout << "error in =, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvColorImage::operator -= ( ofxCvColorImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvSub( cvImage, mom.getCvImage(), cvImageTemp );
-		swapTemp();
-	} else {
-        cout << "error in -=, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvColorImage::operator += ( ofxCvColorImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvAdd( cvImage, mom.getCvImage(), cvImageTemp );
-		swapTemp();
-	} else {
-        cout << "error in +=, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvColorImage::operator *= ( ofxCvColorImage& mom ) {
-    float scalef = 1.0f / 255.0f;
-	if( mom.width == width && mom.height == height ) {
-		cvMul( cvImage, mom.getCvImage(), cvImageTemp, scalef );
-		swapTemp();
-	} else {
-        cout << "error in *=, images are different sizes" << endl;
-	}
+void ofxCvColorImage::operator = ( const IplImage* _mom ) {
+    ofxCvImage::operator = (_mom);
 }
 
 
 // Get Pixel Data
+
 //--------------------------------------------------------------------------------
 unsigned char* ofxCvColorImage::getPixels() {
-	// copy each line of pixels:
-	for( int i=0; i<height; i++ ) {
-		memcpy( pixels+(i*width*3),
-                cvImage->imageData+(i*cvImage->widthStep), width*3 );
-	}
+    if(bPixelsDirty) {
+        if(pixels == NULL) {
+            // we need pixels, allocate it
+            pixels = new unsigned char[width*height*3];
+            pixelsWidth = width;
+            pixelsHeight = height;            
+        } else if(pixelsWidth != width || pixelsHeight != height) {
+            // ROI changed, reallocate pixels for new size
+            delete pixels;
+            pixels = new unsigned char[width*height*3];
+            pixelsWidth = width;
+            pixelsHeight = height;
+        }
+        
+        // copy from ROI to pixels
+        for( int i = 0; i < height; i++ ) {
+            memcpy( pixels + (i*width*3),
+                    cvImage->imageData + ((i+roiY)*cvImage->widthStep) + roiX*3,
+                    width*3 );
+        }
+        bPixelsDirty = false;
+    }
 	return pixels;
 }
 
+//--------------------------------------------------------------------------------
+void ofxCvColorImage::convertToGrayscalePlanarImages(ofxCvGrayscaleImage& red, ofxCvGrayscaleImage& green, ofxCvGrayscaleImage& blue){
+	if( red.width == width && red.height == height &&
+        green.width == width && green.height == height &&
+        blue.width == width && blue.height == height )
+    {
+        cvCvtPixToPlane(cvImage, red.getCvImage(), green.getCvImage(), blue.getCvImage(), NULL);
+	} else {
+        ofLog(OF_ERROR, "in convertToGrayscalePlanarImages, images are different sizes");
+	}     
+}
 
 
 
 // Draw Image
+
+
+
+// Image Filter Operations
+
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::draw( float x, float y ) {
-
-	// note, this is a bit ineficient, as we have to
-	// copy the data out of the cvImage into the pixel array
-	// and then upload to texture.  We should add
-	// to the texture class an override for pixelstorei
-	// that allows stepped-width image upload:
-
-    if( bUseTexture ) {
-        tex.loadData( getPixels(), width, height, GL_RGB );
-        tex.draw( x, y, width, height );
-
-    } else {
-        IplImage* o;
-        o = cvCreateImage( cvSize(width, height), IPL_DEPTH_8U, 3 );
-        cvResize( cvImage, o, CV_INTER_NN );
-        cvFlip( o, o, 0 );
-        glRasterPos3f( x, y+height, 0.0 );
-        glDrawPixels( o->width, o->height ,
-                     GL_BGR, GL_UNSIGNED_BYTE, o->imageData );
-        cvReleaseImage( &o );
-        glRasterPos3f( -x, -(y+height), 0.0 );
-    }
+void ofxCvColorImage::contrastStretch() {
+	ofLog(OF_WARNING, "in contrastStratch, not implemented for ofxCvColorImage");
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::draw( float x, float y, float w, float h ) {
-    if( bUseTexture ) {
-        tex.loadData( getPixels(), width, height, GL_RGB );
-        tex.draw( x, y, w, h );
-
-    } else {
-        IplImage* o;
-        o = cvCreateImage( cvSize((int)w, (int)h), IPL_DEPTH_8U, 3 );
-        cvResize( cvImage, o, CV_INTER_NN );
-        cvFlip( o, o, 0 );
-        glRasterPos3f( x, y+h, 0.0 );
-        glDrawPixels( o->width, o->height ,
-                     GL_BGR, GL_UNSIGNED_BYTE, o->imageData );
-        cvReleaseImage( &o );
-        glRasterPos3f( -x, -(y+h), 0.0 );
-    }
+void ofxCvColorImage::convertToRange(float min, float max ){
+    rangeMap( cvImage, 0,255, min,max);
+    flagImageChanged();
 }
+
+
 
 // Image Transformation Operations
+
 //--------------------------------------------------------------------------------
 void ofxCvColorImage::resize( int w, int h ) {
 
@@ -214,24 +238,44 @@ void ofxCvColorImage::resize( int w, int h ) {
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvColorImage::scaleIntoMe( ofxCvColorImage& mom, int interpolationMethod){
+void ofxCvColorImage::scaleIntoMe( ofxCvImage& mom, int interpolationMethod ){
+    //for interpolation you can pass in:
+    //CV_INTER_NN - nearest-neigbor interpolation,
+    //CV_INTER_LINEAR - bilinear interpolation (used by default)
+    //CV_INTER_AREA - resampling using pixel area relation. It is preferred method 
+    //                for image decimation that gives moire-free results. In case of 
+    //                zooming it is similar to CV_INTER_NN method.
+    //CV_INTER_CUBIC - bicubic interpolation.
+        
+    if( mom.getCvImage()->nChannels == cvImage->nChannels && 
+        mom.getCvImage()->depth == cvImage->depth ) {
+    
+        if ((interpolationMethod != CV_INTER_NN) &&
+            (interpolationMethod != CV_INTER_LINEAR) &&
+            (interpolationMethod != CV_INTER_AREA) &&
+            (interpolationMethod != CV_INTER_CUBIC) ){
+            ofLog(OF_WARNING, "in scaleIntoMe, setting interpolationMethod to CV_INTER_NN");
+    		interpolationMethod = CV_INTER_NN;
+    	}
+        cvResize( mom.getCvImage(), cvImage, interpolationMethod );
+        flagImageChanged();
 
-    if ((interpolationMethod != CV_INTER_NN) ||
-        (interpolationMethod != CV_INTER_LINEAR) ||
-        (interpolationMethod != CV_INTER_AREA) ||
-        (interpolationMethod != CV_INTER_CUBIC) ){
-        printf("error in scaleIntoMe / interpolationMethod, setting to CV_INTER_NN \n");
-		interpolationMethod = CV_INTER_NN;
-	}
-    cvResize( mom.getCvImage(), cvImage, interpolationMethod );
-
-    /*
-    you can pass in:
-    CV_INTER_NN - nearest-neigbor interpolation,
-    CV_INTER_LINEAR - bilinear interpolation (used by default)
-    CV_INTER_AREA - resampling using pixel area relation. It is preferred method for image decimation that gives moire-free results. In case of zooming it is similar to CV_INTER_NN method.
-    CV_INTER_CUBIC - bicubic interpolation.
-    ----> http://opencvlibrary.sourceforge.net/CvReference
-    */
-
+    } else {
+        ofLog(OF_ERROR, "in scaleIntoMe, mom image type has to match");
+    }
 }
+
+//--------------------------------------------------------------------------------
+void ofxCvColorImage::convertRgbToHsv(){
+    cvCvtColor( cvImage, cvImageTemp, CV_RGB2HSV);
+    swapTemp();
+    flagImageChanged();
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvColorImage::convertHsvToRgb(){
+    cvCvtColor( cvImage, cvImageTemp, CV_HSV2RGB);
+    swapTemp();
+    flagImageChanged();
+}
+

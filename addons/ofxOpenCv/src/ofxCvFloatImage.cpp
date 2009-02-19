@@ -7,195 +7,360 @@
 
 
 //--------------------------------------------------------------------------------
-ofxCvFloatImage::ofxCvFloatImage( const ofxCvFloatImage& mom ) {
+ofxCvFloatImage::ofxCvFloatImage() {
+    ipldepth = IPL_DEPTH_32F;
+    iplchannels = 1;
+    gldepth = GL_FLOAT;
+    glchannels = GL_LUMINANCE;
+    floatPixels = NULL; 
+    bFloatPixelsDirty = true;
+    floatPixelsW = 0;
+    floatPixelsH = 0;   
+    cvGrayscaleImage = NULL;
+    scaleMin = 0.0f;
+    scaleMax = 1.0f;
+}
+
+//--------------------------------------------------------------------------------
+ofxCvFloatImage::ofxCvFloatImage( const ofxCvFloatImage& _mom ) {
+    // cast non-const,  to get read access to the mon::cvImage
+    ofxCvFloatImage& mom = const_cast<ofxCvFloatImage&>(_mom); 
+    allocate(mom.width, mom.height);    
     cvCopy( mom.getCvImage(), cvImage, 0 );
 }
 
+
 //--------------------------------------------------------------------------------
-void ofxCvFloatImage::allocate( int w, int h ) {
-	if (bAllocated == true){
-		printf ("warning: reallocating cvImage in ofxCvFloatImage\n");
-		clear();
-	}
-	cvImage = cvCreateImage( cvSize(w,h), IPL_DEPTH_32F, 1 );
-	cvImageTemp	= cvCreateImage( cvSize(w,h), IPL_DEPTH_32F, 1 );
-	cvGrayscaleImage = cvCreateImage( cvSize(w,h), IPL_DEPTH_8U, 1 );
-	pixels = new unsigned char[w*h];
-	pixelsAsFloats = new float[w*h];
-    width = w;
-	height = h;
-	bAllocated = true;
-    if( bUseTexture ) {
-        tex.allocate(width, height, GL_LUMINANCE);
+void ofxCvFloatImage::clear() {
+    if (bAllocated == true){
+        if( cvGrayscaleImage != NULL ){
+            cvReleaseImage( &cvGrayscaleImage );
+        }
+        if( floatPixels != NULL ) {
+            delete floatPixels;
+            floatPixels = NULL;
+            bFloatPixelsDirty = true;
+            floatPixelsW = 0;
+            floatPixelsH = 0;             
+        }
     }
-}
-
-// Set Pixel Data - Arrays
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::setFromPixels( float * _pixels, int w, int h ) {
-	for( int i = 0; i < h; i++ ) {
-		memcpy( cvImage->imageData+(i*cvImage->widthStep), _pixels+(i*w), w*sizeof(float));
-	}
+    ofxCvImage::clear();    //call clear in base class    
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvFloatImage::drawWithScale( float x, float y, float scaleMin, float scaleMax){
-    drawWithScale(x,y,width, height, scaleMin, scaleMax);
+void ofxCvFloatImage::setNativeScale( float _scaleMin, float _scaleMax ) {
+    scaleMin = _scaleMin;
+    scaleMax = _scaleMax;
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvFloatImage::drawWithScale( float x, float y, float w, float h, float scaleMin, float scaleMax){
-    if( bUseTexture ) {
-        // note, this is a bit ineficient, as we have to
-        // copy the data out of the cvImage into the pixel array
-        // and then upload to texture.  We should add
-        // to the texture class an override for pixelstorei
-        // that allows stepped-width image upload:
-        tex.loadData(getPixels(scaleMin, scaleMax), width, height, GL_LUMINANCE);
-        tex.draw(x,y,w,h);
-    }
+void ofxCvFloatImage::flagImageChanged() {
+    bFloatPixelsDirty = true;
+    ofxCvImage::flagImageChanged();
 }
 
 //--------------------------------------------------------------------------------
-unsigned char*  ofxCvFloatImage::getPixels(float scaleMin, float scaleMax){
-    float range = (scaleMax - scaleMin);
-    float scale = 255/range;
-    float offset = - (scaleMin * scale);  // ie, 0.5 - 1 = scale by (255*2), subtract 255, 128-255 = scale by 1/2, subtract 128
-    cvConvertScale( cvImage, cvGrayscaleImage, scale, offset );
-    for( int i = 0; i < height; i++ ) {
-		memcpy( pixels+(i*width),
-                cvGrayscaleImage->imageData+(i*cvGrayscaleImage->widthStep), width );
-	}
-	return pixels;
+void ofxCvFloatImage::convertFloatToGray( IplImage* floatImg, IplImage* grayImg ) {
+    // map from scaleMin-scaleMax to 0-255
+    float scale = 255.0f/(scaleMax-scaleMin);
+    cvConvertScale( floatImg, grayImg, scale, -(scaleMin*scale) );
 }
 
 //--------------------------------------------------------------------------------
-float * ofxCvFloatImage::getPixelsAsFloats(){
-    // ok??
-    for( int i = 0; i < height; i++ ) {
-		memcpy( pixelsAsFloats+(i*width),
-                cvGrayscaleImage->imageData+(i*(cvGrayscaleImage->widthStep / 4)), width*4 );
-	}
-	return pixelsAsFloats;
+void ofxCvFloatImage::convertGrayToFloat( IplImage* grayImg, IplImage* floatImg ) {
+    // map from 0-255 to scaleMin-scaleMax
+    cvConvertScale( grayImg, floatImg, (scaleMax-scaleMin)/255.0f, scaleMin );
 }
 
 
-// Set Pixel Data - Arrays
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator =	( ofxCvGrayscaleImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-        cvConvert( mom.getCvImage(), cvImage );
-	} else {
-        cout << "error in =, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator =	( ofxCvColorImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvCvtColor( mom.getCvImage(), cvImage, CV_RGB2GRAY );
-	} else {
-        cout << "error in =, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator =	( ofxCvFloatImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvCopy( mom.getCvImage(), cvImage, 0 );
-	} else {
-        cout << "error in =, images are different sizes" << endl;
-	}
-}
 
 
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator -= ( ofxCvFloatImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvSub( cvImage, mom.getCvImage(), cvImageTemp );
-		swapTemp();
-	} else {
-        cout << "error in -=, images are different sizes" << endl;
-	}
-}
+// Set Pixel Data
 
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator += ( ofxCvFloatImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvAdd( cvImage, mom.getCvImage(), cvImageTemp );
-		swapTemp();
-	} else {
-        cout << "error in +=, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator *= ( ofxCvFloatImage& mom ) {
-	if( mom.width == width && mom.height == height ) {
-		cvMul( cvImage, mom.getCvImage(), cvImageTemp );
-		swapTemp();
-	} else {
-        cout << "error in *=, images are different sizes" << endl;
-	}
-}
-
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator -=	( float scalar ){
-    cvSubS(cvImage, cvScalar(scalar), cvImageTemp);
-    swapTemp();
-}
-//--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator +=	( float scalar ){
-    cvAddS(cvImage, cvScalar(scalar), cvImageTemp);
-    swapTemp();
+//-------------------------------------------------------------------------------------
+void ofxCvFloatImage::set(float value){  
+	cvSet(cvImage, cvScalar(value));
+    flagImageChanged();
 }
 
 //--------------------------------------------------------------------------------
 void ofxCvFloatImage::operator *= ( float scalar ){
-    // does this exist in opencv?
-    int totalPixels = cvImage->width*cvImage->height;
-    if(totalPixels <= 0)return;
-
-    float * ptr = ((float *)cvImage->imageData);
-
-    for (int i = 0; i < totalPixels; i++){
-       ( *ptr ) *= scalar;
-        if( ( *ptr ) < 0.00001 ) (*ptr) = 0.0;
-        ptr++;
-    }
+    for( int i=0; i<height; i++ ) { 
+        float* ptr = (float*)(cvImage->imageData + (i+roiY)*cvImage->widthStep); 
+        for( int j=0; j<width; j++ ) { 
+            ptr[(j+roiX)] *= scalar; 
+        } 
+    } 
 }
+
 //--------------------------------------------------------------------------------
-void ofxCvFloatImage::operator /=    ( float scalar ){
-    // does this exist in opencv?
-    int totalPixels = cvImage->width*cvImage->height;
-    if(totalPixels == 0 || scalar == 0)return;
-
-    //inverse and then multiply
+void ofxCvFloatImage::operator /= ( float scalar ){
     scalar = 1.0 / scalar;
+    for( int i=0; i<height; i++ ) { 
+        float* ptr = (float*)(cvImage->imageData + (i+roiY)*cvImage->widthStep); 
+        for( int j=0; j<width; j++ ) { 
+            ptr[(j+roiX)] *= scalar; 
+        } 
+    } 
+}
 
-    float * ptr = ((float *)cvImage->imageData);
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::setFromPixels( unsigned char* _pixels, int w, int h ) {    
+    if( cvGrayscaleImage == NULL ) {
+        cvGrayscaleImage = cvCreateImage( cvSize(cvImage->width,cvImage->height), IPL_DEPTH_8U, 1 );
+    }
+    
+    cvSetImageROI(cvGrayscaleImage, cvRect(roiX,roiY,width,height));  //make sure ROI is in sync
 
-    for (int i = 0; i < totalPixels; i++){
-       ( *ptr ) *= scalar;
-        if( ( *ptr ) < 0.00001 ) (*ptr) = 0.0;
-        ptr++;
+    ofRectangle roi = getROI();
+    ofRectangle inputROI = ofRectangle( roi.x, roi.y, w, h);
+    ofRectangle iRoi = getIntersectionROI( roi, inputROI );
+        
+    if( iRoi.width > 0 && iRoi.height > 0 ) {
+        // copy pixels from _pixels, however many we have or will fit in cvGrayscaleImage
+        for( int i=0; i < iRoi.height; i++ ) {
+            memcpy( cvGrayscaleImage->imageData + ((i+(int)iRoi.y)*cvGrayscaleImage->widthStep) + (int)iRoi.x,
+                    _pixels + (i*w),
+                    iRoi.width );
+        }
+        convertGrayToFloat(cvGrayscaleImage, cvImage);
+        flagImageChanged();
+    } else {
+        ofLog(OF_ERROR, "in setFromPixels, ROI mismatch");
+    }    
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::setFromPixels( float* _pixels, int w, int h ) {
+    ofRectangle roi = getROI();
+    ofRectangle inputROI = ofRectangle( roi.x, roi.y, w, h);
+    ofRectangle iRoi = getIntersectionROI( roi, inputROI );
+        
+    if( iRoi.width > 0 && iRoi.height > 0 ) {
+        // copy pixels from _pixels, however many we have or will fit in cvImage
+        for( int i=0; i < iRoi.height; i++ ) {
+            memcpy( cvImage->imageData + ((i+(int)iRoi.y)*cvImage->widthStep) + (int)iRoi.x*sizeof(float),
+                    _pixels + (i*w),
+                    iRoi.width*sizeof(float) );
+        }
+        flagImageChanged();
+    } else {
+        ofLog(OF_ERROR, "in setFromPixels, ROI mismatch");
+    }     
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator = ( unsigned char* _pixels ) {
+    setFromPixels( _pixels, width, height );
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator = ( float* _pixels ) {
+    setFromPixels( _pixels, width, height );
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator = ( const ofxCvGrayscaleImage& _mom ) {
+    // cast non-const,  no worries, we will reverse any chages
+    ofxCvGrayscaleImage& mom = const_cast<ofxCvGrayscaleImage&>(_mom); 
+	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+        convertGrayToFloat(mom.getCvImage(), cvImage);
+        popROI();       //restore prevoius ROI
+        mom.popROI();   //restore prevoius ROI              
+        flagImageChanged();
+	} else {
+        ofLog(OF_ERROR, "in =, ROI mismatch");
+	}
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator = ( const ofxCvColorImage& _mom ) {
+    // cast non-const,  no worries, we will reverse any chages
+    ofxCvColorImage& mom = const_cast<ofxCvColorImage&>(_mom); 
+	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+        if( cvGrayscaleImage == NULL ) {
+            cvGrayscaleImage = cvCreateImage( cvSize(cvImage->width,cvImage->height), IPL_DEPTH_8U, 1 );
+        }
+        cvSetImageROI(cvGrayscaleImage, cvRect(roiX,roiY,width,height));
+		cvCvtColor( mom.getCvImage(), cvGrayscaleImage, CV_RGB2GRAY );
+        convertGrayToFloat(cvGrayscaleImage, cvImage);                
+        popROI();       //restore prevoius ROI
+        mom.popROI();   //restore prevoius ROI   
+        cvSetImageROI(cvGrayscaleImage, cvRect(roiX,roiY,width,height));
+        flagImageChanged();
+	} else {
+        ofLog(OF_ERROR, "in =, ROI mismatch");
+	}
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator = ( const ofxCvFloatImage& _mom ) {
+    if(this != &_mom) {  //check for self-assignment
+        // cast non-const,  no worries, we will reverse any chages
+        ofxCvFloatImage& mom = const_cast<ofxCvFloatImage&>(_mom);     
+        if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+            cvCopy( mom.getCvImage(), cvImage, 0 );
+            popROI();       //restore prevoius ROI
+            mom.popROI();   //restore prevoius ROI             
+            flagImageChanged();
+        } else {
+            ofLog(OF_ERROR, "in =, ROI mismatch");
+        }
+    } else {
+        ofLog(OF_WARNING, "in =, you are assigning a ofxCvFloatImage to itself");
     }
 }
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator = ( const IplImage* _mom ) {
+    ofxCvImage::operator = (_mom);
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator *= ( ofxCvImage& mom ) {
+	if( mom.getCvImage()->nChannels == cvImage->nChannels && 
+        mom.getCvImage()->depth == cvImage->depth )
+    {
+        if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+            cvMul( cvImage, mom.getCvImage(), cvImageTemp );
+            swapTemp();
+            popROI();       //restore prevoius ROI
+            mom.popROI();   //restore prevoius ROI              
+            flagImageChanged();
+        } else {
+            ofLog(OF_ERROR, "in *=, ROI mismatch");
+        }
+	} else {
+        ofLog(OF_ERROR, "in *=, images need to have matching type");
+	}
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::operator &= ( ofxCvImage& mom ) {
+	if( mom.getCvImage()->nChannels == cvImage->nChannels && 
+        mom.getCvImage()->depth == cvImage->depth )
+    {
+        if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+            //this is doing it bit-wise; probably not what we want
+            cvAnd( cvImage, mom.getCvImage(), cvImageTemp );
+            swapTemp();
+            popROI();       //restore prevoius ROI
+            mom.popROI();   //restore prevoius ROI              
+            flagImageChanged();
+        } else {
+            ofLog(OF_ERROR, "in &=, ROI mismatch");
+        }
+	} else {
+        ofLog(OF_ERROR, "in &=, images need to have matching type");
+	}
+}
+
 
 //--------------------------------------------------------------------------------
 void ofxCvFloatImage::addWeighted( ofxCvGrayscaleImage& mom, float f ) {
-	if( mom.width == width && mom.height == height ) {
-         IplImage* cvTemp = cvCreateImage( cvSize(width,height), IPL_DEPTH_32F, 1 );
-         cvConvertScale( mom.getCvImage(), cvTemp, 1, 0 );
-         cvAddWeighted( cvTemp, f, cvImage, 1.0f-f,0, cvImageTemp );
-         swapTemp();
-         cvReleaseImage( &cvTemp );
+	if( pushSetBothToTheirIntersectionROI(*this,mom) ) {
+        convertGrayToFloat(mom.getCvImage(), cvImageTemp);
+        cvAddWeighted( cvImageTemp, f, cvImage, 1.0f-f,0, cvImage );
+        popROI();       //restore prevoius ROI
+        mom.popROI();   //restore prevoius ROI           
+        flagImageChanged();
     } else {
-        cout << "error in addWeighted, images are different sizes" << endl;
+        ofLog(OF_ERROR, "in addWeighted, ROI mismatch");
     }
 }
 
+
+
+// Get Pixel Data
+
+//--------------------------------------------------------------------------------
+unsigned char*  ofxCvFloatImage::getPixels(){
+    if(bPixelsDirty) {
+    
+        if( cvGrayscaleImage == NULL ) {
+            cvGrayscaleImage = cvCreateImage( cvSize(cvImage->width,cvImage->height), IPL_DEPTH_8U, 1 );
+        }
+         
+        cvSetImageROI(cvGrayscaleImage, cvRect(roiX,roiY,width,height));  //make sure ROI is in sync
+        convertFloatToGray(cvImage, cvGrayscaleImage);   
+    
+        if(pixels == NULL) {
+            // we need pixels, allocate it
+            pixels = new unsigned char[width*height];
+            pixelsWidth = width;
+            pixelsHeight = height;            
+        } else if(pixelsWidth != width || pixelsHeight != height) {
+            // ROI changed, reallocate pixels for new size
+            delete pixels;
+            pixels = new unsigned char[width*height];
+            pixelsWidth = width;
+            pixelsHeight = height;
+        }
+        
+        // copy from ROI to pixels
+        for( int i = 0; i < height; i++ ) {
+            memcpy( pixels + (i*width),
+                    cvGrayscaleImage->imageData + ((i+roiY)*cvGrayscaleImage->widthStep) + roiX,
+                    width );
+        }
+        bPixelsDirty = false;
+    }
+	return pixels;        
+}
+
+//--------------------------------------------------------------------------------
+float*  ofxCvFloatImage::getPixelsAsFloats(){
+    if(bFloatPixelsDirty) {
+        if(floatPixels == NULL) {
+            // we need pixels, allocate it
+            floatPixels = new float[width*height];
+            floatPixelsW = width;
+            floatPixelsH = height;            
+        } else if(floatPixelsW != width || floatPixelsH != height) {
+            // ROI changed, reallocate floatPixels for new size
+            delete floatPixels;
+            floatPixels = new float[width*height];
+            floatPixelsW = width;
+            floatPixelsH = height;
+        }
+        
+        // copy from ROI to pixels
+        for( int i = 0; i < height; i++ ) {
+            memcpy( floatPixels + (i*width),
+                    cvImage->imageData + ((i+roiY)*cvImage->widthStep) + roiX*sizeof(float),
+                    width*sizeof(float) );
+        }
+        bFloatPixelsDirty = false;
+    }
+	return floatPixels;     
+}
+
+
+
+// Draw Image
+
+
+
+// Image Filter Operations
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::contrastStretch() {
+	double minVal, maxVal;
+	cvMinMaxLoc( cvImage, &minVal, &maxVal, NULL, NULL, 0 );
+    rangeMap( cvImage, minVal,maxVal, scaleMin,scaleMax );
+    flagImageChanged();
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvFloatImage::convertToRange(float min, float max ){
+    rangeMap( cvImage, scaleMin,scaleMax, min,max);
+    flagImageChanged();
+}
+
+
+
 // Image Transformation Operations
+
 //--------------------------------------------------------------------------------
 void ofxCvFloatImage::resize( int w, int h ) {
 
@@ -211,24 +376,29 @@ void ofxCvFloatImage::resize( int w, int h ) {
 }
 
 //--------------------------------------------------------------------------------
-void ofxCvFloatImage::scaleIntoMe( ofxCvFloatImage& mom, int interpolationMethod){
+void ofxCvFloatImage::scaleIntoMe( ofxCvImage& mom, int interpolationMethod ){
+    //for interpolation you can pass in:
+    //CV_INTER_NN - nearest-neigbor interpolation,
+    //CV_INTER_LINEAR - bilinear interpolation (used by default)
+    //CV_INTER_AREA - resampling using pixel area relation. It is preferred method 
+    //                for image decimation that gives moire-free results. In case of 
+    //                zooming it is similar to CV_INTER_NN method.
+    //CV_INTER_CUBIC - bicubic interpolation.
+        
+    if( mom.getCvImage()->nChannels == cvImage->nChannels && 
+        mom.getCvImage()->depth == cvImage->depth ) {
+    
+        if ((interpolationMethod != CV_INTER_NN) &&
+            (interpolationMethod != CV_INTER_LINEAR) &&
+            (interpolationMethod != CV_INTER_AREA) &&
+            (interpolationMethod != CV_INTER_CUBIC) ){
+            ofLog(OF_WARNING, "in scaleIntoMe, setting interpolationMethod to CV_INTER_NN");
+    		interpolationMethod = CV_INTER_NN;
+    	}
+        cvResize( mom.getCvImage(), cvImage, interpolationMethod );
+        flagImageChanged();
 
-    if ((interpolationMethod != CV_INTER_NN) ||
-        (interpolationMethod != CV_INTER_LINEAR) ||
-        (interpolationMethod != CV_INTER_AREA) ||
-        (interpolationMethod != CV_INTER_CUBIC) ){
-        interpolationMethod = CV_INTER_NN;
-		printf("error in scaleIntoMe / interpolationMethod, setting to CV_INTER_NN \n");
+    } else {
+        ofLog(OF_ERROR, "in scaleIntoMe, mom image type has to match");
     }
-    cvResize( mom.getCvImage(), cvImage, interpolationMethod );
-
-    /*
-    you can pass in:
-    CV_INTER_NN - nearest-neigbor interpolation,
-    CV_INTER_LINEAR - bilinear interpolation (used by default)
-    CV_INTER_AREA - resampling using pixel area relation. It is preferred method for image decimation that gives moire-free results. In case of zooming it is similar to CV_INTER_NN method.
-    CV_INTER_CUBIC - bicubic interpolation.
-    ----> http://opencvlibrary.sourceforge.net/CvReference
-    */
-
 }

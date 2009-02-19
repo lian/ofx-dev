@@ -1,3 +1,13 @@
+/*
+* ofxCvFloatImage.h
+* by stefanix, zach
+*
+* This is essentially an IPL_DEPTH_32F with one channel.
+* Pixel values are typically from 0-1.0 but this range
+* can be set to pretty much any values.
+*
+*/
+
 
 #ifndef OFX_CV_FLOAT_IMAGE_H
 #define OFX_CV_FLOAT_IMAGE_H
@@ -8,52 +18,129 @@
 
 class ofxCvFloatImage : public ofxCvImage {
 
+    // Float Images and Value Range
+    // Float images are special in that they do not have unequivocal scale.
+    // We use a default scale of 0.0 - 1.0
+    // In most cases this class does the right conversion when going
+    // between different image depth/types
+    // In cases you are loading image data to/from float* you might
+    // want to pay closer attention to what the scales are.
 
-    public:
+  public:
 
-        ofxCvFloatImage() {};
-        ofxCvFloatImage( const ofxCvFloatImage& mom );
-        void allocate( int w, int h );
-        void setFromPixels( float * _pixels, int w, int h );
-
-        // Set Pixel Data - Arrays
-        void operator = ( ofxCvGrayscaleImage& mom );
-        void operator = ( ofxCvColorImage& mom );
-        void operator = ( ofxCvFloatImage& mom );
-        void operator -= ( ofxCvFloatImage& mom );
-        void operator += ( ofxCvFloatImage& mom );
-        void operator *= ( ofxCvFloatImage& mom );
-
-        void operator -=	( float scalar );
-    	void operator +=	( float scalar );
-        void operator *=	( float scalar );
-    	void operator /=    ( float scalar );
-
-        void addWeighted( ofxCvGrayscaleImage& mom, float f );
-
-        //------------------------------------------------------
-        // scale min and scale max are used to convert from float to unsigned char...
-        // are needed, since we need to convert floating point values into pixel values (0-255)
-        // default values convert from 0-255, but if you has floating point data between 0 and 1,
-        // you could pass in 0, 1, etc...
-
-		void 	draw( float x, float y ) { drawWithScale(x,y,0.0f,255.0f); };
-		void 	draw( float x, float y, float w, float h ) { drawWithScale(x,y,w,h,0.0f,255.0f); };
-        void 	drawWithScale( float x, float y, float scaleMin, float scaleMax);
-        void 	drawWithScale( float x, float y, float w, float h, float scaleMin, float scaleMax);
-
-        unsigned char*  	getPixels(float scaleMin = 0, float scaleMax = 255);
-        float * 			getPixelsAsFloats();
-        //------------------------------------------------------
-
-        void resize( int w, int h );
-        void scaleIntoMe( ofxCvFloatImage& mom, int interpolationMethod = CV_INTER_NN);
+    ofxCvFloatImage();
+    ofxCvFloatImage( const ofxCvFloatImage& mom );
+    // virtual void  allocate( int w, int h );                                //in base class
+    virtual void  clear();
+    // virtual void  setUseTexture( bool bUse );                              //in base class
+    virtual void  setNativeScale( float _scaleMin, float _scaleMax );  
 
 
-    private :
+    // ROI - region of interest
+    //
+    // virtual void  pushROI();                                               //in base class
+    // virtual void  popROI();                                                //in base class
+    // virtual void  setROI( int x, int y, int w, int h );                    //in base class
+    // virtual void  setROI( ofRectangle& rect );                             //in base class
+    // virtual ofRectangle  getROI();                                         //in base class
+    // virtual void  resetROI();                                              //in base class
+    // virtual ofRectangle  getIntersectionROI( ofRectangle& rec1,      
+    //                                          ofRectangle& rec2 );          // inbase class
+    
 
-        float * pixelsAsFloats; // not width stepped.
-        IplImage*  cvGrayscaleImage;     // internal IPL grayscale;
+    // Set Pixel Data
+    //
+    virtual void  set( float value );
+    // virtual void  operator -= ( float value );                             //in base class 
+    // virtual void  operator += ( float value );                             //in base class     
+    virtual void  operator *= ( float scalar );
+	virtual void  operator /= ( float scalar );
+	      
+    virtual void  setFromPixels( unsigned char* _pixels, int w, int h);
+    virtual void  setFromPixels( float * _pixels, int w, int h );  //no scaling
+    virtual void  operator = ( unsigned char* _pixels );
+    virtual void  operator = ( float* _pixels );  //no scaling
+    virtual void  operator = ( const ofxCvGrayscaleImage& mom );
+    virtual void  operator = ( const ofxCvColorImage& mom );
+    virtual void  operator = ( const ofxCvFloatImage& mom );
+    virtual void  operator = ( const IplImage* mom );     
+    
+    // virtual void  operator -= ( ofxCvImage& mom );                         //in base class 
+    // virtual void  operator += ( ofxCvImage& mom );                         //in base class     
+    virtual void  operator *= ( ofxCvImage& mom );
+    virtual void  operator &= ( ofxCvImage& mom );  //bit-wise at the moment
+
+	void  addWeighted( ofxCvGrayscaleImage& mom, float f );
+	
+	
+	// Get Pixel Data
+	//
+    virtual unsigned char*  getPixels();
+    virtual float*  getPixelsAsFloats();  //no scaling
+    // virtual IplImage*  getCvImage();                                        //in base class
+
+    
+    // Draw Image
+    //
+    //virtual void  draw( float x, float y );                                  //in base class
+    //virtual void  draw( float x, float y, float w, float h );                //in base class
+
+
+    // Image Filter Operations
+    //
+    virtual void  contrastStretch();
+    virtual void  convertToRange( float min, float max );    
+    // virtual void  erode( );                                                 //in base class
+    // virtual void  dilate( );                                                //in base class
+    // virtual void  blur( int value=3 );                                      //in base class
+    // virtual void  blurGaussian( int value=3 );                              //in base class
+    // virtual void  invert();                                                 //in base class
+        
+
+    // Image Transformation Operations
+    //
+    virtual void  resize( int w, int h );
+    virtual void  scaleIntoMe( ofxCvImage& mom, int interpolationMethod = CV_INTER_NN);
+    // virtual void  mirror( bool bFlipVertically, bool bFlipHorizontally );   //in base class
+    // virtual void  translate( float x, float y );                            //in base class
+    // virtual void  rotate( float angle, float centerX, float centerY );      //in base class
+    // virtual void  scale( float scaleX, float sclaeY );                      //in base class
+    // virtual void  transform( float angle, float centerX, float centerY,
+    //                          float scaleX, float scaleY,
+    //                          float moveX, float moveY );                     //in base class
+    // virtual void  undistort( float radialDistX, float radialDistY,
+    //                          float tangentDistX, float tangentDistY,
+    //                          float focalX, float focalY,
+    //                          float centerX, float centerY );                //in base class
+    // virtual void  remap( IplImage* mapX, IplImage* mapY );                  //in base class
+    // virtual void  warpPerspective( ofPoint& A, ofPoint& B,
+    //                                ofPoint& C, ofPoint& D );                //in base class
+    // virtual void  warpIntoMe( ofxCvGrayscaleImage& mom,
+    //                           ofPoint src[4], ofPoint dst[4] );             //in base class
+                             
+
+    // Other Image Operations
+    //
+    // virtual int  countNonZeroInRegion( int x, int y, int w, int h );        //in base class
+    
+
+  private:
+
+    virtual void flagImageChanged();
+    virtual void convertFloatToGray( IplImage* floatImg, IplImage* grayImg );
+    virtual void convertGrayToFloat( IplImage* grayImg, IplImage* floatImg );
+    
+    float* floatPixels;             // not width stepped for getPixelsAsFloats()
+                                    // allocated on demand
+    int  floatPixelsW;
+    int  floatPixelsH;
+    
+    bool bFloatPixelsDirty;
+    IplImage*  cvGrayscaleImage;    // internal helper grayscale, allocated on demand
+    
+    float scaleMin;
+    float scaleMax;
+    
 };
 
 
