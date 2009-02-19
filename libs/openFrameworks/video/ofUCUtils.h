@@ -15,8 +15,6 @@
 
 struct AVPicture;
 
-//#include <gtk/gtk.h>
-//#include <unicapgtk.h>
 
 #define MAX_DEVICES 64
 #define MAX_FORMATS 64

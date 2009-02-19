@@ -2,15 +2,6 @@
 #define _OF_TYPES
 
 #include "ofConstants.h"
-#include "Poco/Timestamp.h"
-#include "Poco/Timespan.h"
-
-//----------------------------------------------------------
-// ofTimestamp / ofTimespan
-//----------------------------------------------------------
-
-typedef Poco::Timestamp ofTimestamp;
-typedef Poco::Timespan ofTimespan;
 
 //----------------------------------------------------------
 // ofPoint
@@ -205,6 +196,8 @@ class ofRectangle {
 
 };
 
+
+
 //----------------------------------------------------------
 // ofColor
 //----------------------------------------------------------
@@ -218,7 +211,7 @@ class ofColor{
 			a = 255;
 		}
 		virtual ~ofColor(){}
-		int r, g, b, a;
+		float r, g, b, a;
 };
 
 //----------------------------------------------------------
@@ -228,19 +221,23 @@ class ofColor{
 class ofStyle{
 	public:
 		ofStyle(){
-			bFill				= 1;
-			blending			= 0;
-			smoothing			= 0;
+			bFill				= true;
+			blending			= false;
+			smoothing			= false;
 			circleResolution	= 20;
 			lineWidth			= 1.0;
+			polyMode			= OF_POLY_WINDING_ODD;
+			rectMode			= OF_RECTMODE_CORNER;
 		}
 
 		virtual ~ofStyle(){}
 
 		ofColor color;
-		int bFill;
-		int blending;
-		int smoothing;
+		int polyMode;
+		int rectMode;
+		bool bFill;
+		bool blending;
+		bool smoothing;
 		int circleResolution;
 		float lineWidth;
 };
@@ -257,6 +254,11 @@ public:
 	virtual void draw(float x,float y,float w, float h)=0;
 	virtual float getHeight()=0;
 	virtual float getWidth()=0;
+
+	virtual void setAnchorPct(float xPct, float yPct)=0;
+    virtual void setAnchorPt(int x, int y)=0;
+	virtual void resetAnchor()=0;
+
 };
 
 //----------------------------------------------------------
@@ -269,6 +271,7 @@ public:
 	virtual void update()=0;
 };
 
+
 //----------------------------------------------------------
 // ofBaseHasTexture
 //----------------------------------------------------------
@@ -280,6 +283,22 @@ public:
 	virtual ofTexture & getTextureReference()=0;
 };
 
+//----------------------------------------------------------
+// ofBaseHasPixels
+//----------------------------------------------------------
+class ofBaseHasPixels{
+public:
+	virtual ~ofBaseHasPixels(){}
+	virtual unsigned char * getPixels()=0;
+};
 
-
+//----------------------------------------------------------
+// ofBaseVideo
+//----------------------------------------------------------
+class ofBaseVideo: public ofBaseDraws, public ofBaseUpdates, public ofBaseHasTexture, public ofBaseHasPixels{
+public:
+	virtual ~ofBaseVideo(){}
+	virtual unsigned char * getPixels()=0;
+	virtual void close()=0;
+};
 #endif

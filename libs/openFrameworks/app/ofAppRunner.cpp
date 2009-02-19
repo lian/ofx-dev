@@ -2,70 +2,43 @@
 
 //========================================================================
 // static variables:
+
 ofBaseApp	*				OFSAptr;
-int							windowMode;
 bool 						bMousePressed;
 bool						bRightButton;
 int							width, height;
-static float 				ofFrameRate;
 
-
-//========================================================================
-// core events instance:
-ofCoreEvents 				ofEvents;
+ofAppBaseWindow *			window = NULL;
 
 //========================================================================
-// core events arguments:
-ofEventArgs					voidEventArgs;
-ofMouseEventArgs 			mouseEventArgs;
-ofKeyEventArgs 				keyEventArgs;
-ofResizeEventArgs 			resizeEventArgs;
-
+// core events instance & arguments
+#ifdef OF_USING_POCO			ofCoreEvents 				ofEvents;
+	ofEventArgs					voidEventArgs;
+#endif
 
 //========================================================================
 // callbacks:
-#include "ofAppGlutGlue.h"
+#ifdef TARGET_OF_IPHONE				
+	#include "ofAppiPhoneWindow.h"#else
+	#include "ofAppGlutWindow.h"
+#endif
 
 
 //--------------------------------------
+void ofSetupOpenGL(ofAppBaseWindow * windowPtr, int w, int h, int screenMode){
+	window = windowPtr;
+	window->setupOpenGL(w, h, screenMode);
+}
+
+//--------------------------------------
 void ofSetupOpenGL(int w, int h, int screenMode){
-	int argc = 1;
-	char *argv = "openframeworks";
-	char **vptr = &argv;
-	glutInit(&argc, vptr);
-	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
-	windowMode = screenMode;
+	#ifdef TARGET_OF_IPHONE
+		window = new ofAppiPhoneWindow();
+	#else
+		window = new ofAppGlutWindow();
+	#endif
 
-
-	if (windowMode != OF_GAME_MODE){
-		glutInitWindowSize(w, h);
-		glutCreateWindow("");
-
-
-		ofBackground(200,200,200);		// default bg color
-		ofSetColor(0xFFFFFF); 			// default draw color
-										// used to be black, but
-										// black + texture = black
-										// so maybe grey bg
-										// and "white" fg color
-										// as default works the best...
-
-		requestedWidth  = glutGet(GLUT_WINDOW_WIDTH);
-		requestedHeight = glutGet(GLUT_WINDOW_HEIGHT);
-	} else {
-		glutInitDisplayMode( GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_ALPHA );
-    	// w x h, 32bit pixel depth, 60Hz refresh rate
-		char gameStr[64];
-		sprintf( gameStr, "%dx%d:%d@%d", w, h, 32, 60 );
-
-    	glutGameModeString(gameStr);
-
-    	if (!glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)){
-    		ofLog(OF_ERROR,"game mode error: selected format (%s) not available \n", gameStr);
-    	}
-    	// start fullscreen game mode
-    	glutEnterGameMode();
-	}
+	window->setupOpenGL(w, h, screenMode);
 }
 
 //----------------------- 	gets called when the app exits
@@ -74,7 +47,6 @@ void ofSetupOpenGL(int w, int h, int screenMode){
 
 void ofExitCallback();
 void ofExitCallback(){
-
 
 	//------------------------
 	// try to close FMOD:
@@ -98,8 +70,7 @@ void ofExitCallback(){
 		timeEndPeriod(1);
 	#endif
 
-	if(OFSAptr)
-		OFSAptr->exit();
+	if(OFSAptr)OFSAptr->exit();
 
 	#ifdef OF_USING_POCO
 		ofNotifyEvent( ofEvents.exit, voidEventArgs );
@@ -129,63 +100,29 @@ void ofRunApp(ofBaseApp * OFSA){
 
 	#endif
 
-
-	bFrameRateSet = false;
-
-	//----------------------
-	// setup the callbacks
-	glutMouseFunc(mouse_cb);
-	glutMotionFunc(motion_cb);
-	glutPassiveMotionFunc(passive_motion_cb);
-	glutIdleFunc(idle_cb);
-	glutDisplayFunc(display);
-
-	glutKeyboardFunc(keyboard_cb);
-	glutKeyboardUpFunc(keyboard_up_cb);
-	glutSpecialFunc(special_key_cb);
-	glutSpecialUpFunc(special_key_up_cb);
-
-	glutReshapeFunc(resize_cb);
-
-
-	//----------------------
+	window->initializeWindow();
 
 	ofSeedRandom();
+	ofResetElapsedTimeCounter();
 
-	// 		seed the random generator
-	// 		(users can seed it to a value in setup
-	// 		if they want it fixed);
+	window->runAppViaInfiniteLoop(OFSAptr);
 
-	if(OFSAptr)
-		OFSAptr->setup();
+}
 
-	#ifdef OF_USING_POCO
-		ofNotifyEvent( ofEvents.setup, voidEventArgs );
-	#endif
-    
-	glutMainLoop();
+//--------------------------------------
+int ofGetFrameNum(){
+	return window->getFrameNum();
 }
 
 //--------------------------------------
 float ofGetFrameRate(){
-	return ofFrameRate;
+	return window->getFrameRate();
 }
 
 //--------------------------------------
 void ofSetFrameRate(int targetRate){
-	// given this FPS, what is the amount of millis per frame
-	// that should elapse?
 
-	// --- > f / s
-
-	if (targetRate == 0){
-		bFrameRateSet = false;
-		return;
-	}
-
-	bFrameRateSet 			= true;
-	float durationOfFrame 	= 1.0f / (float)targetRate;
-	millisForFrame 			= (int)(1000.0f * durationOfFrame);
+	window->setFrameRate(targetRate);
 }
 
 //--------------------------------------
@@ -199,111 +136,82 @@ void ofSleepMillis(int millis){
 
 //--------------------------------------
 void ofHideCursor(){
-	#ifdef TARGET_OSX
-		CGDisplayHideCursor(kCGDirectMainDisplay);
-	#else 
-		glutSetCursor(GLUT_CURSOR_NONE);
-	#endif
+	window->hideCursor();
 }
 
 //--------------------------------------
 void ofShowCursor(){
-	#ifdef TARGET_OSX
-		CGDisplayShowCursor(kCGDirectMainDisplay);
-	#else 
-		glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
-	#endif
+	window->showCursor();
 }
 
 
 //--------------------------------------
 void ofSetWindowPosition(int x, int y){
-	glutPositionWindow(x,y);
+	window->setWindowPosition(x,y);
 }
 
 //--------------------------------------
 void ofSetWindowShape(int width, int height){
-	glutReshapeWindow(width, height);
-	// this is useful, esp if we are in the first frame (setup):
-	requestedWidth  = width;
-	requestedHeight = height;
+	window->setWindowShape(width, height);
 }
 
 //--------------------------------------
 int ofGetWindowPositionX(){
-	return glutGet(GLUT_WINDOW_X);
+	return (int)window->getWindowPosition().x;
 }
 
 //--------------------------------------
 int ofGetWindowPositionY(){
-	return glutGet(GLUT_WINDOW_Y);
+	return (int)window->getWindowPosition().y;
 }
 
 //--------------------------------------
 int ofGetScreenWidth(){
-	return glutGet(GLUT_SCREEN_WIDTH);
+	return (int)window->getScreenSize().x;
 }
 
 //--------------------------------------
 int ofGetScreenHeight(){
-	return glutGet(GLUT_SCREEN_HEIGHT);
+	return (int)window->getScreenSize().y;
 }
 
 //--------------------------------------------------
 int ofGetWidth(){
-	return glutGet(GLUT_WINDOW_WIDTH);
+	return (int)window->getWindowSize().x;
 }
 //--------------------------------------------------
 int ofGetHeight(){
-	return glutGet(GLUT_WINDOW_HEIGHT);
+	return (int)window->getWindowSize().y;
 }
 
 //--------------------------------------
 void ofSetWindowTitle(string title){
-	glutSetWindowTitle(title.c_str());
+	window->setWindowTitle(title);
 }
 
 //----------------------------------------------------------
 void ofEnableSetupScreen(){
-	enableSetupScreen = true;
+	window->enableSetupScreen();
 }
 
 //----------------------------------------------------------
 void ofDisableSetupScreen(){
-	enableSetupScreen = false;
+	window->disableSetupScreen();
 }
 
 //--------------------------------------
 void ofToggleFullscreen(){
-
-	if (windowMode == OF_GAME_MODE) return;
-
-	newScreenMode = true;
-	if (windowMode == OF_WINDOW){
-		windowMode = OF_FULLSCREEN;
-	} else {
-		windowMode = OF_WINDOW;
-	}
+	window->toggleFullscreen();
 }
 
 //--------------------------------------
 void ofSetFullscreen(bool fullscreen){
-
-	if (windowMode == OF_GAME_MODE) return;
-
-	if(fullscreen && windowMode==OF_WINDOW){
-		windowMode    = OF_FULLSCREEN;
-		newScreenMode = true;
-	}
-	else if(!fullscreen && windowMode==OF_FULLSCREEN){
-		windowMode    = OF_WINDOW;
-		newScreenMode = true;
-	}
+	window->setFullscreen(fullscreen);
 }
 
 //--------------------------------------
 int ofGetWindowMode(){
-	return windowMode;
+	return window->getWindowMode();
 }
 
 //--------------------------------------
@@ -323,7 +231,7 @@ void ofSetVerticalSync(bool bSync){
 	//--------------------------------------
 	#ifdef TARGET_OSX
 	//--------------------------------------
-		GLint sync = bSync == true ? 1 : 0;
+		long sync = bSync == true ? 1 : 0;
 		CGLSetParameter (CGLGetCurrentContext(), kCGLCPSwapInterval, &sync);
 	//--------------------------------------
 	#endif

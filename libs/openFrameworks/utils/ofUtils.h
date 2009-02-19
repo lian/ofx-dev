@@ -10,6 +10,7 @@
 
 int 	ofNextPow2(int input);
 
+void	ofResetElapsedTimeCounter();		// this happens on the first frame
 float 	ofGetElapsedTimef();
 int		ofGetElapsedTimeMillis();
 int 	ofGetFrameNum();
@@ -17,6 +18,8 @@ int 	ofGetFrameNum();
 int 	ofGetSeconds();
 int 	ofGetMinutes();
 int 	ofGetHours();
+
+unsigned long ofGetSystemTime( );			// system time in milliseconds;
 
 int     ofGetYear();
 int     ofGetMonth();
@@ -29,6 +32,11 @@ void	ofEnableDataPath();
 void	ofDisableDataPath();
 string 	ofToDataPath(string path, bool absolute=false);
 
+
+//set the root path that ofToDataPath will use to search for files relative to the app
+//the path must have a trailing slash (/) !!!!
+void	ofSetDataPathRoot( string root );
+
 string  ofToString(double value, int precision = 7);
 string  ofToString(int  value);
 
@@ -37,15 +45,14 @@ string 	ofGetVersionInfo();
 void	ofSaveScreen(string filename);
 void	ofSaveFrame();
 
+vector<string>	ofSplitString(const string & text, const string & delimiter);
+
 //--------------------------------------------------
 void ofSetLogLevel(int logLevel);
 void ofLog(int logLevel, string message);
 void ofLog(int logLevel, const char* format, ...);
 void ofSetConsoleColor(int color);
 void ofRestoreConsoleColor();
-
-//----------------------- not for the public:
-void	setFrameNum(int num);
 
 #endif
 

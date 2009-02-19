@@ -1,12 +1,9 @@
 #ifndef OF_CONSTANTS
 #define OF_CONSTANTS
 
-
-
 //-------------------------------
 #define OF_VERSION	6
 //-------------------------------
-
 
 //-------------------------------
 //  find the system type --------
@@ -18,7 +15,14 @@
 #if defined( __WIN32__ ) || defined( _WIN32 )
 	#define TARGET_WIN32
 #elif defined( __APPLE_CC__)
-	#define TARGET_OSX
+	#include <TargetConditionals.h>		
+	
+	#if (TARGET_OF_IPHONE_SIMULATOR) || (TARGET_OS_IPHONE) || (TARGET_IPHONE)
+		#define TARGET_OF_IPHONE
+		#define TARGET_OPENGLES
+	#else
+		#define TARGET_OSX
+	#endif
 #else
 	#define TARGET_LINUX
 #endif
@@ -35,8 +39,7 @@
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	#include "GLee.h"
-	#define GLUT_BUILDING_LIB
-	#include "glut.h"
+   	#include "glu.h"
 	#define __WINDOWS_DS__
 	#define __WINDOWS_MM__
 	#if (_MSC_VER)       // microsoft visual studio
@@ -77,7 +80,7 @@
 	#endif
 	#include <unistd.h>
 	#include "GLee.h"
-	#include <GLUT/glut.h>
+	#include <OpenGL/glu.h>
 	#include <ApplicationServices/ApplicationServices.h>
 
 	#if defined(__LITTLE_ENDIAN__)
@@ -88,7 +91,7 @@
 #ifdef TARGET_LINUX
         #include <unistd.h>
         #include "GLee.h"
-        #include <GL/glut.h>
+        #include <GL/glu.h>
 
     // for some reason, this isn't defined at compile time,
     // so this hack let's us work
@@ -105,8 +108,15 @@
 
 #endif
 
+
+#ifdef TARGET_OF_IPHONE						
+	#import <OpenGLES/ES1/gl.h>
+	#import <OpenGLES/ES1/glext.h>
+#endif
+
+
 #ifndef __MWERKS__
-#define OF_EXIT_APP(val)		exit(val);
+#define OF_EXIT_APP(val)		std::exit(val);
 #else
 #define OF_EXIT_APP(val)		std::exit(val);
 #endif
@@ -163,13 +173,15 @@
 
 
 #ifdef TARGET_LINUX
-	#define OF_VIDEO_PLAYER_FOBS
+	#define OF_VIDEO_PLAYER_GSTREAMER
 #else
 	#define OF_VIDEO_PLAYER_QUICKTIME
 #endif
 
 // comment out this line to disable all poco related code
-#define OF_USING_POCO
+#ifndef TARGET_OF_IPHONE
+	#define OF_USING_POCO
+#endif
 
 //we don't want to break old code that uses ofSimpleApp
 //so we forward declare ofBaseApp and make ofSimpleApp mean the same thing
@@ -302,86 +314,55 @@ using namespace std;
 // 	letters.. now they will be 256 + 104, 256 + 105....)
 
 
-#define OF_KEY_MODIFIER 	0x0100
+	#define OF_KEY_MODIFIER 	0x0100
+	#define OF_KEY_RETURN		13
+	#define OF_KEY_ESC			27
+	
+	// http://www.openframeworks.cc/forum/viewtopic.php?t=494
+	// some issues with keys across platforms:
 
-#define OF_KEY_RETURN		13
+	#ifdef TARGET_OSX
+		#define OF_KEY_BACKSPACE	127
+		#define OF_KEY_DEL			8
+	#else
+		#define OF_KEY_BACKSPACE	8
+		#define OF_KEY_DEL			127
+	#endif
 
-// http://www.openframeworks.cc/forum/viewtopic.php?t=494
-// some issues with keys across platforms:
+	// zach - there are more of these keys, we can add them here...
+	// these are keys that are not coming through "special keys"
+	// via glut, but just other keys on your keyboard like
 
-#ifdef TARGET_OSX
-	#define OF_KEY_BACKSPACE	127
-	#define OF_KEY_DEL			8
-#else
-	#define OF_KEY_BACKSPACE	8
-	#define OF_KEY_DEL			127
-#endif
+	#define OF_KEY_F1			(1 | OF_KEY_MODIFIER)
+	#define OF_KEY_F2			(2 | OF_KEY_MODIFIER)
+	#define OF_KEY_F3			(3 | OF_KEY_MODIFIER)
+	#define OF_KEY_F4			(4 | OF_KEY_MODIFIER)
+	#define OF_KEY_F5			(5 | OF_KEY_MODIFIER)
+	#define OF_KEY_F6			(6 | OF_KEY_MODIFIER)
+	#define OF_KEY_F7			(7 | OF_KEY_MODIFIER)
+	#define OF_KEY_F8			(8 | OF_KEY_MODIFIER)
+	#define OF_KEY_F9			(9 | OF_KEY_MODIFIER)
+	#define OF_KEY_F10			(10 | OF_KEY_MODIFIER)
+	#define OF_KEY_F11			(11 | OF_KEY_MODIFIER)
+	#define OF_KEY_F12			(12 | OF_KEY_MODIFIER)
+	#define OF_KEY_LEFT			(100 | OF_KEY_MODIFIER)
+	#define OF_KEY_UP			(101 | OF_KEY_MODIFIER)
+	#define OF_KEY_RIGHT		(102 | OF_KEY_MODIFIER)
+	#define OF_KEY_DOWN			(103 | OF_KEY_MODIFIER)
+	#define OF_KEY_PAGE_UP		(104 | OF_KEY_MODIFIER)
+	#define OF_KEY_PAGE_DOWN	(105 | OF_KEY_MODIFIER)
+	#define OF_KEY_HOME			(106 | OF_KEY_MODIFIER)
+	#define OF_KEY_END			(107 | OF_KEY_MODIFIER)
+	#define OF_KEY_INSERT		(108 | OF_KEY_MODIFIER)
 
-// zach - there are more of these keys, we can add them here...
-// these are keys that are not coming through "special keys"
-// via glut, but just other keys on your keyboard like
-
-#define OF_KEY_F1			(GLUT_KEY_F1 | OF_KEY_MODIFIER)
-#define OF_KEY_F2			(GLUT_KEY_F2 | OF_KEY_MODIFIER)
-#define OF_KEY_F3			(GLUT_KEY_F3 | OF_KEY_MODIFIER)
-#define OF_KEY_F4			(GLUT_KEY_F4 | OF_KEY_MODIFIER)
-#define OF_KEY_F5			(GLUT_KEY_F5 | OF_KEY_MODIFIER)
-#define OF_KEY_F6			(GLUT_KEY_F6 | OF_KEY_MODIFIER)
-#define OF_KEY_F7			(GLUT_KEY_F7 | OF_KEY_MODIFIER)
-#define OF_KEY_F8			(GLUT_KEY_F8 | OF_KEY_MODIFIER)
-#define OF_KEY_F9			(GLUT_KEY_F9 | OF_KEY_MODIFIER)
-#define OF_KEY_F10			(GLUT_KEY_F10 | OF_KEY_MODIFIER)
-#define OF_KEY_F11			(GLUT_KEY_F11 | OF_KEY_MODIFIER)
-#define OF_KEY_F12			(GLUT_KEY_F12 | OF_KEY_MODIFIER)
-
-#define OF_KEY_LEFT			(GLUT_KEY_LEFT | OF_KEY_MODIFIER)
-#define OF_KEY_UP			(GLUT_KEY_UP | OF_KEY_MODIFIER)
-#define OF_KEY_RIGHT		(GLUT_KEY_RIGHT | OF_KEY_MODIFIER)
-#define OF_KEY_DOWN			(GLUT_KEY_DOWN | OF_KEY_MODIFIER)
-#define OF_KEY_PAGE_UP		(GLUT_KEY_PAGE_UP | OF_KEY_MODIFIER)
-#define OF_KEY_PAGE_DOWN	(GLUT_KEY_PAGE_DOWN | OF_KEY_MODIFIER)
-#define OF_KEY_HOME			(GLUT_KEY_HOME | OF_KEY_MODIFIER)
-#define OF_KEY_END			(GLUT_KEY_END | OF_KEY_MODIFIER)
-#define OF_KEY_INSERT		(GLUT_KEY_INSERT | OF_KEY_MODIFIER)
+// not sure what to do in the case of non-glut apps.... 
 
 
 //--------------------------------------------
-//colors for our logger.
+//console colors for our logger - shame this doesn't work with the xcode console
 
 #ifdef TARGET_WIN32
-//		fg_black = 0,
-//		fg_red = FOREGROUND_RED,
-//		fg_green = FOREGROUND_GREEN,
-//		fg_blue = FOREGROUND_BLUE,
-//		fg_yellow = fg_red | fg_green,
-//		fg_cyan = fg_green | fg_blue,
-//		fg_pink = fg_red | fg_blue,
-//		fg_white = fg_red | fg_green | fg_blue,
-//		fg_bright = FOREGROUND_INTENSITY,
-//		fg_bright_red = fg_bright | fg_red,
-//		fg_bright_green = fg_bright | fg_green,
-//		fg_bright_blue = fg_bright | fg_blue,
-//		fg_bright_yellow = fg_bright | fg_yellow,
-//		fg_bright_cyan = fg_bright | fg_cyan,
-//		fg_bright_pink = fg_bright | fg_pink,
-//		fg_bright_white = fg_bright | fg_white,
-//		bg_black = 0,
-//		bg_red = BACKGROUND_RED,
-//		bg_green = BACKGROUND_GREEN,
-//		bg_blue = BACKGROUND_BLUE,
-//		bg_yellow = bg_red | bg_green,
-//		bg_cyan = bg_green | bg_blue,
-//		bg_pink = bg_red | bg_blue,
-//		bg_white = bg_red | bg_green | bg_blue,
-//		bg_bright = BACKGROUND_INTENSITY,
-//		bg_bright_red = bg_bright | bg_red,
-//		bg_bright_green = bg_bright | bg_green,
-//		bg_bright_blue = bg_bright | bg_blue,
-//		bg_bright_yellow = bg_bright | bg_yellow,
-//		bg_bright_cyan = bg_bright | bg_cyan,
-//		bg_bright_pink = bg_bright | bg_pink,
-//		bg_bright_white = bg_bright | bg_white,
-//
+
 	#define OF_CONSOLE_COLOR_RESTORE (0 | (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE) )
 	#define OF_CONSOLE_COLOR_BLACK (0)
 	#define OF_CONSOLE_COLOR_RED (FOREGROUND_RED)
@@ -406,9 +387,6 @@ using namespace std;
  
 #endif
 
-
 //--------------------------------------------
-
-
 
 #endif

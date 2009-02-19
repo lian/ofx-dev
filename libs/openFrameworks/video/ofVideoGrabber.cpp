@@ -315,6 +315,7 @@ void ofVideoGrabber::grabFrame(){
 	//---------------------------------
 
 		if (bGrabberInited == true){
+			bIsFrameNew = false;
 			if (VI.isFrameNew(device)){
 
 				bIsFrameNew = true;
@@ -1106,6 +1107,23 @@ void ofVideoGrabber::setUseTexture(bool bUse){
 	bUseTexture = bUse;
 }
 
+//we could cap these values - but it might be more useful
+//to be able to set anchor points outside the image
+
+//----------------------------------------------------------
+void ofVideoGrabber::setAnchorPct(float xPct, float yPct){
+    if (bUseTexture)tex.setAnchorPct(xPct, yPct);
+}
+
+//----------------------------------------------------------
+void ofVideoGrabber::setAnchorPt(int x, int y){
+    if (bUseTexture)tex.setAnchorPt(x, y);
+}
+
+//----------------------------------------------------------
+void ofVideoGrabber::resetAnchor(){
+   	if (bUseTexture)tex.resetAnchor();
+}
 
 //------------------------------------
 void ofVideoGrabber::draw(float _x, float _y, float _w, float _h){

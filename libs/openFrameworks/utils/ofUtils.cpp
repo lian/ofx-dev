@@ -1,28 +1,51 @@
 #include "ofUtils.h"
 #include "ofImage.h"
 
+#ifdef TARGET_OF_IPHONE
+	#include "sys/time.h"
+#endif
+
+#ifdef TARGET_WIN32
+    #include <mmsystem.h>
+#endif
+
 static bool enableDataPath = true;
-
-//--------------------------------------------------
-// not for the public, just for glutGlue -> ofUtil comm.
-static int numFrames = 0;
-void setFrameNum(int num){
-	numFrames = num;
-}
-
-//--------------------------------------
-int ofGetFrameNum(){
-	return numFrames;
-}
+static unsigned long startTime = ofGetSystemTime();   //  better at the first frame ?? (currently, there is some delay from static init, to running.
 
 //--------------------------------------
 int ofGetElapsedTimeMillis(){
-	return (int)(glutGet(GLUT_ELAPSED_TIME));
+	return (int)(ofGetSystemTime() - startTime);
 }
 
 //--------------------------------------
 float ofGetElapsedTimef(){
-	return (float)(glutGet(GLUT_ELAPSED_TIME))/1000.0f;
+	return ((float) ((int)(ofGetSystemTime() - startTime)) / 1000.0f);
+}
+
+//--------------------------------------
+void ofResetElapsedTimeCounter(){
+	startTime = ofGetSystemTime();
+}
+
+//=======================================
+// this is from freeglut, and used internally:
+/* Platform-dependent time in milliseconds, as an unsigned 32-bit integer.
+ * This value wraps every 49.7 days, but integer overflows cancel
+ * when subtracting an initial start time, unless the total time exceeds
+ * 32-bit, where the GLUT API return value is also overflowed.
+ */
+unsigned long ofGetSystemTime( ) {
+	#ifndef TARGET_WIN32
+		struct timeval now;
+		gettimeofday( &now, NULL );
+		return now.tv_usec/1000 + now.tv_sec*1000;
+	#else
+		#if defined(_WIN32_WCE)
+			return GetTickCount();
+		#else
+			return timeGetTime();
+		#endif
+	#endif
 }
 
 //--------------------------------------------------
@@ -100,30 +123,39 @@ void ofDisableDataPath(){
 	enableDataPath = false;
 }
 
+
+//use ofSetDataPathRoot() to override this
+#if defined TARGET_OSX
+	static string dataPathRoot = "../../../data/";
+#else
+	static string dataPathRoot = "data/";
+#endif
+
 //--------------------------------------------------
-string ofToDataPath(string path, bool absolute){
+void ofSetDataPathRoot(string newRoot){
+	dataPathRoot = newRoot;
+}
+
+//--------------------------------------------------
+string ofToDataPath(string path, bool makeAbsolute){
 	if( enableDataPath ){
-		#ifdef TARGET_OSX
-			if(path.substr(0,1) != "/" && path.substr(0,14) != "../../../data/"){
-				path = "../../../data/"+path;
 
-				if(absolute){
-					char currDir[1024];
-					path = "/"+path;
-					path = getcwd(currDir, 1024)+path;
-				}
-			}
-		#else
-			if(path.substr(0,1) != "/" && path.substr(0,5) != "data/"){
-				path = "data/"+path;
+		//check if absolute path has been passed or if data path has already been applied
+		//do we want to check for C: D: etc ?? like  substr(1, 2) == ':' ??
+		if( path.substr(0,1) != "/" && path.substr(0,dataPathRoot.length()) != dataPathRoot){
+			path = dataPathRoot+path;
+		}
 
-				if(absolute){
-					char currDir[1024];
-					path = "/"+path;
-					path = getcwd(currDir, 1024)+path;
-				}
-			}
-		#endif
+		if(makeAbsolute && path.substr(0,1) != "/"){
+			#ifndef TARGET_OF_IPHONE
+				char currDir[1024];
+				path = "/"+path;
+				path = getcwd(currDir, 1024)+path;
+			#else
+				//do we need iphone specific code here?
+			#endif
+		}
+
 	}
 	return path;
 }
@@ -142,7 +174,25 @@ string ofToString(int value){
 	return sstr.str();
 }
 
+//--------------------------------------------------
+vector<string> ofSplitString(const string& str, const string& delimiter = " "){
+    vector<string> elements;
+	// Skip delimiters at beginning.
+    string::size_type lastPos = str.find_first_not_of(delimiter, 0);
+    // Find first "non-delimiter".
+    string::size_type pos     = str.find_first_of(delimiter, lastPos);
 
+    while (string::npos != pos || string::npos != lastPos)
+    {
+        // Found a token, add it to the vector.
+    	elements.push_back(str.substr(lastPos, pos - lastPos));
+        // Skip delimiters.  Note the "not_of"
+        lastPos = str.find_first_not_of(delimiter, pos);
+        // Find next "non-delimiter"
+        pos = str.find_first_of(delimiter, lastPos);
+    }
+    return elements;
+}
 
 //--------------------------------------------------
 void ofLaunchBrowser(string url){

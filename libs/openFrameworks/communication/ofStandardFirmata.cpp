@@ -75,33 +75,25 @@ int ofStandardFirmata::connect(string device, int baud){
 	return _port.setup(device.c_str(), baud);
 }
 
-#ifdef TARGET_WIN32
-	void ofStandardFirmata::setDigitalHistoryLength(int length){
-		if(length>=2)	_digitalHistoryLength=length;
-	}
-	void ofStandardFirmata::setAnalogHistoryLength(int length){
-		if(length>=2)	_analogHistoryLength=length;
-	}
-	void ofStandardFirmata::setSysExHistoryLength(int length){
-		if(length>=1)	_sysExHistoryLength=length;
-	}
-	void ofStandardFirmata::setStringHistoryLength(int length){
-		if(length>=1)	_stringHistoryLength=length;
-	}
-#else
-	void ofStandardFirmata::setDigitalHistoryLength(uint length){
-		if(length>=2)	_digitalHistoryLength=length;
-	}
-	void ofStandardFirmata::setAnalogHistoryLength(uint length){
-		if(length>=2)	_analogHistoryLength=length;
-	}
-	void ofStandardFirmata::setSysExHistoryLength(uint length){
-		if(length>=1)	_sysExHistoryLength=length;
-	}
-	void ofStandardFirmata::setStringHistoryLength(uint length){
-		if(length>=1)	_stringHistoryLength=length;
-	}
-#endif
+void ofStandardFirmata::setDigitalHistoryLength(int length){
+	if(length>=2)
+		_digitalHistoryLength=length;
+}
+
+void ofStandardFirmata::setAnalogHistoryLength(int length){
+	if(length>=2)
+		_analogHistoryLength=length;
+}
+
+void ofStandardFirmata::setSysExHistoryLength(int length){
+	if(length>=1)
+		_sysExHistoryLength=length;
+}
+
+void ofStandardFirmata::setStringHistoryLength(int length){
+	if(length>=1)
+		_stringHistoryLength=length;
+}
 
 void ofStandardFirmata::disconnect(){
 	_port.close();

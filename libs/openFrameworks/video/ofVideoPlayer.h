@@ -5,9 +5,23 @@
 #include "ofTexture.h"
 
 
-#ifdef OF_VIDEO_PLAYER_FOBS
-	#include "Decoder.h"
+#ifdef OF_VIDEO_PLAYER_GSTREAMER
+	#include <gst/gst.h>
 	#include <pthread.h>
+
+	typedef struct{
+		GMainLoop 		*	loop;
+		GstElement 		*	pipeline;
+		unsigned char 	*	pixels;
+		pthread_mutex_t 	buffer_mutex;
+		bool				bHasPixelsChanged;
+
+		guint64				durationNanos;
+		guint64				nFrames;
+		int					pipelineState;
+		float				speed;
+	}ofGstVideoData;
+
 #else
 	#include "ofQtUtils.h"
 #endif
@@ -21,7 +35,7 @@
 
 //---------------------------------------------
 
-class ofVideoPlayer : public ofBaseUpdates, public ofBaseDraws, public ofBaseHasTexture{
+class ofVideoPlayer : public ofBaseVideo{
 
 	public:
 
@@ -31,6 +45,7 @@ class ofVideoPlayer : public ofBaseUpdates, public ofBaseDraws, public ofBaseHas
 
 		bool 				loadMovie(string name);
 		void 				closeMovie();
+		void 				close();
 
 		void				update();			//same as idleMovie
 		void 				idleMovie();		// rename to updateMovie?
@@ -59,10 +74,16 @@ class ofVideoPlayer : public ofBaseUpdates, public ofBaseDraws, public ofBaseHas
 		void 				draw(float x, float y, float w, float h);
 		void 				draw(float x, float y);
 
+		//a more accurate way to set the point which the image is drawn from
+		//this makes rotating an image around a point easier.
+        void                setAnchorPct(float xPct, float yPct);
+        void                setAnchorPt(int x, int y);
+        void                resetAnchor();
+
 		void 				setPaused(bool bPause);
 
 		int					getCurrentFrame();
-		int					getTotalNumFrames(){   return nFrames; }
+		int					getTotalNumFrames();
 
 		void				firstFrame();
 		void				nextFrame();
@@ -70,19 +91,9 @@ class ofVideoPlayer : public ofBaseUpdates, public ofBaseDraws, public ofBaseHas
 
 		float 				getHeight();
 		float 				getWidth();
+
 		//--------------------------------------
-		#ifdef OF_VIDEO_PLAYER_FOBS
-		//--------------------------------------
-			omnividea::fobs::Decoder	* fobsDecoder;
-			int					iTotalFrames;
-			int					loopMode;
-			float               timeLastIdle;
-			float               diffTime;
-			float               positionPct;
-			int                 lastFrameIndex;  // as we play, look for changed frames
-			float               durationMillis;
-		//--------------------------------------
-		#else    // quicktime
+		#ifdef OF_VIDEO_PLAYER_QUICKTIME
 		//--------------------------------------
 			MovieController  	thePlayer;
 			GWorldPtr 			offscreenGWorld;
@@ -111,12 +122,21 @@ class ofVideoPlayer : public ofBaseUpdates, public ofBaseDraws, public ofBaseHas
 		bool 				bIsFrameNew;			// if we are new
 
 		//--------------------------------------
-		#ifdef OF_VIDEO_PLAYER_FOBS
+		#ifdef OF_VIDEO_PLAYER_GSTREAMER
 		//--------------------------------------
-		pthread_mutex_t			time_mutex;
+		ofGstVideoData 		gstData;
+		bool				bIsMovieDone;
+		bool				isStream;
+		GstElement	* 		gstPipeline;
+		GstElement  *		gstSink;
+		gint64          	durationNanos;
+		int					loopMode;
 
-		void 					lock();
-		void 					unlock();
+		bool				posChangingPaused;
+
+
+		void 				gstHandleMessage();
+		bool 				allocate();
 		//--------------------------------------
 		#endif
 		//--------------------------------------

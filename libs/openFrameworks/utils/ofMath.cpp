@@ -2,7 +2,10 @@
 #include "ofAppRunner.h"
 #include <sys/time.h>
 
-
+#ifdef TARGET_WIN32
+    #include <process.h>
+    #define getpid _getpid
+#endif
 
 //--------------------------------------------------
 int ofNextPow2(int a){
@@ -18,11 +21,7 @@ void ofSeedRandom() {
 	gettimeofday(&tv, 0);
 
 	// use XOR'd second, microsecond precision AND pid as seed
-	#ifdef TARGET_WIN32
-	  long int n = (tv.tv_sec ^ tv.tv_usec); // ^ getpid();
-	#else
-	  long int n = (tv.tv_sec ^ tv.tv_usec) ^ getpid();
-	#endif
+	long int n = (tv.tv_sec ^ tv.tv_usec) ^ getpid();
 	srand(n);
 
 }
@@ -125,4 +124,4 @@ float ofRandomWidth() {
 //--------------------------------------------------
 float ofRandomHeight() { 
    return ofRandom(0, ofGetHeight()); 
-}
+} 
