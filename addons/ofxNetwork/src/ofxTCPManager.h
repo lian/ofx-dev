@@ -3,15 +3,15 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////
-// Original author: ???????? we think Christian Naglhofer  
+// Original author: ???????? we think Christian Naglhofer
 // Crossplatform port by: Theodore Watson May 2007 - update Jan 2008
-// Changes: Mac (and should be nix) equivilant functions and data types for  
-// win32 calls, artificial nix version of GetTickCount() used for timestamp 
+// Changes: Mac (and should be nix) equivilant functions and data types for
+// win32 calls, artificial nix version of GetTickCount() used for timestamp
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
 
-/*************************************************************** 
+/***************************************************************
 	USAGE
 ****************************************************************
 
@@ -24,7 +24,7 @@ TCP Socket Client:
 ...
 x) close()
 
-optional: 
+optional:
 SetTimeoutSend()
 
 
@@ -39,7 +39,7 @@ TCP Socket Server:
 ...
 x) close()
 
-optional: 
+optional:
 SetTimeoutAccept()
 SetTimeoutReceive()
 
@@ -50,9 +50,9 @@ SetTimeoutReceive()
 #include <stdio.h>
 
 #ifndef TARGET_WIN32
-	
+
 	//unix includes - works for osx should be same for *nix
-	#include <ctype.h>	
+	#include <ctype.h>
 	#include <netdb.h>
 	#include <string.h>
 	#include <fcntl.h>
@@ -60,18 +60,19 @@ SetTimeoutReceive()
 	#include <errno.h>
 	#include <unistd.h>
 	#include <netinet/in.h>
-	#include <arpa/inet.h>			
+	#include <arpa/inet.h>
 	#include <sys/timeb.h>
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <sys/time.h>
-	#include <sys/ioctl.h>			
-	#include <sys/signal.h>
+	#include <sys/ioctl.h>
+
+    #include <sys/signal.h>
 
 	//other types
 	#define INVALID_SOCKET -1
-	#define SOCKET_ERROR -1	
-	#define FAR 
+	#define SOCKET_ERROR -1
+	#define FAR
 	#define SO_MAX_MSG_SIZE TCP_MAXSEG
 #else
 	//windows includes
@@ -84,64 +85,64 @@ class InetAddr : public sockaddr_in
 {
 public:
   // constructors
-	InetAddr() { 
+	InetAddr() {
 		memset(this, 0, sizeof(InetAddr));
 		sin_family= AF_INET;
 		sin_port= 0;
 		sin_addr.s_addr= 0;
-	}; 
-  
-	InetAddr(const sockaddr& sockAddr) { 
-		memcpy(this, &sockAddr, sizeof(sockaddr)); 
 	};
-	
-	InetAddr(const sockaddr_in& sin) { 
-		memcpy(this, &sin, sizeof(sockaddr_in)); 
+
+	InetAddr(const sockaddr& sockAddr) {
+		memcpy(this, &sockAddr, sizeof(sockaddr));
 	};
-	
-	InetAddr(const unsigned long ulAddr, const unsigned short ushPort= 0) {  
+
+	InetAddr(const sockaddr_in& sin) {
+		memcpy(this, &sin, sizeof(sockaddr_in));
+	};
+
+	InetAddr(const unsigned long ulAddr, const unsigned short ushPort= 0) {
 		memset(this, 0, sizeof(InetAddr));
 		sin_family= AF_INET;
 		sin_port= htons(ushPort);
 		sin_addr.s_addr= htonl(ulAddr);
 	};
-  
-  InetAddr(const wchar_t* pStrIP, const unsigned short usPort= 0) {  
+
+  InetAddr(const wchar_t* pStrIP, const unsigned short usPort= 0) {
 		char szStrIP[32];
-		
-		#ifdef TARGET_WIN32 
+
+		#ifdef TARGET_WIN32
 			WideCharToMultiByte(CP_ACP, 0, pStrIP, (int)wcslen(pStrIP) + 1, szStrIP, 32, 0, 0);
-		#else						
+		#else
 			//theo note:
-			//do we need to set the codepage here first? 
+			//do we need to set the codepage here first?
 			//or is the default one okay?
 			wcstombs(szStrIP, pStrIP, 32);
 		#endif
-		
+
 		memset(this, 0, sizeof(InetAddr));
 		sin_family= AF_INET;
 		sin_port= htons(usPort);
-		sin_addr.s_addr= inet_addr(szStrIP); 
+		sin_addr.s_addr= inet_addr(szStrIP);
 	}
 
-	InetAddr(const char* pStrIP, const unsigned short usPort= 0) {  
+	InetAddr(const char* pStrIP, const unsigned short usPort= 0) {
 		memset(this, 0, sizeof(InetAddr));
 		sin_family= AF_INET;
 		sin_port= htons(usPort);
-		sin_addr.s_addr= inet_addr(pStrIP); 
-	} 	
+		sin_addr.s_addr= inet_addr(pStrIP);
+	}
 	/// returns the address in dotted-decimal format
-	char* DottedDecimal() { return inet_ntoa(sin_addr); } 
+	char* DottedDecimal() { return inet_ntoa(sin_addr); }
 	unsigned short GetPort() const { return ntohs(sin_port); }
 	unsigned long GetIpAddr() const { return ntohl(sin_addr.s_addr); }
 	/// operators added for efficiency
-	const InetAddr& operator=(const sockaddr& sa) { 
+	const InetAddr& operator=(const sockaddr& sa) {
 		memcpy(this, &sa, sizeof(sockaddr));
-		return *this; 
+		return *this;
 	}
 	const InetAddr& operator=(const sockaddr_in& sin) {
 		memcpy(this, &sin, sizeof(sockaddr_in));
-		return *this; 
+		return *this;
 	}
 	operator sockaddr() { return *((sockaddr *)this); }
 	operator sockaddr *() { return (sockaddr *)this; }
@@ -165,10 +166,10 @@ class ofxTCPManager
 {
 public:
 	ofxTCPManager();
-	virtual ~ofxTCPManager() { 
-		if ((m_hSocket)&&(m_hSocket != INVALID_SOCKET)) Close(); 
+	virtual ~ofxTCPManager() {
+		if ((m_hSocket)&&(m_hSocket != INVALID_SOCKET)) Close();
 	};
-	
+
 	bool Close();
 	bool Create();
 	bool Listen(int iMaxConnections);
@@ -177,8 +178,8 @@ public:
 	bool Accept(ofxTCPManager& sock);
 	//sends the data, but it is not guaranteed that really all data will be sent
 	int  Send(const char* pBuff, const int iSize);
-	//all data will be sent guaranteed. 
-	int  SendAll(const char* pBuff, const int iSize);	
+	//all data will be sent guaranteed.
+	int  SendAll(const char* pBuff, const int iSize);
 	int  Receive(char* pBuff, const int iSize);
 	int  ReceiveAll(char* pBuff, const int iSize);
 	int  Write(const char* pBuff, const int iSize);
@@ -202,13 +203,13 @@ public:
 protected:
   int m_iListenPort;
   int m_iMaxConnections;
- 
-  #ifdef TARGET_WIN32		
+
+  #ifdef TARGET_WIN32
     SOCKET m_hSocket;
   #else
 	int m_hSocket;
-  #endif 
-  
+  #endif
+
   unsigned long m_dwTimeoutSend;
   unsigned long m_dwTimeoutReceive;
   unsigned long m_dwTimeoutAccept;
