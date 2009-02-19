@@ -193,6 +193,9 @@ void ofxCvGrayscaleImage::threshold( int value, bool invert) {
     flagImageChanged();
 }
 
+void ofxCvGrayscaleImage::thresholdMSA( int value, int type) {		// MSA
+	cvThreshold( cvImage, cvImageTemp, value, 255, type ); swapTemp(); flagImageChanged();
+}
 
 
 // Image Transformation Operations

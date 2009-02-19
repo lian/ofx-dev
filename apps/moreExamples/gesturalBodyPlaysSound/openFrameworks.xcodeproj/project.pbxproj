@@ -14,6 +14,7 @@
 		293865DD0F2F488E0021FBF2 /* ofxCvGrayscaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 293865C90F2F488E0021FBF2 /* ofxCvGrayscaleImage.cpp */; };
 		293865DE0F2F488E0021FBF2 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 293865CB0F2F488E0021FBF2 /* ofxCvImage.cpp */; };
 		293866080F2F4B360021FBF2 /* NSvidbutton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 293866060F2F4B360021FBF2 /* NSvidbutton.cpp */; };
+		3C0BB48E0F4DB47300F5ED22 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0BB48B0F4DB47300F5ED22 /* ofxCvShortImage.cpp */; };
 		3C6BF4A20F4D8E010093E45B /* ofAppGlutWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BF4710F4D8E010093E45B /* ofAppGlutWindow.cpp */; };
 		3C6BF4A30F4D8E010093E45B /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BF4730F4D8E010093E45B /* ofAppRunner.cpp */; };
 		3C6BF4A40F4D8E010093E45B /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BF4770F4D8E010093E45B /* ofArduino.cpp */; };
@@ -66,9 +67,11 @@
 		293865CA0F2F488E0021FBF2 /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvGrayscaleImage.h; sourceTree = "<group>"; };
 		293865CB0F2F488E0021FBF2 /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
 		293865CC0F2F488E0021FBF2 /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
-		293865CD0F2F488E0021FBF2 /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
 		293866060F2F4B360021FBF2 /* NSvidbutton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NSvidbutton.cpp; sourceTree = "<group>"; };
 		293866070F2F4B360021FBF2 /* NSvidbutton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSvidbutton.h; sourceTree = "<group>"; };
+		3C0BB48B0F4DB47300F5ED22 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
+		3C0BB48C0F4DB47300F5ED22 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
+		3C0BB48D0F4DB47300F5ED22 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
 		3C6BF4700F4D8E010093E45B /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppBaseWindow.h; sourceTree = "<group>"; };
 		3C6BF4710F4D8E010093E45B /* ofAppGlutWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppGlutWindow.cpp; sourceTree = "<group>"; };
 		3C6BF4720F4D8E010093E45B /* ofAppGlutWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppGlutWindow.h; sourceTree = "<group>"; };
@@ -200,6 +203,9 @@
 		293865C00F2F488E0021FBF2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3C0BB48B0F4DB47300F5ED22 /* ofxCvShortImage.cpp */,
+				3C0BB48C0F4DB47300F5ED22 /* ofxCvShortImage.h */,
+				3C0BB48D0F4DB47300F5ED22 /* ofxOpenCv.h */,
 				293865C10F2F488E0021FBF2 /* ofxCvBlob.h */,
 				293865C20F2F488E0021FBF2 /* ofxCvColorImage.cpp */,
 				293865C30F2F488E0021FBF2 /* ofxCvColorImage.h */,
@@ -212,7 +218,6 @@
 				293865CA0F2F488E0021FBF2 /* ofxCvGrayscaleImage.h */,
 				293865CB0F2F488E0021FBF2 /* ofxCvImage.cpp */,
 				293865CC0F2F488E0021FBF2 /* ofxCvImage.h */,
-				293865CD0F2F488E0021FBF2 /* ofxCvMain.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 				3C6BF4B10F4D8E010093E45B /* ofUCUtils.cpp in Sources */,
 				3C6BF4B20F4D8E010093E45B /* ofVideoGrabber.cpp in Sources */,
 				3C6BF4B30F4D8E010093E45B /* ofVideoPlayer.cpp in Sources */,
+				3C0BB48E0F4DB47300F5ED22 /* ofxCvShortImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

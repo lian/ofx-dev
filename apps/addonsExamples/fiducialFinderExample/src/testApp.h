@@ -2,9 +2,9 @@
 #define _TEST_APP
 
 #include "ofMain.h"
+#define OF_ADDON_USING_OFXOPENCV
+#define OF_ADDON_USING_OFXFIDUCIALFINDER
 #include "ofAddons.h"
-#include "ofxCvMain.h"
-#include "ofxFidMain.h"
 
 class testApp : public ofBaseApp {
 	
@@ -38,4 +38,3 @@ class testApp : public ofBaseApp {
 };
 
 #endif
-	

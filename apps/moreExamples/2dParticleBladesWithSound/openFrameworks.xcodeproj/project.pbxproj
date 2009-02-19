@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C0BB4670F4DB17F00F5ED22 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0BB4640F4DB17F00F5ED22 /* ofxCvShortImage.cpp */; };
 		3C4F99DE0F11228B008EAE4A /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C4F99DC0F11228B008EAE4A /* particle.cpp */; };
 		3C4F9A020F112299008EAE4A /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C4F99F50F112299008EAE4A /* tinyxml.cpp */; };
 		3C4F9A030F112299008EAE4A /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C4F99F70F112299008EAE4A /* tinyxmlerror.cpp */; };
@@ -42,6 +43,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C0BB4640F4DB17F00F5ED22 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
+		3C0BB4650F4DB17F00F5ED22 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
+		3C0BB4660F4DB17F00F5ED22 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
 		3C4F99DC0F11228B008EAE4A /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = particle.cpp; sourceTree = "<group>"; };
 		3C4F99DD0F11228B008EAE4A /* particle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
 		3C4F99E60F112299008EAE4A /* ofxMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxMatrix3x3.h; sourceTree = "<group>"; };
@@ -130,7 +134,6 @@
 		3CEAAEE00F143CC2000376BB /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvGrayscaleImage.h; sourceTree = "<group>"; };
 		3CEAAEE10F143CC2000376BB /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
 		3CEAAEE20F143CC2000376BB /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
-		3CEAAEE30F143CC2000376BB /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
 		E411BE020CFA279F007A1F4A /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
 		E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
@@ -378,6 +381,9 @@
 		3CEAAED60F143CC2000376BB /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3C0BB4640F4DB17F00F5ED22 /* ofxCvShortImage.cpp */,
+				3C0BB4650F4DB17F00F5ED22 /* ofxCvShortImage.h */,
+				3C0BB4660F4DB17F00F5ED22 /* ofxOpenCv.h */,
 				3CEAAED70F143CC2000376BB /* ofxCvBlob.h */,
 				3CEAAED80F143CC2000376BB /* ofxCvColorImage.cpp */,
 				3CEAAED90F143CC2000376BB /* ofxCvColorImage.h */,
@@ -390,7 +396,6 @@
 				3CEAAEE00F143CC2000376BB /* ofxCvGrayscaleImage.h */,
 				3CEAAEE10F143CC2000376BB /* ofxCvImage.cpp */,
 				3CEAAEE20F143CC2000376BB /* ofxCvImage.h */,
-				3CEAAEE30F143CC2000376BB /* ofxCvMain.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -556,6 +561,7 @@
 				3C6BF36E0F4D8BDD0093E45B /* ofUCUtils.cpp in Sources */,
 				3C6BF36F0F4D8BDD0093E45B /* ofVideoGrabber.cpp in Sources */,
 				3C6BF3700F4D8BDD0093E45B /* ofVideoPlayer.cpp in Sources */,
+				3C0BB4670F4DB17F00F5ED22 /* ofxCvShortImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

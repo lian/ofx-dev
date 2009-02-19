@@ -4,3 +4,10 @@
   original sources: http://www.berio.alg-a.org/IMG/zip/color_tracking.zip
  
  ***********************************************************************/
+
+NOTES:
+  
+(pending)
+  not working since d8b04201b - updated: addons/ofxOpenCv - (006_preLinux.tar.bz2)
+   - xcode warning: OF_WARNING: in allocate, reallocating a ofxCvImage
+   - works fine at c541162da

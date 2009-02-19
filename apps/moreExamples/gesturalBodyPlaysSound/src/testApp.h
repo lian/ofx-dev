@@ -1,15 +1,13 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-// #include <map>
-// #include <vector>
-
 #include "ofMain.h"
-#include "ofxCvMain.h"
+#define OF_ADDON_USING_OFXOPENCV
+#include "ofAddons.h"
 
 #include "NSvidbutton.h"
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp {
 	
 	public:
 		
@@ -49,4 +47,3 @@ class testApp : public ofSimpleApp{
 };
 
 #endif
-	

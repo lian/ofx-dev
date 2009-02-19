@@ -2,10 +2,9 @@
 #define PARTICLE_H
 
 #include "ofMain.h"
-#define _OF_ADDON_USING_OFXVECTORMATH
-#define _OF_ADDON_USEING_OPENCV
+#define OF_ADDON_USING_OFXVECTORMATH
+#define OF_ADDON_USING_OFXOPENCV
 #include "ofAddons.h"
-#include "ofxVectorMath.h"
 
 class particle
 {
@@ -51,4 +50,4 @@ class particle
     private:
 };
 
-#endif // PARTICLE_H
+#endif

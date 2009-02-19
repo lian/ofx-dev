@@ -80,6 +80,7 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     virtual void  contrastStretch();
     virtual void  convertToRange( float min, float max );
     virtual void  threshold( int value, bool invert = false);
+    virtual void  thresholdMSA( int value, int type = CV_THRESH_BINARY);       // MSA
     // virtual void  erode( );                                                 //in base class
     // virtual void  dilate( );                                                //in base class
     // virtual void  blur( int value=3 );                                      //in base class

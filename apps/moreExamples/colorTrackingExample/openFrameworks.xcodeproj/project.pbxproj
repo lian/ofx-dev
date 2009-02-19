@@ -14,6 +14,7 @@
 		296EED020F36F88500993473 /* ofxCvGrayscaleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296EECEE0F36F88500993473 /* ofxCvGrayscaleImage.cpp */; };
 		296EED030F36F88500993473 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296EECF00F36F88500993473 /* ofxCvImage.cpp */; };
 		296EED0F0F36F8E500993473 /* laserTracking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296EED0C0F36F8E500993473 /* laserTracking.cpp */; };
+		3C0BB4800F4DB27F00F5ED22 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0BB47D0F4DB27F00F5ED22 /* ofxCvShortImage.cpp */; };
 		3C6BF44E0F4D8D8A0093E45B /* ofAppGlutWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BF41D0F4D8D8A0093E45B /* ofAppGlutWindow.cpp */; };
 		3C6BF44F0F4D8D8A0093E45B /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BF41F0F4D8D8A0093E45B /* ofAppRunner.cpp */; };
 		3C6BF4500F4D8D8A0093E45B /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BF4230F4D8D8A0093E45B /* ofArduino.cpp */; };
@@ -66,10 +67,12 @@
 		296EECEF0F36F88500993473 /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvGrayscaleImage.h; sourceTree = "<group>"; };
 		296EECF00F36F88500993473 /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
 		296EECF10F36F88500993473 /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
-		296EECF20F36F88500993473 /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
 		296EED0C0F36F8E500993473 /* laserTracking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = laserTracking.cpp; sourceTree = "<group>"; };
 		296EED0D0F36F8E500993473 /* laserTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = laserTracking.h; sourceTree = "<group>"; };
 		296EED0E0F36F8E500993473 /* laserUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = laserUtils.h; sourceTree = "<group>"; };
+		3C0BB47D0F4DB27F00F5ED22 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
+		3C0BB47E0F4DB27F00F5ED22 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
+		3C0BB47F0F4DB27F00F5ED22 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
 		3C6BF41C0F4D8D8A0093E45B /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppBaseWindow.h; sourceTree = "<group>"; };
 		3C6BF41D0F4D8D8A0093E45B /* ofAppGlutWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppGlutWindow.cpp; sourceTree = "<group>"; };
 		3C6BF41E0F4D8D8A0093E45B /* ofAppGlutWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppGlutWindow.h; sourceTree = "<group>"; };
@@ -115,7 +118,7 @@
 		3C6BF44C0F4D8D8A0093E45B /* ofVideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofVideoPlayer.cpp; sourceTree = "<group>"; };
 		3C6BF44D0F4D8D8A0093E45B /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofVideoPlayer.h; sourceTree = "<group>"; };
 		E411BE020CFA279F007A1F4A /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
-		E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openFrameworks.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* openFrameworks.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = openFrameworks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
@@ -201,6 +204,9 @@
 		296EECE50F36F88500993473 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3C0BB47D0F4DB27F00F5ED22 /* ofxCvShortImage.cpp */,
+				3C0BB47E0F4DB27F00F5ED22 /* ofxCvShortImage.h */,
+				3C0BB47F0F4DB27F00F5ED22 /* ofxOpenCv.h */,
 				296EECE60F36F88500993473 /* ofxCvBlob.h */,
 				296EECE70F36F88500993473 /* ofxCvColorImage.cpp */,
 				296EECE80F36F88500993473 /* ofxCvColorImage.h */,
@@ -213,7 +219,6 @@
 				296EECEF0F36F88500993473 /* ofxCvGrayscaleImage.h */,
 				296EECF00F36F88500993473 /* ofxCvImage.cpp */,
 				296EECF10F36F88500993473 /* ofxCvImage.h */,
-				296EECF20F36F88500993473 /* ofxCvMain.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -482,6 +487,7 @@
 				3C6BF45D0F4D8D8A0093E45B /* ofUCUtils.cpp in Sources */,
 				3C6BF45E0F4D8D8A0093E45B /* ofVideoGrabber.cpp in Sources */,
 				3C6BF45F0F4D8D8A0093E45B /* ofVideoPlayer.cpp in Sources */,
+				3C0BB4800F4DB27F00F5ED22 /* ofxCvShortImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

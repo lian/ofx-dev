@@ -23,7 +23,7 @@
 #ifndef _OFX_BAZAR_H_
 #define _OFX_BAZAR_H_
 
-#include "ofxCvMain.h"
+#include "ofxOpenCv.h"
 #include <garfeild.h>
 #include "ofxBazARDetector.h"
 

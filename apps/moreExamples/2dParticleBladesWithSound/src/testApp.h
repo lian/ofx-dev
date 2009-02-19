@@ -1,13 +1,8 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-
 #include "ofMain.h"
 #include "particle.h"
-
-#define OF_ADDON_USING_OFXVECTORMATH
-// #define OF_ADDON_USING_OFXOPENCV
-#include "ofAddons.h"
 
 class testApp : public ofBaseApp {
 	
@@ -44,4 +39,3 @@ class testApp : public ofBaseApp {
 };
 
 #endif
-	

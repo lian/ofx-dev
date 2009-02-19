@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C0BB5060F4DB6B700F5ED22 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0BB5030F4DB6B700F5ED22 /* ofxCvShortImage.cpp */; };
 		3C0EA4640F33878C000BB62E /* CamAugmentation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4110F33878C000BB62E /* CamAugmentation.cpp */; };
 		3C0EA4650F33878C000BB62E /* CamCalibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4130F33878C000BB62E /* CamCalibration.cpp */; };
 		3C0EA4660F33878C000BB62E /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C0EA4150F33878C000BB62E /* camera.cpp */; };
@@ -68,6 +69,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C0BB5030F4DB6B700F5ED22 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
+		3C0BB5040F4DB6B700F5ED22 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
+		3C0BB5050F4DB6B700F5ED22 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
 		3C0EA4110F33878C000BB62E /* CamAugmentation.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CamAugmentation.cpp; sourceTree = "<group>"; };
 		3C0EA4120F33878C000BB62E /* CamAugmentation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CamAugmentation.h; sourceTree = "<group>"; };
 		3C0EA4130F33878C000BB62E /* CamCalibration.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CamCalibration.cpp; sourceTree = "<group>"; };
@@ -170,7 +174,6 @@
 		3C0EA4BA0F33879E000BB62E /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvGrayscaleImage.h; sourceTree = "<group>"; };
 		3C0EA4BB0F33879E000BB62E /* ofxCvImage.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvImage.cpp; sourceTree = "<group>"; };
 		3C0EA4BC0F33879E000BB62E /* ofxCvImage.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvImage.h; sourceTree = "<group>"; };
-		3C0EA4BD0F33879E000BB62E /* ofxCvMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvMain.h; sourceTree = "<group>"; };
 		3C6BF2350F4D890E0093E45B /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppBaseWindow.h; sourceTree = "<group>"; };
 		3C6BF2360F4D890E0093E45B /* ofAppGlutWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofAppGlutWindow.cpp; sourceTree = "<group>"; };
 		3C6BF2370F4D890E0093E45B /* ofAppGlutWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofAppGlutWindow.h; sourceTree = "<group>"; };
@@ -473,6 +476,9 @@
 		3C0EA4AA0F33879E000BB62E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				3C0BB5030F4DB6B700F5ED22 /* ofxCvShortImage.cpp */,
+				3C0BB5040F4DB6B700F5ED22 /* ofxCvShortImage.h */,
+				3C0BB5050F4DB6B700F5ED22 /* ofxOpenCv.h */,
 				3C0EA4AF0F33879E000BB62E /* ofxCvBlob.h */,
 				3C0EA4B00F33879E000BB62E /* ofxCvColorImage.cpp */,
 				3C0EA4B10F33879E000BB62E /* ofxCvColorImage.h */,
@@ -485,7 +491,6 @@
 				3C0EA4BA0F33879E000BB62E /* ofxCvGrayscaleImage.h */,
 				3C0EA4BB0F33879E000BB62E /* ofxCvImage.cpp */,
 				3C0EA4BC0F33879E000BB62E /* ofxCvImage.h */,
-				3C0EA4BD0F33879E000BB62E /* ofxCvMain.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -782,6 +787,7 @@
 				3C6BF2760F4D890F0093E45B /* ofUCUtils.cpp in Sources */,
 				3C6BF2770F4D890F0093E45B /* ofVideoGrabber.cpp in Sources */,
 				3C6BF2780F4D890F0093E45B /* ofVideoPlayer.cpp in Sources */,
+				3C0BB5060F4DB6B700F5ED22 /* ofxCvShortImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

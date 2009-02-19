@@ -6,7 +6,7 @@
 
 //-------------------------------------------- openCV
 #ifdef OF_ADDON_USING_OFXOPENCV
-	#include "ofxCvMain.h"
+	#include "ofxOpenCv.h"
 #endif
 
 //-------------------------------------------- obj loader
