@@ -1,5 +1,5 @@
 /* ========================================================================================== */
-/* FMOD Ex - DSP header file. Copyright (c), Firelight Technologies Pty, Ltd. 2004-2006.      */
+/* FMOD Ex - DSP header file. Copyright (c), Firelight Technologies Pty, Ltd. 2004-2009.      */
 /*                                                                                            */
 /* Use this header if you are interested in delving deeper into the FMOD software mixing /    */
 /* DSP engine.  In this header you can find parameter structures for FMOD system reigstered   */
@@ -168,8 +168,9 @@ typedef struct FMOD_DSP_DESCRIPTION
 */
 struct FMOD_DSP_STATE
 {
-    FMOD_DSP    *instance;      /* [out] Handle to the DSP hand the user created.  Not to be modified.  C++ users cast to FMOD::DSP to use.  */
-    void        *plugindata;    /* [in] Plugin writer created data the output author wants to attach to this object. */
+    FMOD_DSP      *instance;      /* [out] Handle to the DSP hand the user created.  Not to be modified.  C++ users cast to FMOD::DSP to use.  */
+    void          *plugindata;    /* [in] Plugin writer created data the output author wants to attach to this object. */
+	unsigned short speakermask;	  /* Specifies which speakers the DSP effect is active on */
 };
 
 
@@ -280,7 +281,7 @@ typedef enum
 */
 typedef enum
 {
-    FMOD_DSP_HIGHPASS_CUTOFF,    /* Highpass cutoff frequency in hz.  10.0 to output 22000.0.  Default = 5000.0. */
+    FMOD_DSP_HIGHPASS_CUTOFF,    /* Highpass cutoff frequency in hz.  1.0 to output 22000.0.  Default = 5000.0. */
     FMOD_DSP_HIGHPASS_RESONANCE  /* Highpass resonance Q value.  1.0 to 10.0.  Default = 1.0. */
 } FMOD_DSP_HIGHPASS;
 
