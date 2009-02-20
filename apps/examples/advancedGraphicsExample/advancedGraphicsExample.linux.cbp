@@ -96,9 +96,13 @@
 			<Add after="cp -p ../../../libs/freetype/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
 			<Add after="cp -p ../../../libs/freeimage/lib/*.so* $(PROJECT_DIR)bin/libs/" />
 			<Add after="cp -p ../../../libs/fmodex/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
+			<Add after="cp -p ../../../libs/poco/lib/linux/libPocoFoundation.so* $(PROJECT_DIR)bin/libs/" />
 
-			<Add after="cp -p ../../../addons/*/libs/*/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
-			
+<!--			<Add after="cp -p ../../../addons/*/libs/*/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />  -->
+
+			<Add after="mkdir -p $(PROJECT_DIR)data/" />
+			<Add after="cp -r $(PROJECT_DIR)data/ $(PROJECT_DIR)bin/" />
+
 			<Add after="cp ../../../other/codeblocks/linux_clickToLaunchApp.sh $(PROJECT_DIR)bin/clickToLaunchApp_$(TARGET_NAME).sh" />
 			<Add after="sed -i s/applicationName/$(TARGET_OUTPUT_BASENAME)/g  $(PROJECT_DIR)bin/clickToLaunchApp_$(TARGET_NAME).sh" />
 			<Add after="#" />
