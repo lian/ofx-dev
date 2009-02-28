@@ -41,6 +41,7 @@ ofImage& ofImage::operator=(const ofImage& mom) {
 
 //----------------------------------------------------------
 ofImage::ofImage(const ofImage& mom) {
+	myPixels.bAllocated			= false;
 
 	if (!bFreeImageInited){
 		FreeImage_Initialise();
@@ -81,13 +82,13 @@ void ofImage::saveImage(string fileName){
 //to be able to set anchor points outside the image
 
 //----------------------------------------------------------
-void ofImage::setAnchorPct(float xPct, float yPct){
-    if (bUseTexture)tex.setAnchorPct(xPct, yPct);
+void ofImage::setAnchorPercent(float xPct, float yPct){
+    if (bUseTexture)tex.setAnchorPercent(xPct, yPct);
 }
 
 //----------------------------------------------------------
-void ofImage::setAnchorPt(int x, int y){
-    if (bUseTexture)tex.setAnchorPt(x, y);
+void ofImage::setAnchorPoint(int x, int y){
+    if (bUseTexture)tex.setAnchorPoint(x, y);
 }
 
 //----------------------------------------------------------
@@ -143,7 +144,7 @@ void ofImage::allocate(int w, int h, int type){
 void ofImage::clear(){
 
 	if (myPixels.bAllocated == true){
-		delete myPixels.pixels;
+		delete[] myPixels.pixels;
 	}
 
 	tex.clear();

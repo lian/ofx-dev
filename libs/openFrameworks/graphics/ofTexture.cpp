@@ -62,6 +62,11 @@ void ofTexture::clear(){
 }
 
 //----------------------------------------------------------
+void ofTexture::allocate(int w, int h, int internalGlDataType){
+	allocate(w, h, internalGlDataType, ofGetUsingArbTex());
+}
+
+//----------------------------------------------------------
 void ofTexture::allocate(int w, int h, int internalGlDataType, bool bUseARBExtention){
 
 	//our graphics card might not support arb so we have to see if it is supported.
@@ -242,7 +247,7 @@ void ofTexture::loadScreenData(int x, int y, int w, int h){
 //to be able to set anchor points outside the image
 
 //----------------------------------------------------------
-void ofTexture::setAnchorPct(float xPct, float yPct){
+void ofTexture::setAnchorPercent(float xPct, float yPct){
     anchor.x  = xPct;
     anchor.y  = yPct;
 
@@ -250,7 +255,7 @@ void ofTexture::setAnchorPct(float xPct, float yPct){
 }
 
 //----------------------------------------------------------
-void ofTexture::setAnchorPt(int x, int y){
+void ofTexture::setAnchorPoint(int x, int y){
     anchor.x = x;
     anchor.y = y;
 
@@ -261,6 +266,18 @@ void ofTexture::setAnchorPt(int x, int y){
 void ofTexture::resetAnchor(){
     anchor       = 0;
     bAnchorIsPct = false;
+}
+
+//----------------------------------------------------------
+void ofTexture::bind(){
+	//we could check if it has been allocated - but we don't do that in draw() 
+	glEnable(texData.textureTarget);
+	glBindTexture( texData.textureTarget, (GLuint)texData.textureName[0]);
+}
+
+//----------------------------------------------------------
+void ofTexture::unbind(){
+	glDisable(texData.textureTarget);
 }
 
 //----------------------------------------------------------
