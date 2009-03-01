@@ -1,0 +1,71 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {
+                addConfiguration = id; 
+                cancelEnterSaveName = id; 
+                deleteConfiguration = id; 
+                doCalibration = id; 
+                enterSaveName = id; 
+                openKeyConfiguration = id; 
+                setForceFeedbackEnabled = id; 
+                setIRSensorEnabled = id; 
+                setLEDEnabled = id; 
+                setMotionSensorsEnabled = id; 
+                setMouseModeEnabled = id; 
+                setRemoteAddress = id; 
+            }; 
+            CLASS = AppController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                aButton = NSButton; 
+                appDelegate = "KeyConfiguration_AppDelegate"; 
+                bButton = NSButton; 
+                batteryLevel = NSLevelIndicator; 
+                downButton = NSButton; 
+                drawer = NSDrawer; 
+                enterNameWindow = NSWindow; 
+                graphView = GraphView; 
+                graphView2 = GraphView; 
+                homeButton = NSButton; 
+                led1 = NSButton; 
+                led2 = NSButton; 
+                led3 = NSButton; 
+                led4 = NSButton; 
+                leftButton = NSButton; 
+                mainWindow = NSWindow; 
+                mappingController = NSArrayController; 
+                minusButton = NSButton; 
+                mouseMode = NSPopUpButton; 
+                newNameField = NSTextField; 
+                oneButton = NSButton; 
+                oscOKbutton = NSButton; 
+                plusButton = NSButton; 
+                preferenceWindow = PreferenceWindow; 
+                rightButton = NSButton; 
+                textView = NSTextView; 
+                theRemoteAddress = NSTextField; 
+                theRemotePort = NSTextField; 
+                twoButton = NSButton; 
+                upButton = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = GraphView; LANGUAGE = ObjC; SUPERCLASS = NSOpenGLView; }, 
+        {
+            CLASS = KeyCaptureField; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {observer = id; }; 
+            SUPERCLASS = NSTextField; 
+        }, 
+        {CLASS = NSLevelIndicator; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {
+            ACTIONS = {cancel = id; ok = id; }; 
+            CLASS = PreferenceWindow; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSWindow; 
+        }
+    ); 
+    IBVersion = 1; 
+}

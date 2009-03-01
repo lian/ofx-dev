@@ -1,0 +1,70 @@
+0.4 (2006.12.26)
+====================
+	o New Features:
+		- supports Nunchuk
+		- supports manual key mappings
+		- supports mouse sensitivity
+		- supports motion sensor auto calibration
+		
+	o Changes:
+		- add Nunchuk motion sensor graph view
+		- move manual calibration buttons into preferences panel
+		- add mouse mode popup button
+
+0.3.1 (2006.12.13)
+====================
+	o  New Features:
+		- supports battery status
+
+	o  Bug Fix:
+		- #1612959 Keyboard stops working when Mouse Mode is on
+			replace old CGPostEvent functions to new ApplicationSupport API
+		- #1614587 IR/Force Feedback Bug
+		- When Pluging/Unpluging Extension Port, Wiimote status go back to initial state
+		- Bluetooth discovery is now more stabled
+		
+	o  Others
+		- DarwiinRemote has been divided into 2 pieces, App and Framework.
+		  now you can use WiiRemote Framework in your projects independently.
+		  
+
+0.3 (2006.12.10)
+====================
+	o  New Features:
+		- based on Ian's code, supports IR sensor detection
+			Thanks Ian!
+		- supports Motion sensors calibration
+	
+	o  Changes:
+		- key mapping
+			Wii Remote	Key mapping
+			Up			Up
+			Down		Down
+			Left		Left
+			Right		Right
+			A			Left-Click
+			B			Return (Play/Pause in FrontRow)
+			Minus		Command + Left (Volume Down in FrontRow)
+			Home		Command + ESC (Enter FrontRow and "Menu" button)
+			Plus		Command + Right (Volume Up in FrontRow)
+			One			Mouse Mode On/Off (using Motion Sensors)
+			Two			Mouse Mode On/Off (using IR sensor)
+	
+	o  Bug Fixes:
+		- direction analysis
+
+
+0.1a (2006.12.6)
+====================
+	o  New Feature
+		- Icon is added.
+			Thanks truex!
+
+	o  Bug Fix:
+		- now supports not only Intel, but PPC
+		
+		
+0.1 (2006.12.6)
+====================
+	o  First Release
+		Thanks WiiLi.org!

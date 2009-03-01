@@ -1,0 +1,522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C0F30B50F59F7350056DC66 /* WiiRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0F30B40F59F7350056DC66 /* WiiRemote.framework */; };
+		3C0F34CA0F5A02370056DC66 /* WiiRemote.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3C0F30B40F59F7350056DC66 /* WiiRemote.framework */; };
+		531447F60B3010A900757188 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 531447E10B3010A900757188 /* ApplicationServices.framework */; };
+		5317449B0B240DD500579963 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5317449A0B240DD500579963 /* AppController.m */; };
+		5335B3480B3C73F800B21C9A /* PreferenceWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5335B3460B3C73F800B21C9A /* PreferenceWindow.m */; };
+		53BDDEBB0B2B22710033DB22 /* COPYRIGHT in Resources */ = {isa = PBXBuildFile; fileRef = 53BDDEBA0B2B22710033DB22 /* COPYRIGHT */; };
+		53BDDEBD0B2B229B0033DB22 /* HISTORY in Resources */ = {isa = PBXBuildFile; fileRef = 53BDDEBC0B2B229B0033DB22 /* HISTORY */; };
+		53C573550B24870B00D36527 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C573540B24870B00D36527 /* GraphView.m */; };
+		53C576B60B2497D500D36527 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53C576B50B2497D500D36527 /* OpenGL.framework */; };
+		53C576F90B24999B00D36527 /* GraphPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C576F80B24999B00D36527 /* GraphPoint.m */; };
+		53F79ADC0B261EBE00C74335 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 53F79ADB0B261EBE00C74335 /* icon.icns */; };
+		53FA54E90B3AD41A003B73F3 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FA54D40B3AD41A003B73F3 /* Carbon.framework */; };
+		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		E152C0840B88584E0056409A /* NetworkReturnAddress.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0630B88584E0056409A /* NetworkReturnAddress.c */; };
+		E152C0850B88584E0056409A /* NetworkReturnAddress.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0640B88584E0056409A /* NetworkReturnAddress.h */; };
+		E152C0860B88584E0056409A /* NetworkUDP.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0650B88584E0056409A /* NetworkUDP.h */; };
+		E152C0870B88584E0056409A /* OSC-address-space.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0660B88584E0056409A /* OSC-address-space.c */; };
+		E152C0880B88584E0056409A /* OSC-address-space.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0670B88584E0056409A /* OSC-address-space.h */; };
+		E152C0890B88584E0056409A /* OSC-callbacklist.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0680B88584E0056409A /* OSC-callbacklist.c */; };
+		E152C08A0B88584E0056409A /* OSC-callbacklist.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0690B88584E0056409A /* OSC-callbacklist.h */; };
+		E152C08B0B88584E0056409A /* OSC-client.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C06A0B88584E0056409A /* OSC-client.c */; };
+		E152C08C0B88584E0056409A /* OSC-client.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C06B0B88584E0056409A /* OSC-client.h */; };
+		E152C08D0B88584E0056409A /* OSC-common.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C06C0B88584E0056409A /* OSC-common.h */; };
+		E152C08E0B88584E0056409A /* OSC-dispatch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C06D0B88584E0056409A /* OSC-dispatch.h */; };
+		E152C08F0B88584E0056409A /* OSC-drop.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C06E0B88584E0056409A /* OSC-drop.c */; };
+		E152C0900B88584E0056409A /* OSC-drop.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C06F0B88584E0056409A /* OSC-drop.h */; };
+		E152C0910B88584E0056409A /* OSC-internal-messages.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0700B88584E0056409A /* OSC-internal-messages.h */; };
+		E152C0920B88584E0056409A /* OSC-pattern-match.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0710B88584E0056409A /* OSC-pattern-match.c */; };
+		E152C0930B88584E0056409A /* OSC-pattern-match.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0720B88584E0056409A /* OSC-pattern-match.h */; };
+		E152C0940B88584E0056409A /* OSC-priority-queue.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0730B88584E0056409A /* OSC-priority-queue.c */; };
+		E152C0950B88584E0056409A /* OSC-priority-queue.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0740B88584E0056409A /* OSC-priority-queue.h */; };
+		E152C0960B88584E0056409A /* OSC-receive.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0750B88584E0056409A /* OSC-receive.c */; };
+		E152C0970B88584E0056409A /* OSC-receive.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0760B88584E0056409A /* OSC-receive.h */; };
+		E152C0980B88584E0056409A /* OSC-string-help.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0770B88584E0056409A /* OSC-string-help.c */; };
+		E152C0990B88584E0056409A /* OSC-string-help.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0780B88584E0056409A /* OSC-string-help.h */; };
+		E152C09A0B88584E0056409A /* OSC-system-dependent.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C0790B88584E0056409A /* OSC-system-dependent.c */; };
+		E152C09B0B88584E0056409A /* OSC-timetag.c in Sources */ = {isa = PBXBuildFile; fileRef = E152C07A0B88584E0056409A /* OSC-timetag.c */; };
+		E152C09C0B88584E0056409A /* OSC-timetag.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C07B0B88584E0056409A /* OSC-timetag.h */; };
+		E152C09D0B88584E0056409A /* README in Resources */ = {isa = PBXBuildFile; fileRef = E152C07C0B88584E0056409A /* README */; };
+		E152C09F0B88584E0056409A /* OSCInPort.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C07E0B88584E0056409A /* OSCInPort.h */; };
+		E152C0A00B88584E0056409A /* OSCInPort.m in Sources */ = {isa = PBXBuildFile; fileRef = E152C07F0B88584E0056409A /* OSCInPort.m */; };
+		E152C0A10B88584E0056409A /* OSCPort.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E152C0800B88584E0056409A /* OSCPort.h */; };
+		E152C0A20B88584E0056409A /* OSCPort.m in Sources */ = {isa = PBXBuildFile; fileRef = E152C0810B88584E0056409A /* OSCPort.m */; };
+		E1B3BFAC0BBCD08F0075B434 /* WidgetsEnableTransformer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B3BFA80BBCD08F0075B434 /* WidgetsEnableTransformer.h */; };
+		E1B3BFAD0BBCD08F0075B434 /* WidgetsEnableTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B3BFA90BBCD08F0075B434 /* WidgetsEnableTransformer.m */; };
+		E1B3BFAE0BBCD08F0075B434 /* WidgetsEnableTransformer2.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B3BFAA0BBCD08F0075B434 /* WidgetsEnableTransformer2.h */; };
+		E1B3BFAF0BBCD08F0075B434 /* WidgetsEnableTransformer2.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B3BFAB0BBCD08F0075B434 /* WidgetsEnableTransformer2.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5314496F0B303BEC00757188 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3C0F34CA0F5A02370056DC66 /* WiiRemote.framework in CopyFiles */,
+				E152C0850B88584E0056409A /* NetworkReturnAddress.h in CopyFiles */,
+				E152C0860B88584E0056409A /* NetworkUDP.h in CopyFiles */,
+				E152C0880B88584E0056409A /* OSC-address-space.h in CopyFiles */,
+				E152C08A0B88584E0056409A /* OSC-callbacklist.h in CopyFiles */,
+				E152C08C0B88584E0056409A /* OSC-client.h in CopyFiles */,
+				E152C08D0B88584E0056409A /* OSC-common.h in CopyFiles */,
+				E152C08E0B88584E0056409A /* OSC-dispatch.h in CopyFiles */,
+				E152C0900B88584E0056409A /* OSC-drop.h in CopyFiles */,
+				E152C0910B88584E0056409A /* OSC-internal-messages.h in CopyFiles */,
+				E152C0930B88584E0056409A /* OSC-pattern-match.h in CopyFiles */,
+				E152C0950B88584E0056409A /* OSC-priority-queue.h in CopyFiles */,
+				E152C0970B88584E0056409A /* OSC-receive.h in CopyFiles */,
+				E152C0990B88584E0056409A /* OSC-string-help.h in CopyFiles */,
+				E152C09C0B88584E0056409A /* OSC-timetag.h in CopyFiles */,
+				E152C09F0B88584E0056409A /* OSCInPort.h in CopyFiles */,
+				E152C0A10B88584E0056409A /* OSCPort.h in CopyFiles */,
+				E1B3BFAC0BBCD08F0075B434 /* WidgetsEnableTransformer.h in CopyFiles */,
+				E1B3BFAE0BBCD08F0075B434 /* WidgetsEnableTransformer2.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97319FDCFA39411CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		3C0F30B40F59F7350056DC66 /* WiiRemote.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WiiRemote.framework; path = ../WiiRemoteFramework/build/Release/WiiRemote.framework; sourceTree = SOURCE_ROOT; };
+		531447E10B3010A900757188 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
+		531744990B240DD500579963 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		5317449A0B240DD500579963 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		5335B3450B3C73F800B21C9A /* PreferenceWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferenceWindow.h; sourceTree = "<group>"; };
+		5335B3460B3C73F800B21C9A /* PreferenceWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceWindow.m; sourceTree = "<group>"; };
+		53BDDEBA0B2B22710033DB22 /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT; sourceTree = "<group>"; };
+		53BDDEBC0B2B229B0033DB22 /* HISTORY */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HISTORY; sourceTree = "<group>"; };
+		53C573530B24870B00D36527 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		53C573540B24870B00D36527 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		53C576B50B2497D500D36527 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		53C576F70B24999B00D36527 /* GraphPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphPoint.h; sourceTree = "<group>"; };
+		53C576F80B24999B00D36527 /* GraphPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphPoint.m; sourceTree = "<group>"; };
+		53F79ADB0B261EBE00C74335 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		53FA54D40B3AD41A003B73F3 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* DarwiinRemote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DarwiinRemote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E152C0630B88584E0056409A /* NetworkReturnAddress.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = NetworkReturnAddress.c; sourceTree = "<group>"; };
+		E152C0640B88584E0056409A /* NetworkReturnAddress.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NetworkReturnAddress.h; sourceTree = "<group>"; };
+		E152C0650B88584E0056409A /* NetworkUDP.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NetworkUDP.h; sourceTree = "<group>"; };
+		E152C0660B88584E0056409A /* OSC-address-space.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-address-space.c"; sourceTree = "<group>"; };
+		E152C0670B88584E0056409A /* OSC-address-space.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-address-space.h"; sourceTree = "<group>"; };
+		E152C0680B88584E0056409A /* OSC-callbacklist.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-callbacklist.c"; sourceTree = "<group>"; };
+		E152C0690B88584E0056409A /* OSC-callbacklist.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-callbacklist.h"; sourceTree = "<group>"; };
+		E152C06A0B88584E0056409A /* OSC-client.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-client.c"; sourceTree = "<group>"; };
+		E152C06B0B88584E0056409A /* OSC-client.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-client.h"; sourceTree = "<group>"; };
+		E152C06C0B88584E0056409A /* OSC-common.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-common.h"; sourceTree = "<group>"; };
+		E152C06D0B88584E0056409A /* OSC-dispatch.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-dispatch.h"; sourceTree = "<group>"; };
+		E152C06E0B88584E0056409A /* OSC-drop.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-drop.c"; sourceTree = "<group>"; };
+		E152C06F0B88584E0056409A /* OSC-drop.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-drop.h"; sourceTree = "<group>"; };
+		E152C0700B88584E0056409A /* OSC-internal-messages.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-internal-messages.h"; sourceTree = "<group>"; };
+		E152C0710B88584E0056409A /* OSC-pattern-match.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-pattern-match.c"; sourceTree = "<group>"; };
+		E152C0720B88584E0056409A /* OSC-pattern-match.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-pattern-match.h"; sourceTree = "<group>"; };
+		E152C0730B88584E0056409A /* OSC-priority-queue.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-priority-queue.c"; sourceTree = "<group>"; };
+		E152C0740B88584E0056409A /* OSC-priority-queue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-priority-queue.h"; sourceTree = "<group>"; };
+		E152C0750B88584E0056409A /* OSC-receive.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-receive.c"; sourceTree = "<group>"; };
+		E152C0760B88584E0056409A /* OSC-receive.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-receive.h"; sourceTree = "<group>"; };
+		E152C0770B88584E0056409A /* OSC-string-help.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-string-help.c"; sourceTree = "<group>"; };
+		E152C0780B88584E0056409A /* OSC-string-help.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-string-help.h"; sourceTree = "<group>"; };
+		E152C0790B88584E0056409A /* OSC-system-dependent.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-system-dependent.c"; sourceTree = "<group>"; };
+		E152C07A0B88584E0056409A /* OSC-timetag.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = "OSC-timetag.c"; sourceTree = "<group>"; };
+		E152C07B0B88584E0056409A /* OSC-timetag.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "OSC-timetag.h"; sourceTree = "<group>"; };
+		E152C07C0B88584E0056409A /* README */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		E152C07E0B88584E0056409A /* OSCInPort.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OSCInPort.h; sourceTree = "<group>"; };
+		E152C07F0B88584E0056409A /* OSCInPort.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OSCInPort.m; sourceTree = "<group>"; };
+		E152C0800B88584E0056409A /* OSCPort.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OSCPort.h; sourceTree = "<group>"; };
+		E152C0810B88584E0056409A /* OSCPort.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = OSCPort.m; sourceTree = "<group>"; };
+		E1B3BFA80BBCD08F0075B434 /* WidgetsEnableTransformer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = WidgetsEnableTransformer.h; sourceTree = "<group>"; };
+		E1B3BFA90BBCD08F0075B434 /* WidgetsEnableTransformer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = WidgetsEnableTransformer.m; sourceTree = "<group>"; };
+		E1B3BFAA0BBCD08F0075B434 /* WidgetsEnableTransformer2.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = WidgetsEnableTransformer2.h; sourceTree = "<group>"; };
+		E1B3BFAB0BBCD08F0075B434 /* WidgetsEnableTransformer2.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = WidgetsEnableTransformer2.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C0F30B50F59F7350056DC66 /* WiiRemote.framework in Frameworks */,
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				53C576B60B2497D500D36527 /* OpenGL.framework in Frameworks */,
+				531447F60B3010A900757188 /* ApplicationServices.framework in Frameworks */,
+				53FA54E90B3AD41A003B73F3 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				531744990B240DD500579963 /* AppController.h */,
+				5317449A0B240DD500579963 /* AppController.m */,
+				53C573530B24870B00D36527 /* GraphView.h */,
+				53C573540B24870B00D36527 /* GraphView.m */,
+				53C576F70B24999B00D36527 /* GraphPoint.h */,
+				53C576F80B24999B00D36527 /* GraphPoint.m */,
+				5335B3450B3C73F800B21C9A /* PreferenceWindow.h */,
+				5335B3460B3C73F800B21C9A /* PreferenceWindow.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				53FA54D40B3AD41A003B73F3 /* Carbon.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				531447E10B3010A900757188 /* ApplicationServices.framework */,
+				53C576B50B2497D500D36527 /* OpenGL.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C0F30B40F59F7350056DC66 /* WiiRemote.framework */,
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* DarwiinRemote.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* WiiRemote */ = {
+			isa = PBXGroup;
+			children = (
+				536851CB0B33087B00A38BE5 /* Models */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				53BDDEB90B2B22540033DB22 /* docs */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = WiiRemote;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E152C0600B88584E0056409A /* OSC-Kit-Mac */,
+				E152C07E0B88584E0056409A /* OSCInPort.h */,
+				E152C07F0B88584E0056409A /* OSCInPort.m */,
+				E152C0800B88584E0056409A /* OSCPort.h */,
+				E152C0810B88584E0056409A /* OSCPort.m */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53F79ADB0B261EBE00C74335 /* icon.icns */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		536851CB0B33087B00A38BE5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E1B3BFA80BBCD08F0075B434 /* WidgetsEnableTransformer.h */,
+				E1B3BFA90BBCD08F0075B434 /* WidgetsEnableTransformer.m */,
+				E1B3BFAA0BBCD08F0075B434 /* WidgetsEnableTransformer2.h */,
+				E1B3BFAB0BBCD08F0075B434 /* WidgetsEnableTransformer2.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		53BDDEB90B2B22540033DB22 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				53BDDEBA0B2B22710033DB22 /* COPYRIGHT */,
+				53BDDEBC0B2B229B0033DB22 /* HISTORY */,
+			);
+			name = docs;
+			sourceTree = "<group>";
+		};
+		E152C0600B88584E0056409A /* OSC-Kit-Mac */ = {
+			isa = PBXGroup;
+			children = (
+				E152C0630B88584E0056409A /* NetworkReturnAddress.c */,
+				E152C0640B88584E0056409A /* NetworkReturnAddress.h */,
+				E152C0650B88584E0056409A /* NetworkUDP.h */,
+				E152C0660B88584E0056409A /* OSC-address-space.c */,
+				E152C0670B88584E0056409A /* OSC-address-space.h */,
+				E152C0680B88584E0056409A /* OSC-callbacklist.c */,
+				E152C0690B88584E0056409A /* OSC-callbacklist.h */,
+				E152C06A0B88584E0056409A /* OSC-client.c */,
+				E152C06B0B88584E0056409A /* OSC-client.h */,
+				E152C06C0B88584E0056409A /* OSC-common.h */,
+				E152C06D0B88584E0056409A /* OSC-dispatch.h */,
+				E152C06E0B88584E0056409A /* OSC-drop.c */,
+				E152C06F0B88584E0056409A /* OSC-drop.h */,
+				E152C0700B88584E0056409A /* OSC-internal-messages.h */,
+				E152C0710B88584E0056409A /* OSC-pattern-match.c */,
+				E152C0720B88584E0056409A /* OSC-pattern-match.h */,
+				E152C0730B88584E0056409A /* OSC-priority-queue.c */,
+				E152C0740B88584E0056409A /* OSC-priority-queue.h */,
+				E152C0750B88584E0056409A /* OSC-receive.c */,
+				E152C0760B88584E0056409A /* OSC-receive.h */,
+				E152C0770B88584E0056409A /* OSC-string-help.c */,
+				E152C0780B88584E0056409A /* OSC-string-help.h */,
+				E152C0790B88584E0056409A /* OSC-system-dependent.c */,
+				E152C07A0B88584E0056409A /* OSC-timetag.c */,
+				E152C07B0B88584E0056409A /* OSC-timetag.h */,
+				E152C07C0B88584E0056409A /* README */,
+			);
+			path = "OSC-Kit-Mac";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* DarwiinRemote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "DarwiinRemote" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				5314496F0B303BEC00757188 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DarwiinRemote;
+			productInstallPath = "$(HOME)/Applications";
+			productName = WiiRemote;
+			productReference = 8D1107320486CEB800E47090 /* DarwiinRemote.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DarwiinRemote" */;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* WiiRemote */;
+			projectDirPath = "";
+			targets = (
+				8D1107260486CEB800E47090 /* DarwiinRemote */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				53F79ADC0B261EBE00C74335 /* icon.icns in Resources */,
+				53BDDEBB0B2B22710033DB22 /* COPYRIGHT in Resources */,
+				53BDDEBD0B2B229B0033DB22 /* HISTORY in Resources */,
+				E152C09D0B88584E0056409A /* README in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				5317449B0B240DD500579963 /* AppController.m in Sources */,
+				53C573550B24870B00D36527 /* GraphView.m in Sources */,
+				53C576F90B24999B00D36527 /* GraphPoint.m in Sources */,
+				5335B3480B3C73F800B21C9A /* PreferenceWindow.m in Sources */,
+				E152C0840B88584E0056409A /* NetworkReturnAddress.c in Sources */,
+				E152C0870B88584E0056409A /* OSC-address-space.c in Sources */,
+				E152C0890B88584E0056409A /* OSC-callbacklist.c in Sources */,
+				E152C08B0B88584E0056409A /* OSC-client.c in Sources */,
+				E152C08F0B88584E0056409A /* OSC-drop.c in Sources */,
+				E152C0920B88584E0056409A /* OSC-pattern-match.c in Sources */,
+				E152C0940B88584E0056409A /* OSC-priority-queue.c in Sources */,
+				E152C0960B88584E0056409A /* OSC-receive.c in Sources */,
+				E152C0980B88584E0056409A /* OSC-string-help.c in Sources */,
+				E152C09A0B88584E0056409A /* OSC-system-dependent.c in Sources */,
+				E152C09B0B88584E0056409A /* OSC-timetag.c in Sources */,
+				E152C0A00B88584E0056409A /* OSCInPort.m in Sources */,
+				E152C0A20B88584E0056409A /* OSCPort.m in Sources */,
+				E1B3BFAD0BBCD08F0075B434 /* WidgetsEnableTransformer.m in Sources */,
+				E1B3BFAF0BBCD08F0075B434 /* WidgetsEnableTransformer2.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		29B97318FDCFA39411CA2CEA /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				29B97319FDCFA39411CA2CEA /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../../../Library/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/build/Release/DarwiinRemote.app/Contents/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/../WiiRemoteFramework/build/Release\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../WiiRemoteFramework/build/Release\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../WiiRemoteFramework/build/Release\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = WiiRemote;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../../../../Library/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/build/Release/DarwiinRemote.app/Contents/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/../WiiRemoteFramework/build/Release\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/../WiiRemoteFramework/build/Release\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3 = "\"$(SRCROOT)/../WiiRemoteFramework/build/Release\"";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = DarwiinRemote;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "DarwiinRemote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DarwiinRemote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
