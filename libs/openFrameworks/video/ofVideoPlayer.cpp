@@ -210,7 +210,7 @@ ofVideoPlayer::ofVideoPlayer (){
 
 		durationNanos				= 0;
 		bIsMovieDone				= false;
-		posChangingPaused			= false;
+		posChangingPaused			= 0;
 		isStream					= false;
 
 		gstData.durationNanos		= 0;
@@ -218,10 +218,11 @@ ofVideoPlayer::ofVideoPlayer (){
 		gstData.speed				= speed;
 
 		pthread_mutex_init(&(gstData.buffer_mutex),NULL);
+		pthread_mutex_init(&seek_mutex,NULL);
 
-		/*if(!g_thread_supported()){
+		if(!g_thread_supported()){
 			g_thread_init(NULL);
-		}*/
+		}
 		if(!gst_inited){
 			gst_init (NULL, NULL);
 			gst_inited=true;
@@ -274,7 +275,7 @@ void ofVideoPlayer::idleMovie(){
 		#ifndef  TARGET_LINUX  // !linux = quicktime...
 		//--------------------------------------------------------------
 		if (bLoaded == true){
-			#ifdef TARGET_WIN32 || QT_USE_MOVIETASK
+			#if defined(TARGET_WIN32) || defined(QT_USE_MOVIETASK)
 				MoviesTask(moviePtr,0);
 			#endif
 
@@ -796,8 +797,13 @@ void ofVideoPlayer::setPosition(float pct){
 	//pct = CLAMP(pct, 0,1);// check between 0 and 1;
 	GstFormat format = GST_FORMAT_TIME;
 	GstSeekFlags flags = (GstSeekFlags) (GST_SEEK_FLAG_FLUSH|GST_SEEK_FLAG_ACCURATE);
-
-	gint64 pos = (guint64)(pct*(float)durationNanos);
+	gint64 pos = (guint64)((double)pct*(double)durationNanos);
+	if(bPaused){
+	    seek_lock();
+		gst_element_set_state (gstPipeline, GST_STATE_PLAYING);
+		posChangingPaused=true;
+		seek_unlock();
+	}
 	if(speed>0){
 		if(!gst_element_seek(GST_ELEMENT(gstPipeline),speed, 	format,
 				flags,
@@ -817,10 +823,7 @@ void ofVideoPlayer::setPosition(float pct){
 		ofLog(OF_WARNING,"GStreamer: unable to change speed");
 		}
 	}
-	if(bPaused){
-		gst_element_set_state (gstPipeline, GST_STATE_PLAYING);
-		posChangingPaused = true;
-	}
+
 	//--------------------------------------
 	#endif
 	//--------------------------------------
@@ -853,7 +856,7 @@ void ofVideoPlayer::setFrame(int frame){
 
 	if (frameRate > 0){
 		double frameDuration = 1 / frameRate;
-		TimeValue t = (frame * frameDuration * movieTimeScale);
+		TimeValue t = (TimeValue)(frame * frameDuration * movieTimeScale);
 		SetMovieTimeValue(moviePtr, t);
 		MoviesTask(moviePtr, 0);
 	}
@@ -861,14 +864,42 @@ void ofVideoPlayer::setFrame(int frame){
    if (!bPaused) SetMovieRate(moviePtr, X2Fix(speed));
 
    //--------------------------------------
-#else
+    #else
    //--------------------------------------
 
 	   float pct = (float)frame / (float)gstData.nFrames;
 	   setPosition(pct);
 
+        //pct = CLAMP(pct, 0,1);// check between 0 and 1;
+       /* GstFormat format = GST_FORMAT_BUFFERS;
+        GstSeekFlags flags = (GstSeekFlags) (GST_SEEK_FLAG_FLUSH|GST_SEEK_FLAG_ACCURATE);
+
+        if(bPaused){
+            gst_element_set_state (gstPipeline, GST_STATE_PLAYING);
+            posChangingPaused = true;
+        }
+        gint64 pos = (guint64)frame;
+        if(speed>0){
+            if(!gst_element_seek(GST_ELEMENT(gstPipeline),speed, 	format,
+                    flags,
+                    GST_SEEK_TYPE_SET,
+                    pos,
+                    GST_SEEK_TYPE_SET,
+                    -1)) {
+            ofLog(OF_WARNING,"GStreamer: unable to change speed");
+            }
+        }else{
+            if(!gst_element_seek(GST_ELEMENT(gstPipeline),speed, 	format,
+                    flags,
+                    GST_SEEK_TYPE_SET,
+                    0,
+                    GST_SEEK_TYPE_SET,
+                    pos)) {
+            ofLog(OF_WARNING,"GStreamer: unable to change speed");
+            }
+        }*/
    //--------------------------------------
-#endif
+    #endif
    //--------------------------------------
 
 }
@@ -881,7 +912,7 @@ float ofVideoPlayer::getDuration(){
 	#ifdef OF_VIDEO_PLAYER_QUICKTIME
 	//--------------------------------------
 
-		return GetMovieDuration (moviePtr) / (double) GetMovieTimeScale (moviePtr);
+		return (float) (GetMovieDuration (moviePtr) / (double) GetMovieTimeScale (moviePtr));
 
 	//--------------------------------------
 	#else
@@ -950,7 +981,7 @@ bool ofVideoPlayer::getIsMovieDone(){
 	//--------------------------------------
 	#ifdef OF_VIDEO_PLAYER_QUICKTIME
 	//--------------------------------------
-		bool bIsMovieDone = IsMovieDone(moviePtr);
+		bool bIsMovieDone = (bool)IsMovieDone(moviePtr);
 		return bIsMovieDone;
 	//--------------------------------------
 	#else
@@ -1117,7 +1148,7 @@ void ofVideoPlayer::draw(float _x, float _y, float _w, float _h){
 
 //------------------------------------
 void ofVideoPlayer::draw(float _x, float _y){
-	draw(_x, _y, width, height);
+	draw(_x, _y, (float)width, (float)height);
 }
 
 //------------------------------------
@@ -1138,12 +1169,12 @@ int ofVideoPlayer::getTotalNumFrames(){
 
 //----------------------------------------------------------
 float ofVideoPlayer::getHeight(){
-	return height;
+	return (float)height;
 }
 
 //----------------------------------------------------------
 float ofVideoPlayer::getWidth(){
-	return width;
+	return (float)width;
 }
 
 
@@ -1235,14 +1266,17 @@ void ofVideoPlayer::gstHandleMessage()
 			}break;
 
 			case GST_MESSAGE_STATE_CHANGED:
-				if(posChangingPaused){
-					gst_element_set_state (gstPipeline, GST_STATE_PAUSED);
-					posChangingPaused=false;
-				}
-
-				GstState oldstate, newstate, pendstate;
+                GstState oldstate, newstate, pendstate;
 				gst_message_parse_state_changed(msg, &oldstate, &newstate, &pendstate);
 				gstData.pipelineState=newstate;
+				seek_lock();
+				if(posChangingPaused && newstate==GST_STATE_PLAYING){
+                    gst_element_set_state (gstPipeline, GST_STATE_PAUSED);
+                    posChangingPaused=false;
+				}
+				seek_unlock();
+
+
 				ofLog(OF_VERBOSE,"GStreamer: state changed from %d to %d (%d)", oldstate, newstate, pendstate);
 			break;
 
@@ -1328,6 +1362,14 @@ void ofVideoPlayer::gstHandleMessage()
 	}
 
 	gst_object_unref(GST_OBJECT(bus));
+}
+
+
+void ofVideoPlayer::seek_lock(){
+    pthread_mutex_lock( &seek_mutex );
+}
+void ofVideoPlayer::seek_unlock(){
+    pthread_mutex_unlock( &seek_mutex );
 }
 //--------------------------------------
 #endif

@@ -12,14 +12,16 @@ ofAppBaseWindow *			window = NULL;
 
 //========================================================================
 // core events instance & arguments
-#ifdef OF_USING_POCO	ofCoreEvents 				ofEvents;
-	ofEventArgs					voidEventArgs;
+#ifdef OF_USING_POCO
+ofCoreEvents 				ofEvents;
+ofEventArgs					voidEventArgs;
 #endif
 
 //========================================================================
-// callbacks:
+// default windowing
 #ifdef TARGET_OF_IPHONE
-	#include "ofAppiPhoneWindow.h"#else
+	#include "ofAppiPhoneWindow.h"
+#else
 	#include "ofAppGlutWindow.h"
 #endif
 
@@ -30,7 +32,8 @@ void ofSetupOpenGL(ofAppBaseWindow * windowPtr, int w, int h, int screenMode){
 	window->setupOpenGL(w, h, screenMode);
 }
 
-//--------------------------------------
+
+//--------------------------------------
 void ofSetupOpenGL(int w, int h, int screenMode){
 	#ifdef TARGET_OF_IPHONE
 		window = new ofAppiPhoneWindow();
@@ -233,7 +236,7 @@ void ofSetVerticalSync(bool bSync){
 	//--------------------------------------
 	#ifdef TARGET_OSX
 	//--------------------------------------
-		long sync = bSync == true ? 1 : 0;
+		GLint sync = bSync == true ? 1 : 0;
 		CGLSetParameter (CGLGetCurrentContext(), kCGLCPSwapInterval, &sync);
 	//--------------------------------------
 	#endif
