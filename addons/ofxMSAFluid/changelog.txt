@@ -1,0 +1,15 @@
+ofxMSAFluid changelog
+
+v1.0
+--------------------
+- added RGB or monochrome functionality (enableRGB())
+- vector drawing implemented
+- get and set info much improved
+- added draw mode system
+- setup() now only takes dimensions, other parameters have their own setters
+
+
+
+v0.9	04/12/08
+--------------------
+- initial version

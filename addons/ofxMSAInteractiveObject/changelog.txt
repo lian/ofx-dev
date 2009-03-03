@@ -1,0 +1,18 @@
+ofxMSAInteractiveObject changelog
+
+v2.0	23/02/08
+--------------------
+- updated to work with the oF 006 event system (thanks to arturo)
+- added onDragOutside() callback
+- fixed bug with onReleaseOutside()
+
+
+v1.01	16/10/08
+--------------------
+- minor poco compatibility update
+
+
+
+v1.0	14/10/08
+--------------------
+- initial version
