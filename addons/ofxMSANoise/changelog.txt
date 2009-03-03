@@ -1,0 +1,10 @@
+ofxMSANoise changelog
+
+v1.1
+--------------------
+- renamed init(..) to setup(..) for consistency with oF Core
+
+
+v1.0	
+--------------------
+- initial release
