@@ -21,3 +21,4 @@ apps/*/*/*linux.layout
 apps/*/*/*linux.depend
 
 apps/*/*/bin
+apps/_tmp

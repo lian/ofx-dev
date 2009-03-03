@@ -65,7 +65,6 @@
 		E47B5BC70F1BAA2200EC040D /* ofVideoGrabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47B5BB50F1BAA2200EC040D /* ofVideoGrabber.cpp */; };
 		E47B5BC80F1BAA2200EC040D /* ofVideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47B5BB70F1BAA2200EC040D /* ofVideoPlayer.cpp */; };
 		E4A1E17F0F3CAAAF009ED795 /* glfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A1E17C0F3CAAAF009ED795 /* glfw.a */; };
-		E4A1E1990F3CAAC8009ED795 /* ofAppGLFWWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4A1E1970F3CAAC8009ED795 /* ofAppGLFWWindow.cpp */; };
 		E4A275980F3C782C006EF4BB /* ofBitmapFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4A275960F3C782B006EF4BB /* ofBitmapFont.cpp */; };
 		E4A275A40F3C7847006EF4BB /* ofAppGlutWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4A2759E0F3C7847006EF4BB /* ofAppGlutWindow.cpp */; };
 		E4A275A50F3C7847006EF4BB /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4A275A00F3C7847006EF4BB /* ofAppRunner.cpp */; };
@@ -315,8 +314,6 @@
 		E47B5BB80F1BAA2200EC040D /* ofVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofVideoPlayer.h; path = ../../../libs/openFrameworks/video/ofVideoPlayer.h; sourceTree = SOURCE_ROOT; };
 		E4A1E17C0F3CAAAF009ED795 /* glfw.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = glfw.a; path = ../../../libs/glfw/glfw.a; sourceTree = SOURCE_ROOT; };
 		E4A1E17E0F3CAAAF009ED795 /* glfw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glfw.h; path = ../../../libs/glfw/include/glfw.h; sourceTree = SOURCE_ROOT; };
-		E4A1E1970F3CAAC8009ED795 /* ofAppGLFWWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppGLFWWindow.cpp; path = ../../../libs/openFrameworks/app/ofAppGLFWWindow.cpp; sourceTree = SOURCE_ROOT; };
-		E4A1E1980F3CAAC8009ED795 /* ofAppGLFWWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppGLFWWindow.h; path = ../../../libs/openFrameworks/app/ofAppGLFWWindow.h; sourceTree = SOURCE_ROOT; };
 		E4A275960F3C782B006EF4BB /* ofBitmapFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofBitmapFont.cpp; path = ../../../libs/openFrameworks/graphics/ofBitmapFont.cpp; sourceTree = SOURCE_ROOT; };
 		E4A275970F3C782B006EF4BB /* ofBitmapFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofBitmapFont.h; path = ../../../libs/openFrameworks/graphics/ofBitmapFont.h; sourceTree = SOURCE_ROOT; };
 		E4A2759B0F3C7847006EF4BB /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppBaseWindow.h; path = ../../../libs/openFrameworks/app/ofAppBaseWindow.h; sourceTree = SOURCE_ROOT; };
@@ -1226,8 +1223,6 @@
 		E4A2759A0F3C7847006EF4BB /* app */ = {
 			isa = PBXGroup;
 			children = (
-				E4A1E1970F3CAAC8009ED795 /* ofAppGLFWWindow.cpp */,
-				E4A1E1980F3CAAC8009ED795 /* ofAppGLFWWindow.h */,
 				E4A2759B0F3C7847006EF4BB /* ofAppBaseWindow.h */,
 				E4A2759E0F3C7847006EF4BB /* ofAppGlutWindow.cpp */,
 				E4A2759F0F3C7847006EF4BB /* ofAppGlutWindow.h */,
@@ -1372,7 +1367,6 @@
 				E4A275980F3C782C006EF4BB /* ofBitmapFont.cpp in Sources */,
 				E4A275A40F3C7847006EF4BB /* ofAppGlutWindow.cpp in Sources */,
 				E4A275A50F3C7847006EF4BB /* ofAppRunner.cpp in Sources */,
-				E4A1E1990F3CAAC8009ED795 /* ofAppGLFWWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
