@@ -1,0 +1,11 @@
+ofxMultiTouch changelog
+
+
+v0.2
+--------------------
+- added custom touch info data
+
+
+v0.1
+--------------------
+- initial version
