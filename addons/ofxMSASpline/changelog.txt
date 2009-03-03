@@ -1,0 +1,6 @@
+ofxMSASpline changelog
+
+
+v1.0	03/10/08
+--------------------
+- initial version

@@ -1,7 +1,7 @@
 /***********************************************************************
  -----------------------------------
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ public:
 			glBegin(GL_LINE_STRIP);
 			for(float f=0; f<1; f+= spacing) {
 				ofxVec3f v = sampleAt(f);
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3fv((const float*)&v);
 			}
 			glEnd();
 		}
@@ -79,7 +79,7 @@ public:
 			glBegin(GL_POINTS);
 			for(float f=0; f<1; f+= spacing) {
 				ofxVec3f v = sampleAt(f);
-				glVertex3f(v.x, v.y, v.z);
+				glVertex3fv((const float*)&v);
 			}
 			glEnd();
 		}

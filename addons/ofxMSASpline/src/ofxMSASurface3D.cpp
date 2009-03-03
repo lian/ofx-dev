@@ -1,5 +1,4 @@
 /***********************************************************************
- -----------------------------------
  
  Copyright (c) 2009, Memo Akten, www.memo.tv
  
@@ -18,8 +17,5 @@
  
  ***********************************************************************/
 
-#include "ofxMSASpline2D.h"
+#include "ofxMSASurface3D.h"
 
-float fabs(const ofxVec2f& v) {
-	return v.length();
-}

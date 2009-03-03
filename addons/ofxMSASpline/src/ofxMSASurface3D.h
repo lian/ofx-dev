@@ -18,8 +18,14 @@
  
  ***********************************************************************/
 
-#include "ofxMSASpline2D.h"
+#pragma once
 
-float fabs(const ofxVec2f& v) {
-	return v.length();
-}
+#include "ofxMSASpline3D.h"
+
+template <typename Type> class ofxMSASurfaceTemplate {
+	
+protected:
+//	vector<
+	
+	
+};

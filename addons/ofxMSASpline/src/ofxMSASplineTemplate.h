@@ -1,7 +1,7 @@
 /***********************************************************************
  -----------------------------------
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -21,14 +21,13 @@
 /**************************** Spline Template Class ****************************/
 #pragma once
 
-#define OF_ADDON_USING_OFXVECTORMATH
 
 #include "ofMain.h"
-#include "ofAddons.h"
+#include "ofxVectorMath.h"
 
 #include "ofxMSASplineInterpolationTypes.h"
 
-template <typename Type> class ofxMSASpline /* : public vector<Type> */{
+template <typename Type> class ofxMSASpline {
 public:
 	ofxMSASpline() {
 		setInterpolation(OFX_MSA_SPLINE_CUBIC);
@@ -39,6 +38,8 @@ public:
 	// use catmull rom interpolation to re-sample At normT position along the spline
 	// where normT: 0....1 based on length of spline
 	Type sampleAt(float t) {
+		if(t>0.9999) t = 0.9999;
+		else if(t<0) t=0;
 		int numItems = size();
 		int i0, i1, i2, i3;
 		float mu;
