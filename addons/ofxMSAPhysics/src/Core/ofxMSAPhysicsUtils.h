@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,7 +18,15 @@
  
  ***********************************************************************/
 
+
 #pragma once
 
-#include "ofxMSAParticleDrawer.h"
-#include "ofxMSAParticleUpdater.h"
+#include "ofMain.h"
+
+float msaFastInvSquareRoot(float f);
+
+float msaLengthSquared(ofPoint &p);
+
+float msaLength(ofPoint &p);
+
+void msaFastNormalize(ofPoint &p);

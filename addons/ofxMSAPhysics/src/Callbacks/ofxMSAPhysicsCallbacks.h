@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,20 +18,7 @@
  
  ***********************************************************************/
 
-
 #pragma once
 
-#define OF_ADDON_USING_OFXVECTORMATH
-#include "ofMain.h"
-#include "ofAddons.h"
-
-struct ofxMSAPhysicsParams {
-	float		timeStep, timeStep2;
-	float		drag;	
-	
-	ofxVec3f	gravity;
-	bool		doGravity;
-	
-	float		invWidth, invHeight;		// cache these for speed
-
-};
+#include "ofxMSAParticleDrawer.h"
+#include "ofxMSAParticleUpdater.h"

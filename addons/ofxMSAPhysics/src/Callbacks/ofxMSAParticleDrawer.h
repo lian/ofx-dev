@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -19,9 +20,8 @@
 
 #pragma once
 
-#define OF_ADDON_USING_OFXOBJCPOINTER
 #include "ofMain.h"
-#include "ofAddons.h"
+#include "ofxObjCPointer.h"
 
 #include "ofxMSAParticle.h"
 
@@ -36,7 +36,7 @@ public:
 	virtual void draw(ofxMSAParticle* p) {
 		glPushMatrix();
 		glTranslatef(p->x, p->y, p->z);
-		glutSolidSphere(10, 10, 10);
+//		glutSolidSphere(10, 10, 10);
 		glPopMatrix();
 	};
 };

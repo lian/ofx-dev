@@ -1,24 +1,14 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-#define OF_ADDON_USING_OFXMSAPHYSICS
 
 #include "ofMain.h"
-#include "ofAddons.h"
 
-#define	WIDTH		1280
-#define HEIGHT		720
 
-class testApp : public ofBaseApp {
+
+class testApp : public ofSimpleApp{
 	
 public:
-	
-	ofxMSAPhysics physics;
-	
-	void initScene();
-	void addRandomParticle();
-	void addRandomSpring();
-	
 	void setup();
 	void update();
 	void draw();
@@ -33,3 +23,4 @@ public:
 };
 
 #endif
+

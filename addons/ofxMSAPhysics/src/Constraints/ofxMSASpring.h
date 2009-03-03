@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -19,46 +20,34 @@
 
 #pragma once
 
-#define OF_ADDON_USING_OFXVECTORMATH
 #include "ofMain.h"
-#include "ofAddons.h"
-
 #include "ofxMSAConstraint.h"
 
-class ofxMSAAttraction : public ofxMSAConstraint {
+class ofxMSASpring : public ofxMSAConstraint {
 public:	
 	friend class ofxMSAPhysics;
 	
+	float restLength;
 	float strength;
 	
-	ofxMSAAttraction(ofxMSAParticle *a, ofxMSAParticle *b, float _strength, float minimumDistance) {
+	ofxMSASpring(ofxMSAParticle *a, ofxMSAParticle *b, float _strength, float _restLength) {
 		this->_a = a;
 		this->_b = b;
 		strength	= _strength;
-		setMinimumDistance(minimumDistance);
-		
-		_type = OFX_MSA_CONSTRAINT_TYPE_ATTRACTION;
-	}
-	
-	void setMinimumDistance(float d) {
-		_minDist = d;
-		_minDist2 = d*d;
+		restLength	= _restLength;
+		_type = OFX_MSA_CONSTRAINT_TYPE_SPRING;
+		setClassName(string("ofxMSASpring"));
 	}
 	
 protected:	
-	float _minDist, _minDist2;
-	
 	void solve() {
-		if(isOff()) return;
+		ofPoint delta = (*_b) - (*_a);
+		float deltaLength2 = msaLengthSquared(delta);
+		float deltaLength = sqrt(deltaLength2);	// TODO: fast approximation of square root (1st order Taylor-expansion at a neighborhood of the rest length r (one Newton-Raphson iteration with initial guess r))
+		float force = strength * (deltaLength - restLength) / (deltaLength * (_a->getInvMass() + _b->getInvMass()));
 		
-		ofxVec3f delta = (*_b) - (*_a);
-		float deltaLength2 = delta.lengthSquared();
-		if(deltaLength2 > _minDist2) return;
-		
-		float force = (*b->_mass) * (*a->_mass) / deltaLength2;
-		
-		if (!_a->_isFixed) *_a += (_a->_invMass * force) * delta;
-		if (!_b->_isFixed) *_b -= (_b->_invMass * force) * delta;
-	}
+		if (!_a->isFixed()) *_a += delta * (_a->getInvMass() * force);
+		if (!_b->isFixed()) *_b -= delta * (_b->getInvMass() * force);
+ 	}
 	
 };

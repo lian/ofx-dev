@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,28 +18,38 @@
  
  ***********************************************************************/
 
-/* based on
+/* 
+ based on principles mentioned at
+  http://www.gamasutra.com/resource_guide/20030121/jacobson_01.shtml
  
- http://www.gamasutra.com/resource_guide/20030121/jacobson_01.shtml
  
+fast inverse square root mentioned at
+ http://en.wikipedia.org/wiki/Fast_inverse_square_root
+ attributed to John Carmack but apparently much older
  */
 
 #pragma once
 
-#define OF_ADDON_USING_OFXVECTORMATH
-#define OF_ADDON_USING_OFXOBJCPOINTER
-// #define OF_ADDON_USING_OFMSADATARECORDER
-#include "ofMain.h"
-#include "ofAddons.h"
-#include "ofxMSADataRecorder.h"
+//#define MSAPHYSICS_USE_RECORDER
 
-#include <vector>
+#include "ofMain.h"
+
+#include "ofxObjCPointer.h"
 
 #include "ofxMSAParticle.h"
 #include "ofxMSAConstraint.h"
 #include "ofxMSASpring.h"
+#include "ofxMSAAttraction.h"
+#include "ofxMSACollision.h"
+
+#include "ofxMSAPhysicsUtils.h"
 #include "ofxMSAPhysicsParams.h"
 #include "ofxMSAPhysicsCallbacks.h"
+
+#ifdef MSAPHYSICS_USE_RECORDER
+#include "ofxMSADataRecorder.h"
+#endif
+
 
 
 class ofxMSAPhysics : public ofxMSAParticleUpdatable {
@@ -46,57 +57,91 @@ class ofxMSAPhysics : public ofxMSAParticleUpdatable {
 public:	
 	friend class ofxMSAParticle;
 	
+	bool				verbose;
+	
 	ofxMSAPhysics();
 	~ofxMSAPhysics();
 	
 	ofxMSAParticle*		makeParticle(float x, float y, float z, float m = 1.0f, float d = 1.0f);
 	ofxMSASpring*		makeSpring(ofxMSAParticle *a, ofxMSAParticle *b, float _strength, float _restLength);
+	ofxMSAAttraction*	makeAttraction(ofxMSAParticle *a, ofxMSAParticle *b, float _strength, float _minimumDistance = 0);
+	ofxMSACollision*	makeCollision(ofxMSAParticle *a, ofxMSAParticle *b);
 	
+	// this method retains the particle, so you should release() it after adding (obj-c style)
 	ofxMSAParticle*		addParticle(ofxMSAParticle *p);
-	ofxMSAConstraint*	addConstraint(ofxMSAConstraint *s);
 	
-	ofxMSAParticle*		getParticle(int i);
-	ofxMSAConstraint*	getSpring(int i);
+	// this method retains the constraint, so you should release it after adding (obj-c style)
+	ofxMSAConstraint*	addConstraint(ofxMSAConstraint *c);
 	
-	void setDrag(float drag = 0.99);					// set the drag. 1: no drag at all, 0.9: quite a lot of drag, 0: particles can't even move
-	void setGravity(float gy);							// set gravity 
-	void setGravity(float gx = 0, float gy = 0, float gz = 0);		// default values
-	void setGravity(ofxVec3f &g);						// NEW
-	ofxVec3f& getGravity();
+	ofxMSAParticle*		getParticle(uint i);
+	ofxMSAConstraint*	getConstraint(uint i);			// generally you wouldn't use this but use the ones below
+	ofxMSASpring*		getSpring(uint i);
+	ofxMSAAttraction*	getAttraction(uint i);
+	ofxMSACollision*	getCollision(uint i);
+	
+	uint				numberOfParticles();
+	uint				numberOfConstraints();		// all constraints: springs, attractions, collisions and user created
+	uint				numberOfSprings();			// only springs
+	uint				numberOfAttractions();		// only attractions
+	uint				numberOfCollisions();		// only collisions
+	
+	ofxMSAPhysics*		enableCollision();
+	ofxMSAPhysics*		disableCollision();
+	bool				isCollisionEnabled();
+	
+	ofxMSAPhysics*		addToCollision(ofxMSAParticle* p);
+	ofxMSAPhysics*		removeFromCollision(ofxMSAParticle* p);
+	
+	ofxMSAPhysics*		setDrag(float drag = 0.99);					// set the drag. 1: no drag at all, 0.9: quite a lot of drag, 0: particles can't even move
+	ofxMSAPhysics*		setGravity(float gy);							// set gravity 
+	ofxMSAPhysics*		setGravity(float gx = 0, float gy = 0, float gz = 0);		// default values
+	ofxMSAPhysics*		setGravity(ofPoint &g);
+	ofPoint&			getGravity();
+	ofxMSAPhysics*		setTimeStep(float timeStep);
+	ofxMSAPhysics*		setNumIterations(float numIterations = 20);	// default value
+	
+	ofxMSAPhysics*		setWorldMin(ofPoint worldMin);
+	ofxMSAPhysics*		setWorldMax(ofPoint worldMax);
+	ofxMSAPhysics*		setWorldSize(ofPoint worldMin, ofPoint worldMax);
+	ofxMSAPhysics*		clearWorldSize();
+	
+	// preallocate buffers if you know how big they need to be (they grow automatically if need be)
+	ofxMSAPhysics*		setParticleCount(uint i);
+	ofxMSAPhysics*		setConstraintCount(uint i);
+	ofxMSAPhysics*		setSpringCount(uint i);
+	ofxMSAPhysics*		setAttractionCount(uint i);
+	ofxMSAPhysics*		setCollisionCount(uint i);					
 
-	void setTimeStep(float timeStep);
-	void setNumIterations(float numIterations = 20);	// default value
 	
-	int numberOfParticles();
-	int numberOfSprings();
-
-	void update(int frameNum = -1);						// NEW
-	void draw();										// NEW
-	void debugDraw();									// NEW
 	void clear();
-	
-	void setParticleCount(int i);						// preallocate buffer for particles if known (can grow if needed)
-	void setConstraintCount(int i);						// preallocate buffer for constraints if known (can grow if needed)
+	void update(int frameNum = -1);	
+	void draw();
+	void debugDraw();
 
-	void setReplayMode(int i, float playbackScaler = 1.0f);		// when playing back recorded data, optionally scale positions up (so you can record in lores, playback at highres)
-	void setReplayFilename(string f);
+#ifdef MSAPHYSICS_USE_RECORDER
+	ofxMSAPhysics*		setReplayMode(int i, float playbackScaler = 1.0f);		// when playing back recorded data, optionally scale positions up (so you can record in lores, playback at highres)
+	ofxMSAPhysics*		setReplayFilename(string f);
+#endif	
 	
 protected:
 	vector<ofxMSAParticle*>		_particles;
-	vector<ofxMSAConstraint*>	_constraints;
+	vector<ofxMSAConstraint*>	_constraints[OFX_MSA_CONSTRAINT_TYPE_COUNT];
 	
-	ofxMSADataRecorder<ofxVec3f>_recorder;
-	
-	int							_numIterations;
-	int							_frameCounter;
-	int							_replayMode;
-	float						_playbackScaler;
 	ofxMSAPhysicsParams			params;
 
-	void updateConstraints();
-	void updateParticles();
-	void load(int frameNum);
+	void						updateParticles();
+	void						updateAllConstraints();
+	void						updateConstraintsByType(vector<ofxMSAConstraint*> constraints);
+
+	ofxMSAConstraint*			getConstraint(ofxMSAParticle *a, int constraintType);
+	ofxMSAConstraint*			getConstraint(ofxMSAParticle *a, ofxMSAParticle *b, int constraintType);
+
 	
-	ofxMSAConstraint *getConstraint(ofxVec3f *a, ofxVec3f *b);
-	ofxMSAConstraint *getConstraint(ofxVec3f *a);
+#ifdef MSAPHYSICS_USE_RECORDER
+	ofxMSADataRecorder<ofPoint>_recorder;
+	uint						_frameCounter;
+	uint						_replayMode;
+	float						_playbackScaler;
+	void load(uint frameNum);
+#endif
 };

@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,5 +18,11 @@
  
  ***********************************************************************/
 
+#pragma once
+
+#define OFX_MSA_CONSTRAINT_TYPE_CUSTOM		0
 #define OFX_MSA_CONSTRAINT_TYPE_SPRING		1
 #define OFX_MSA_CONSTRAINT_TYPE_ATTRACTION	2
+#define OFX_MSA_CONSTRAINT_TYPE_COLLISION	3
+
+#define OFX_MSA_CONSTRAINT_TYPE_COUNT		4

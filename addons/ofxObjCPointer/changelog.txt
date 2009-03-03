@@ -1,0 +1,16 @@
+ofxObjCPointer changelog
+
+
+v1.1	29/02/09
+--------------------
+- added verbose option (off by default)
+
+
+v1.01	16/10/08
+--------------------
+- added virtual destructor
+
+
+v1.0	15/10/08
+--------------------
+- initial version

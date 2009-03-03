@@ -21,9 +21,10 @@
  
  Never use 'delete myObj', only use 'myObj->release();
  
- -----------------------------------
+ /***********************************************************************
  
  Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -47,8 +48,10 @@
  
 class ofxObjCPointer {
 public:
+	bool verbose;
+	
 	ofxObjCPointer();
-	virtual ~ofxObjCPointer() {}
+	virtual ~ofxObjCPointer();
 	
 	// use this to indicate you are using the object and want to keep it safe in memory
 	void retain();
@@ -69,6 +72,6 @@ protected:
 private:
 	unsigned int	__useCountOfThisObject;
 	string			__myClassName;
-	string	__myInstanceName;
+	string			__myInstanceName;
 };
 

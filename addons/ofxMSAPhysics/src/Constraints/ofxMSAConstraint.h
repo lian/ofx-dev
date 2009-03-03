@@ -1,6 +1,7 @@
 /***********************************************************************
  
- Copyright (c) 2008, Memo Akten, www.memo.tv
+ Copyright (c) 2009, Memo Akten, www.memo.tv
+ *** The Mega Super Awesome Visuals Company ***
  
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -19,11 +20,10 @@
 
 #pragma once
 
-#define OF_ADDON_USING_OFXVECTORMATH
-#define OF_ADDON_USING_OFXOBJCPOINTER
 #include "ofMain.h"
-#include "ofAddons.h"
+#include "ofxObjCPointer.h"
 
+#include "ofxMSAPhysicsUtils.h"
 #include "ofxMSAParticle.h"
 #include "ofxMSAConstraintTypes.h"
 
@@ -35,6 +35,9 @@ public:
 		_isOn = true;
 		_type = -1;
 		_isDead = false;
+		verbose = true;
+		_params = NULL;
+
 		setClassName("ofxMSAConstraint");
 	}
 	
@@ -43,65 +46,71 @@ public:
 		_b->release(); 		
 	}
 	
-	int type() {
+	inline int type() {
 		return _type;
 	}
 	
-	ofxMSAParticle* getOneEnd() {
+	inline ofxMSAParticle* getOneEnd() {
 		return _a;
 	}
 	
-	ofxMSAParticle* getTheOtherEnd() {
+	inline ofxMSAParticle* getTheOtherEnd() {
 		return _b;
 	}
 	
-	ofxMSAParticle* getA() {
+	inline ofxMSAParticle* getA() {
 		return _a;
 	}
 	
-	ofxMSAParticle* getB() {
+	inline ofxMSAParticle* getB() {
 		return _b;
 	}
 	
-	void turnOff() {
+	inline void turnOff() {
 		_isOn = false;
 	}
 	
-	void turnOn() {
+	inline void turnOn() {
 		_isOn = true;
 	}
 	
-	bool isOn() {
+	inline bool isOn() {
 		return (_isOn == true);
 	}
 	
-	bool isOff(){
+	inline bool isOff(){
 		return (_isOn == false);
 	}
 	
-	// NEW
-	void kill() {
+	inline void kill() {
 		_isDead = true;
 	}
 
-	bool isDead() {
+	inline bool isDead() {
 		return _isDead;
+	}
+	
+	// only worth solving the constraint if its on, and at least one end is free
+	inline bool shouldSolve() {
+		return _isOn && (_a->isFree() || _b->isFree());
 	}
 	
 	virtual void update() {}
 	virtual void draw() {}
+	
+
 	
 protected:	
 	int				_type;
 	bool			_isOn;
 	bool			_isDead;
 	ofxMSAParticle	*_a, *_b;
-	
+	ofxMSAPhysicsParams *_params;	
 	virtual void solve() = 0;
 	
 	virtual void debugDraw() {
-		ofxVec3f vec = (*_b - *_a);
-		float dist = vec.length();
+		ofPoint vec = (*_b - *_a);
+		float dist = msaLength(vec);
 		float angle = acos( vec.z / dist ) * RAD_TO_DEG;
 		if(vec.z <= 0 ) angle = -angle;
 		float rx = -vec.y * vec.z;
@@ -112,7 +121,9 @@ protected:
 		glRotatef(angle, rx, ry, 0.0);
 		glScalef(1, 1, dist);
 		glTranslatef(0, 0, 0.5);
+#ifndef TARGET_OF_IPHONE		
 		glutSolidCube(1);
+#endif		
 		glPopMatrix();
 	}
 };
