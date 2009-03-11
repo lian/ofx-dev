@@ -4,7 +4,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){	 
     
-    ofSetLogLevel(OF_VERBOSE);
+    ofSetLogLevel(OF_LOG_VERBOSE);
     
     nImages = DIR.listDir("images/of_logos/");
  	images = new ofImage[nImages];

@@ -20,7 +20,7 @@ static float		frameRate;
 
 //-------------------------------------------------------
 ofAppGLFWWindow::ofAppGLFWWindow():ofAppBaseWindow(){
-	ofLog(OF_VERBOSE,"creating glfw window");
+	ofLog(OF_LOG_VERBOSE,"creating glfw window");
 	bEnableSetupScreen	= true;
 	nFrameCount			= 0;
 	buttonInUse			= 0;
@@ -58,7 +58,7 @@ void ofAppGLFWWindow::setupOpenGL(int w, int h, int screenMode){
 	requestedHeight = h;
 
 	if(!glfwInit( )){
-		ofLog(OF_ERROR,"cannot init GLFW");
+		ofLog(OF_LOG_ERROR,"cannot init GLFW");
 		return;
 	}
 
@@ -436,7 +436,7 @@ void ofAppGLFWWindow::exitApp(){
 //		ofNotifyEvent( ofEvents.exit, voidEventArgs );
 //	#endif
 	
-	ofLog(OF_VERBOSE,"GLFW app is being terminated!");
+	ofLog(OF_LOG_VERBOSE,"GLFW app is being terminated!");
 
 	// Terminate GLFW
 	glfwTerminate();
@@ -447,7 +447,7 @@ void ofAppGLFWWindow::exitApp(){
 
 //------------------------------------------------------------
 void ofAppGLFWWindow::mouse_cb(int button, int state) {
-	ofLog(OF_VERBOSE,"button: %i",button);
+	ofLog(OF_LOG_VERBOSE,"button: %i",button);
 	static ofMouseEventArgs	mouseEventArgs;
 
 	if (state == GLFW_PRESS) {
@@ -522,7 +522,7 @@ void ofAppGLFWWindow::motion_cb(int x, int y) {
 void ofAppGLFWWindow::keyboard_cb(int key, int state) {
 	static ofKeyEventArgs keyEventArgs;
 
-	ofLog(OF_VERBOSE,"key: %i, state: %i",key,state);
+	ofLog(OF_LOG_VERBOSE,"key: %i, state: %i",key,state);
 	
 	switch (key) {
 		case GLFW_KEY_ESC:
