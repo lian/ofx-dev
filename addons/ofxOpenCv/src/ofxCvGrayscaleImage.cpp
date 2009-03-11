@@ -7,20 +7,29 @@
 
 //--------------------------------------------------------------------------------
 ofxCvGrayscaleImage::ofxCvGrayscaleImage() {
+    init();
+}
+
+//--------------------------------------------------------------------------------
+ofxCvGrayscaleImage::ofxCvGrayscaleImage( const ofxCvGrayscaleImage& _mom ) {
+    init();
+    if( _mom.bAllocated ) {
+        // cast non-const,  to get read access to the mon::cvImage
+        ofxCvGrayscaleImage& mom = const_cast<ofxCvGrayscaleImage&>(_mom);
+        allocate(mom.width, mom.height);
+        cvCopy( mom.getCvImage(), cvImage, 0 );
+    } else {
+        ofLog(OF_NOTICE, "in ofxCvGrayscaleImage copy constructor, mom not allocated");
+    }
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvGrayscaleImage::init() {
     ipldepth = IPL_DEPTH_8U;
     iplchannels = 1;
     gldepth = GL_UNSIGNED_BYTE;
     glchannels = GL_LUMINANCE;
 }
-
-//--------------------------------------------------------------------------------
-ofxCvGrayscaleImage::ofxCvGrayscaleImage( const ofxCvGrayscaleImage& _mom ) {
-    // cast non-const,  to get read access to the mon::cvImage
-    ofxCvGrayscaleImage& mom = const_cast<ofxCvGrayscaleImage&>(_mom);
-    allocate(mom.width, mom.height);
-    cvCopy( mom.getCvImage(), cvImage, 0 );
-}
-
 
 
 // Set Pixel Data - Arrays
@@ -193,9 +202,31 @@ void ofxCvGrayscaleImage::threshold( int value, bool invert) {
     flagImageChanged();
 }
 
-void ofxCvGrayscaleImage::thresholdMSA( int value, int type) {		// MSA
-	cvThreshold( cvImage, cvImageTemp, value, 255, type ); swapTemp(); flagImageChanged();
-}
+//--------------------------------------------------------------------------------
+void ofxCvGrayscaleImage::adaptiveThreshold( int blockSize, int offset, 
+                                             bool invert, bool gauss) {
+    if( blockSize < 2 ) {
+        ofLog(OF_NOTICE, "in adaptiveThreshold, value < 2, will make it 3");
+        blockSize = 3;
+    }
+    
+    if( blockSize % 2 == 0 ) {
+        ofLog(OF_NOTICE, "in adaptiveThreshold, value not odd -> will add 1 to cover your back");
+        blockSize++;
+    }
+                                                 
+    int threshold_type = CV_THRESH_BINARY;
+    if(invert) threshold_type = CV_THRESH_BINARY_INV;
+
+    int adaptive_method = CV_ADAPTIVE_THRESH_MEAN_C;
+    if(gauss) adaptive_method = CV_ADAPTIVE_THRESH_GAUSSIAN_C;
+                    
+    cvAdaptiveThreshold( cvImage, cvImageTemp, 255, adaptive_method, 
+                         threshold_type, blockSize, offset);
+   swapTemp();
+   flagImageChanged(); 
+} 
+
 
 
 // Image Transformation Operations

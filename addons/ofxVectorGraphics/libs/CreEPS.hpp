@@ -1,10 +1,10 @@
 /*******************************************************************************
- 
+
 CreEPS = Creating EPS  Version 1.32
- 
+
 Uwe Fabricius : http://uwefabricius.de/
 Thomas Pohl   : http://thomas-pohl.info/
- 
+
 Copyright (C) 2002, 2003, 2004  Uwe Fabricius & Thomas Pohl
 
 This program is free software; you can redistribute it and/or

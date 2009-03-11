@@ -1,51 +1,33 @@
 <install>
 	<author>theo watson</author>
 	<version>0.01</version>
-
-	
-	<!-- ========================================================================= 	-->
-	<!--	setting for the "installation" of OF 					-->
-	<!-- ========================================================================= 	-->
 	
 	
-	<toAddAddonsH>
-
-//-------------------------------------------- xml settings
-#ifdef OF_ADDON_USING_OFXVECTORGRAPHICS
-	#include "ofxVectorGraphics.h"
-#endif
-
-	</toAddAddonsH>
+	<add>
+		<!-- 	=====================================================================	-->
+		<!--	========================== add per project using this addon =========	-->
+		<!-- 	=====================================================================	-->
 	
+	    <src>
 	
-	
-	<!-- ========================================================================= 	-->
-	<!--	setting per project 							-->
-	<!-- ========================================================================= 	-->
-	
-	<toAddPerProject>
-	
-		<folder name="addons/ofxVectorGraphics/src">
-			<src>../../../addons/ofxVectorGraphics/src/ofxVectorGraphics.cpp</src>
-			<src>../../../addons/ofxVectorGraphics/src/ofxVectorGraphics.h</src>
-		</folder>
+		    <folder name="addons/ofxVectorGraphics/src">
+			    <file>../../../addons/ofxVectorGraphics/src/ofxVectorGraphics.cpp</file>
+			    <file>../../../addons/ofxVectorGraphics/src/ofxVectorGraphics.h</file>
+		    </folder>
 		
-		<folder name="addons/ofxVectorGraphics/libs">
-			<src>../../../addons/ofxVectorGraphics/libs/CreEPS.cpp</src>
-			<src>../../../addons/ofxVectorGraphics/libs/CreEPS.hpp</src>
-		</folder>
+		    <folder name="addons/ofxVectorGraphics/libs">
+			    <file>../../../addons/ofxVectorGraphics/libs/CreEPS.cpp</file>
+			    <file>../../../addons/ofxVectorGraphics/libs/CreEPS.hpp</file>
+		    </folder>
 	
-	</toAddPerProject>
+	    </src>
 	
-	<includePath>
-		<path>../../../addons/ofxVectorGraphics/src</path>
-		<path>../../../addons/ofxVectorGraphics/libs</path>
-	</includePath>
+	    <include>
+		    <path>../../../addons/ofxVectorGraphics/src</path>
+		    <path>../../../addons/ofxVectorGraphics/libs</path>
+	    </include>
 				
-	<!-- ========================================================================= 	-->
-	<!--	any requirements?							-->
-	<!-- ========================================================================= 	-->
+	</add>
 	
-	<requires></requires>
 	
 </install>

@@ -1,23 +1,10 @@
 <install>
 
-	<version>0.01</version>
+	<version>0.02</version>
 	<author>damian frey</author>
 	<url></url>
-	<requires></requires>
 
 	<add>	
-
-		<!-- 	=====================================================================	-->
-		<!--	========================== add for the "installation" of OF =========	-->
-		<!-- 	=====================================================================	-->
-
-		<addons_h>
-		//-------------------------------------------- OSC
-		#ifdef OF_ADDON_USING_OFXOSC
-			#include "ofxOsc.h"
-		#endif
-		</addons_h>
-
 		<!-- 	=====================================================================	-->
 		<!--	========================== add per project using this addon =========	-->
 		<!-- 	=====================================================================	-->
@@ -26,7 +13,8 @@
 			<folder name="addons/ofxOsc/src">			
 			<file>../../../addons/ofxOsc/src/ofxOsc.h</file>
 			<file>../../../addons/ofxOsc/src/ofxOscArg.h</file>
-			<file>../../../addons/ofxOsc/src/ofxOsc.h</file>
+			<file>../../../addons/ofxOsc/src/ofxOscBundle.cpp</file>
+			<file>../../../addons/ofxOsc/src/ofxOscBundle.h</file>
 			<file>../../../addons/ofxOsc/src/ofxOscMessage.h</file>
 			<file>../../../addons/ofxOsc/src/ofxOscMessage.cpp</file>
 			<file>../../../addons/ofxOsc/src/ofxOscReceiver.h</file>

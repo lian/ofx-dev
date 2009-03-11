@@ -12,12 +12,12 @@ void testApp::setup(){
         vidPlayer.loadMovie("fingers.mov");
         vidPlayer.play();
 	#endif
-        
+
     colorImg.allocate(320,240);
 	grayImage.allocate(320,240);
 	grayBg.allocate(320,240);
 	grayDiff.allocate(320,240);
-	
+
 	bLearnBakground = true;
 	threshold = 80;
 }
@@ -25,9 +25,9 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
 	ofBackground(100,100,100);
-    
+
     bool bNewFrame = false;
-	
+
 	#ifdef _USE_LIVE_VIDEO
        vidGrabber.grabFrame();
 	   bNewFrame = vidGrabber.isFrameNew();
@@ -35,21 +35,21 @@ void testApp::update(){
         vidPlayer.idleMovie();
         bNewFrame = vidPlayer.isFrameNew();
 	#endif
-	
+
 	if (bNewFrame){
-		
+
 		#ifdef _USE_LIVE_VIDEO
             colorImg.setFromPixels(vidGrabber.getPixels(), 320,240);
 	    #else
             colorImg.setFromPixels(vidPlayer.getPixels(), 320,240);
         #endif
-		
+
         grayImage = colorImg;
 		if (bLearnBakground == true){
 			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
 			bLearnBakground = false;
 		}
-		
+
 		// take the abs value of the difference between background and incoming and then threshold:
 		grayDiff.absDiff(grayBg, grayImage);
 		grayDiff.threshold(threshold);
@@ -67,18 +67,18 @@ void testApp::draw(){
 
 	// draw the incoming, the grayscale, the bg and the thresholded difference
 	ofSetColor(0xffffff);
-	colorImg.draw(20,20);	
+	colorImg.draw(20,20);
 	grayImage.draw(360,20);
 	grayBg.draw(20,280);
 	grayDiff.draw(360,280);
-	
+
 	// then draw the contours:
 
 	ofFill();
 	ofSetColor(0x333333);
 	ofRect(360,540,320,240);
 	ofSetColor(0xffffff);
-    
+
 	// we could draw the whole contour finder
 	//contourFinder.draw(360,540);
 
@@ -87,7 +87,7 @@ void testApp::draw(){
     for (int i = 0; i < contourFinder.nBlobs; i++){
         contourFinder.blobs[i].draw(360,540);
     }
-	
+
 	// finally, a report:
 
 	ofSetColor(0xffffff);
@@ -99,8 +99,8 @@ void testApp::draw(){
 
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
-	
+void testApp::keyPressed  (int key){
+
 	switch (key){
 		case ' ':
 			bLearnBakground = true;
@@ -118,7 +118,7 @@ void testApp::keyPressed  (int key){
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-}	
+}
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
@@ -129,6 +129,12 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::mouseReleased(int x, int y, int button){
 
 }
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
+
+}
+

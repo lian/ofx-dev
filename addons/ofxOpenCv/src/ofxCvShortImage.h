@@ -25,6 +25,8 @@ class ofxCvShortImage : public ofxCvImage {
     ofxCvShortImage( const ofxCvShortImage& mom );
     // virtual void  allocate( int w, int h );                                //in base class
     virtual void  clear();
+	//virtual float getWidth();                                               //in base class
+	//virtual float getHeight();                                              //in base class    
     // virtual void  setUseTexture( bool bUse );                              //in base class 
 
 
@@ -70,7 +72,10 @@ class ofxCvShortImage : public ofxCvImage {
     //
     //virtual void  draw( float x, float y );                                  //in base class
     //virtual void  draw( float x, float y, float w, float h );                //in base class
-
+    //virtual void setAnchorPercent( float xPct, float yPct );                 //in base class
+    //virtual void setAnchorPoint( int x, int y );                             //in base class
+    //virtual void resetAnchor();                                              //in base class
+    
 
     // Image Filter Operations
     //
@@ -101,7 +106,7 @@ class ofxCvShortImage : public ofxCvImage {
     // virtual void  remap( IplImage* mapX, IplImage* mapY );                  //in base class
     // virtual void  warpPerspective( ofPoint& A, ofPoint& B,
     //                                ofPoint& C, ofPoint& D );                //in base class
-    // virtual void  warpIntoMe( ofxCvGrayscaleImage& mom,
+    // virtual void  warpIntoMe( ofxCvImage& mom,
     //                           ofPoint src[4], ofPoint dst[4] );             //in base class
                              
 
@@ -111,7 +116,8 @@ class ofxCvShortImage : public ofxCvImage {
     
 
   private:
-
+    
+    void init();
     virtual void convertShortToGray( IplImage* floatImg, IplImage* grayImg );
     virtual void convertGrayToShort( IplImage* grayImg, IplImage* floatImg );
     

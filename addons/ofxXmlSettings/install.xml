@@ -1,55 +1,33 @@
 <install>
 
-	<version>
-		0.01
-	</version>
-
+	<version>0.01</version>
+	<author></author>
+	<url></url>
 	
-	<!-- ========================================================================= 	-->
-	<!--	setting for the "installation" of OF 					-->
-	<!-- ========================================================================= 	-->
+    <add>	
+		<!-- 	=====================================================================	-->
+		<!--	========================== add per project using this addon =========	-->
+		<!-- 	=====================================================================	-->
 	
-	
-	<toAddAddonsH>
-
-//-------------------------------------------- xml settings
-#ifdef OF_ADDON_USING_OFXXMLSETTINGS
-	#include "ofxXmlSettings.h"
-#endif
-
-	</toAddAddonsH>
-	
-	
-	
-	<!-- ========================================================================= 	-->
-	<!--	setting per project 							-->
-	<!-- ========================================================================= 	-->
-	
-	<toAddPerProject>
+	    <src>
 		
-		<folder name="addons/ofXmlSettings/src">	
-			<src>../../../addons/ofxXmlSettings/src/ofxXmlSettings.h</src>
-			<src>../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp</src>
-		</folder>
+		    <folder name="addons/ofXmlSettings/src">	
+			    <file>../../../addons/ofxXmlSettings/src/ofxXmlSettings.h</file>
+			    <file>../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp</file>
+		    </folder>
 		
-		<folder name="addons/ofXmlSettings/libs">
-			<src>../../../addons/ofxXmlSettings/libs/tinyxml.h</src>
-			<src>../../../addons/ofxXmlSettings/libs/tinyxml.cpp</src>
-			<src>../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp</src>
-			<src>../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp</src>
-		</folder>
+		    <folder name="addons/ofXmlSettings/libs">
+			    <file>../../../addons/ofxXmlSettings/libs/tinyxml.h</file>
+			    <file>../../../addons/ofxXmlSettings/libs/tinyxml.cpp</file>
+			    <file>../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp</file>
+			    <file>../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp</file>
+		    </folder>
 		
-	</toAddPerProject>
+	    </src>
 	
-	<includePath>
-		<path>../../../addons/ofxXmlSettings/src</path>
-		<path>../../../addons/ofxXmlSettings/libs</path>
-	</includePath>
-				
-	<!-- ========================================================================= 	-->
-	<!--	any requirements?							-->
-	<!-- ========================================================================= 	-->
-	
-	<requires></requires>
-	
+	    <include>
+		    <path>../../../addons/ofxXmlSettings/src</path>
+		    <path>../../../addons/ofxXmlSettings/libs</path>
+	    </include>    </add>
+    
 </install>

@@ -25,6 +25,8 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     ofxCvGrayscaleImage( const ofxCvGrayscaleImage& mom );
     // virtual void  allocate( int w, int h );                                //in base class
     // virtual void  clear();                                                 //in base class
+	//virtual float getWidth();                                               //in base class
+	//virtual float getHeight();                                              //in base class
     // virtual void  setUseTexture( bool bUse );                              //in base class   
 
 
@@ -73,14 +75,18 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     //
     //virtual void  draw( float x, float y );                                  //in base class
     //virtual void  draw( float x, float y, float w, float h );                //in base class
+    //virtual void setAnchorPercent( float xPct, float yPct );                 //in base class
+    //virtual void setAnchorPoint( int x, int y );                             //in base class
+    //virtual void resetAnchor();                                              //in base class
 
 
     // Image Filter Operations
     //
     virtual void  contrastStretch();
     virtual void  convertToRange( float min, float max );
-    virtual void  threshold( int value, bool invert = false);
-    virtual void  thresholdMSA( int value, int type = CV_THRESH_BINARY);       // MSA
+    virtual void  threshold( int value, bool invert=false);
+    virtual void  adaptiveThreshold( int blockSize, int offset=0,
+                                     bool invert=false, bool gauss=false);
     // virtual void  erode( );                                                 //in base class
     // virtual void  dilate( );                                                //in base class
     // virtual void  blur( int value=3 );                                      //in base class
@@ -91,7 +97,7 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     // Image Transformation Operations
     //
     virtual void  resize( int w, int h );
-    virtual void  scaleIntoMe( ofxCvImage& mom, int interpolationMethod = CV_INTER_NN);
+    virtual void  scaleIntoMe( ofxCvImage& mom, int interpolationMethod=CV_INTER_NN);
     // virtual void  mirror( bool bFlipVertically, bool bFlipHorizontally );   //in base class
     // virtual void  translate( float x, float y );                            //in base class
     // virtual void  rotate( float angle, float centerX, float centerY );      //in base class
@@ -106,7 +112,7 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     // virtual void  remap( IplImage* mapX, IplImage* mapY );                  //in base class
     // virtual void  warpPerspective( ofPoint& A, ofPoint& B,
     //                                ofPoint& C, ofPoint& D );                //in base class
-    // virtual void  warpIntoMe( ofxCvGrayscaleImage& mom,
+    // virtual void  warpIntoMe( ofxCvImage& mom,
     //                           ofPoint src[4], ofPoint dst[4] );             //in base class
                              
 
@@ -128,6 +134,12 @@ class ofxCvGrayscaleImage : public ofxCvImage {
 	void setFromColorImage(ofxCvColorImage& mom) { *this = mom; };
 	void setFromFloatImage(ofxCvFloatImage& mom) { *this = mom; };
 
+
+
+  private:
+  
+    void init();
+    
 };
 
 

@@ -23,6 +23,8 @@ class ofxCvColorImage : public ofxCvImage {
     ofxCvColorImage( const ofxCvColorImage& mom );
     // virtual void  allocate( int w, int h );                                //in base class
     virtual void  clear();
+	//virtual float getWidth();                                               //in base class
+	//virtual float getHeight();                                              //in base class    
     // virtual void  setUseTexture( bool bUse );                              //in base class    
     // virtual ofTexture&  getTextureReference();                             //in base class    
 
@@ -71,7 +73,10 @@ class ofxCvColorImage : public ofxCvImage {
     //
     //virtual void  draw( float x, float y );                                 //in base class
     //virtual void  draw( float x, float y, float w, float h );               //in base class
-    
+    //virtual void setAnchorPercent( float xPct, float yPct );                //in base class
+    //virtual void setAnchorPoint( int x, int y );                            //in base class
+    //virtual void resetAnchor();                                             //in base class
+        
 
     // Image Filter Operations
     //
@@ -104,7 +109,7 @@ class ofxCvColorImage : public ofxCvImage {
     // virtual void  remap( IplImage* mapX, IplImage* mapY );                  //in base class
     // virtual void  warpPerspective( ofPoint& A, ofPoint& B,
     //                                ofPoint& C, ofPoint& D );                //in base class
-    // virtual void  warpIntoMe( ofxCvGrayscaleImage& mom,
+    // virtual void  warpIntoMe( ofxCvImage& mom,
     //                           ofPoint src[4], ofPoint dst[4] );             //in base class
                              
 
@@ -115,6 +120,7 @@ class ofxCvColorImage : public ofxCvImage {
 
   private:
   
+    void init();
     IplImage*  cvGrayscaleImage;    // internal helper grayscale, allocated on demand
       
 };

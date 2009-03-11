@@ -9,19 +9,29 @@
 
 //--------------------------------------------------------------------------------
 ofxCvColorImage::ofxCvColorImage() {
+    init();
+}
+
+//--------------------------------------------------------------------------------
+ofxCvColorImage::ofxCvColorImage( const ofxCvColorImage& _mom ) {
+    init(); 
+    if( _mom.bAllocated ) {
+        // cast non-const,  to get read access to the mon::cvImage
+        ofxCvColorImage& mom = const_cast<ofxCvColorImage&>(_mom); 
+        allocate(mom.width, mom.height);    
+        cvCopy( mom.getCvImage(), cvImage, 0 );
+    } else {
+        ofLog(OF_NOTICE, "in ofxCvColorImage copy constructor, mom not allocated");
+    }    
+}
+
+//--------------------------------------------------------------------------------
+void ofxCvColorImage::init() {
     ipldepth = IPL_DEPTH_8U;
     iplchannels = 3;
     gldepth = GL_UNSIGNED_BYTE;
     glchannels = GL_RGB;
     cvGrayscaleImage = NULL;
-}
-
-//--------------------------------------------------------------------------------
-ofxCvColorImage::ofxCvColorImage( const ofxCvColorImage& _mom ) {
-    // cast non-const,  to get read access to the mon::cvImage
-    ofxCvColorImage& mom = const_cast<ofxCvColorImage&>(_mom); 
-    allocate(mom.width, mom.height);    
-    cvCopy( mom.getCvImage(), cvImage, 0 );
 }
 
 //--------------------------------------------------------------------------------

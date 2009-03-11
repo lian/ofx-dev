@@ -9,7 +9,7 @@ void testApp::setup(){
 	current_msg_string = 0;
 	mouseX = 0;
 	mouseY = 0;
-	mouseButtonState = "";
+	strcpy( mouseButtonState, "" );
 
 	ofBackground( 30, 30, 130 );
 
@@ -33,29 +33,28 @@ void testApp::update(){
 		receiver.getNextMessage( &m );
 
 		// check for mouse moved message
-		if ( m.getAddress() == "/mouse/position" )
+		if ( strcmp( m.getAddress(), "/mouse/position" ) == 0 )
 		{
 			// both the arguments are int32's
 			mouseX = m.getArgAsInt32( 0 );
 			mouseY = m.getArgAsInt32( 1 );
 		}
 		// check for mouse button message
-		else if ( m.getAddress() == "/mouse/button" )
+		else if ( strcmp( m.getAddress(), "/mouse/button" ) == 0 )
 		{
 			// the single argument is a string
-			mouseButtonState = m.getArgAsString( 0 );
+			strcpy( mouseButtonState, m.getArgAsString( 0 ) );
 		}
 		else
 		{
 			// unrecognized message: display on the bottom of the screen
 			char msg_string[16384];
-			sprintf( msg_string, "[%s:%i] ", m.getRemoteIp().c_str(), m.getRemotePort() );
-			sprintf( msg_string, "%s%s", msg_string, m.getAddress().c_str() );
+			strcpy( msg_string, m.getAddress() );
 			strcat( msg_string, ": " );
 			for ( int i=0; i<m.getNumArgs(); i++ )
 			{
 				// get the argument type
-				strcat( msg_string, m.getArgTypeName( i ).c_str() );
+				strcat( msg_string, m.getArgTypeName( i ) );
 				strcat( msg_string, ":" );
 				// display the argument - make sure we get the right type
 				if( m.getArgType( i ) == OFXOSC_TYPE_INT32 )
@@ -63,9 +62,9 @@ void testApp::update(){
 				else if( m.getArgType( i ) == OFXOSC_TYPE_FLOAT )
 					sprintf( msg_string, "%s%f ", msg_string, m.getArgAsFloat( i ) );
 				else if( m.getArgType( i ) == OFXOSC_TYPE_STRING )
-					sprintf( msg_string, "%s\"%s\" ", msg_string, m.getArgAsString( i ).c_str() );
+					sprintf( msg_string, "%s\"%s\" ", msg_string, m.getArgAsString( i ) );
 				else
-					strcat( msg_string, "unknown " );
+					strcat( msg_string, "unknown" );
 			}
 			// add to the list of strings to display
 			msg_strings[current_msg_string] = msg_string;
@@ -121,5 +120,12 @@ void testApp::mousePressed(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::mouseReleased(int x, int y, int button){
+
 }
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
+
+}
+

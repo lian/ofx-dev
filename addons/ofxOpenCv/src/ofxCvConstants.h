@@ -6,6 +6,5 @@
 #include <vector>
 #include "ofMain.h"
 
-#define  MAX_NUM_CONTOURS_TO_FIND   500
 
 #endif

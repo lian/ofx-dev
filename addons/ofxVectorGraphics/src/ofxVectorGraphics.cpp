@@ -568,4 +568,4 @@ void ofxVectorGraphics::clearAllVertices(){
 	}
 	curvePts.clear();
 }			
-
+						

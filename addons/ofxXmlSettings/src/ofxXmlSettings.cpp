@@ -29,6 +29,10 @@ static vector<string> tokenize(const string & str, const string & delim)
 
 ofxXmlSettings::ofxXmlSettings(){
 	storedHandle	= new TiXmlHandle(NULL);
+	level			= 0;
+	//we do this so that we have a valid handle
+	//without the need for loadFile
+	*storedHandle   = TiXmlHandle(&doc);
 }
 
 //---------------------------------------------------------
@@ -56,6 +60,9 @@ bool ofxXmlSettings::loadFile(string xmlFile){
 	//theo removed bool check as it would
 	//return false if the file exists but was
 	//empty
+
+    //our push pop level should be set to 0!
+	level = 0;
 
 	*storedHandle = TiXmlHandle(&doc);
 	return loadOkay;
@@ -118,7 +125,7 @@ int ofxXmlSettings::getValue(string tag, int defaultValue, int which){
 	int returnValue = defaultValue;
 
 	if (readTag(tag, tempStr, which)){
-		returnValue = atoi(tempStr);
+		returnValue = strtol(tempStr, NULL, 0);
 	}
 	delete tempStr;
 	return returnValue;
@@ -131,7 +138,7 @@ float ofxXmlSettings::getValue(string tag, double defaultValue, int which){
 	float returnValue = defaultValue;
 
 	if (readTag(tag, tempStr, which)){
-		returnValue = atof(tempStr);
+		returnValue = strtod(tempStr,  NULL);
 	}
 	delete tempStr;
 	return returnValue;
@@ -207,7 +214,7 @@ bool ofxXmlSettings::pushTag(string  tag, int which){
 //---------------------------------------------------------
 int ofxXmlSettings::popTag(){
 
-	if(level > 1){
+	if(level >= 1){
 		TiXmlHandle parent( (storedHandle->ToNode() )->Parent() );
 		*storedHandle = parent;
 		level--;
@@ -413,5 +420,3 @@ int ofxXmlSettings::addTag(string tag){
 	int tagID = writeTag(tag, "", -1) -1;
 	return tagID;
 }
-
-
