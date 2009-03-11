@@ -92,7 +92,7 @@ void ofAppGlutWindow::setupOpenGL(int w, int h, int screenMode){
     	glutGameModeString(gameStr);
 
     	if (!glutGameModeGet(GLUT_GAME_MODE_POSSIBLE)){
-    		ofLog(OF_ERROR,"game mode error: selected format (%s) not available \n", gameStr);
+    		ofLog(OF_LOG_ERROR,"game mode error: selected format (%s) not available \n", gameStr);
     	}
     	// start fullscreen game mode
     	glutEnterGameMode();
@@ -154,7 +154,7 @@ void ofAppGlutWindow::exitApp(){
 //		ofNotifyEvent( ofEvents.exit, voidEventArgs );
 //	#endif
 
-	ofLog(OF_VERBOSE,"GLUT OF app is being terminated!");
+	ofLog(OF_LOG_VERBOSE,"GLUT OF app is being terminated!");
 
 	OF_EXIT_APP(0);
 }
@@ -560,11 +560,11 @@ void ofAppGlutWindow::resize_cb(int w, int h) {
 	static ofResizeEventArgs resizeEventArgs;
 
 	if(ofAppPtr)
-		ofAppPtr->resized(w,h);
+		ofAppPtr->windowResized(w,h);
 
 	#ifdef OF_USING_POCO
 		resizeEventArgs.width = w;
 		resizeEventArgs.height = h;
-		ofNotifyEvent( ofEvents.resize, resizeEventArgs );
+		ofNotifyEvent( ofEvents.windowResized, resizeEventArgs );
 	#endif
 }

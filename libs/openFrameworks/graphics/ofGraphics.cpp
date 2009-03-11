@@ -486,7 +486,7 @@ void ofPushStyle(){
 	if( styleHistory.size() > OF_MAX_STYLE_HISTORY ){
 		styleHistory.erase(styleHistory.begin() + OF_MAX_STYLE_HISTORY, styleHistory.end());
 		//should we warn here?
-		//ofLog(OF_WARNING, "ofPushStyle - warning: you have used ofPushStyle more than %i times without calling ofPopStyle - check your code!", OF_MAX_STYLE_HISTORY);
+		//ofLog(OF_LOG_WARNING, "ofPushStyle - warning: you have used ofPushStyle more than %i times without calling ofPopStyle - check your code!", OF_MAX_STYLE_HISTORY);
 	}
 }
 
@@ -693,7 +693,7 @@ void clearCurveVertices();
 void CALLBACK tessError(GLenum errCode){
 	const GLubyte* estring;
 	estring = gluErrorString( errCode);
-	ofLog(OF_ERROR, "tessError: %s", estring);
+	ofLog(OF_LOG_ERROR, "tessError: %s", estring);
 }
 
 
@@ -787,7 +787,7 @@ void ofSetPolyMode(int mode){
 			polyMode = OF_POLY_WINDING_ABS_GEQ_TWO;
 			break;
 		default:
-			ofLog(OF_ERROR," error in ofSetPolyMode");
+			ofLog(OF_LOG_ERROR," error in ofSetPolyMode");
 
 	}
 
@@ -999,7 +999,7 @@ void ofNextContour(bool bClose){
 
 	if ((bClose == true)){
 		//---------------------------
-		if (polyVertices.size() > currentStartVertex){
+		if ((int)polyVertices.size() > currentStartVertex){
 
 			double* point = new double[3];
 	 		point[0] = polyVertices[currentStartVertex][0];
@@ -1020,7 +1020,7 @@ void ofNextContour(bool bClose){
 			GLfloat * points = new GLfloat[numToDraw * 2];
 			int k = 0;
 
-			for (int i=currentStartVertex; i< polyVertices.size(); i++) {
+			for (int i=currentStartVertex; i< (int)polyVertices.size(); i++) {
 				points[k] = polyVertices[i][0];
 				points[k+1] = polyVertices[i][1];
 				k+=2;
@@ -1037,7 +1037,7 @@ void ofNextContour(bool bClose){
 
 		if ( tobj != NULL){
 	      gluTessBeginContour( tobj);
-			for (int i=currentStartVertex; i<polyVertices.size(); i++) {
+			for (int i=currentStartVertex; i<(int)polyVertices.size(); i++) {
 	   			gluTessVertex( tobj, polyVertices[i],polyVertices[i]);
 			}
 			gluTessEndContour( tobj);
@@ -1057,7 +1057,7 @@ void ofEndShape(bool bClose){
 
 	if ((bClose == true)){
 		//---------------------------
-		if (polyVertices.size() > currentStartVertex){
+		if ((int)polyVertices.size() > currentStartVertex){
 
 			double* point = new double[3];
 	 		point[0] = polyVertices[currentStartVertex][0];
@@ -1085,7 +1085,7 @@ void ofEndShape(bool bClose){
 
 			int k = 0;
 
-			for (int i=currentStartVertex; i< polyVertices.size(); i++) {
+			for (int i=currentStartVertex; i< (int)polyVertices.size(); i++) {
 				points[k] = polyVertices[i][0];
 				points[k+1] = polyVertices[i][1];
 
@@ -1104,7 +1104,7 @@ void ofEndShape(bool bClose){
 
 		if ( tobj != NULL){
 	    	gluTessBeginContour( tobj);
-			for (int i=currentStartVertex; i<polyVertices.size(); i++) {
+			for (int i=currentStartVertex; i<(int)polyVertices.size(); i++) {
 	   			gluTessVertex( tobj, polyVertices[i],polyVertices[i]);
 			}
 

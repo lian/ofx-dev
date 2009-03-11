@@ -160,23 +160,10 @@ string ofToDataPath(string path, bool makeAbsolute){
 			#else
 
 				char currDir[1024];
-				path = "/"+path;
+				path = "\\"+path;
 				path = _getcwd(currDir, 1024)+path;
-				/*
-				char fileName[1024];
-				memset(fileName,0,1024);	
-				GetModuleFileNameA(0,fileName,1024);
-				size_t len = strlen(fileName);
-				for(size_t s = len - 1; s > 0; s--){
-					if(fileName[s] == '\\')
-					{
-						fileName[s] = 0;
-						//return fileName;
-						break;
-					}
-				}
-				path = std::string(fileName)+ "//" +path;
-				*/
+				std::replace( path.begin(), path.end(), '/', '\\' ); // fix any unixy paths...
+				
 
 			#endif
 
@@ -231,7 +218,7 @@ void ofLaunchBrowser(string url){
 
 	//make sure it is a properly formatted url
 	if(url.substr(0,7) != "http://"){
-		ofLog(OF_WARNING, "ofLaunchBrowser: url must begin http://");
+		ofLog(OF_LOG_WARNING, "ofLaunchBrowser: url must begin http://");
 		return;
 	}
 
@@ -302,10 +289,10 @@ void ofSaveFrame(){
 
 //levels are currently:
 // see ofConstants.h
-// OF_NOTICE
-// OF_WARNING
-// OF_ERROR
-// OF_FATAL_ERROR
+// OF_LOG_NOTICE
+// OF_LOG_WARNING
+// OF_LOG_ERROR
+// OF_LOG_FATAL_ERROR
 
 int currentLogLevel =  OF_DEFAULT_LOG_LEVEL;
 //--------------------------------------------------
@@ -316,19 +303,19 @@ void ofSetLogLevel(int logLevel){
 //--------------------------------------------------
 void ofLog(int logLevel, string message){
 	if(logLevel >= currentLogLevel){
-		if(logLevel == OF_VERBOSE){
+		if(logLevel == OF_LOG_VERBOSE){
 			printf("OF_VERBOSE: ");
 		}
-		else if(logLevel == OF_NOTICE){
+		else if(logLevel == OF_LOG_NOTICE){
 			printf("OF_NOTICE: ");
 		}
-		else if(logLevel == OF_WARNING){
+		else if(logLevel == OF_LOG_WARNING){
 			printf("OF_WARNING: ");
 		}
-		else if(logLevel == OF_ERROR){
+		else if(logLevel == OF_LOG_ERROR){
 			printf("OF_ERROR: ");
 		}
-		else if(logLevel == OF_FATAL_ERROR){
+		else if(logLevel == OF_LOG_FATAL_ERROR){
 			printf("OF_FATAL_ERROR: ");
 		}
 		printf("%s\n",message.c_str());
@@ -343,19 +330,19 @@ void ofLog(int logLevel, const char* format, ...){
 	if(logLevel >= currentLogLevel){
 		va_list args;
 		va_start( args, format );
-		if(logLevel == OF_VERBOSE){
+		if(logLevel == OF_LOG_VERBOSE){
 			printf("OF_VERBOSE: ");
 		}
-		else if(logLevel == OF_NOTICE){
+		else if(logLevel == OF_LOG_NOTICE){
 			printf("OF_NOTICE: ");
 		}
-		else if(logLevel == OF_WARNING){
+		else if(logLevel == OF_LOG_WARNING){
 			printf("OF_WARNING: ");
 		}
-		else if(logLevel == OF_ERROR){
+		else if(logLevel == OF_LOG_ERROR){
 			printf("OF_ERROR: ");
 		}
-		else if(logLevel == OF_FATAL_ERROR){
+		else if(logLevel == OF_LOG_FATAL_ERROR){
 			printf("OF_FATAL_ERROR: ");
 		}
 		vprintf( format, args );

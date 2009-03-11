@@ -106,7 +106,7 @@ static vector <ofPoint> ofSimplifyContour(vector <ofPoint> &V, float tol){
     ofPoint * vt = new ofPoint[n];
 	int * mk = new int[n];
 
-	memset(&mk, 0, sizeof(int) * n );
+	memset(mk, 0, sizeof(int) * n );
 
     // STAGE 1.  Vertex Reduction within tolerance of prior vertex cluster
     vt[0] = V[0];              // start at the beginning
@@ -128,7 +128,7 @@ static vector <ofPoint> ofSimplifyContour(vector <ofPoint> &V, float tol){
     }
 
 	//get rid of the unused points
-	if( m < sV.size() ) sV.erase( sV.begin()+m, sV.end() );
+	if( m < (int)sV.size() ) sV.erase( sV.begin()+m, sV.end() );
 
 	delete [] vt;
 	delete [] mk;
@@ -290,7 +290,7 @@ static ofTTFCharacter makeContoursForCharacter(FT_Face &face){
 			//end for
 			}
 
-			for(int g =0; g < testOutline.size(); g++){
+			for(int g =0; g < (int)testOutline.size(); g++){
 				testOutline[g] /= 64.0f;
 			}
 
@@ -371,7 +371,7 @@ void ofTrueTypeFont::loadFont(string filename, int fontsize, bool _bAntiAliased,
 	//--------------- load the library and typeface
 	FT_Library library;
 	if (FT_Init_FreeType( &library )){
-		ofLog(OF_ERROR," PROBLEM WITH FT lib");
+		ofLog(OF_LOG_ERROR," PROBLEM WITH FT lib");
 		return;
 	}
 
@@ -385,7 +385,7 @@ void ofTrueTypeFont::loadFont(string filename, int fontsize, bool _bAntiAliased,
 
 	//------------------------------------------------------
 	//kerning would be great to support:
-	//ofLog(OF_NOTICE,"FT_HAS_KERNING ? %i", FT_HAS_KERNING(face));
+	//ofLog(OF_LOG_NOTICE,"FT_HAS_KERNING ? %i", FT_HAS_KERNING(face));
 	//------------------------------------------------------
 
 	nCharacters = bFullCharacterSet ? 256 : 128 - NUM_CHARACTER_TO_START;
@@ -404,7 +404,7 @@ void ofTrueTypeFont::loadFont(string filename, int fontsize, bool _bAntiAliased,
 
 		//------------------------------------------ anti aliased or not:
 		if(FT_Load_Glyph( face, FT_Get_Char_Index( face, (unsigned char)(i+NUM_CHARACTER_TO_START) ), FT_LOAD_DEFAULT )){
-			ofLog(OF_ERROR,"error with FT_Load_Glyph %i", i);
+			ofLog(OF_LOG_ERROR,"error with FT_Load_Glyph %i", i);
 		}
 
 		if (bAntiAlised == true) FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
@@ -457,7 +457,7 @@ void ofTrueTypeFont::loadFont(string filename, int fontsize, bool _bAntiAliased,
 
 
 		/* sanity check:
-		ofLog(OF_NOTICE,"%i %i %i %i %i %i",
+		ofLog(OF_LOG_NOTICE,"%i %i %i %i %i %i",
 		cps[i].value ,
 		cps[i].height ,
 		cps[i].width 	,
@@ -578,10 +578,10 @@ float ofTrueTypeFont::getLineHeight(){
 //------------------------------------------------------------------
 ofTTFCharacter ofTrueTypeFont::getCharacterAsPoints(int character){
 	if( bMakeContours == false ){
-		ofLog(OF_ERROR, "getCharacterAsPoints: contours not created,  call loadFont with makeContours set to true" );
+		ofLog(OF_LOG_ERROR, "getCharacterAsPoints: contours not created,  call loadFont with makeContours set to true" );
 	}
 
-	if( bMakeContours && charOutlines.size() > 0 && character >= NUM_CHARACTER_TO_START && character - NUM_CHARACTER_TO_START < charOutlines.size() ){
+	if( bMakeContours && (int)charOutlines.size() > 0 && character >= NUM_CHARACTER_TO_START && character - NUM_CHARACTER_TO_START < (int)charOutlines.size() ){
 		return charOutlines[character-NUM_CHARACTER_TO_START];
 	}else{
 		return ofTTFCharacter();
@@ -594,12 +594,12 @@ void ofTrueTypeFont::drawChar(int c, float x, float y) {
 
 	//----------------------- error checking
 	if (!bLoadedOk){
-		ofLog(OF_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
+		ofLog(OF_LOG_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
 		return;
 	}
 
 	if (c >= nCharacters){
-		//ofLog(OF_ERROR,"Error : char (%i) not allocated -- line %d in %s", (c + NUM_CHARACTER_TO_START), __LINE__,__FILE__);
+		//ofLog(OF_LOG_ERROR,"Error : char (%i) not allocated -- line %d in %s", (c + NUM_CHARACTER_TO_START), __LINE__,__FILE__);
 		return;
 	}
 	//-----------------------
@@ -657,7 +657,7 @@ void ofTrueTypeFont::drawChar(int c, float x, float y) {
 		//let's add verbosity levels somewhere...
 		//this error, for example, is kind of annoying to see
 		//all the time:
-		ofLog(OF_WARNING," texture not bound for character -- line %d in %s", __LINE__,__FILE__);
+		ofLog(OF_LOG_WARNING," texture not bound for character -- line %d in %s", __LINE__,__FILE__);
 	}
 
 }
@@ -668,18 +668,18 @@ void ofTrueTypeFont::drawCharAsShape(int c, float x, float y) {
 
 	//----------------------- error checking
 	if (!bLoadedOk){
-		ofLog(OF_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
+		ofLog(OF_LOG_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
 		return;
 	}
 
 	//----------------------- error checking
 	if (!bMakeContours){
-		ofLog(OF_ERROR,"Error : contours not created for this font - call loadFont with makeContours set to true");
+		ofLog(OF_LOG_ERROR,"Error : contours not created for this font - call loadFont with makeContours set to true");
 		return;
 	}
 
 	if (c >= nCharacters){
-		//ofLog(OF_ERROR,"Error : char (%i) not allocated -- line %d in %s", (c + NUM_CHARACTER_TO_START), __LINE__,__FILE__);
+		//ofLog(OF_LOG_ERROR,"Error : char (%i) not allocated -- line %d in %s", (c + NUM_CHARACTER_TO_START), __LINE__,__FILE__);
 		return;
 	}
 	//-----------------------
@@ -688,9 +688,9 @@ void ofTrueTypeFont::drawCharAsShape(int c, float x, float y) {
 	ofTTFCharacter & charRef = charOutlines[cu];
 
 	ofBeginShape();
-		for(int k = 0; k < charRef.contours.size(); k++){
+		for(int k = 0; k < (int)charRef.contours.size(); k++){
 			if( k!= 0)ofNextContour(true);
-			for(int i = 0; i < charRef.contours[k].pts.size(); i++){
+			for(int i = 0; i < (int)charRef.contours[k].pts.size(); i++){
 				ofVertex(charRef.contours[k].pts[i].x + x, charRef.contours[k].pts[i].y + y);
 			}
 		}
@@ -786,7 +786,7 @@ float ofTrueTypeFont::stringHeight(string c) {
 void ofTrueTypeFont::drawString(string c, float x, float y) {
 
     if (!bLoadedOk){
-    	ofLog(OF_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
+    	ofLog(OF_LOG_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
     	return;
     };
 
@@ -869,13 +869,13 @@ void ofTrueTypeFont::drawString(string c, float x, float y) {
 void ofTrueTypeFont::drawStringAsShapes(string c, float x, float y) {
 
     if (!bLoadedOk){
-    	ofLog(OF_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
+    	ofLog(OF_LOG_ERROR,"Error : font not allocated -- line %d in %s", __LINE__,__FILE__);
     	return;
     };
 
 	//----------------------- error checking
 	if (!bMakeContours){
-		ofLog(OF_ERROR,"Error : contours not created for this font - call loadFont with makeContours set to true");
+		ofLog(OF_LOG_ERROR,"Error : contours not created for this font - call loadFont with makeContours set to true");
 		return;
 	}
 
