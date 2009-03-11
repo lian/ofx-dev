@@ -44,7 +44,7 @@ void testApp::keyPressed  (int key){
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){ 
-	sprintf(eventString, "keyReleased = (%i)", key);
+	
 }
 
 //--------------------------------------------------------------
@@ -62,9 +62,12 @@ void testApp::mousePressed(int x, int y, int button){
 	sprintf(eventString, "mousePressed = (%i,%i - button %i)", x, y, button);
 
 }
-
-//--------------------------------------------------------------
+//--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
 	sprintf(eventString, "mouseReleased = (%i,%i - button %i)", x, y, button);
+}
 
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
+	sprintf(eventString, "resized = (%i,%i)", w, h);
 }

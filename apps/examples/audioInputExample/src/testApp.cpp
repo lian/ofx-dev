@@ -11,11 +11,11 @@ void testApp::setup(){
 	
 	// 0 output channels, 
 	// 2 input channels
-	// 44100 samples per second
+	// 22050 samples per second
 	// 256 samples per buffer
 	// 4 num buffers (latency)
 	
-	ofSoundStreamSetup(0, 2, 44100, 256, 4);	
+	ofSoundStreamSetup(0,2,this, 44100, 256, 4);	
 	left = new float[256];
 	right = new float[256];
 	
@@ -96,5 +96,11 @@ void testApp::mousePressed(int x, int y, int button){
 void testApp::mouseReleased(int x, int y, int button){
 
 }
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
+
+}
+
 
 

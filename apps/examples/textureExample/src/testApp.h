@@ -3,9 +3,8 @@
 
 
 #include "ofMain.h"
-#include "ofAddons.h"
 
-class testApp : public ofBaseApp {
+class testApp : public ofBaseApp{
 	
 	public:
 		
@@ -18,7 +17,8 @@ class testApp : public ofBaseApp {
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);		
+		void mouseReleased(int x, int y, int button);
+		void resized(int w, int h);
 		
 		ofTexture		texGray;
 		ofTexture 		texColor;

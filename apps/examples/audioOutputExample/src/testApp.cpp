@@ -4,16 +4,16 @@
 
 
 //--------------------------------------------------------------
-void testApp::setup(){	 
-	
-	ofBackground(255,255,255);	
-	
-	// 2 output channels, 
+void testApp::setup(){
+
+	ofBackground(255,255,255);
+
+	// 2 output channels,
 	// 0 input channels
-	// 44100 samples per second
+	// 22050 samples per second
 	// 256 samples per buffer
 	// 4 num buffers (latency)
-	
+
 	sampleRate 			= 44100;
 	phase 				= 0;
 	phaseAdder 			= 0.0f;
@@ -22,7 +22,7 @@ void testApp::setup(){
 	bNoise 				= false;
 	lAudio = new float[256];
 	rAudio = new float[256];
-	ofSoundStreamSetup(2, 0, sampleRate,256, 4);
+	ofSoundStreamSetup(2,0,this, sampleRate,256, 4);
 
 	ofSetFrameRate(60);
 
@@ -31,13 +31,13 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	
-	
+
+
 	// draw the left:
 	ofSetColor(0x333333);
 	ofRect(100,100,256,200);
@@ -45,7 +45,7 @@ void testApp::draw(){
 	for (int i = 0; i < 256; i++){
 		ofLine(100+i,200,100+i,200+lAudio[i]*100.0f);
 	}
-	
+
 	// draw the right:
 	ofSetColor(0x333333);
 	ofRect(600,100,256,200);
@@ -53,19 +53,19 @@ void testApp::draw(){
 	for (int i = 0; i < 256; i++){
 		ofLine(600+i,200,600+i,200+rAudio[i]*100.0f);
 	}
-	
+
 	ofSetColor(0x333333);
 	char reportString[255];
 	sprintf(reportString, "volume: (%f) modify with -/+ keys\npan: (%f)\nsynthesis: %s", volume, pan, bNoise ? "noise" : "sine wave");
 	if (!bNoise) sprintf(reportString, "%s (%fhz)", reportString, targetFrequency);
-	
+
 	ofDrawBitmapString(reportString,80,380);
-	
+
 }
 
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){ 
+void testApp::keyPressed  (int key){
 	if (key == '-'){
 		volume -= 0.05;
 		volume = MAX(volume, 0);
@@ -76,7 +76,7 @@ void testApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){ 
+void testApp::keyReleased  (int key){
 
 }
 
@@ -101,17 +101,22 @@ void testApp::mousePressed(int x, int y, int button){
 	bNoise = true;
 }
 
+
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
 	bNoise = false;
 }
 
 //--------------------------------------------------------------
-void testApp::audioRequested(float * output, int bufferSize, int nChannels){	
+void testApp::resized(int w, int h){
+
+}
+//--------------------------------------------------------------
+void testApp::audioRequested 	(float * output, int bufferSize, int nChannels){
 	//pan = 0.5f;
 	float leftScale = 1 - pan;
 	float rightScale = pan;
-	
+
 	// sin (n) seems to have trouble when n is very large, so we
 	// keep phase in the range of 0-TWO_PI like this:
 	while (phase > TWO_PI){
@@ -133,6 +138,6 @@ void testApp::audioRequested(float * output, int bufferSize, int nChannels){
 			rAudio[i] = output[i*nChannels + 1] = sample * volume * rightScale;
 		}
 	}
-	
+
 }
 

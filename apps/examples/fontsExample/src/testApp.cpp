@@ -7,7 +7,7 @@ void testApp::setup(){
 	// this load font loads the non-full character set
 	// (ie ASCII 33-128), at size "32"
 	
-	franklinBook.loadFont("frabk.ttf",32);
+	franklinBook.loadFont("frabk.ttf", 32);
 	
 	// now load another font, but with extended parameters:
 	// font name, size, anti-aliased, full character set
@@ -41,7 +41,6 @@ void testApp::draw(){
 	
 	ofSetColor(0x00FF00);
 	franklinBook.drawString("you look ok ! don't worry", 100,520);
-
 	
 	//------------------- bounding rectangle : 
 	char tempString[255];
@@ -52,33 +51,32 @@ void testApp::draw(){
 	float centerx = rect.x + rect.width / 2;
 	float centery = rect.y + rect.height / 2;
 
-	glPushMatrix();
-		glTranslatef(100,650,0);
-		glRotatef(counter, 0,0,1);
+	ofPushMatrix();
+		ofTranslate(100,650,0);
+		ofRotate(counter, 0,0,1);
 		// draw type & rect centered around 0,0 (subtract midpt from both):
 		ofSetColor(0xcccccc);
 		ofRect(rect.x - centerx, rect.y - centery, rect.width, rect.height);
 		ofSetColor(0xff3399);
 		franklinBook.drawString(tempString, -centerx,-centery);
-	glPopMatrix();
+	ofPopMatrix();
 
 	// -------------------------------------
 
-	glPushMatrix();
-
-		glTranslatef(225,675,0);
-		glScalef(5,5,1);
+	ofPushMatrix();
+		ofTranslate(225,675,0);
+		ofScale(5,5,1);
 		ofSetColor(0x333333);
 		verdana.drawString("scale 5x!",0, 0);
-	glPopMatrix();
+	ofPopMatrix();
 	
 	float size = 2 + 2*sin(counter/300.0f);
-	glPushMatrix();
-		glTranslatef(520,675,0);
-		glScalef(size,size,1);
+	ofPushMatrix();
+		ofTranslate(520,675,0);
+		ofScale(size,size,1);
 		ofSetColor(0x00FF00);
 		franklinBook.drawString("$k@!%",0, 0);
-	glPopMatrix();
+	ofPopMatrix();
 	
 }
 
@@ -110,5 +108,10 @@ void testApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
 
 }

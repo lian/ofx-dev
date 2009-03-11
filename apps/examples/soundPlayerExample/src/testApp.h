@@ -3,9 +3,8 @@
 
 
 #include "ofMain.h"
-#include "ofAddons.h"
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp{
 	
 	public:
 		
@@ -19,6 +18,7 @@ class testApp : public ofSimpleApp{
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
+		void resized(int w, int h);
 		
 		ofSoundPlayer  beats;
 		ofSoundPlayer  synth;

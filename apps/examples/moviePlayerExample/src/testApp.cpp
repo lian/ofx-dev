@@ -3,12 +3,12 @@
 
 //--------------------------------------------------------------
 testApp::testApp(){
-	
+
 }
 
 //--------------------------------------------------------------
-void testApp::setup(){	 
-	ofBackground(255,255,255);	
+void testApp::setup(){
+	ofBackground(255,255,255);
 	fingerMovie.loadMovie("movies/fingers.mov");
 	fingerMovie.play();
 }
@@ -22,8 +22,8 @@ void testApp::update(){
 void testApp::draw(){
 	ofSetColor(0xFFFFFF);
 	fingerMovie.draw(20,20);
-	
-	
+
+
 	ofSetColor(0x000000);
 	unsigned char * pixels = fingerMovie.getPixels();
 	// let's move through the "RGB" char array
@@ -35,17 +35,17 @@ void testApp::draw(){
 			ofCircle(400 + i,20+j,10*val);
 		}
 	}
-	
-}
-
-//--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
 
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){ 
-	
+void testApp::keyPressed  (int key){
+
+}
+
+//--------------------------------------------------------------
+void testApp::keyReleased(int key){
+
 }
 
 //--------------------------------------------------------------
@@ -68,7 +68,12 @@ void testApp::mousePressed(int x, int y, int button){
 	fingerMovie.setPaused(true);
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
 	fingerMovie.setPaused(false);
+}
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
+
 }

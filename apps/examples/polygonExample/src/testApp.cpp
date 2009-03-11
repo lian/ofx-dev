@@ -456,5 +456,10 @@ void testApp::mouseReleased(int x, int y, int button){
 	for (int i = 0; i < nCurveVertexes; i++){
 		curveVertices[i].bBeingDragged = false;	
 	}
+}
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
 
 }
+

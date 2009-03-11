@@ -2,10 +2,10 @@
 
 
 //--------------------------------------------------------------
-void testApp::setup(){	 
+void testApp::setup(){
 	counter = 0;
 	ofSetCircleResolution(50);
-	ofBackground(255,255,255);	
+	ofBackground(255,255,255);
 	bSmooth = false;
 	ofSetWindowTitle("graphics example");
 
@@ -26,9 +26,9 @@ void testApp::draw(){
 	float radius = 50 + 10 * sin(counter);
 	ofFill();		// draw "filled shapes"
 	ofCircle(100,400,radius);
-	
+
 	// now just an outline
-	ofNoFill();		
+	ofNoFill();
 	ofSetColor(0xCCCCCC);
 	ofCircle(100,400,80);
 
@@ -39,7 +39,7 @@ void testApp::draw(){
 	// if this bitMap type slows you down.
 	ofSetColor(0x000000);
 	ofDrawBitmapString("circle", 75,500);
-	
+
 
 	//--------------------------- rectangles
 	ofFill();
@@ -54,13 +54,13 @@ void testApp::draw(){
 	ofSetColor(0x00FF33);
 	ofRect(400,350,100,100);
 	// alpha is usually turned off - for speed puposes.  let's turn it on!
-	ofEnableAlphaBlending();	
+	ofEnableAlphaBlending();
 	ofSetColor(255,0,0,127);   // red, 50% transparent
 	ofRect(450,430,100,33);
 	ofSetColor(255,0,0,(int)(counter * 10.0f) % 255);   // red, variable transparent
 	ofRect(450,370,100,33);
-	ofDisableAlphaBlending();	
-	
+	ofDisableAlphaBlending();
+
 	ofSetColor(0x000000);
 	ofDrawBitmapString("transparency", 410,500);
 
@@ -70,32 +70,32 @@ void testApp::draw(){
 	if (bSmooth){
 		ofEnableSmoothing();
 	}
-	
+
 	ofSetColor(0xFF0000);
 	for (int i = 0; i < 20; i++){
 		ofLine(600,300 + (i*5),800, 250 + (i*10));
 	}
-	
+
 	if (bSmooth){
 		ofDisableSmoothing();
 	}
-	
+
 	ofSetColor(0x000000);
 	ofDrawBitmapString("lines\npress 's' to toggle smoothness", 600,500);
-	
+
 }
 
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
+void testApp::keyPressed  (int key){
 	if (key == 's'){
 		bSmooth = !bSmooth;
 	}
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-	
+void testApp::keyReleased  (int key){
+
 }
 
 //--------------------------------------------------------------
@@ -112,5 +112,10 @@ void testApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
+
+}
+
+//--------------------------------------------------------------
+void testApp::resized(int w, int h){
 
 }

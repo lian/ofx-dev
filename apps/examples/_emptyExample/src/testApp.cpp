@@ -1,29 +1,31 @@
 #include "testApp.h"
-
+#include "stdio.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){	 
+testApp::testApp(){
 
+}
+
+//--------------------------------------------------------------
+void testApp::setup(){
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
 }
+
 
 //--------------------------------------------------------------
 void testApp::draw(){
-	
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
-	
+void testApp::keyPressed  (int key){
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased  (int key){ 
-	
+void testApp::keyReleased(int key){
+
 }
 
 //--------------------------------------------------------------
@@ -36,9 +38,15 @@ void testApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
+
+}
+//--------------------------------------------------------------
+void testApp::mouseReleased(int x, int y, int button){
+
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void testApp::resized(int w, int h){
 
 }
+

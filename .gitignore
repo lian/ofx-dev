@@ -7,6 +7,7 @@
 *.mode1
 *.perspectivev3
 
+apps/*/*/*/*.app
 apps/*/*/*.app
 apps/*/*.app
 addons/*/*/*.app
@@ -20,5 +21,4 @@ addons/*/*/build
 apps/*/*/*linux.layout
 apps/*/*/*linux.depend
 
-apps/*/*/bin
 apps/_tmp
