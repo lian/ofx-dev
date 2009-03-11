@@ -38,6 +38,7 @@ Thanks to:
 /////////////////////////////////////////////////////////
 
 
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -61,6 +62,10 @@ Thanks to:
 	
 	int device1 = 0;  //this could be any deviceID that shows up in listDevices
 	int device2 = 1;  //this could be any deviceID that shows up in listDevices
+	
+	//if you want to capture at a different frame rate (default is 30) 
+	//specify it here, you are not guaranteed to get this fps though.
+	//VI.setIdealFramerate(dev, 60);	
 	
 	//setup the first device - there are a number of options:
 	
@@ -112,20 +117,23 @@ Thanks to:
 //change for verbose debug info
 static bool verbose = true;
 
+//if you need VI to use multi threaded com
+//#define VI_COM_MULTI_THREADED
 
 //STUFF YOU DON'T CHANGE
 
 //videoInput defines
-#define VI_VERSION	 0.1991
+#define VI_VERSION	 0.1995
 #define VI_MAX_CAMERAS  20
 #define VI_NUM_TYPES    18 //DON'T TOUCH
 #define VI_NUM_FORMATS  18 //DON'T TOUCH
 
-//defines for setPhyCon
+//defines for setPhyCon - tuner is not as well supported as composite and s-video 
 #define VI_COMPOSITE 0
 #define VI_S_VIDEO   1
 #define VI_TUNER     2
 #define VI_USB       3
+#define VI_1394		 4
 
 //defines for formats
 #define VI_NTSC_M	0
@@ -208,9 +216,13 @@ class videoDevice{
 		bool sizeSet;
 		bool setupStarted;
 		bool specificFormat;
+		bool autoReconnect;
+		int  nFramesForReconnect;
+		unsigned long nFramesRunning;
 		int  connection;
 		int	 storeConn;
 		int  myID;
+		long requestedFrameTime; //ie fps
 		
 		char 	nDeviceName[255];
 		WCHAR 	wDeviceName[255];
@@ -238,27 +250,39 @@ class videoInput{
 		
 		//Functions in rough order they should be used.
 		static int listDevices(bool silent = false);
+
+		//needs to be called after listDevices - otherwise returns NULL
+		static char * getDeviceName(int deviceID);
 		
 		//choose to use callback based capture - or single threaded
-		void setUseCallback(bool useCallback);
+		void setUseCallback(bool useCallback);	
+		
+		//call before setupDevice
+		//directshow will try and get the closest possible framerate to what is requested
+		void setIdealFramerate(int deviceID, int idealFramerate);
+
+		//some devices will stop delivering frames after a while - this method gives you the option to try and reconnect
+		//to a device if videoInput detects that a device has stopped delivering frames. 
+		//you MUST CALL isFrameNew every app loop for this to have any effect
+		void setAutoReconnectOnFreeze(int deviceNumber, bool doReconnect, int numMissedFramesBeforeReconnect);
 		
 		//Choose one of these four to setup your device
 		bool setupDevice(int deviceID);
 		bool setupDevice(int deviceID, int w, int h);
-		
-		//If you need to you can set your NTSC/PAL/SECAM
-		//preference here. if it is available it will be used.
-		//see #defines above for available formats - eg VI_NTSC_M or VI_PAL_B
-		//should be called after setupDevice
-		//can be called multiple times
-		bool setFormat(int deviceNumber, int format);
 
 		//These two are only for capture cards
 		//USB and Firewire cameras souldn't specify connection 
 		bool setupDevice(int deviceID, int connection);	
 		bool setupDevice(int deviceID, int w, int h, int connection); 
 		
-		//Tells you when a new frame has arrived
+		//If you need to you can set your NTSC/PAL/SECAM
+		//preference here. if it is available it will be used.
+		//see #defines above for available formats - eg VI_NTSC_M or VI_PAL_B
+		//should be called after setupDevice
+		//can be called multiple times
+		bool setFormat(int deviceNumber, int format);	
+				
+		//Tells you when a new frame has arrived - you should call this if you have specified setAutoReconnectOnFreeze to true
 		bool isFrameNew(int deviceID); 
 		
 		bool isDeviceSetup(int deviceID);
@@ -273,6 +297,18 @@ class videoInput{
 		//For some reason in GLUT you have to call it twice each time. 
 		void showSettingsWindow(int deviceID);
 		
+		//Manual control over settings thanks..... 
+		//These are experimental for now.
+		bool setVideoSettingFilter(int deviceID, long Property, long lValue, long Flags = NULL, bool useDefaultValue = false);
+		bool setVideoSettingFilterPct(int deviceID, long Property, float pctValue, long Flags = NULL);
+		bool getVideoSettingFilter(int deviceID, long Property, long &min, long &max, long &SteppingDelta, long &currentValue, long &flags, long &defaultValue);
+
+		bool setVideoSettingCamera(int deviceID, long Property, long lValue, long Flags = NULL, bool useDefaultValue = false);
+		bool setVideoSettingCameraPct(int deviceID, long Property, float pctValue, long Flags = NULL);
+		bool getVideoSettingCamera(int deviceID, long Property, long &min, long &max, long &SteppingDelta, long &currentValue, long &flags, long &defaultValue);
+
+		//bool setVideoSettingCam(int deviceID, long Property, long lValue, long Flags = NULL, bool useDefaultValue = false);
+
 		//get width, height and number of pixels
 		int  getWidth(int deviceID);
 		int  getHeight(int deviceID);
@@ -286,7 +322,26 @@ class videoInput{
 		
 		//number of devices available
 		int  devicesFound;
+		
+		long propBrightness;
+		long propContrast;
+		long propHue;
+		long propSaturation;
+		long propSharpness;
+		long propGamma;
+		long propColorEnable;
+		long propWhiteBalance;
+		long propBacklightCompensation;
+		long propGain;
 
+		long propPan;
+		long propTilt;
+		long propRoll;
+		long propZoom;
+		long propExposure;
+		long propIris;
+		long propFocus;
+				
 		
 	private:		
 		void setPhyCon(int deviceID, int conn);                   
@@ -295,6 +350,7 @@ class videoInput{
 		void processPixels(unsigned char * src, unsigned char * dst, int width, int height, bool bRGB, bool bFlip);
 		int  start(int deviceID, videoDevice * VD);                   
 		int  getDeviceCount();
+		void getMediaSubtypeAsString(GUID type, char * typeAsString);
 		
 		HRESULT getDevice(IBaseFilter **pSrcFilter, int deviceID, WCHAR * wDeviceName, char * nDeviceName);
 		static HRESULT ShowFilterPropertyPages(IBaseFilter *pFilter);
@@ -321,6 +377,8 @@ class videoInput{
 		long formatTypes[VI_NUM_FORMATS];
 
 		static void __cdecl basicThread(void * objPtr);
+
+		static char deviceNames[VI_MAX_CAMERAS][255];
 
 }; 
   
