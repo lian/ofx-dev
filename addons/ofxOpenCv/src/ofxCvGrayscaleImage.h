@@ -87,6 +87,7 @@ class ofxCvGrayscaleImage : public ofxCvImage {
     virtual void  threshold( int value, bool invert=false);
     virtual void  adaptiveThreshold( int blockSize, int offset=0,
                                      bool invert=false, bool gauss=false);
+    virtual void  thresholdMSA( int value, int type = CV_THRESH_BINARY);       // MSA
     // virtual void  erode( );                                                 //in base class
     // virtual void  dilate( );                                                //in base class
     // virtual void  blur( int value=3 );                                      //in base class

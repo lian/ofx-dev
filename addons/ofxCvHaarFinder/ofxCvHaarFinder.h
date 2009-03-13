@@ -8,7 +8,7 @@
 and BlobTracker to...tracking objects. -thanks to stefanix-
 *  
 */
-
+#define MAX_NUM_CONTOURS_TO_FIND 500
 
 #include "ofMain.h"
 #include "ofxCvMain.h"

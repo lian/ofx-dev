@@ -9,7 +9,7 @@ void testApp::setup(){
 	testFont.loadFont("Batang.ttf", 160, true, true, true);
 	testFont2.loadFont("cooperBlack.ttf", 52, true, true, true);
 
-	ofSetLogLevel(OF_WARNING);
+	ofSetLogLevel(OF_LOG_WARNING);
 	
 	ofSetFullscreen(false);
 

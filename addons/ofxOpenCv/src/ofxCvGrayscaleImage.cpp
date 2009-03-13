@@ -227,7 +227,9 @@ void ofxCvGrayscaleImage::adaptiveThreshold( int blockSize, int offset,
    flagImageChanged(); 
 } 
 
-
+void ofxCvGrayscaleImage::thresholdMSA( int value, int type) {		// MSA
+	cvThreshold( cvImage, cvImageTemp, value, 255, type ); swapTemp(); flagImageChanged();
+}
 
 // Image Transformation Operations
 //--------------------------------------------------------------------------------
