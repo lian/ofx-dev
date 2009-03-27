@@ -1,0 +1,15 @@
+/***********************************************************************
+ 
+  forum post at: http://www.openframeworks.cc/forum/viewtopic.php?p=7291&sid=2f241bd5dc179623d7b347869a163854#7291
+  
+	theo - Posted: Wed Nov 26, 2008 9:25 am
+	
+	Hey I just made an FBO example app - that uses Zach Gage's FBO code, with the ofAdvancedTexture and a render manager to manage multiple screens. The render manager is a continuation of the code started by other Zach (OF) adding in some new things: 
+
+	1 - Lets you set the internal texture coordinates for each screen and also the coordinates of each corner of the texture to do fast warping / projection correction. 
+	2 - set however many screens you want to split your FBO across. 
+	3 - Loads and saves to xml.
+	
+	more at: http://www.openframeworks.cc/forum/viewtopic.php?p=7291&sid=2f241bd5dc179623d7b347869a163854#7291
+ 
+ ***********************************************************************/
