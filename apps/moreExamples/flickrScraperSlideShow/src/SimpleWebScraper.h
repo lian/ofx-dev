@@ -41,8 +41,8 @@ using Poco::Delegate;
 
 
 #include "ofMain.h"
-#define OF_ADDON_USING_OFXTHREAD
-#include "ofAddons.h"
+
+#include "ofxThread.h"
 
 #define		TEXT_REQUEST 0
 #define		STREAM_REQUEST 1

@@ -2,8 +2,8 @@
 #define FIREWORK
 
 #include "ofMain.h"
-#define OF_ADDON_USING_OFXVECTORMATH
-#include "ofAddons.h"
+
+#include "ofxVectorMath.h"
 
 #include "particle.h"
 

@@ -56,19 +56,11 @@
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */; };
 		E4B6FCAE0C3E899E008CF71C /* openFrameworks-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */; };
-		E4D9467E0F5F492F00B90D9D /* ofxMatrix3x3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D946770F5F492F00B90D9D /* ofxMatrix3x3.cpp */; };
-		E4D9467F0F5F492F00B90D9D /* ofxPoint2f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D946780F5F492F00B90D9D /* ofxPoint2f.cpp */; };
-		E4D946800F5F492F00B90D9D /* ofxPoint3f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D946790F5F492F00B90D9D /* ofxPoint3f.cpp */; };
-		E4D946810F5F492F00B90D9D /* ofxPoint4f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D9467A0F5F492F00B90D9D /* ofxPoint4f.cpp */; };
-		E4D946820F5F492F00B90D9D /* ofxVec2f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D9467B0F5F492F00B90D9D /* ofxVec2f.cpp */; };
-		E4D946830F5F492F00B90D9D /* ofxVec3f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D9467C0F5F492F00B90D9D /* ofxVec3f.cpp */; };
-		E4D946840F5F492F00B90D9D /* ofxVec4f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D9467D0F5F492F00B90D9D /* ofxVec4f.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3C196CAC0F6A10E4002D4DE3 /* ofxCvColorTrack.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvColorTrack.cpp; sourceTree = "<group>"; };
 		3C196CAD0F6A10E4002D4DE3 /* ofxCvColorTrack.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxCvColorTrack.h; sourceTree = "<group>"; };
-		E4370CF70F62B930007CD673 /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
 		E44664190F5B1CFD005D0BF0 /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppBaseWindow.h; path = ../../../libs/openFrameworks/app/ofAppBaseWindow.h; sourceTree = SOURCE_ROOT; };
 		E446641A0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppGlutWindow.cpp; path = ../../../libs/openFrameworks/app/ofAppGlutWindow.cpp; sourceTree = SOURCE_ROOT; };
 		E446641B0F5B1CFD005D0BF0 /* ofAppGlutWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppGlutWindow.h; path = ../../../libs/openFrameworks/app/ofAppGlutWindow.h; sourceTree = SOURCE_ROOT; };
@@ -145,14 +137,6 @@
 		E44666890F5B3E04005D0BF0 /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxCvShortImage.cpp; path = ../../../addons/ofxOpenCv/src/ofxCvShortImage.cpp; sourceTree = SOURCE_ROOT; };
 		E446668A0F5B3E04005D0BF0 /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxCvShortImage.h; path = ../../../addons/ofxOpenCv/src/ofxCvShortImage.h; sourceTree = SOURCE_ROOT; };
 		E446668B0F5B3E04005D0BF0 /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxOpenCv.h; path = ../../../addons/ofxOpenCv/src/ofxOpenCv.h; sourceTree = SOURCE_ROOT; };
-		E44666E10F5B3E04005D0BF0 /* ofxMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxMatrix3x3.h; path = ../../../addons/ofxVectorMath/src/ofxMatrix3x3.h; sourceTree = SOURCE_ROOT; };
-		E44666E20F5B3E04005D0BF0 /* ofxPoint2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxPoint2f.h; path = ../../../addons/ofxVectorMath/src/ofxPoint2f.h; sourceTree = SOURCE_ROOT; };
-		E44666E30F5B3E04005D0BF0 /* ofxPoint3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxPoint3f.h; path = ../../../addons/ofxVectorMath/src/ofxPoint3f.h; sourceTree = SOURCE_ROOT; };
-		E44666E40F5B3E04005D0BF0 /* ofxPoint4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxPoint4f.h; path = ../../../addons/ofxVectorMath/src/ofxPoint4f.h; sourceTree = SOURCE_ROOT; };
-		E44666E50F5B3E04005D0BF0 /* ofxVec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec2f.h; path = ../../../addons/ofxVectorMath/src/ofxVec2f.h; sourceTree = SOURCE_ROOT; };
-		E44666E60F5B3E04005D0BF0 /* ofxVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec3f.h; path = ../../../addons/ofxVectorMath/src/ofxVec3f.h; sourceTree = SOURCE_ROOT; };
-		E44666E70F5B3E04005D0BF0 /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec4f.h; path = ../../../addons/ofxVectorMath/src/ofxVec4f.h; sourceTree = SOURCE_ROOT; };
-		E44666E80F5B3E04005D0BF0 /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVectorMath.h; path = ../../../addons/ofxVectorMath/src/ofxVectorMath.h; sourceTree = SOURCE_ROOT; };
 		E45BE0390E8CC647009D7055 /* FreeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreeImage.h; path = ../../../libs/freeimage/include/FreeImage.h; sourceTree = SOURCE_ROOT; };
 		E45BE03B0E8CC647009D7055 /* freeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = freeimage.a; path = ../../../libs/freeimage/lib/freeimage.a; sourceTree = SOURCE_ROOT; };
 		E45BE03F0E8CC650009D7055 /* fmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fmod.h; path = ../../../libs/fmodex/inc/fmod.h; sourceTree = SOURCE_ROOT; };
@@ -278,13 +262,6 @@
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
-		E4D946770F5F492F00B90D9D /* ofxMatrix3x3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxMatrix3x3.cpp; path = ../../../addons/ofxVectorMath/src/ofxMatrix3x3.cpp; sourceTree = SOURCE_ROOT; };
-		E4D946780F5F492F00B90D9D /* ofxPoint2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxPoint2f.cpp; path = ../../../addons/ofxVectorMath/src/ofxPoint2f.cpp; sourceTree = SOURCE_ROOT; };
-		E4D946790F5F492F00B90D9D /* ofxPoint3f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxPoint3f.cpp; path = ../../../addons/ofxVectorMath/src/ofxPoint3f.cpp; sourceTree = SOURCE_ROOT; };
-		E4D9467A0F5F492F00B90D9D /* ofxPoint4f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxPoint4f.cpp; path = ../../../addons/ofxVectorMath/src/ofxPoint4f.cpp; sourceTree = SOURCE_ROOT; };
-		E4D9467B0F5F492F00B90D9D /* ofxVec2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxVec2f.cpp; path = ../../../addons/ofxVectorMath/src/ofxVec2f.cpp; sourceTree = SOURCE_ROOT; };
-		E4D9467C0F5F492F00B90D9D /* ofxVec3f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxVec3f.cpp; path = ../../../addons/ofxVectorMath/src/ofxVec3f.cpp; sourceTree = SOURCE_ROOT; };
-		E4D9467D0F5F492F00B90D9D /* ofxVec4f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxVec4f.cpp; path = ../../../addons/ofxVectorMath/src/ofxVec4f.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,9 +414,7 @@
 		E44665C70F5B3E03005D0BF0 /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				E4370CF70F62B930007CD673 /* ofAddons.h */,
 				E446663B0F5B3E03005D0BF0 /* ofxOpenCv */,
-				E44666D90F5B3E04005D0BF0 /* ofxVectorMath */,
 			);
 			name = addons;
 			path = ../../../addons;
@@ -537,38 +512,6 @@
 			);
 			name = src;
 			path = ../../../addons/ofxOpenCv/src;
-			sourceTree = SOURCE_ROOT;
-		};
-		E44666D90F5B3E04005D0BF0 /* ofxVectorMath */ = {
-			isa = PBXGroup;
-			children = (
-				E44666E00F5B3E04005D0BF0 /* src */,
-			);
-			name = ofxVectorMath;
-			path = ../../../addons/ofxVectorMath;
-			sourceTree = SOURCE_ROOT;
-		};
-		E44666E00F5B3E04005D0BF0 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				E4D946770F5F492F00B90D9D /* ofxMatrix3x3.cpp */,
-				E44666E10F5B3E04005D0BF0 /* ofxMatrix3x3.h */,
-				E4D946780F5F492F00B90D9D /* ofxPoint2f.cpp */,
-				E44666E20F5B3E04005D0BF0 /* ofxPoint2f.h */,
-				E4D946790F5F492F00B90D9D /* ofxPoint3f.cpp */,
-				E44666E30F5B3E04005D0BF0 /* ofxPoint3f.h */,
-				E4D9467A0F5F492F00B90D9D /* ofxPoint4f.cpp */,
-				E44666E40F5B3E04005D0BF0 /* ofxPoint4f.h */,
-				E4D9467B0F5F492F00B90D9D /* ofxVec2f.cpp */,
-				E44666E50F5B3E04005D0BF0 /* ofxVec2f.h */,
-				E4D9467C0F5F492F00B90D9D /* ofxVec3f.cpp */,
-				E44666E60F5B3E04005D0BF0 /* ofxVec3f.h */,
-				E4D9467D0F5F492F00B90D9D /* ofxVec4f.cpp */,
-				E44666E70F5B3E04005D0BF0 /* ofxVec4f.h */,
-				E44666E80F5B3E04005D0BF0 /* ofxVectorMath.h */,
-			);
-			name = src;
-			path = ../../../addons/ofxVectorMath/src;
 			sourceTree = SOURCE_ROOT;
 		};
 		E45BE0360E8CC5DE009D7055 /* libs */ = {
@@ -1050,13 +993,6 @@
 				E446675A0F5B3E04005D0BF0 /* ofxCvGrayscaleImage.cpp in Sources */,
 				E446675B0F5B3E04005D0BF0 /* ofxCvImage.cpp in Sources */,
 				E446675C0F5B3E04005D0BF0 /* ofxCvShortImage.cpp in Sources */,
-				E4D9467E0F5F492F00B90D9D /* ofxMatrix3x3.cpp in Sources */,
-				E4D9467F0F5F492F00B90D9D /* ofxPoint2f.cpp in Sources */,
-				E4D946800F5F492F00B90D9D /* ofxPoint3f.cpp in Sources */,
-				E4D946810F5F492F00B90D9D /* ofxPoint4f.cpp in Sources */,
-				E4D946820F5F492F00B90D9D /* ofxVec2f.cpp in Sources */,
-				E4D946830F5F492F00B90D9D /* ofxVec3f.cpp in Sources */,
-				E4D946840F5F492F00B90D9D /* ofxVec4f.cpp in Sources */,
 				3C196CAE0F6A10E4002D4DE3 /* ofxCvColorTrack.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

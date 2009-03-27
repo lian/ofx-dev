@@ -1,7 +1,5 @@
 #include "particle.h"
-#include "ofMain.h"
-#define OF_ADDON_USING_OFXVECTORMATH
-#include "ofAddons.h"
+
 
 //------------------------------------------------------------
 particle::particle(){

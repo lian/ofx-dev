@@ -2,9 +2,10 @@
 #define PARTICLE_H
 
 #include "ofMain.h"
-#define OF_ADDON_USING_OFXVECTORMATH
-#define OF_ADDON_USING_OFXOPENCV
-#include "ofAddons.h"
+
+#include "ofxVectorMath.h"
+#include "ofxOpenCv.h"
+
 
 class particle
 {

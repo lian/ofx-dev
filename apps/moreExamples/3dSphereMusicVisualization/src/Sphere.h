@@ -3,9 +3,8 @@
 
 #include "ofMain.h"
 
-#define OF_ADDON_USING_OFXVECTORMATH
+#include "ofxVectorMath.h"
 
-#include "ofAddons.h"
 #include "Ponto.h"
 #include "Constants.h"
 

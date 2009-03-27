@@ -1,15 +1,15 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-#define OF_ADDON_USING_OFXOPENCV
-#define OF_ADDON_USING_OFXVECTORMATH
-#define OF_ADDON_USING_OFXVECTORGRAPHICS
-#define OF_ADDON_USING_OFXXMLSETTINGS
-
 
 #include "ofMain.h"
-#include "ofAddons.h"
+
+#include "ofxOpenCv.h"
+#include "ofxVectorMath.h"
+#include "ofxXmlSettings.h"
+
 #include "renderManager.h"
+
 
 class testApp : public ofBaseApp{
 

@@ -1,14 +1,12 @@
 // a lot of this camera class is adapted from the ofCamera class which can be found here:
 // http://www.openframeworks.cc/forum/viewtopic.php?t=363&highlight=ofcamera
  
- #ifndef CAMERA_H
- #define CAMERA_H
+#ifndef CAMERA_H
+#define CAMERA_H
 
 #include "ofMain.h"
 
-#define OF_ADDON_USING_OFXVECTORMATH
-
-#include "ofAddons.h"
+#include "ofxVectorMath.h"
 
 
 class Camera{
@@ -45,4 +43,3 @@ public:
 	
 };
 #endif
-

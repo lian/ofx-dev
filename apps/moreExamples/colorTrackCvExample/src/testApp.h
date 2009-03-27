@@ -2,9 +2,8 @@
 #define _TEST_APP
 
 #include "ofMain.h"
-#define OF_ADDON_USING_OFXOPENCV
-#include "ofAddons.h"
 
+#include "ofxOpenCv.h"
 #include "ofxCvColorTrack.h"
 
 class testApp : public ofSimpleApp{

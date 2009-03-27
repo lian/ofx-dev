@@ -12,8 +12,8 @@
 #define _CV_COLOR_TRACK
 
 #include "ofMain.h"
-#define OF_ADDON_USING_OFXOPENCV
-#include "ofAddons.h"
+#include "ofxOpenCv.h"
+
 
 //--------------------------------------------------------------------
 class ofxCvColorTrack {

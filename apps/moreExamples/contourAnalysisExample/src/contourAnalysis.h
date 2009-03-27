@@ -3,9 +3,9 @@
 
 #include "ofMain.h"
 
-#define OF_ADDON_USING_OFXOPENCV
-#define OF_ADDON_USING_OFXVECTORMATH
-#include "ofAddons.h"
+#include "ofxVectorMath.h"
+#include "ofxOpenCv.h"
+
 
 #include <vector>
 

@@ -1,16 +1,5 @@
 #pragma once
 
-#define OF_ADDON_USING_OFXOPENCV
-//#define OF_ADDON_USING_OFXOBJLOADER
-//#define OF_ADDON_USING_OFXDIRLIST
-#define OF_ADDON_USING_OFXVECTORMATH
-//#define OF_ADDON_USING_OFXNETWORK
-//#define OF_ADDON_USING_OFXVECTORGRAPHICS
-//#define OF_ADDON_USING_OFXOSC
-//#define OF_ADDON_USING_OFXTHREAD
-//#define OF_ADDON_USING_OFXXMLSETTINGS
-
-
 //#define			__WINDOWED__
 
 #define		WIDTH			800
@@ -75,7 +64,10 @@
 
  	
 #include "ofMain.h"
-#include "ofAddons.h"
+
+#include "ofxOpenCv.h"
+#include "ofxVectorMath.h"
+
 #include "MotionTracker.h"
 
 
