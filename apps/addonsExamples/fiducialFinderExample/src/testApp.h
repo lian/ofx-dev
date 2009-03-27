@@ -2,11 +2,12 @@
 #define _TEST_APP
 
 #include "ofMain.h"
-#define OF_ADDON_USING_OFXOPENCV
-#define OF_ADDON_USING_OFXFIDUCIALFINDER
-#include "ofAddons.h"
 
-class testApp : public ofBaseApp {
+#include "ofxOpenCv.h"
+#include "ofxFidMain.h"
+
+
+class testApp : public ofBaseApp{
 	
 	public:
 	

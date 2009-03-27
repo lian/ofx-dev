@@ -2,7 +2,6 @@
 #define _TEST_APP
 
 #include "ofMain.h"
-#include "ofAddons.h"
 
 #include "Thingy.h"
 

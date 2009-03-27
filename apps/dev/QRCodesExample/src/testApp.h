@@ -3,7 +3,7 @@
 
 
 #include "ofMain.h"
-#include "ofAddons.h"
+
 #include "ofxQRCodes.h"
 
 

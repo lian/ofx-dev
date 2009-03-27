@@ -18,8 +18,8 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	// display instructions
-	char buf[256];
-	sprintf( buf, "sending osc messages to %s:%d", HOST, PORT );
+	string buf;
+	buf = "sending osc messages to" + string( HOST ) + ofToString( PORT );
 	ofDrawBitmapString( buf, 10, 20 );
 	ofDrawBitmapString( "move the mouse to send osc message [/mouse/position <x> <y>]", 10, 50 );
 	ofDrawBitmapString( "click to send osc message [/mouse/button <button> <\"up\"|\"down\">]", 10, 65 );
@@ -73,7 +73,7 @@ void testApp::mouseReleased(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::resized(int w, int h){
+void testApp::windowResized(int w, int h){
 
 }
 

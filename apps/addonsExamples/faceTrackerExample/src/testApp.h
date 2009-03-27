@@ -2,11 +2,11 @@
 #define _TEST_APP
 
 
-#define OF_ADDON_USING_OFXOPENCV
-#define OF_ADDON_USING_OFXCVHAARFINDER
-
 #include "ofMain.h"
-#include "ofAddons.h"
+
+#include "ofxOpenCv.h"
+#include "ofxCvHaarFinder.h"
+
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 

@@ -1,13 +1,11 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-#define OF_ADDON_USING_OFXVECTORMATH
 
 #include "ofMain.h"
-#include "ofAddons.h"
 
+#include "ofxVectorMath.h"
 #include "ofxMSASpline.h"
-
 
 
 class testApp : public ofSimpleApp{
@@ -28,4 +26,3 @@ public:
 };
 
 #endif
-

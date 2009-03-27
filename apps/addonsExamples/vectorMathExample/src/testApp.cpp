@@ -9,6 +9,8 @@ void testApp::setup(){
 
      ofBackground(255,255,255);
 
+
+
      ofxVec3f center(ofGetWidth()/2, ofGetHeight()/2, 0);
 
      xAxisMin.set(-100,0,0);
@@ -183,10 +185,9 @@ void testApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
+
 }
 
+void testApp::windowResized(int w, int h){
 
-//--------------------------------------------------------------
-void testApp::resized(int w, int h){
 }
-

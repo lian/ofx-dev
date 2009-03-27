@@ -3,7 +3,7 @@
 
 
 #include "ofMain.h"
-#include "ofAddons.h"
+
 #include "ofx2dFluid.h"
 #include "ofBall.h"
 
@@ -49,4 +49,3 @@ class testApp : public ofSimpleApp{
 };
 
 #endif
-	

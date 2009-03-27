@@ -3,7 +3,6 @@
 
 
 #include "ofMain.h"
-#include "ofAddons.h"
 
 #include "ofxNoise.h"
 

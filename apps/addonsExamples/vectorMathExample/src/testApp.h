@@ -1,10 +1,10 @@
 #ifndef _TEST_APP
 #define _TEST_APP
 
-#define OF_ADDON_USING_OFXVECTORMATH
 
 #include "ofMain.h"
-#include "ofAddons.h"
+
+#include "ofxVectorMath.h"
 
 #define MAX_N_PTS         1500
 
@@ -23,7 +23,7 @@ class testApp : public ofBaseApp{
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
-		void resized(int w, int h);
+		void windowResized(int w, int h);
 
 		ofxVec3f	pts[MAX_N_PTS];
 		int			nPts;

@@ -4,9 +4,7 @@
 
 #include "ofMain.h"
 
-#define OF_ADDON_USING_OFXOBJLOADER
-
-#include "ofAddons.h"
+#include "ofxObjLoader.h"
 
 class testApp : public ofBaseApp {
 	
