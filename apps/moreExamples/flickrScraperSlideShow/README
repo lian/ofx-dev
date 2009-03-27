@@ -1,0 +1,38 @@
+/***********************************************************************
+
+	NOTE: the ofx-dev flickrScraperSlideShow is only based on this code, just a
+		  previous version without flickr api dependencies, more like webImgLoader..
+
+ 
+  forum post at: http://www.openframeworks.cc/forum/viewtopic.php?t=1257
+
+	JGL - Posted: Tue Nov 04, 2008 9:18 pm
+	
+	flickrScraperSlideShow is an application I created with oF "00573-Xcode-Fat-YCAM-WithGui". It queries Flickr for a keyword and then displays the resulting (up to 100) images in a slideshow format. 
+
+	It uses a blocking call for getting the results from Flickr using their REST API: 
+
+	http://www.flickr.com/services/api/request.rest.html 
+
+	It then uses a thread to download images from Flickr.com, while allowing the slideshow to continue. 
+
+	Any comments welcome. 
+
+	System design and assembly by Joel Gethin Lewis 
+	http://www.joelgethinlewis.com 
+	XML query and manipulation of Flickr API by Brian Balantine, Jesús Gollonet Bailén 
+	http://www.openframeworks.cc/forum/viewtopic.php?p=3578 
+	slideshow logic based upon work by prisonerjohn, Memo Akten, Theo Watson, Zachary Lieberman, otherside, arturo 
+	http://www.openframeworks.cc/forum/viewtopic.php?t=816 
+	thread and scraping, SimpleWebScraper by Jesús Gollonet Bailén, Zachary Lieberman, arturo 
+	http://www.openframeworks.cc/forum/viewtopic.php?p=6715 
+	based in turn on work on webImageLoader by Brian Balantine, Theo Watson, Zachary Lieberman, mantissa, Matt Parker 
+	http://www.openframeworks.cc/forum/viewtopic.php?t=562 
+
+	Full source and project (OSX) (40KB): 
+
+	http://www.joelgethinlewis.com/download/flickrScraperSlideShow.zip
+	
+	more at: http://www.openframeworks.cc/forum/viewtopic.php?t=1257
+ 
+ ***********************************************************************/
