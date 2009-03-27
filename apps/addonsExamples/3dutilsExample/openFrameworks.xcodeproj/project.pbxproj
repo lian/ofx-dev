@@ -10,6 +10,7 @@
 		3C379AA50F6882750029D6D5 /* ofxCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C379A9E0F6882740029D6D5 /* ofxCamera.cpp */; };
 		3C379AA60F6882750029D6D5 /* ofxLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C379AA00F6882740029D6D5 /* ofxLight.cpp */; };
 		3C379AA70F6882750029D6D5 /* ofxShapes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C379AA20F6882750029D6D5 /* ofxShapes.cpp */; };
+		3CE91F740F6AEF980055B026 /* ofx3DGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3CE91F720F6AEF980055B026 /* ofx3DGraphics.cpp */; };
 		E446644B0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E446641A0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp */; };
 		E446644C0F5B1CFD005D0BF0 /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E446641C0F5B1CFD005D0BF0 /* ofAppRunner.cpp */; };
 		E446644D0F5B1CFD005D0BF0 /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E44664200F5B1CFD005D0BF0 /* ofArduino.cpp */; };
@@ -68,6 +69,8 @@
 		3C379AA10F6882740029D6D5 /* ofxLight.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxLight.h; sourceTree = "<group>"; };
 		3C379AA20F6882750029D6D5 /* ofxShapes.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofxShapes.cpp; sourceTree = "<group>"; };
 		3C379AA30F6882750029D6D5 /* ofxShapes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofxShapes.h; sourceTree = "<group>"; };
+		3CE91F720F6AEF980055B026 /* ofx3DGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofx3DGraphics.cpp; sourceTree = "<group>"; };
+		3CE91F730F6AEF980055B026 /* ofx3DGraphics.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofx3DGraphics.h; sourceTree = "<group>"; };
 		E4370CF70F62B930007CD673 /* ofAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAddons.h; path = ../../../addons/ofAddons.h; sourceTree = SOURCE_ROOT; };
 		E44664190F5B1CFD005D0BF0 /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppBaseWindow.h; path = ../../../libs/openFrameworks/app/ofAppBaseWindow.h; sourceTree = SOURCE_ROOT; };
 		E446641A0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppGlutWindow.cpp; path = ../../../libs/openFrameworks/app/ofAppGlutWindow.cpp; sourceTree = SOURCE_ROOT; };
@@ -290,6 +293,8 @@
 			isa = PBXGroup;
 			children = (
 				3C379A9D0F6882740029D6D5 /* ofx3DUtils.h */,
+				3CE91F720F6AEF980055B026 /* ofx3DGraphics.cpp */,
+				3CE91F730F6AEF980055B026 /* ofx3DGraphics.h */,
 				3C379A9E0F6882740029D6D5 /* ofxCamera.cpp */,
 				3C379A9F0F6882740029D6D5 /* ofxCamera.h */,
 				3C379AA00F6882740029D6D5 /* ofxLight.cpp */,
@@ -939,6 +944,7 @@
 				3C379AA50F6882750029D6D5 /* ofxCamera.cpp in Sources */,
 				3C379AA60F6882750029D6D5 /* ofxLight.cpp in Sources */,
 				3C379AA70F6882750029D6D5 /* ofxShapes.cpp in Sources */,
+				3CE91F740F6AEF980055B026 /* ofx3DGraphics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -44,10 +44,6 @@ private:
 	ofxVec3f eyeCoord;
 	ofxVec3f upVec;
 	
-//	float posCoord[3];
-//	float eyeCoord[3];
-//	float upVec[3];
-	
 	//relative to defining the persperctive:
 	float	fieldOfView;
 	int	w; 

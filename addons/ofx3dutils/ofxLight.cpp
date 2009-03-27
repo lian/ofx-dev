@@ -141,7 +141,7 @@ void ofxSetSmoothLight(bool mode){
 //on/off
 void ofxLightsOn(){
 	glEnable(GL_LIGHTING);
-	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 	glEnable(GL_COLOR_MATERIAL);
 }
 

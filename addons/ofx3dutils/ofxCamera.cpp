@@ -91,9 +91,9 @@ void ofxCamera::place(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(posCoord[0], posCoord[1], posCoord[2], eyeCoord[0], eyeCoord[1], eyeCoord[2], upVec[0], upVec[1], upVec[2]);
-//this is already being done in the ofSetupScreen() so no need to do it here again :)
-//	glScalef(1, -1, 1);
-//	glTranslatef(0, -h, 0);
+
+	glScalef(1, -1, 1);
+	glTranslatef(0, -h, 0);
 }
 
 
