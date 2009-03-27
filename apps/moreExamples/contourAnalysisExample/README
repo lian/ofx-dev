@@ -1,0 +1,11 @@
+/***********************************************************************
+ 
+  blog post at: http://csugrue.com/code/?p=10
+  website: http://www.csugrue.com/code/
+
+	A series of functions for finding information about contours and blobs: ellipse fitting (using opencv fitEllipse), orientation, point inside polygon test, and line finding.
+	
+	Version: of_preRelease_v0.05 (works with ofx-dev006 - lian)
+	AddOns: ofxOpenCv, ofxVectorMath
+ 
+ ***********************************************************************/
