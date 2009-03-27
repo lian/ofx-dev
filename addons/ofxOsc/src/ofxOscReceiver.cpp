@@ -30,7 +30,7 @@
 ofxOscReceiver::ofxOscReceiver()
 {
 #ifdef TARGET_WIN32
-	mutex = CreateMutex( NULL, FALSE, NULL );
+	mutex = CreateMutexA( NULL, FALSE, NULL );
 #else
 	pthread_mutex_init( &mutex, NULL );
 #endif

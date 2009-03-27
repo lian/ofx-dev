@@ -23,7 +23,7 @@
 #ifndef _OFX_QR_CODES_H_
 #define _OFX_QR_CODES_H_
 
-#include "ofxCvMain.h"
+#include "ofxOpenCv.h"
 #include "libdecodeqr/decodeqr.h"
 
 #endif

@@ -4,34 +4,33 @@
 
 #include "ofMain.h"
 
-#define OF_ADDON_USING_OFXVECTORMATH
-
-#include "ofAddons.h"
+#include "ofxVectorMath.h"
 
 #define MAX_N_PTS         1500
 
-class testApp : public ofSimpleApp{
-	
+class testApp : public ofBaseApp{
+
 	public:
-		
+
 		void setup();
 		void update();
 		void draw();
-		
+
 		void keyPressed  (int key);
 		void keyReleased (int key);
-		
+
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
-		void mouseReleased();
-		
+		void mouseReleased(int x, int y, int button);
+		void windowResized(int w, int h);
+
 		ofxVec3f	pts[MAX_N_PTS];
 		int			nPts;
-		
+
 		ofxVec3f	rotateAmount;  // amount to rotate in x,y,z;
 		float		speedOfRotation; // speed;
-		
+
 		// a grid helpful for seeing the rotation
 		ofxVec3f	xAxisMin;
 		ofxVec3f	xAxisMax;
@@ -39,10 +38,10 @@ class testApp : public ofSimpleApp{
 		ofxVec3f	yAxisMax;
 		ofxVec3f	zAxisMin;
 		ofxVec3f	zAxisMax;
-		
+
 		bool		bDrawnAnything;
-		
+
 };
 
 #endif
-	
+
