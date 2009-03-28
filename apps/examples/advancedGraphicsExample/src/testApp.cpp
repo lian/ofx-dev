@@ -220,7 +220,7 @@ void testApp::mouseMoved(int x, int y ){
 		bFirstMouseMove = false;
 		//turn the flag off
 	}
-
+	
 	//store the x and y
 	//so we can get the prev value
 	//next time the mouse is moved
@@ -246,7 +246,7 @@ void testApp::mouseReleased(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void testApp::resized(int w, int h){
+void testApp::windowResized(int w, int h){
 
 }
 

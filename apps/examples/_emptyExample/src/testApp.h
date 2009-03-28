@@ -7,8 +7,6 @@
 class testApp : public ofBaseApp{
 
 	public:
-
-		testApp();
 		void setup();
 		void update();
 		void draw();
@@ -19,7 +17,7 @@ class testApp : public ofBaseApp{
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
-		void resized(int w, int h);
+		void windowResized(int w, int h);
 
 };
 
