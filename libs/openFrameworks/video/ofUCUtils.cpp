@@ -7,12 +7,20 @@
 #include <stdint.h>
 #include "ofUtils.h"
 
+
+// ugly hack to make this work with
+// new ffmpeg include path in ubuntu jaunty
+// with -MMD flag in the compiler
+// this will throw a warning instead of an error
+// comment out the two lines that doesn't work for you
+// to avoid the warnings
 extern "C"
 {
-#include "avformat.h"
-#include "swscale.h"
+#include <avformat.h>
+#include <swscale.h>
+#include <libavformat/avformat.h>
+#include <libswscale/swscale.h>
 }
-
 
 
 #define FOURCC(a,b,c,d) (unsigned int)((((unsigned int)a))+(((unsigned int)b)<<8)+(((unsigned int)c)<<16)+(((unsigned int)d)<<24))
@@ -221,6 +229,12 @@ void ofUCUtils::set_format(int w, int h) {
 		}
 		format = formats[selected_format];
 
+		src_pix_fmt=fourcc_to_pix_fmt(format.fourcc);
+		if( src_pix_fmt==-1){
+			ofLog(OF_LOG_ERROR,"ofUCUtils : Format not suported\n");
+			return;
+		}
+
 		bool exactMatch  = false;
 		int sizeDiff = 99999999;
 		int mostAproxSize = -1;
@@ -246,8 +260,26 @@ void ofUCUtils::set_format(int w, int h) {
 							format.identifier, w, h,
 							format.size.width, format.size.height);
 		}else if(format.size_count==0){
-			ofLog(OF_LOG_WARNING, "ofUCUtils : Can't recognize supported video sizes for %s, trying with default size: %i,%i",
+			int defaultFormatWidth = format.size.width;
+			int defaultFormatHeight = format.size.height;
+
+			format.size.width  = w;
+			format.size.height = h;
+
+			ofLog(OF_LOG_WARNING, "ofUCUtils : Can't recognize supported video sizes for %s, trying with requested size: %i,%i",
 										format.identifier, format.size.width, format.size.height);
+
+			if ( !SUCCESS ( unicap_set_format (handle, &format) ) ) {
+				format.size.width  = defaultFormatWidth;
+				format.size.height = defaultFormatHeight;
+
+				ofLog(OF_LOG_WARNING, "ofUCUtils : Can't set requested size, trying with format defaults: %i,%i",
+						defaultFormatWidth, defaultFormatHeight);
+			}else{
+				exactMatch=true; //if we can set the requested size -> exactMatch
+			}
+			ofLog(OF_LOG_WARNING, "ofUCUtils : If this doesn't work try using the reported default size in initGrabber:",
+					defaultFormatWidth, defaultFormatHeight);
 		}
 		if ( !SUCCESS ( unicap_set_format (handle, &format) ) ) {
 			ofLog(OF_LOG_ERROR, "ofUCUtils : Failed to set alternative video format!");
@@ -256,13 +288,10 @@ void ofUCUtils::set_format(int w, int h) {
 		ofLog(OF_LOG_NOTICE,"ofUCUtils : Selected format: %s, with size %dx%d\n", format.identifier,
 				format.size.width, format.size.height);
 
-		src_pix_fmt=fourcc_to_pix_fmt(format.fourcc);
-		if( src_pix_fmt==-1){
-			ofLog(OF_LOG_ERROR,"ofUCUtils : Format not suported\n");
-			return;
-		}
+
 
 		if(src_pix_fmt!=PIX_FMT_RGB24 || !exactMatch){
+			doConversion = true;
 			src=new AVPicture;
 			avpicture_alloc(src,src_pix_fmt,format.size.width,format.size.height);
 			dst=new AVPicture;
@@ -356,7 +385,7 @@ void ofUCUtils::new_frame (unicap_data_buffer_t * buffer)
 	if(!deviceReady)
 		return;
 
-	if(src_pix_fmt!=PIX_FMT_RGB24){
+	if(doConversion){
 		avpicture_fill(src,buffer->data,src_pix_fmt,format.size.width,format.size.height);
 
 		if(sws_scale(toRGB_convert_ctx,

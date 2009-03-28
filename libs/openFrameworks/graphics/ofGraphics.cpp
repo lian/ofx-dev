@@ -437,7 +437,7 @@ void ofDisableSmoothing(){
 //----------------------------------------------------------
 void ofSetStyle(ofStyle style){
 	//color
-	ofSetColor(style.color.r, style.color.g, style.color.b, style.color.a);
+	ofSetColor((int)style.color.r, (int)style.color.g, (int)style.color.b, (int)style.color.a);
 
 	//circle resolution - don't worry it only recalculates the display list if the res has changed
 	ofSetCircleResolution(style.circleResolution);
@@ -679,8 +679,8 @@ static int currentStartVertex = 0;
 // this allows multi contour polygons;
 
 static GLUtesselator * tobj = NULL;
-static bool tessInited = false;
-static GLdouble point[3];
+//static bool tessInited = false;
+//static GLdouble point[3];
 static GLint shapeType;
 
 void CALLBACK tessError(GLenum);
