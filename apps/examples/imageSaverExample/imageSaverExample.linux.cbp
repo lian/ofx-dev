@@ -2,36 +2,38 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="emptyExample" />
+		<Option title="imageSaverExample" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Option virtualFolders="addons/;libs/;src/;libs/openframeworks/;libs/openframeworks/app/;libs/openframeworks/communication/;libs/openframeworks/graphics/;libs/openframeworks/sound/;libs/openframeworks/utils/;libs/openframeworks/video/;" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/emptyExample_debug" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/imageSaverExample_debug" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin" />
 				<Option object_output="build/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-MMD" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/emptyExample" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/imageSaverExample" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin" />
 				<Option object_output="build/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O3" />
+					<Add option="-MMD" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
 			</Target>
 			<Environment>
-				<Variable name="target" value="emptyExample" />
+				<Variable name="target" value="imageSaverExample" />
 				<Variable name="nautilusOnBuild" value="false" />
 				<Variable name="runOnBuild" value="false" />
 			</Environment>
@@ -62,8 +64,6 @@
 			<Add directory="../../../libs/gstappsink/include" />
 			<Add directory="../../../addons" />
 			<Add directory="../../../libs/poco/include" />
-<!--			<Add directory="/usr/include" />
-			<Add directory="/usr/include/GL" />  -->
 		</Compiler>
 		<Linker>
 			<Add library="fmodex" />
@@ -74,12 +74,9 @@
 			<Add library="Xxf86vm" />
 			<Add library="asound" />
 			<Add library="PocoFoundation" />
-<!--			<Add library="PocoUtil" /> -->
-			<Add library="z" />
-			<Add library="../../../libs/freetype/lib/linux/libfreetype.a" />
+			<Add library="../../../libs/freetype/lib/libfreetype.a" />
 			<Add library="../../../libs/freeimage/lib/libfreeimage.a" />
 			<Add library="../../../libs/rtAudio/lib/libRtAudio.a" />
-<!--			<Add library="../../../libs/fobs/lib/libfobscore.a" />  -->
 			<Add library="../../../libs/GLee/lib/libGLee.a" />
 			<Add library="unicap" />
 			<Add library="../../../libs/gstappsink/lib/liboFappsink.a" />
@@ -93,26 +90,24 @@
 			<Add after="#" />
 
 			<Add after="mkdir -p $(PROJECT_DIR)bin/libs/" />
-			<Add after="cp -p ../../../libs/freetype/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
-			<Add after="cp -p ../../../libs/freeimage/lib/*.so* $(PROJECT_DIR)bin/libs/" />
+
 			<Add after="cp -p ../../../libs/fmodex/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />
-			<Add after="cp -p ../../../libs/poco/lib/linux/libPocoFoundation.so* $(PROJECT_DIR)bin/libs/" />
-
-<!--			<Add after="cp -p ../../../addons/*/libs/*/lib/linux/*.so* $(PROJECT_DIR)bin/libs/" />  -->
-
-			<Add after="mkdir -p $(PROJECT_DIR)data/" />
-			<Add after="cp -r $(PROJECT_DIR)data/ $(PROJECT_DIR)bin/" />
-
 			<Add after="cp ../../../other/codeblocks/linux_clickToLaunchApp.sh $(PROJECT_DIR)bin/clickToLaunchApp_$(TARGET_NAME).sh" />
 			<Add after="sed -i s/applicationName/$(TARGET_OUTPUT_BASENAME)/g  $(PROJECT_DIR)bin/clickToLaunchApp_$(TARGET_NAME).sh" />
+
+			<Add after="#" />
+			<Add after="#    this is a shell script that can either (a) run the app or (b) launch nautilus to a good directory for you to run the app" />
+			<Add after="#" />
+			<Add after="./../../../other/codeblocks/cb_build_runner.sh $(TARGET_OUTPUT_BASENAME) $runOnBuild $nautilusOnBuild $(PROJECT_DIR)" />
+			<Add after="#" />
+			<Add after="#     to enable either, change the custom variables in project-&gt;build options-&gt;custom variables" />
+			<Add after="#     to true / false." />
+			<Add after="#" />
+			<Add after="#     currently this is disabled, but allows you to run the app from w/in CB." />
 			<Add after="#" />
 			<Add after="#      DONE" />
-			<Add after="#" />
 			<Mode after="always" />
 		</ExtraCommands>
-		<Unit filename="../../../addons/ofAddons.h">
-			<Option virtualFolder="addons/" />
-		</Unit>
 		<Unit filename="src/main.cpp">
 			<Option virtualFolder="src/" />
 		</Unit>
