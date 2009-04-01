@@ -1,0 +1,45 @@
+<install>
+	<author>plong0</author>
+	<version>0.01</version>
+
+	
+	<!-- ========================================================================= 	-->
+	<!--	setting for the "installation" of OF 					-->
+	<!-- ========================================================================= 	-->
+	
+	
+	<toAddAddonsH>
+
+//-------------------------------------------- ofxArgs
+#ifdef OF_ADDON_USING_OFXARGS
+	#include "ofxArgs.h"
+#endif
+
+	</toAddAddonsH>
+	
+	
+	
+	<!-- ========================================================================= 	-->
+	<!--	setting per project 							-->
+	<!-- ========================================================================= 	-->
+	
+	<toAddPerProject>
+	
+		<folder name="addons/ofxArgs/src">
+			<src>../../../addons/ofxArgs/src/ofxArgs.h</src>
+			<src>../../../addons/ofxArgs/src/ofxArgs.cpp</src>
+		</folder>
+	
+	</toAddPerProject>
+	
+	<includePath>
+		<path>../../../addons/ofxArgs/src</path>
+	</includePath>
+				
+	<!-- ========================================================================= 	-->
+	<!--	any requirements?							-->
+	<!-- ========================================================================= 	-->
+	
+	<requires></requires>
+	
+</install>
