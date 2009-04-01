@@ -29,14 +29,17 @@
 
 ofxOscSender::ofxOscSender()
 {
+	socket = NULL;
 }
 
 ofxOscSender::~ofxOscSender()
 {
+	if(socket) delete socket;
 }
 
 void ofxOscSender::setup( std::string hostname, int port )
 {
+	if(socket) delete socket;
 	socket = new UdpTransmitSocket( IpEndpointName( hostname.c_str(), port ) );
 }
 
