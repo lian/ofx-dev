@@ -192,12 +192,14 @@ float ofxPerlin::noiseuf(float x, float y){
 	float res = noise(x, y);
 	res *= 0.5f;
 	res += 0.5f;
+	return res;
 }
 
 float ofxPerlin::noiseuf(float x, float y, float z){
 	float res = noise(x, y, z);
 	res *= 0.5f;
 	res += 0.5f;
+	return res;
 }
 
 void ofxPerlin::noiseDetail(int lod){
