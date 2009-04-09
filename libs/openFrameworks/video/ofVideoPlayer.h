@@ -2,41 +2,20 @@
 #define _OF_VIDEO_PLAYER
 
 #include "ofConstants.h"
+#include "ofUtils.h"
 #include "ofTexture.h"
-
-
-#ifdef OF_VIDEO_PLAYER_GSTREAMER
-	#include <gst/gst.h>
-	#include <pthread.h>
-
-	typedef struct{
-		GMainLoop 		*	loop;
-		GstElement 		*	pipeline;
-		unsigned char 	*	pixels;
-		pthread_mutex_t 	buffer_mutex;
-		bool				bHasPixelsChanged;
-
-		guint64				durationNanos;
-		guint64				nFrames;
-		int					pipelineState;
-		float				speed;
-	}ofGstVideoData;
-
-#else
-	#include "ofQtUtils.h"
-#endif
-
 
 
 #define OF_LOOP_NONE					0x01
 #define OF_LOOP_PALINDROME				0x02
 #define OF_LOOP_NORMAL					0x03
 
+class ofVideoPlayerImpl;
+
 
 //---------------------------------------------
 
 class ofVideoPlayer : public ofBaseVideo{
-
 	public:
 
 
@@ -48,7 +27,7 @@ class ofVideoPlayer : public ofBaseVideo{
 		void 				close();
 
 		void				update();			//same as idleMovie
-		void 				idleMovie();		// rename to updateMovie?
+		void 				idleMovie();		//rename to updateMovie?
 		void 				play();
 		void 				stop();
 
@@ -81,6 +60,7 @@ class ofVideoPlayer : public ofBaseVideo{
         void				resetAnchor();								//resets the anchor to (0, 0)
 
 		void 				setPaused(bool bPause);
+		bool                getPaused() {return bPaused;}
 
 		int					getCurrentFrame();
 		int					getTotalNumFrames();
@@ -92,18 +72,7 @@ class ofVideoPlayer : public ofBaseVideo{
 		float 				getHeight();
 		float 				getWidth();
 
-		//--------------------------------------
-		#ifdef OF_VIDEO_PLAYER_QUICKTIME
-		//--------------------------------------
-			MovieController  	thePlayer;
-			GWorldPtr 			offscreenGWorld;
-			Movie 			 	moviePtr;
-			unsigned char * 	offscreenGWorldPixels;	// 32 bit: argb (qt k32ARGBPixelFormat)
-			void				qtGetFrameCount(Movie & movForcount);
-		//--------------------------------------
-		#endif
-		//--------------------------------------
-
+		ofVideoPlayerImpl	*impl;
 		int					nFrames;				// number of frames
 		unsigned char * 	pixels;					// 24 bit: rgb
 		bool 				bHavePixelsChanged;
@@ -111,45 +80,39 @@ class ofVideoPlayer : public ofBaseVideo{
 		bool 				bUseTexture;			// are we using a texture
 		bool				allocated;				// so we know to free pixels or not
 
+
+
 	protected:
+
+		void implInit(ofVideoPlayer *generic);
+		void implFree();
+		void implEnterIdleMovie();
+		void implCloseMovie();
+		bool implLoadMovie(string name);
+		void implStart();
+		void implPlay();
+		void implStop();
+		void implSetVolume(int volume);
+		void implSetLoopState(int state);
+		void implSetPosition(float pct);
+		void implSetFrame(int frame);
+		float implGetDuration();
+		float implGetPosition();
+		bool implGetIsMovieDone();
+		void implSetSpeed(float _speed);
+		void implSetPaused(bool _bPause);
+		int implGetTotalNumFrames();
 
 
 		void 				start();
-		void 				createImgMemAndGWorld();
+
+
 		bool 				bStarted;
 		bool 				bPlaying;
 		bool 				bPaused;
 		bool 				bIsFrameNew;			// if we are new
 
-		//--------------------------------------
-		#ifdef OF_VIDEO_PLAYER_GSTREAMER
-		//--------------------------------------
-		ofGstVideoData 		gstData;
-		bool				bIsMovieDone;
-		bool				isStream;
-		GstElement	* 		gstPipeline;
-		GstElement  *		gstSink;
-		gint64          	durationNanos;
-		int					loopMode;
-
-		bool				    posChangingPaused;
-
-
-		pthread_mutex_t 	seek_mutex;
-		void                seek_lock();
-		void                seek_unlock();
-		void 				gstHandleMessage();
-		bool 				allocate();
-		//--------------------------------------
-		#endif
-		//--------------------------------------
-
 
 };
 #endif
-
-
-
-
-
 

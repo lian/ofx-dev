@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C3E3B840F8DEE1C00BA65F4 /* ofVideoPlayerGST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C3E3B800F8DEE1C00BA65F4 /* ofVideoPlayerGST.cpp */; };
+		3C3E3B850F8DEE1C00BA65F4 /* ofVideoPlayerQT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3C3E3B820F8DEE1C00BA65F4 /* ofVideoPlayerQT.cpp */; };
 		E446644B0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E446641A0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp */; };
 		E446644C0F5B1CFD005D0BF0 /* ofAppRunner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E446641C0F5B1CFD005D0BF0 /* ofAppRunner.cpp */; };
 		E446644D0F5B1CFD005D0BF0 /* ofArduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E44664200F5B1CFD005D0BF0 /* ofArduino.cpp */; };
@@ -51,6 +53,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C3E3B800F8DEE1C00BA65F4 /* ofVideoPlayerGST.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofVideoPlayerGST.cpp; sourceTree = "<group>"; };
+		3C3E3B810F8DEE1C00BA65F4 /* ofVideoPlayerGST.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofVideoPlayerGST.h; sourceTree = "<group>"; };
+		3C3E3B820F8DEE1C00BA65F4 /* ofVideoPlayerQT.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ofVideoPlayerQT.cpp; sourceTree = "<group>"; };
+		3C3E3B830F8DEE1C00BA65F4 /* ofVideoPlayerQT.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ofVideoPlayerQT.h; sourceTree = "<group>"; };
 		E44664190F5B1CFD005D0BF0 /* ofAppBaseWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppBaseWindow.h; path = ../../../libs/openFrameworks/app/ofAppBaseWindow.h; sourceTree = SOURCE_ROOT; };
 		E446641A0F5B1CFD005D0BF0 /* ofAppGlutWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofAppGlutWindow.cpp; path = ../../../libs/openFrameworks/app/ofAppGlutWindow.cpp; sourceTree = SOURCE_ROOT; };
 		E446641B0F5B1CFD005D0BF0 /* ofAppGlutWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofAppGlutWindow.h; path = ../../../libs/openFrameworks/app/ofAppGlutWindow.h; sourceTree = SOURCE_ROOT; };
@@ -354,6 +360,10 @@
 		E44664410F5B1CFD005D0BF0 /* video */ = {
 			isa = PBXGroup;
 			children = (
+				3C3E3B800F8DEE1C00BA65F4 /* ofVideoPlayerGST.cpp */,
+				3C3E3B810F8DEE1C00BA65F4 /* ofVideoPlayerGST.h */,
+				3C3E3B820F8DEE1C00BA65F4 /* ofVideoPlayerQT.cpp */,
+				3C3E3B830F8DEE1C00BA65F4 /* ofVideoPlayerQT.h */,
 				E44664420F5B1CFD005D0BF0 /* ofQtUtils.cpp */,
 				E44664430F5B1CFD005D0BF0 /* ofQtUtils.h */,
 				E44664440F5B1CFD005D0BF0 /* ofUCUtils.cpp */,
@@ -838,6 +848,8 @@
 				E446645A0F5B1CFD005D0BF0 /* ofUCUtils.cpp in Sources */,
 				E446645B0F5B1CFD005D0BF0 /* ofVideoGrabber.cpp in Sources */,
 				E446645C0F5B1CFD005D0BF0 /* ofVideoPlayer.cpp in Sources */,
+				3C3E3B840F8DEE1C00BA65F4 /* ofVideoPlayerGST.cpp in Sources */,
+				3C3E3B850F8DEE1C00BA65F4 /* ofVideoPlayerQT.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
