@@ -115,7 +115,6 @@ float ofxPerlin::noise(float x, float y, float z){
 	perlin_cosTable = sinCosLUT.cosLUT;
 	perlin_TWO_PI = perlin_PI = sinCosLUT.SC_PERIOD;
 	perlin_PI >>= 1;
-	
 	if(x < 0) x = -x;
 	if(y < 0) y = -y;
 	if(z < 0) z = -z;
@@ -130,10 +129,8 @@ float ofxPerlin::noise(float x, float y, float z){
 	float ampl = 0.5f;
 	
 	float n1, n2, n3;
-	
 	for(int i=0; i<perlin_octaves; i++){
 		int of = xi + (yi << PERLIN_YWRAPB) + (zi << PERLIN_ZWRAPB);
-		
 		
 		rxf = noise_fsc(xf);
 		ryf = noise_fsc(yf);
@@ -155,6 +152,7 @@ float ofxPerlin::noise(float x, float y, float z){
 		
 		r += n1 * ampl;
 		ampl *= perlin_amp_falloff;
+		
 		
 		if (ampl<PERLIN_MIN_AMPLITUDE) break;
 		

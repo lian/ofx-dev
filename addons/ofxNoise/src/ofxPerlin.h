@@ -38,7 +38,8 @@ if you have any questions regarding the original classes please contact Karsten 
 #include "ofxSinCosLUT.h"
 
 class ofxPerlin{
-protected:
+//protected:
+public:
 	ofxSinCosLUT sinCosLUT;
 	static const int PERLIN_YWRAPB = 4;
 	static const int PERLIN_YWRAP = 1 << PERLIN_YWRAPB;
@@ -47,7 +48,7 @@ protected:
 	static const int PERLIN_SIZE = 4095;
 	static const int PERLIN_MIN_AMPLITUDE = 0.001f;
 	int perlin_octaves; // = 4;
-	int perlin_amp_falloff; // = 0.5f;
+	float perlin_amp_falloff; // = 0.5f;
 	
 	int perlin_PI, perlin_TWO_PI;
 	float *perlin_cosTable;
