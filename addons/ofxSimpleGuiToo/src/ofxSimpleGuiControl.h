@@ -3,6 +3,10 @@
  Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
  *** The Mega Super Awesome Visuals Company ***
  * All rights reserved.
+ 
+ based on Todd Vanderlin's ofxSimpleGui API
+ http://toddvanderlin.com/
+ 
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,11 +33,45 @@
  *
  * ***********************************************************************/ 
 
+
 #pragma once
 
-#define OF_ADDON_USING_OFXMSAFLUID
+#include "ofxMSAInteractiveObject.h"
+#include "ofxSimpleGuiConfig.h"
+#include "ofxXmlSettings.h"
 
-#include "ofxMSAFluidSolver.h"
-#include "ofxMSAFluidDrawer.h"
+class ofxSimpleGuiControl : public ofxMSAInteractiveObject {
+public:
+	string		name;		// Human readable name this is what is displayed on screen
+	string		key;		// Machine readable name (don't change this after creating control, used for saving/loading)
+	string		controlType;
+	bool		lock;
+	bool		focused;
+	
+	ofxSimpleGuiControl(string name);	
+	void setName(string newName);
+	void setKey(string newKey);
+	void setConfig(ofxSimpleGuiConfig *config);
+	
+	void setTextColor(bool clickable = true);
+	void setTextBGColor(bool clickable = true);
+	void setFullColor(bool forceActive = false);
+	void setEmptyColor();
+	
+	virtual void loadFromXML(ofxXmlSettings &XML) {}
+	virtual void saveToXML(ofxXmlSettings &XML) {}	
+	
+	virtual void setup() {}
 
-#include "ofxMSAFluidParticleUpdater.h"
+	virtual void draw(float x, float y) {}
+	virtual void draw() { draw(x, y); }
+	
+	virtual void onKeyUp() {}
+	virtual void onKeyDown() {}
+	virtual void onKeyLeft() {}
+	virtual void onKeyRight() {}
+	virtual void onKeyEnter() {}
+	
+protected:
+	ofxSimpleGuiConfig	*config;
+};

@@ -3,6 +3,10 @@
  Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
  *** The Mega Super Awesome Visuals Company ***
  * All rights reserved.
+ 
+ based on Todd Vanderlin's ofxSimpleGui API
+ http://toddvanderlin.com/
+ 
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,11 +33,66 @@
  *
  * ***********************************************************************/ 
 
-#pragma once
 
-#define OF_ADDON_USING_OFXMSAFLUID
+#include "ofxSimpleGuiControl.h"
 
-#include "ofxMSAFluidSolver.h"
-#include "ofxMSAFluidDrawer.h"
 
-#include "ofxMSAFluidParticleUpdater.h"
+ofxSimpleGuiControl::ofxSimpleGuiControl(string name) {
+	controlType = "";
+	this->config = &defaultSimpleGuiConfig;
+	setName(name);
+	setKey(key);
+	setPos(0, 0);
+	lock	  = false;
+	focused	  = false;
+
+	setup();
+	
+	disableAllEvents();		// just for safety to make sure nothing is registered twice
+//	enableAppEvents();
+//	enableMouseEvents();
+//	disableKeyEvents();
+}
+
+void ofxSimpleGuiControl::setConfig(ofxSimpleGuiConfig *config) {
+	this->config = config;
+	setup();
+}
+
+
+void ofxSimpleGuiControl::setName(string newName) {
+	name = newName;
+	if(key.compare("") == 0) setKey("");	// if key has not been set yet, set name as key too
+}
+
+
+void ofxSimpleGuiControl::setKey(string newKey) {
+	if(newKey.compare("") == 0) key = name;
+	else key = newKey;
+	for(int i=0; i<key.size(); i++) {
+		if(key[i] == ' ') key[i] = '_';
+	}
+}
+
+void ofxSimpleGuiControl::setTextColor(bool clickable) {
+	if(isMouseOver() && clickable) ofSetColor(config->textOverColor);
+	else ofSetColor(config->textColor);
+}
+
+void ofxSimpleGuiControl::setTextBGColor(bool clickable) {
+	if(isMouseOver() && clickable) ofSetColor(config->textBGOverColor);
+	else ofSetColor(config->textBGColor);
+}
+
+void ofxSimpleGuiControl::setFullColor(bool forceActive) {
+	if(isMouseDown() || forceActive) ofSetColor(config->fullActiveColor);
+	else if(isMouseOver()) ofSetColor(config->fullOverColor);
+	else ofSetColor(config->fullColor);
+}
+
+void ofxSimpleGuiControl::setEmptyColor() {
+	ofSetColor(config->emptyColor);
+	//		if(isMouseOver()) ofSetColor(config->overColor.r, config->overColor.g, config->overColor.b);
+	//		if(focused && !isMouseOver()) ofSetColor(config->focusColor.r, config->focusColor.g, config->focusColor.b);
+	
+}

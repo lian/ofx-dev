@@ -1,103 +1,126 @@
 /***********************************************************************
  
- This class solves a fluid system based on the classic Jos Stam paper I'm sure you've heard about :P
- http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
- 
- also had help from this site (though its in 3D, so simplied it a bit)
- http://www.mikeash.com/?page=pyblog/fluid-simulation-for-dummies.html
- 
- 
- In addition to the features in the Jos Stam paper, this class allows you to add colored dye and force at (x,y) coordinates using the addAt....() functions
- Also use the getInfoAtCell() function to read velocity and density at any coordinates in the fluid so you can feed it to a particle system or something
+ * this is a class for solving real-time fluid dynamics simulations based on Navier-Stokes equations 
+ * and code from Jos Stam's paper "Real-Time Fluid Dynamics for Games" http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
+ * Other useful resources and implementations I looked at while building this lib: 
+ * Mike Ash (C) - http://mikeash.com/?page=pyblog/fluid-simulation-for-dummies.html
+ * Alexander McKenzie (Java) - http://www.multires.caltech.edu/teaching/demos/java/stablefluids.htm
+ * Pierluigi Pesenti (AS3 port of Alexander's) - http://blog.oaxoa.com/2008/01/21/actionscript-3-fluids-simulation/
+ * Gustav Taxen (C) - http://www.nada.kth.se/~gustavt/fluids/
+ * Dave Wallin (C++) - http://nuigroup.com/touchlib/ (uses portions from Gustav's)
  
  
  /***********************************************************************
  
- Copyright (c) 2009, Memo Akten, www.memo.tv
+ Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
  *** The Mega Super Awesome Visuals Company ***
- 
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
- 
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
- 
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
- ***********************************************************************/
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of MSA Visuals nor the names of its contributors 
+ *       may be used to endorse or promote products derived from this software
+ *       without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS 
+ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+ * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
+ * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+ * OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
+ * ***********************************************************************/ 
+//	April 2009 optimized and extended by Maa (http://www.lagraine.com/ - new content coming soon)
+
+#ifdef	AAASEED
+#include "math/rand.h"
+static	c_rand_lin		msa_rand;
+float ofRandom(float x, float y)	{	return msa_rand.get_ufloat();	}
+#endif
 
 #include "ofxMSAFluidSolver.h"
 
-#define FLUID_CONDENSED_LOOPS				// doing a lot of the iterations in the same loop is quite faster...
 
-//#define __DO_vorticityConfinement	// I think the fluid looks better without this (at least for optical flow), so disable this to not do it
+#define FLUID_CONDENSED_LOOPS				// doing a lot of the iterations in the same loop is quite faster...
 
 #ifdef FLUID_CONDENSED_LOOPS
 #define ADD_SOURCE_UV		addSourceUV();
 #define ADD_SOURCE_RGB		addSourceRGB();
-#define DIFFUSE_RGB			diffuseRGB(0, 0);
-#define ADVECT_RGB			advectRGB(0, _u, _v);
-#define DIFFUSE_UV			diffuseUV(0, _visc);
+#define DIFFUSE_RGB			diffuseRGB(0, colorDiffusion );
+#define ADVECT_RGB			advectRGB(0, u, v);
+#define DIFFUSE_UV			diffuseUV( viscocity );
 #else	
-#define ADD_SOURCE_UV		addSource(_u, _uOld);	addSource(_v, _vOld);
-#define ADD_SOURCE_RGB		addSource(_r, _rOld);	addSource(_g, _gOld);	addSource(_b, _bOld);
-#define DIFFUSE_RGB			diffuse(0, _r, _rOld, 0);	diffuse(0, _g, _gOld, 0);	diffuse(0, _b, _bOld, 0);    
-#define ADVECT_RGB			advect(0, _r, _rOld, _u, _v);	advect(0, _g, _gOld, _u, _v);	advect(0, _b, _bOld, _u, _v);
-#define DIFFUSE_UV			diffuse(0, _u, _uOld, _visc);	diffuse(0, _v, _vOld, _visc);
-
+#define ADD_SOURCE_UV		addSource(u, uOld);	addSource(v, vOld);
+#define ADD_SOURCE_RGB		addSource(r, rOld);	addSource(g, gOld);	addSource(b, bOld);
+#define DIFFUSE_RGB			diffuse(0, r, rOld, colorDiffusion);       diffuse(0, g, gOld, colorDiffusion);       diffuse(0, b, bOld, colorDiffusion);    
+#define ADVECT_RGB			advect(0, r, rOld, u, v);	advect(0, g, gOld, u, v);	advect(0, b, bOld, u, v);
+#define DIFFUSE_UV			diffuse(0, u, uOld, viscocity);   diffuse(0, v, vOld, viscocity);
 #endif
 
-ofxMSAFluidSolver::ofxMSAFluidSolver() {
+ofxMSAFluidSolver::ofxMSAFluidSolver()
+:r(NULL)
+,rOld(NULL)
+,g(NULL)
+,gOld(NULL)
+,b(NULL)
+,bOld(NULL)
+,u(NULL)
+,uOld(NULL)
+,v(NULL)
+,vOld(NULL)
+,curl(NULL)
+,_isInited(false)
+{
 	printf("ofxMSAFluidSolver::ofxMSAFluidSolver()\n");	
+}
+
+ofxMSAFluidSolver& ofxMSAFluidSolver::setSize(int NX, int NY)
+{
+	printf("ofxMSAFluidSolver::setSize(%i, %i)\n", NX, NY);
 	
-	_r    = 0;
-	_rOld = 0;
+	_NX = NX;
+	_NY = NY;
+	_numCells = (_NX + 2) * (_NY + 2);
 	
-	_g    = 0;
-	_gOld = 0;
+	_invNX = 1.0f / _NX;
+	_invNY = 1.0f / _NY;
+	_invNumCells = 1.0f / _numCells;
 	
-	_b    = 0;
-	_bOld = 0;
+	//maa	unused
+	//	_width           = getWidth();
+	//	_height          = getHeight();
+	//	_invWidth        = 1.0f/_width;
+	//	_invHeight       = 1.0f/_height;
 	
-	_u    = 0;
-	_uOld = 0;
-	_v    = 0;
-	_vOld = 0;
-	_curl = 0;
-	
-	_isInited = false;
+	reset();
+	return *this;
 }
 
 
-ofxMSAFluidSolver& ofxMSAFluidSolver::setup(int NX, int NY) {
+ofxMSAFluidSolver& ofxMSAFluidSolver::setup(int NX, int NY)
+{
 	printf("ofxMSAFluidSolver::init(%i, %i)\n", NX, NY);
 	
 	setDeltaT();
 	setFadeSpeed();
 	setSolverIterations();
+	enableVorticityConfinement(false);
 	
-    _NX = NX;
-	_NY = NY;
-	_numCells = (_NX + 2) * (_NY + 2);
-	_invNumCells = 1.0f/ _numCells;
-	//    reset();
+	//maa
+	viscocity =  FLUID_DEFAULT_VISC;
+	colorDiffusion = FLUID_DEFAULT_COLOR_DIFFUSION;
 	
-	_invNX = 1.0f / _NX;
-	_invNY = 1.0f / _NY;
-	
-	width		= getWidth();
-	height		= getHeight();
-	invWidth	= 1.0f/width;
-	invHeight	= 1.0f/height;
-	
-	reset();
-	enableRGB(false);
-	return *this;
+	return setSize( NX, NY);
 }
 
 ofxMSAFluidSolver&  ofxMSAFluidSolver::setDeltaT(float dt) {
@@ -106,21 +129,31 @@ ofxMSAFluidSolver&  ofxMSAFluidSolver::setDeltaT(float dt) {
 }
 
 ofxMSAFluidSolver&  ofxMSAFluidSolver::setFadeSpeed(float fadeSpeed) {
-	_fadeSpeed = fadeSpeed;
+	this->fadeSpeed = fadeSpeed;
 	return *this;	
 }
 
 ofxMSAFluidSolver&  ofxMSAFluidSolver::setSolverIterations(int solverIterations) {
-	_solverIterations = solverIterations;
+	this->solverIterations = solverIterations;
 	return *this;	
 }
 
 
 // whether fluid is RGB or monochrome (if only pressure / velocity is needed no need to update 3 channels)
-ofxMSAFluidSolver&  ofxMSAFluidSolver::enableRGB(bool isRGB) {
-	_isRGB = isRGB;
+ofxMSAFluidSolver&  ofxMSAFluidSolver::enableRGB(bool doRGB) {
+	this->doRGB = doRGB;
 	return *this;
 }
+
+ofxMSAFluidSolver&  ofxMSAFluidSolver::enableVorticityConfinement(bool b) {
+	doVorticityConfinement = b;
+	return *this;
+}
+
+bool ofxMSAFluidSolver::getVorticityConfinement() {
+	return doVorticityConfinement;
+}
+
 
 
 bool ofxMSAFluidSolver::isInited() {
@@ -136,20 +169,20 @@ void ofxMSAFluidSolver::destroy() {
 	printf("ofxMSAFluidSolver::destroy()\n");
 	_isInited = false;
 	
-	if(_r)		delete []_r;
-	if(_rOld)	delete []_rOld;
+	if(r)		delete []r;
+	if(rOld)	delete []rOld;
 	
-	if(_g)		delete []_g;
-	if(_gOld)	delete []_gOld;
+	if(g)		delete []g;
+	if(gOld)	delete []gOld;
 	
-	if(_b)		delete []_b;
-	if(_bOld)	delete []_bOld;
+	if(b)		delete []b;
+	if(bOld)	delete []bOld;
 	
-	if(_u)		delete []_u;
-	if(_uOld)	delete []_uOld;
-	if(_v)		delete []_v;
-	if(_vOld)	delete []_vOld;
-	if(_curl)	delete []_curl;
+	if(u)		delete []u;
+	if(uOld)	delete []uOld;
+	if(v)		delete []v;
+	if(vOld)	delete []vOld;
+	if(curl)       delete []curl;
 }
 
 
@@ -158,25 +191,26 @@ void ofxMSAFluidSolver::reset() {
 	destroy();
 	_isInited = true;
 	
-	_r    = new float[_numCells];
-	_rOld = new float[_numCells];
+	r    = new float[_numCells];
+	rOld = new float[_numCells];
 	
-	_g    = new float[_numCells];
-	_gOld = new float[_numCells];
+	g    = new float[_numCells];
+	gOld = new float[_numCells];
 	
-	_b    = new float[_numCells];
-	_bOld = new float[_numCells];
+	b    = new float[_numCells];
+	bOld = new float[_numCells];
 	
-	_u    = new float[_numCells];
-	_uOld = new float[_numCells];
-	_v    = new float[_numCells];
-	_vOld = new float[_numCells];
-	_curl = new float[_numCells];
+	u    = new float[_numCells];
+	uOld = new float[_numCells];
+	v    = new float[_numCells];
+	vOld = new float[_numCells];
+	curl = new float[_numCells];
 	
-	for (int i = 0; i < _numCells; i++) {
-		_u[i] = _uOld[i] = _v[i] = _vOld[i] = 0.0f;
-		_curl[i] = 0.0f;
-		_r[i] = _rOld[i] = _g[i] = _gOld[i] = _b[i] = _bOld[i] = 0;
+	for ( int i = _numCells-1; i>=0; --i )
+	{
+		u[i] = uOld[i] = v[i] = vOld[i] = 0.0f;
+		curl[i] = 0.0f;
+		r[i] = rOld[i] = g[i] = gOld[i] = b[i] = bOld[i] = 0;
 	}
 }
 
@@ -189,20 +223,30 @@ int ofxMSAFluidSolver::getWidth() {
 	return _NX + 2;
 }
 
+
 int ofxMSAFluidSolver::getHeight() {
 	return _NY + 2;
 }
 
 
-ofxMSAFluidSolver& ofxMSAFluidSolver::setVisc(float newVisc, float lerpSpeed) {
-	_targetVisc = newVisc;
-	_viscLerpSpeed = lerpSpeed;
+ofxMSAFluidSolver& ofxMSAFluidSolver::setVisc(float newVisc) {
+	viscocity = newVisc;
 	return *this;
 }
 
 // returns current viscocity
 float ofxMSAFluidSolver::getVisc() {
-	return _visc;
+	return viscocity;
+}
+
+void	ofxMSAFluidSolver::setColorDiffusion( float diff )
+{
+	colorDiffusion = diff;
+}
+
+float	ofxMSAFluidSolver::getColorDiffusion()
+{
+	return colorDiffusion;
 }
 
 // returns average density of fluid 
@@ -219,126 +263,136 @@ float ofxMSAFluidSolver::getAvgSpeed() {
 	return _avgSpeed;
 }
 
-float ofxMSAFluidSolver::calcCurl(int i, int j) {
-	float du_dy = (_u[FLUID_IX(i, j + 1)] - _u[FLUID_IX(i, j - 1)]) * 0.5f;
-	float dv_dx = (_v[FLUID_IX(i + 1, j)] - _v[FLUID_IX(i - 1, j)]) * 0.5f;
-	
-	return du_dy - dv_dx;
-}
 
-#ifdef __DO_vorticityConfinement
+// Curl and vorticityConfinement based on code by Alexander McKenzie
+INLINE	float ofxMSAFluidSolver::calcCurl( int i, int j)
+{
+	float du_dy = u[FLUID_IX(i, j + 1)] - u[FLUID_IX(i, j - 1)];
+	float dv_dx = v[FLUID_IX(i + 1, j)] - v[FLUID_IX(i - 1, j)];
+	return (du_dy - dv_dx) * 0.5f;	// for optimization should be moved to later and done with another operation
+}
 
 void ofxMSAFluidSolver::vorticityConfinement(float* Fvc_x, float* Fvc_y) {
 	float dw_dx, dw_dy;
 	float length;
-	float _v;
+	float v;
 	
-	// Calculate magnitude of calcCurl(_u,_v) for each cell. (|w|)
-	for (int i = 1; i <= _NX; i++) {
-		for (int j = 1; j <= _NY; j++) {
-			_curl[FLUID_IX(i, j)] = fabs(calcCurl(i, j));
+	// Calculate magnitude of calcCurl(u,v) for each cell. (|w|)
+	for (int j = _NY; j > 0; --j )
+	{
+		for (int i = _NX; i > 0; --i )
+		{
+			curl[FLUID_IX(i, j)] = fabs(calcCurl(i, j));
 		}
 	}
 	
-	for (int i = 2; i < _NX; i++) {
-		for (int j = 2; j < _NY; j++) {
-			
+	for (int j = _NY-1; j > 1; --j )	//for (int j = 2; j < _NY; j++)
+	{
+		for (int i = _NX-1; i > 1; --i )		//for (int i = 2; i < _NX; i++)		
+		{
 			// Find derivative of the magnitude (_N = del |w|)
-			dw_dx = (_curl[FLUID_IX(i + 1, j)] - _curl[FLUID_IX(i - 1, j)]) * 0.5f;
-			dw_dy = (_curl[FLUID_IX(i, j + 1)] - _curl[FLUID_IX(i, j - 1)]) * 0.5f;
+			dw_dx = (curl[FLUID_IX(i + 1, j)] - curl[FLUID_IX(i - 1, j)]);	// was * 0.5f; now done later with 2./lenght
+			dw_dy = (curl[FLUID_IX(i, j + 1)] - curl[FLUID_IX(i, j - 1)]);	// was * 0.5f;
 			
 			// Calculate vector length. (|_N|)
 			// Add small factor to prevent divide by zeros.
 			length = (float) sqrt(dw_dx * dw_dx + dw_dy * dw_dy) + 0.000001f;
 			
 			// N = ( _N/|_N| )
-			dw_dx /= length;
-			dw_dy /= length;
+			length = 2./length;	// the 2. come from the previous * 0.5
+			dw_dx *= length;
+			dw_dy *= length;
 			
-			_v = calcCurl(i, j);
+			v = calcCurl(i, j);
 			
 			// N x w
-			Fvc_x[FLUID_IX(i, j)] = dw_dy * -_v;
-			Fvc_y[FLUID_IX(i, j)] = dw_dx *  _v;
+			Fvc_x[FLUID_IX(i, j)] = dw_dy * -v;
+			Fvc_y[FLUID_IX(i, j)] = dw_dx *  v;
 		}
 	}
 }
-#endif
 
 void ofxMSAFluidSolver::update() {
-	_visc += (_targetVisc - _visc) * _viscLerpSpeed;
-	
 	ADD_SOURCE_UV
 	
-#ifdef __DO_vorticityConfinement
-	vorticityConfinement(_uOld, _vOld);
-	ADD_SOURCE_UV
-#endif
+	if( doVorticityConfinement )
+	{
+		vorticityConfinement(uOld, vOld);
+		ADD_SOURCE_UV
+	}
 	
-	swapU();
-	swapV();
+	swapUV();
 	
-	DIFFUSE_UV(0, _visc);
+	DIFFUSE_UV(viscocity);
 	
-	project(_u, _v, _uOld, _vOld);
+	project(u, v, uOld, vOld);
 	
-	swapU(); 
-	swapV();
+	swapUV();
 	
-	advect(1, _u, _uOld, _uOld, _vOld);
-	advect(2, _v, _vOld, _uOld, _vOld);
+	advect(1, u, uOld, uOld, vOld);
+	advect(2, v, vOld, uOld, vOld);
 	
-	project(_u, _v, _uOld, _vOld);
+	project(u, v, uOld, vOld);
 	
-	if(_isRGB) {
+	if(doRGB)
+	{
 		ADD_SOURCE_RGB
 		swapRGB();
 		
-		DIFFUSE_RGB
-		swapRGB();
+		if( colorDiffusion!=0. && _dt!=0. )
+		{
+			DIFFUSE_RGB
+			swapRGB();
+		}
 		
 		ADVECT_RGB
-		
 		fadeRGB();
-	} else {
-		addSource(_r, _rOld);
+	} 
+	else
+	{
+		addSource(r, rOld);
 		swapR();
 		
-		diffuse(0, _r, _rOld, 0);
-		swapRGB();
+		if( colorDiffusion!=0. && _dt!=0. )
+		{
+			diffuse(0, r, rOld, colorDiffusion );
+			swapRGB();
+		}
 		
-		advect(0, _r, _rOld, _u, _v);	
+		advect(0, r, rOld, u, v);	
 		fadeR();
 	}
 }
 
 void ofxMSAFluidSolver::fadeR() {
 	// I want the fluid to gradually fade out so the screen doesn't fill. the amount it fades out depends on how full it is, and how uniform (i.e. boring) the fluid is...
-	float holdAmount = 1 - _avgDensity * _avgDensity * _fadeSpeed;	// this is how fast the density will decay depending on how full the screen currently is
+	//		float holdAmount = 1 - _avgDensity * _avgDensity * fadeSpeed;	// this is how fast the density will decay depending on how full the screen currently is
+	float holdAmount = 1 - fadeSpeed;
 	
 	_avgDensity = 0;
 	_avgSpeed = 0;
 	
 	float totalDeviations = 0;
 	float currentDeviation;
-	//	float uniformityMult = _uniformity * 0.05f;
+	//	float uniformityMult = uniformity * 0.05f;
 	
 	_avgSpeed = 0;
-	for (int i = 0; i < _numCells; i++) {
+	for (int i = _numCells-1; i >=0; --i)
+	{
 		// clear old values
-		_uOld[i] = _vOld[i] = 0; 
-		_rOld[i] = 0;
-		//		_gOld[i] = _bOld[i] = 0;
+		uOld[i] = vOld[i] = 0; 
+		rOld[i] = 0;
+		//		gOld[i] = bOld[i] = 0;
 		
 		// calc avg speed
-		_avgSpeed += _u[i] * _u[i] + _v[i] * _v[i];
+		_avgSpeed += u[i] * u[i] + v[i] * v[i];
 		
 		// calc avg density
-		_r[i] = MIN(1.0f, _r[i]);
-		//		_g[i] = MIN(1.0f, _g[i]);
-		//		_b[i] = MIN(1.0f, _b[i]);
-		//		float density = MAX(_r[i], MAX(_g[i], _b[i]));
-		float density = _r[i];
+		r[i] = MIN(1.0f, r[i]);
+		//		g[i] = MIN(1.0f, g[i]);
+		//		b[i] = MIN(1.0f, b[i]);
+		//		float density = MAX(r[i], MAX(g[i], b[i]));
+		float density = r[i];
 		_avgDensity += density;	// add it up
 		
 		// calc deviation (for uniformity)
@@ -346,20 +400,20 @@ void ofxMSAFluidSolver::fadeR() {
 		totalDeviations += currentDeviation * currentDeviation;
 		
 		// fade out old
-		_r[i] *= holdAmount;
-//		_r[i] *= _fadeSpeed;
+		r[i] *= holdAmount;
 	}
 	_avgDensity *= _invNumCells;
 	//	_avgSpeed *= _invNumCells;
 	
-	//	printf("%.3f\n", _avgSpeed);
+	//	println("%.3f\n", _avgSpeed);
 	_uniformity = 1.0f / (1 + totalDeviations * _invNumCells);		// 0: very wide distribution, 1: very uniform
 }
 
 
 void ofxMSAFluidSolver::fadeRGB() {
 	// I want the fluid to gradually fade out so the screen doesn't fill. the amount it fades out depends on how full it is, and how uniform (i.e. boring) the fluid is...
-	float holdAmount = 1 - _avgDensity * _avgDensity * _fadeSpeed;	// this is how fast the density will decay depending on how full the screen currently is
+	//		float holdAmount = 1 - _avgDensity * _avgDensity * fadeSpeed;	// this is how fast the density will decay depending on how full the screen currently is
+	float holdAmount = 1 - fadeSpeed;
 	
 	_avgDensity = 0;
 	_avgSpeed = 0;
@@ -369,75 +423,86 @@ void ofxMSAFluidSolver::fadeRGB() {
 	//	float uniformityMult = _uniformity * 0.05f;
 	
 	_avgSpeed = 0;
-	for (int i = 0; i < _numCells; i++) {
+	for (int i = _numCells-1; i >=0; --i)
+	{
 		// clear old values
-		_uOld[i] = _vOld[i] = 0; 
-		_rOld[i] = 0;
-		_gOld[i] = _bOld[i] = 0;
+		uOld[i] = vOld[i] = 0; 
+		rOld[i] = 0;
+		gOld[i] = bOld[i] = 0;
 		
 		// calc avg speed
-		_avgSpeed += _u[i] * _u[i] + _v[i] * _v[i];
+		_avgSpeed += u[i] * u[i] + v[i] * v[i];
 		
 		// calc avg density
-		_r[i] = MIN(1.0f, _r[i]);
-		_g[i] = MIN(1.0f, _g[i]);
-		_b[i] = MIN(1.0f, _b[i]);
-		float density = MAX(_r[i], MAX(_g[i], _b[i]));
-		//float density = _r[i];
+		r[i] = MIN(1.0f, r[i]);
+		g[i] = MIN(1.0f, g[i]);
+		b[i] = MIN(1.0f, b[i]);
+		float density = MAX(r[i], MAX(g[i], b[i]));
+		//float density = r[i];
 		_avgDensity += density;	// add it up
 		
-		// calc deviation (for uniformity)
+		// calc deviation (for _uniformity)
 		currentDeviation = density - _avgDensity;
 		totalDeviations += currentDeviation * currentDeviation;
 		
 		// fade out old
-		_r[i] *= holdAmount;
-		_g[i] *= holdAmount;
-		_b[i] *= holdAmount;
-
+		r[i] *= holdAmount;
+		g[i] *= holdAmount;
+		b[i] *= holdAmount;
+		
 	}
 	_avgDensity *= _invNumCells;
 	_avgSpeed *= _invNumCells;
 	
-	//printf("%.3f\n", _avgDensity);
+	//println("%.3f\n", _avgDensity);
 	_uniformity = 1.0f / (1 + totalDeviations * _invNumCells);		// 0: very wide distribution, 1: very uniform
 }
 
 
-void ofxMSAFluidSolver::addSourceUV() {
-	for (int i = 0; i < _numCells; i++) {
-		_u[i] += _dt * _uOld[i];
-		_v[i] += _dt * _vOld[i];
+void ofxMSAFluidSolver::addSourceUV()
+{
+	for (int i = _numCells-1; i >=0; --i)
+	{
+		u[i] += _dt * uOld[i];
+		v[i] += _dt * vOld[i];
 	}
 }
 
-void ofxMSAFluidSolver::addSourceRGB() {
-	for (int i = 0; i < _numCells; i++) {
-		_r[i] += _dt * _rOld[i];
-		_g[i] += _dt * _gOld[i];
-		_b[i] += _dt * _bOld[i];		
+void ofxMSAFluidSolver::addSourceRGB()
+{
+	for (int i = _numCells-1; i >=0; --i)
+	{
+		r[i] += _dt * rOld[i];
+		g[i] += _dt * gOld[i];
+		b[i] += _dt * bOld[i];		
 	}
 }
 
 
 
 void ofxMSAFluidSolver::addSource(float* x, float* x0) {
-	for (int i = 0; i < _numCells; i++) {
+	for (int i = _numCells-1; i >=0; --i)
+	{
 		x[i] += _dt * x0[i];
 	}
 }
 
 
-void ofxMSAFluidSolver::advect(int _b, float* _d, float* d0, float* du, float* dv) {
+void ofxMSAFluidSolver::advect( int bound, float* d, float* d0, float* du, float* dv) {
 	int i0, j0, i1, j1;
-	float x, y, s0, t0, s1, t1, dt0;
+	float x, y, s0, t0, s1, t1, dt0x, dt0y;
+	int	index;
 	
-	dt0 = _dt * _NX;
+	dt0x = _dt * _NX;
+	dt0y = _dt * _NY;
 	
-	for (int i = 1; i <= _NX; i++) {
-		for (int j = 1; j <= _NY; j++) {
-			x = i - dt0 * du[FLUID_IX(i, j)];
-			y = j - dt0 * dv[FLUID_IX(i, j)];
+	for (int j = _NY; j > 0; --j)
+	{
+		for (int i = _NX; i > 0; --i)
+		{
+			index = FLUID_IX(i, j);
+			x = i - dt0x * du[index];
+			y = j - dt0y * dv[index];
 			
 			if (x > _NX + 0.5) x = _NX + 0.5f;
 			if (x < 0.5)     x = 0.5f;
@@ -456,162 +521,241 @@ void ofxMSAFluidSolver::advect(int _b, float* _d, float* d0, float* du, float* d
 			t1 = y - j0;
 			t0 = 1 - t1;
 			
-			_d[FLUID_IX(i, j)] = s0 * (t0 * d0[FLUID_IX(i0, j0)] + t1 * d0[FLUID_IX(i0, j1)])
+			d[index] = s0 * (t0 * d0[FLUID_IX(i0, j0)] + t1 * d0[FLUID_IX(i0, j1)])
 			+ s1 * (t0 * d0[FLUID_IX(i1, j0)] + t1 * d0[FLUID_IX(i1, j1)]);
 			
 		}
 	}
-	setBoundry(_b, _d);
+	setBoundary(bound, d);
 }
 
-void ofxMSAFluidSolver::advectRGB(int _bound, float* du, float* dv) {
+void ofxMSAFluidSolver::advectRGB(int bound, float* du, float* dv) {
 	int i0, j0, i1, j1;
-	float x, y, s0, t0, s1, t1, dt0;
+	float x, y, s0, t0, s1, t1, dt0x, dt0y;
+	int	index;
 	
-	dt0 = _dt * _NX;
+	dt0x = _dt * _NX;
+	dt0y = _dt * _NY;
 	
-	for (int i = 1; i <= _NX; i++) {
-		for (int j = 1; j <= _NY; j++) {
-			x = i - dt0 * du[FLUID_IX(i, j)];
-			y = j - dt0 * dv[FLUID_IX(i, j)];
+	for (int j = _NY; j > 0; --j)
+	{
+		for (int i = _NX; i > 0; --i)
+		{
+			index = FLUID_IX(i, j);
+			x = i - dt0x * du[index];
+			y = j - dt0y * dv[index];
 			
 			if (x > _NX + 0.5) x = _NX + 0.5f;
 			if (x < 0.5)     x = 0.5f;
 			
 			i0 = (int) x;
-			i1 = i0 + 1;
 			
 			if (y > _NY + 0.5) y = _NY + 0.5f;
 			if (y < 0.5)     y = 0.5f;
 			
 			j0 = (int) y;
-			j1 = j0 + 1;
 			
 			s1 = x - i0;
 			s0 = 1 - s1;
 			t1 = y - j0;
 			t0 = 1 - t1;
 			
-			_r[FLUID_IX(i, j)] = s0 * (t0 * _rOld[FLUID_IX(i0, j0)] + t1 * _rOld[FLUID_IX(i0, j1)])	+ s1 * (t0 * _rOld[FLUID_IX(i1, j0)] + t1 * _rOld[FLUID_IX(i1, j1)]);
-			_g[FLUID_IX(i, j)] = s0 * (t0 * _gOld[FLUID_IX(i0, j0)] + t1 * _gOld[FLUID_IX(i0, j1)])	+ s1 * (t0 * _gOld[FLUID_IX(i1, j0)] + t1 * _gOld[FLUID_IX(i1, j1)]);			
-			_b[FLUID_IX(i, j)] = s0 * (t0 * _bOld[FLUID_IX(i0, j0)] + t1 * _bOld[FLUID_IX(i0, j1)])	+ s1 * (t0 * _bOld[FLUID_IX(i1, j0)] + t1 * _bOld[FLUID_IX(i1, j1)]);				
+			i0 = FLUID_IX(i0, j0);	//we don't need col/row index any more but index in 1 dimension
+			j0 = i0 + (_NX + 2);
+			r[index] = s0 * ( t0 * rOld[i0] + t1 * rOld[j0] ) + s1 * ( t0 * rOld[i0+1] + t1 * rOld[j0+1] );
+			g[index] = s0 * ( t0 * gOld[i0] + t1 * gOld[j0] ) + s1 * ( t0 * gOld[i0+1] + t1 * gOld[j0+1] );                  
+			b[index] = s0 * ( t0 * bOld[i0] + t1 * bOld[j0] ) + s1 * ( t0 * bOld[i0+1] + t1 * bOld[j0+1] );                          
 		}
 	}
-	setBoundryRGB(_bound);
+	setBoundaryRGB(bound);
 }
 
 
 
-void ofxMSAFluidSolver::diffuse(int _b, float* c, float* c0, float _diff) {
-	float a = _dt * _diff * _NX * _NY;
-	linearSolver(_b, c, c0, a, 1.0 + 4 * a);
+void ofxMSAFluidSolver::diffuse( int bound, float* c, float* c0, float diff )
+{
+	float a = _dt * diff * _NX * _NY;	//todo find the exact strategy for using _NX and _NY in the factors
+	linearSolver( bound, c, c0, a, 1.0 + 4 * a );
 }
 
-void ofxMSAFluidSolver::diffuseRGB(int _b, float _diff) {
-	float a = _dt * _diff * _NX * _NY;
-	linearSolverRGB(_b, a, 1.0 + 4 * a);
+void ofxMSAFluidSolver::diffuseRGB( int bound, float diff )
+{
+	float a = _dt * diff * _NX * _NY;
+	linearSolverRGB( bound, a, 1.0 + 4 * a );
 }
 
-void ofxMSAFluidSolver::diffuseUV(int _b, float _diff) {
-	float a = _dt * _diff * _NX * _NY;
-	linearSolverUV(_b, a, 1.0 + 4 * a);
+void ofxMSAFluidSolver::diffuseUV( float diff )
+{
+	float a = _dt * diff * _NX * _NY;
+	linearSolverUV( a, 1.0 + 4 * a );
 }
 
 
-void ofxMSAFluidSolver::project(float* x, float* y, float* p, float* div)  {
-	for (int i = 1; i <= _NX; i++) {
-		for (int j = 1; j <= _NY; j++) {
-			div[FLUID_IX(i, j)] = (x[FLUID_IX(i+1, j)] - x[FLUID_IX(i-1, j)] + y[FLUID_IX(i, j+1)] - y[FLUID_IX(i, j-1)])
-			* - 0.5f / _NX;
-			p[FLUID_IX(i, j)] = 0;
+void ofxMSAFluidSolver::project(float* x, float* y, float* p, float* div) 
+{
+	float	h;
+	int		index;
+	int		step_x = _NX + 2;
+	
+	h = - 0.5f / _NX;
+	for (int j = _NY; j > 0; --j)
+	{
+		index = FLUID_IX(_NX, j);
+		for (int i = _NX; i > 0; --i)
+		{
+			div[index] = h * ( x[index+1] - x[index-1] + y[index+step_x] - y[index-step_x] );
+			p[index] = 0;
+			--index;
 		}
 	}
 	
-	setBoundry(0, div);
-	setBoundry(0, p);
+	setBoundary(0, div);
+	setBoundary(0, p);
 	
 	linearSolver(0, p, div, 1, 4);
 	
-	for (int i = 1; i <= _NX; i++) {
-		for (int j = 1; j <= _NY; j++) {
-			x[FLUID_IX(i, j)] -= 0.5f * _NX * (p[FLUID_IX(i+1, j)] - p[FLUID_IX(i-1, j)]);
-			y[FLUID_IX(i, j)] -= 0.5f * _NX * (p[FLUID_IX(i, j+1)] - p[FLUID_IX(i, j-1)]);
+	float fx = 0.5f * _NX;
+	float fy = 0.5f * _NY;	//maa	change it from _NX to _NY
+	for (int j = _NY; j > 0; --j)
+	{
+		index = FLUID_IX(_NX, j);
+		for (int i = _NX; i > 0; --i)
+		{
+			x[index] -= fx * (p[index+1] - p[index-1]);
+			y[index] -= fy * (p[index+step_x] - p[index-step_x]);
+			--index;
 		}
 	}
 	
-	setBoundry(1, x);
-	setBoundry(2, y);
+	setBoundary(1, x);
+	setBoundary(2, y);
 }
 
 
-
-void ofxMSAFluidSolver::linearSolver(int _b, float* x, float* x0, float a, float c) {
-	for (int k = 0; k < _solverIterations; k++) {
-		for (int i = 1; i <= _NX; i++) {
-			for (int j = 1; j <= _NY; j++) {
-				x[FLUID_IX(i, j)] = (a * ( x[FLUID_IX(i-1, j)] + x[FLUID_IX(i+1, j)]  +   x[FLUID_IX(i, j-1)] + x[FLUID_IX(i, j+1)])  +  x0[FLUID_IX(i, j)]) / c;
+//	Gauss-Seidel relaxation
+void ofxMSAFluidSolver::linearSolver( int bound, float* x, float* x0, float a, float c )
+{
+	int	step_x = _NX + 2;
+	int index;
+	if( a == 1. && c == 4. )	//	optimize call in project()
+	{
+		for (int k = solverIterations; k > 0; --k)	// MEMO 
+		{
+			for (int j = _NY; j > 0 ; --j)
+			{
+				/*				index = FLUID_IX(_NX, j );
+				 float* p = &x[index];
+				 float* po = &x0[index]+1;
+				 for (int i = _NX; i > 0 ; --i)
+				 {
+				 *p = ( *(p-1) + *(p+1) + *(p-step_x) + *(p+step_x) + *--po ) * .25;
+				 --p;
+				 }
+				 */
+				index = FLUID_IX(_NX, j );
+				for (int i = _NX; i > 0 ; --i)
+				{
+					x[index] = ( x[index-1] + x[index+1] + x[index - step_x] + x[index + step_x] + x0[index] ) * .25;
+					--index;				
+				}
 			}
+			setBoundary( bound, x );
 		}
-		setBoundry(_b, x);
+	}
+	else
+	{
+		c = 1. / c;
+		for (int k = solverIterations; k > 0; --k)	// MEMO 
+		{
+			for (int j = _NY; j > 0 ; --j)
+			{
+				index = FLUID_IX(_NX, j );
+				for (int i = _NX; i > 0 ; --i)
+				{
+					x[index] = ( ( x[index-1] + x[index+1] + x[index - step_x] + x[index + step_x] ) * a + x0[index] ) * c;
+					--index;
+				}
+			}
+			setBoundary( bound, x );
+		}
 	}
 }
 
-//#define LINEAR_SOLVE_EQ	(x, x0)			(a * ( x[] + x[]  +  x[] + x[])  +  x0[]) / c;
 
-void ofxMSAFluidSolver::linearSolverRGB(int _bound, float a, float c) {
-	int index1, index2, index3, index4, index5;
-	for (int k = 0; k < _solverIterations; k++) {		// MEMO
-		for (int i = 1; i <= _NX; i++) {
-			for (int j = 1; j <= _NY; j++) {
-				index5 = FLUID_IX(i, j);
-				index1 = index5 - 1;//FLUID_IX(i-1, j);
-				index2 = index5 + 1;//FLUID_IX(i+1, j);
-				index3 = index5 - (_NX + 2);//FLUID_IX(i, j-1);
-				index4 = index5 + (_NX + 2);//FLUID_IX(i, j+1);
-				
-				_r[index5] = (a * ( _r[index1] + _r[index2]  +  _r[index3] + _r[index4])  +  _rOld[index5]) / c;
-				_g[index5] = (a * ( _g[index1] + _g[index2]  +  _g[index3] + _g[index4])  +  _gOld[index5]) / c;
-				_b[index5] = (a * ( _b[index1] + _b[index2]  +  _b[index3] + _b[index4])  +  _bOld[index5]) / c;				
+void ofxMSAFluidSolver::linearSolverRGB( int bound, float a, float c )
+{
+	int index3, index4, index;
+	int	step_x = _NX + 2;
+	c = 1. / c;
+	for ( int k = solverIterations; k > 0; --k )	// MEMO
+	{           
+		for (int j = _NY; j > 0 ; --j)
+		{
+			index = FLUID_IX(_NX, j );
+			//index1 = index - 1;		//FLUID_IX(i-1, j);
+			//index2 = index + 1;		//FLUID_IX(i+1, j);
+			index3 = index - step_x;	//FLUID_IX(i, j-1);
+			index4 = index + step_x;	//FLUID_IX(i, j+1);
+			for (int i = _NX; i > 0 ; --i)
+			{	
+				r[index] = ( ( r[index-1] + r[index+1]  +  r[index3] + r[index4] ) * a  +  rOld[index] ) * c;
+				g[index] = ( ( g[index-1] + g[index+1]  +  g[index3] + g[index4] ) * a  +  gOld[index] ) * c;
+				b[index] = ( ( b[index-1] + b[index+1]  +  b[index3] + b[index4] ) * a  +  bOld[index] ) * c;                                
 				//				x[FLUID_IX(i, j)] = (a * ( x[FLUID_IX(i-1, j)] + x[FLUID_IX(i+1, j)]  +  x[FLUID_IX(i, j-1)] + x[FLUID_IX(i, j+1)])  +  x0[FLUID_IX(i, j)]) / c;
+				--index;
+				--index3;
+				--index4;
 			}
 		}
-		setBoundryRGB(_bound);
+		setBoundaryRGB( bound );	
 	}
 }
 
-void ofxMSAFluidSolver::linearSolverUV(int _bound, float a, float c) {
-	int index1, index2, index3, index4, index5;
-	for (int k = 0; k < _solverIterations; k++) {		// MEMO
-		for (int i = 1; i <= _NX; i++) {
-			for (int j = 1; j <= _NY; j++) {
-				index5 = FLUID_IX(i, j);
-				index1 = index5 - 1;//FLUID_IX(i-1, j);
-				index2 = index5 + 1;//FLUID_IX(i+1, j);
-				index3 = index5 - (_NX + 2);//FLUID_IX(i, j-1);
-				index4 = index5 + (_NX + 2);//FLUID_IX(i, j+1);
+void ofxMSAFluidSolver::linearSolverUV( float a, float c )
+{
+	int index;
+	int	step_x = _NX + 2;
+	c = 1. / c;
+	for (int k = solverIterations; k > 0; --k)	// MEMO
+	{           
+		for (int j = _NY; j > 0 ; --j)
+		{
+			index = FLUID_IX(_NX, j );
+			//index1 = index - 1;		//FLUID_IX(i-1, j);
+			//index2 = index + 1;		//FLUID_IX(i+1, j);
+			//index3 = index - step_x;	//FLUID_IX(i, j-1);
+			//index4 = index + step_x;	//FLUID_IX(i, j+1);
+			for (int i = _NX; i > 0 ; --i)
+			{
 				
-				_u[index5] = (a * ( _u[index1] + _u[index2]  +  _u[index3] + _u[index4])  +  _uOld[index5]) / c;
-				_v[index5] = (a * ( _v[index1] + _v[index2]  +  _v[index3] + _v[index4])  +  _vOld[index5]) / c;
+				u[index] = ( ( u[index-1] + u[index+1] + u[index - step_x] + u[index + step_x] ) * a  +  uOld[index] ) * c;
+				v[index] = ( ( v[index-1] + v[index+1] + v[index - step_x] + v[index + step_x] ) * a  +  vOld[index] ) * c;
 				//				x[FLUID_IX(i, j)] = (a * ( x[FLUID_IX(i-1, j)] + x[FLUID_IX(i+1, j)]  +  x[FLUID_IX(i, j-1)] + x[FLUID_IX(i, j+1)])  +  x0[FLUID_IX(i, j)]) / c;
+				--index;
 			}
 		}
-		setBoundryRGB(_bound);
+		//setBoundaryRGB( bound );	//maa changed this
+		setBoundary( 1, u );
+		setBoundary( 2, v );
 	}
 }
-
 
 
 // specifies simple boundry conditions.
-void ofxMSAFluidSolver::setBoundry(int _b, float* x) {
+void ofxMSAFluidSolver::setBoundary(int bound, float* x)
+{
 	//return;
-	for (int i = 1; i <= _NX; i++) {
-		if(i<= _NY) {
-			x[FLUID_IX(  0, i  )] = _b == 1 ? -x[FLUID_IX(_NX, i)] : x[FLUID_IX(_NX, i)];
-			x[FLUID_IX(_NX+1, i  )] = _b == 1 ? -x[FLUID_IX(1, i)] : x[FLUID_IX(1, i)];
-		}
-		
-		x[FLUID_IX(  i, 0  )] = _b == 2 ? -x[FLUID_IX(i, 1)] : x[FLUID_IX(i, 1)];
-		x[FLUID_IX(  i, _NY+1)] = _b == 2 ? -x[FLUID_IX(i, _NY)] : x[FLUID_IX(i, _NY)];
+	for (int i = _NY; i > 0; --i )
+	{
+		//maa x[FLUID_IX(  0, i  )] = bound == 1 ? -x[FLUID_IX(_NX, i)] : x[FLUID_IX(_NX, i)];
+		//maa x[FLUID_IX(_NX+1, i  )] = bound == 1 ? -x[FLUID_IX(1, i)] : x[FLUID_IX(1, i)];
+		x[FLUID_IX(  0, i  )] = bound == 1 ? -x[FLUID_IX(1, i)] : x[FLUID_IX(1, i)];
+		x[FLUID_IX(_NX+1, i  )] = bound == 1 ? -x[FLUID_IX(_NX, i)] : x[FLUID_IX(_NX, i)];
+	}
+	for (int i = _NX; i > 0; --i )
+	{
+		x[FLUID_IX(  i, 0  )] = bound == 2 ? -x[FLUID_IX(i, 1)] : x[FLUID_IX(i, 1)];
+		x[FLUID_IX(  i, _NY+1)] = bound == 2 ? -x[FLUID_IX(i, _NY)] : x[FLUID_IX(i, _NY)];
 	}
 	
 	x[FLUID_IX(  0,   0)] = 0.5f * (x[FLUID_IX(1, 0  )] + x[FLUID_IX(  0, 1)]);
@@ -620,37 +764,49 @@ void ofxMSAFluidSolver::setBoundry(int _b, float* x) {
 	x[FLUID_IX(_NX+1, _NY+1)] = 0.5f * (x[FLUID_IX(_NX, _NY+1)] + x[FLUID_IX(_NX+1, _NY)]);
 }
 
+#define CPY_RGB( d, s )		{	r[d] = r[s];	g[d] = g[s];	b[d] = b[s]; }
+#define CPY_RGB_NEG( d, s )	{	r[d] = -r[s];	g[d] = -g[s];	b[d] = -b[s]; }
+
 // specifies simple boundry conditions.
-void ofxMSAFluidSolver::setBoundryRGB(int _bound) {
-	int index1, index2;
-	for (int i = 1; i <= _NX; i++) {
-		if(i<= _NY) {
-			index1 = FLUID_IX(0, i);
-			index2 = FLUID_IX(_NX, i);
-			_r[index1] = _bound == 1 ? -_r[index2] : _r[index2];
-			_g[index1] = _bound == 1 ? -_g[index2] : _g[index2];
-			_b[index1] = _bound == 1 ? -_b[index2] : _b[index2];
-			
-			index1 = FLUID_IX(_NX+1, i );
-			index2 = FLUID_IX(1, i);
-			_r[index1] = _bound == 1 ? -_r[index2] : _r[index2];
-			_g[index1] = _bound == 1 ? -_g[index2] : _g[index2];
-			_b[index1] = _bound == 1 ? -_b[index2] : _b[index2];
+void ofxMSAFluidSolver::setBoundaryRGB( int bound )
+{
+	int step, dst1, dst2, src1, src2;
+	
+	step = FLUID_IX(0, 1) - FLUID_IX(0, 0);
+	dst1 = FLUID_IX(0, 1);
+	src1 = FLUID_IX(1, 1);
+	dst2 = FLUID_IX(_NX+1, 1 );
+	src2 = FLUID_IX(_NX, 1);
+	if( bound == 1 )
+		for (int i = _NY; i > 0; --i )
+		{
+			CPY_RGB_NEG( dst1, src1 );	dst1 += step;	src1 += step;	
+			CPY_RGB_NEG( dst2, src2 );	dst2 += step;	src2 += step;	
 		}
-		
-		index1 = FLUID_IX(i, 0);
-		index2 = FLUID_IX(i, 1);
-		_r[index1] = _bound == 2 ? -_r[index2] : _r[index2];
-		_g[index1] = _bound == 2 ? -_g[index2] : _g[index2];
-		_b[index1] = _bound == 2 ? -_b[index2] : _b[index2];
-		
-		index1 = FLUID_IX(i, _NY+1);
-		index2 = FLUID_IX(i, _NY);
-		_r[index1] = _bound == 2 ? -_r[index2] : _r[index2];
-		_g[index1] = _bound == 2 ? -_g[index2] : _g[index2];
-		_b[index1] = _bound == 2 ? -_b[index2] : _b[index2];
-		
-	}
+	else
+		for (int i = _NY; i > 0; --i )
+		{
+			CPY_RGB( dst1, src1 );	dst1 += step;	src1 += step;	
+			CPY_RGB( dst2, src2 );	dst2 += step;	src2 += step;	
+		}
+	
+	step = FLUID_IX(1, 0) - FLUID_IX(0, 0);
+	dst1 = FLUID_IX(1, 0);
+	src1 = FLUID_IX(1, 1);
+	dst2 = FLUID_IX(1, _NY+1);
+	src2 = FLUID_IX(1, _NY);
+	if( bound == 2 )
+		for (int i = _NX; i > 0; --i )
+		{
+			CPY_RGB_NEG( dst1, src1 );	dst1 += step;	src1 += step;	
+			CPY_RGB_NEG( dst2, src2 );	dst2 += step;	src2 += step;	
+		}
+	else
+		for (int i = _NX; i > 0; --i )
+		{
+			CPY_RGB( dst1, src1 );	dst1 += step;	src1 += step;	
+			CPY_RGB( dst2, src2 );	dst2 += step;	src2 += step;	
+		}
 	
 	//	x[FLUID_IX(  0,   0)] = 0.5f * (x[FLUID_IX(1, 0  )] + x[FLUID_IX(  0, 1)]);
 	//	x[FLUID_IX(  0, _NY+1)] = 0.5f * (x[FLUID_IX(1, _NY+1)] + x[FLUID_IX(  0, _NY)]);
@@ -660,116 +816,36 @@ void ofxMSAFluidSolver::setBoundryRGB(int _bound) {
 }
 
 
-void ofxMSAFluidSolver::swapU() { 
-	_tmp = _u; 
-	_u = _uOld; 
-	_uOld = _tmp; 
+#ifndef	SWAP
+template<class T> INLINE void SWAP( T& a, T& b)
+{
+	T tmp = b;
+	b = a;
+	a = tmp;
 }
-void ofxMSAFluidSolver::swapV(){ 
-	_tmp = _v; 
-	_v = _vOld; 
-	_vOld = _tmp; 
-}
-void ofxMSAFluidSolver::swapR(){ 
-	_tmp = _r;
-	_r = _rOld;
-	_rOld = _tmp;
-}
+#endif
 
+void ofxMSAFluidSolver::swapR()		{	SWAP( r, rOld );	}
 void ofxMSAFluidSolver::swapRGB(){ 
-	_tmp = _r;
-	_r = _rOld;
-	_rOld = _tmp;
-	
-	_tmp = _g;
-	_g = _gOld;
-	_gOld = _tmp;
-	
-	_tmp = _b;
-	_b = _bOld;
-	_bOld = _tmp;
+	SWAP( r, rOld );
+	SWAP( g, gOld );
+	SWAP( b, bOld );
 }
-
-
-// get index for normalized position
-int ofxMSAFluidSolver::fluidIndex(float x, float y) {
-	return 0;
-	// TODO
-}
-
-
-
-void ofxMSAFluidSolver::getInfoAtPos(float x, float y, ofPoint *vel, ofPoint *color) {
-	int i= (int)(x * (_NX+2));
-	int j= (int)(y * (_NY+2));
-	getInfoAtCell(i, j, vel, color);
-}
-
-void ofxMSAFluidSolver::getInfoAtCell(int i, int j,  ofPoint *vel, ofPoint *color) {
-	if(i<0) i = 0; else if(i > _NX+1) i = _NX+1;
-	if(j<0) j = 0; else if(j > _NY+1) j = _NY+1;
-	getInfoAtCell(FLUID_IX(i, j), vel, color);
-}
-
-
-void ofxMSAFluidSolver::getInfoAtCell(int i,  ofPoint *vel, ofPoint *color) {
-	//	if(safeToRun()){
-	if(vel) vel->set(_u[i] * _invNX, _v[i] * _invNY);
-	if(color) {
-		if(_isRGB) color->set(_r[i], _g[i], _b[i]);
-		else color->set(_r[i], _r[i], _r[i]);
-	}
-	//		unlock();
-	//	}
-}
-
-
-
-void ofxMSAFluidSolver::addForceAtPos(float x, float y, float vx, float vy) {
-	int i = (int) (x * _NX + 1);
-	int j = (int) (y * _NY + 1);
-	if(i<0 || i>_NX+1 || j<0 || j>_NY+1) return;
-	addForceAtCell(i, j, vx, vy);
-}
-
-void ofxMSAFluidSolver::addForceAtCell(int i, int j, float vx, float vy) {
-	//	if(safeToRun()){
-	int index = FLUID_IX(i, j);
-	_uOld[index] += vx * _NX;
-	_vOld[index] += vy * _NY;
-	//		unlock();
-	//	}
-}
-
-
-void ofxMSAFluidSolver::addColorAtPos(float x, float y, float r, float g, float b) {
-	int i = (int) (x * _NX + 1);
-	int j = (int) (y * _NY + 1);
-	if(i<0 || i>_NX+1 || j<0 || j>_NY+1) return;
-	addColorAtCell(i, j, r, g, b);	
-}
-
-void ofxMSAFluidSolver::addColorAtCell(int i, int j, float r, float g, float b) {
-	//	if(safeToRun()){
-	int index = FLUID_IX(i, j);
-	_rOld[index] += r;
-	if(_isRGB) {
-		_gOld[index] += g;
-		_bOld[index] += b;
-	}
-	//		unlock();
-	//	}
+void ofxMSAFluidSolver::swapUV()	{	SWAP( u, uOld );
+	SWAP( v, vOld );
 }
 
 
 void ofxMSAFluidSolver::randomizeColor() {
-	for(int i=0; i< getWidth(); i++) {
-		for(int j=0; j< getHeight(); j++) {
+	for (int i = getWidth()-1; i > 0; --i)
+	{
+		for (int j = getHeight()-1; j > 0; --j)
+		{
 			int index = FLUID_IX(i, j);
-			_r[index] = _rOld[index] = ofRandom(0, 1);
-			if(_isRGB) {
-				_g[index] = _gOld[index] = ofRandom(0, 1);
-				_b[index] = _bOld[index] = ofRandom(0, 1);
+			r[index] = rOld[index] = ofRandom(0, 1);
+			if(doRGB) {
+				g[index] = gOld[index] = ofRandom(0, 1);
+				b[index] = bOld[index] = ofRandom(0, 1);
 			}
 		} 
 	}
@@ -794,12 +870,12 @@ void ofxMSAFluidSolver::randomizeColor() {
  
  if(generateMult > 0) {
  float speedMult = 1.0f/255.0f * speed2 * speed2 * generateMult;
- _rOld[index] += speedMult * r;
- _gOld[index] += speedMult * g;
- _bOld[index] += speedMult * b;
+ rOld[index] += speedMult * r;
+ gOld[index] += speedMult * g;
+ bOld[index] += speedMult * b;
  }
- _uOld[index] += dx * velocityMult;
- _vOld[index] += dy * velocityMult;
+ uOld[index] += dx * velocityMult;
+ vOld[index] += dy * velocityMult;
  
  }
  }

@@ -3,6 +3,10 @@
  Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
  *** The Mega Super Awesome Visuals Company ***
  * All rights reserved.
+ 
+ based on Todd Vanderlin's ofxSimpleGui API
+ http://toddvanderlin.com/
+ 
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,11 +33,7 @@
  *
  * ***********************************************************************/ 
 
-#pragma once
 
-#define OF_ADDON_USING_OFXMSAFLUID
+#include "ofxSimpleGuiConfig.h"
 
-#include "ofxMSAFluidSolver.h"
-#include "ofxMSAFluidDrawer.h"
-
-#include "ofxMSAFluidParticleUpdater.h"
+ofxSimpleGuiConfig defaultSimpleGuiConfig;

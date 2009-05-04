@@ -3,6 +3,10 @@
  Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
  *** The Mega Super Awesome Visuals Company ***
  * All rights reserved.
+ 
+ based on Todd Vanderlin's ofxSimpleGui API
+ http://toddvanderlin.com/
+ 
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -29,11 +33,49 @@
  *
  * ***********************************************************************/ 
 
+
 #pragma once
 
-#define OF_ADDON_USING_OFXMSAFLUID
+#include "ofxSimpleGuiIncludes.h"
 
-#include "ofxMSAFluidSolver.h"
-#include "ofxMSAFluidDrawer.h"
+class ofxSimpleGuiPage : public ofxSimpleGuiControl {
+public:
+	ofxSimpleGuiPage(string name);
+	~ofxSimpleGuiPage();
+	
+	void					draw(float x = 0, float y = 0);
+	
+	void					loadFromXML(ofxXmlSettings &XML);
+	void					saveToXML(ofxXmlSettings &XML);
+	
+	ofxSimpleGuiControl		*addControl(ofxSimpleGuiControl* control);
+	ofxSimpleGuiButton		*addButton(string name, bool *value);
+	ofxSimpleGuiContent		*addContent(string name, ofBaseDraws *content, float fixwidth = -1);
+	ofxSimpleGuiFPSCounter	*addFPSCounter();
+//	ofxSimpleGuiQuadWarp	*addQuadWarper(string name, float x, float y, float sw, float sh, ofPoint **pts);
+//	ofxSimpleGuiMovieSlider	*addMovieSlider(string name, ofVideoPlayer* input);
+	ofxSimpleGuiSliderInt	*addSlider(string name, int *value, int min, int max);
+	ofxSimpleGuiSliderFloat	*addSlider(string name, float *value, float min, float max, float smoothing = 0);
+	ofxSimpleGuiSlider2d	*addSlider2d(string name, ofPoint* value, float xmin, float xmax, float ymin, float ymax);
+	ofxSimpleGuiTitle		*addTitle(string name, bool *value = NULL);
+	ofxSimpleGuiToggle		*addToggle(string name, bool *value);
 
-#include "ofxMSAFluidParticleUpdater.h"
+	
+	//	void setup(ofEventArgs &e);
+	void update(ofEventArgs &e);
+	//  void draw(ofEventArgs &e);
+	//	void exit(ofEventArgs &e);
+	
+	void mouseMoved(ofMouseEventArgs &e);
+	void mousePressed(ofMouseEventArgs &e);	
+	void mouseDragged(ofMouseEventArgs &e);	
+	void mouseReleased(ofMouseEventArgs &e);
+	
+	void keyPressed(ofKeyEventArgs &e);
+	void keyReleased(ofKeyEventArgs &e);	
+	
+protected:
+	vector <ofxSimpleGuiControl*>	controls;
+	float ofxSimpleGuiPage::getNextY(float y);
+
+};
