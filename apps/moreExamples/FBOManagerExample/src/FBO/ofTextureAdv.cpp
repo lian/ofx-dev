@@ -10,8 +10,8 @@ ofTextureAdv::ofTextureAdv(){
 
 //----------------------------------------------------------
 ofTextureAdv::~ofTextureAdv(){
-	delete grid;
-	delete coor;
+	delete [] grid;
+	delete [] coor;
 }
 
 //----------------------------------------------------------
