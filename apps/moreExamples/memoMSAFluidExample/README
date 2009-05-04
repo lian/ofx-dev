@@ -1,0 +1,11 @@
+# commit-log: add moreExamples/memoMSAFluidExample
+
+        memo - PostPosted: Sun May 03, 2009 5:27 pm
+        http://www.openframeworks.cc/forum/viewtopic.php?f=10&t=1915
+        => I"ve just uploaded a new version of ofxMSAFluid.
+           http://www.memo.tv/ofxmsafluid
+
+           Now I"ve included an example, so hopefully that should demonstrate how to use the addon. The demo also has tuio support (you'll need ofxTuio and ofxOsc) and you can play with the parameters in realtime using a gui (I'm using ofxSimpleGuiToo which is based on Todd's ofxSimpleGui API - more info on that at in the post).
+
+           And quite importantly, thanks to the beauty of open-source, now the lib is radically faster. Programmer & artiste extraordinaire Emmanuel Maa has done some serious optimizations so that the solver runs 10% - 100% faster!
+
