@@ -1067,7 +1067,7 @@ bool ofVideoGrabber::initGrabber(int w, int h, bool setUseTexture){
 			device = 0;
 		}
 		sprintf(dev_name, "/dev/video%i", device);
-		ofLog(OF_LOG_NOTICE, "choosing device "+dev_name+"");
+		ofLog(OF_LOG_NOTICE, "choosing device %s", dev_name);
 
 		bool bOk = initV4L(w, h, dev_name);
 
