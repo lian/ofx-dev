@@ -1,0 +1,326 @@
+APP_NAME = eventsExample
+OF_LIBS_PATH = ../../../libs
+OF_ADDONS_PATH = ../../../addons
+
+CC = gcc
+PROJECT_DIR = ./
+CFLAGS += -Wall -fexceptions 
+#= CFLAGS += -I$(OF_LIBS_PATH)/openFrameworks/ -I$(OF_LIBS_PATH)/openFrameworks/events -I$(OF_LIBS_PATH)/openFrameworks/app -I$(OF_LIBS_PATH)/openFrameworks/communication -I$(OF_LIBS_PATH)/openFrameworks/graphics -I$(OF_LIBS_PATH)/openFrameworks/video -I$(OF_LIBS_PATH)/openFrameworks/utils -I$(OF_LIBS_PATH)/openFrameworks/sound -I$(OF_LIBS_PATH)/rtAudio -I$(OF_LIBS_PATH)/fmodex/inc -I$(OF_LIBS_PATH)/glee/include -I$(OF_LIBS_PATH)/glee/ -I$(OF_LIBS_PATH)/freeimage/Source -I$(OF_LIBS_PATH)/FreeImage -I$(OF_LIBS_PATH)/alsa/include -I$(OF_LIBS_PATH)/alsa/include/alsa -I$(OF_LIBS_PATH)/freetype/include -I$(OF_LIBS_PATH)/freetype/include/freetype2 -I$(OF_LIBS_PATH)/unicap/include -I$(OF_LIBS_PATH)/gstappsink/include -I$(OF_LIBS_PATH)/poco/include -I$(OF_ADDONS_PATH)
+
+CFLAGS += -I$(OF_LIBS_PATH)/openFrameworks/ -I$(OF_LIBS_PATH)/openFrameworks/events -I$(OF_LIBS_PATH)/openFrameworks/app -I$(OF_LIBS_PATH)/openFrameworks/communication -I$(OF_LIBS_PATH)/openFrameworks/graphics -I$(OF_LIBS_PATH)/openFrameworks/video -I$(OF_LIBS_PATH)/openFrameworks/utils -I$(OF_LIBS_PATH)/openFrameworks/sound -I$(OF_LIBS_PATH)/rtAudio/include -I$(OF_LIBS_PATH)/fmodex/inc -I$(OF_LIBS_PATH)/GLee/include -I$(OF_LIBS_PATH)/GLee/ -I$(OF_LIBS_PATH)/freeimage/include -I$(OF_LIBS_PATH)/freeimage -I$(OF_LIBS_PATH)/alsa/include -I$(OF_LIBS_PATH)/alsa/include/alsa -I$(OF_LIBS_PATH)/freetype/include/linux -I$(OF_LIBS_PATH)/freetype/include/linux/freetype2 -I$(OF_LIBS_PATH)/unicap/include -I$(OF_LIBS_PATH)/gstappsink/include -I$(OF_LIBS_PATH)/poco/include -I$(OF_ADDONS_PATH)
+
+CFLAGS +=`pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 libavcodec libavformat libavutil libswscale --cflags`
+#= LDFLAGS += -L$(OF_LIBS_PATH)/fmodex/lib -L$(OF_LIBS_PATH)/unicap/lib -L$(OF_LIBS_PATH)/poco/lib
+LDFLAGS += -L$(OF_LIBS_PATH)/fmodex/lib/linux -L$(OF_LIBS_PATH)/unicap/lib -L$(OF_LIBS_PATH)/poco/lib/linux
+LIBS += -lfmodex -lraw1394 -lglut -lGL -lGLU -lXxf86vm -lasound -lPocoFoundation -lunicap
+LIBS +=`pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 libavcodec libavformat libavutil libswscale --libs`
+#= LIBS += $(OF_LIBS_PATH)/freetype/lib/libfreetype.a $(OF_LIBS_PATH)/FreeImage/libfreeimage.a $(OF_LIBS_PATH)/rtAudio/libRtAudio.a $(OF_LIBS_PATH)/glee/libGLee.a $(OF_LIBS_PATH)/gstappsink/lib/liboFappsink.a
+LIBS += $(OF_LIBS_PATH)/freetype/lib/libfreetype.a $(OF_LIBS_PATH)/freeimage/lib/libfreeimage.a $(OF_LIBS_PATH)/rtAudio/lib/libRtAudio.a $(OF_LIBS_PATH)/GLee/lib/libGLee.a $(OF_LIBS_PATH)/gstappsink/lib/liboFappsink.a
+CFLAGS += -DLINUX
+
+OBJS = src/main.o libs/openframeworks/graphics/ofBitmapFont.o libs/openframeworks/video/ofUCUtils.o libs/openframeworks/graphics/ofImage.o libs/openframeworks/app/ofAppGlutWindow.o libs/openframeworks/video/ofVideoPlayer.o libs/openframeworks/sound/ofSoundStream.o libs/openframeworks/communication/ofSerial.o libs/openframeworks/graphics/ofTrueTypeFont.o libs/openframeworks/communication/ofStandardFirmata.o libs/openframeworks/video/ofVideoGrabber.o libs/openframeworks/graphics/ofGraphics.o libs/openframeworks/communication/ofArduino.o libs/openframeworks/graphics/ofTexture.o src/testApp.o libs/openframeworks/utils/ofMath.o libs/openframeworks/sound/ofSoundPlayer.o libs/openframeworks/app/ofAppRunner.o libs/openframeworks/utils/ofUtils.o
+
+Debug: TARGET_NAME = Debug
+Debug: OBJ_OUTPUT = build/Debug/
+Debug: OUTPUT = bin/$(APP_NAME)_debug
+Debug: TARGET_OUTPUT_BASENAME = $(APP_NAME)_debug
+Debug: CC = gcc
+Debug: CFLAGS += -g -MMD
+
+OBJS_Debug = $(addprefix build/Debug/, $(OBJS) )
+
+Release: TARGET_NAME = Release
+Release: OBJ_OUTPUT = build/Release/
+Release: OUTPUT = bin/$(APP_NAME)
+Release: TARGET_OUTPUT_BASENAME = $(APP_NAME)
+Release: CC = gcc
+Release: CFLAGS += -O3 -MMD
+Release: LDFLAGS += -s
+
+OBJS_Release = $(addprefix build/Release/, $(OBJS) )
+
+.PHONY: after
+
+Debug: bin/emptyExample_debug after
+Release: bin/emptyExample after
+bin/emptyExample_debug: $(OBJS_Debug)
+	mkdir -p bin/
+	$(CC) $(LDFLAGS) -o $@ $(OBJS_Debug) $(LIBS)
+
+bin/emptyExample: $(OBJS_Release)
+	mkdir -p bin/
+	$(CC) $(LDFLAGS) -o $@ $(OBJS_Release) $(LIBS)
+
+after:
+	#
+	#      copy libs and shell script to bin directory:
+	#
+	mkdir -p $(PROJECT_DIR)bin/
+	mkdir -p $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodex.so $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodexp.so $(PROJECT_DIR)bin/libs/
+	cp ../../../other/codeblocks/linux_clickToLaunchApp.sh $(PROJECT_DIR)bin/$(TARGET_OUTPUT_BASENAME).sh
+	sed -i s/applicationName/$(TARGET_OUTPUT_BASENAME)/g  $(PROJECT_DIR)bin/$(TARGET_OUTPUT_BASENAME).sh
+
+build/Debug/src/main.o build/Release/src/main.o: src/main.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/main.o $(CFLAGS)
+build/Debug/libs/openframeworks/graphics/ofBitmapFont.o build/Release/libs/openframeworks/graphics/ofBitmapFont.o: $(OF_LIBS_PATH)/openFrameworks/graphics/ofBitmapFont.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/graphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/graphics/ofBitmapFont.o $(CFLAGS)
+build/Debug/libs/openframeworks/video/ofUCUtils.o build/Release/libs/openframeworks/video/ofUCUtils.o: $(OF_LIBS_PATH)/openFrameworks/video/ofUCUtils.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/video/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/video/ofUCUtils.o $(CFLAGS)
+build/Debug/libs/openframeworks/graphics/ofImage.o build/Release/libs/openframeworks/graphics/ofImage.o: $(OF_LIBS_PATH)/openFrameworks/graphics/ofImage.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/graphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/graphics/ofImage.o $(CFLAGS)
+build/Debug/libs/openframeworks/app/ofAppGlutWindow.o build/Release/libs/openframeworks/app/ofAppGlutWindow.o: $(OF_LIBS_PATH)/openFrameworks/app/ofAppGlutWindow.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/app/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/app/ofAppGlutWindow.o $(CFLAGS)
+build/Debug/libs/openframeworks/video/ofVideoPlayer.o build/Release/libs/openframeworks/video/ofVideoPlayer.o: $(OF_LIBS_PATH)/openFrameworks/video/ofVideoPlayer.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/video/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/video/ofVideoPlayer.o $(CFLAGS)
+build/Debug/libs/openframeworks/sound/ofSoundStream.o build/Release/libs/openframeworks/sound/ofSoundStream.o: $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundStream.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/sound/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/sound/ofSoundStream.o $(CFLAGS)
+build/Debug/libs/openframeworks/communication/ofSerial.o build/Release/libs/openframeworks/communication/ofSerial.o: $(OF_LIBS_PATH)/openFrameworks/communication/ofSerial.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/communication/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/communication/ofSerial.o $(CFLAGS)
+build/Debug/libs/openframeworks/graphics/ofTrueTypeFont.o build/Release/libs/openframeworks/graphics/ofTrueTypeFont.o: $(OF_LIBS_PATH)/openFrameworks/graphics/ofTrueTypeFont.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/graphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/graphics/ofTrueTypeFont.o $(CFLAGS)
+build/Debug/libs/openframeworks/communication/ofStandardFirmata.o build/Release/libs/openframeworks/communication/ofStandardFirmata.o: $(OF_LIBS_PATH)/openFrameworks/communication/ofStandardFirmata.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/communication/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/communication/ofStandardFirmata.o $(CFLAGS)
+build/Debug/libs/openframeworks/video/ofVideoGrabber.o build/Release/libs/openframeworks/video/ofVideoGrabber.o: $(OF_LIBS_PATH)/openFrameworks/video/ofVideoGrabber.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/video/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/video/ofVideoGrabber.o $(CFLAGS)
+build/Debug/libs/openframeworks/graphics/ofGraphics.o build/Release/libs/openframeworks/graphics/ofGraphics.o: $(OF_LIBS_PATH)/openFrameworks/graphics/ofGraphics.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/graphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/graphics/ofGraphics.o $(CFLAGS)
+build/Debug/libs/openframeworks/communication/ofArduino.o build/Release/libs/openframeworks/communication/ofArduino.o: $(OF_LIBS_PATH)/openFrameworks/communication/ofArduino.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/communication/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/communication/ofArduino.o $(CFLAGS)
+build/Debug/libs/openframeworks/graphics/ofTexture.o build/Release/libs/openframeworks/graphics/ofTexture.o: $(OF_LIBS_PATH)/openFrameworks/graphics/ofTexture.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/graphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/graphics/ofTexture.o $(CFLAGS)
+build/Debug/src/testApp.o build/Release/src/testApp.o: src/testApp.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/testApp.o $(CFLAGS)
+build/Debug/libs/openframeworks/utils/ofMath.o build/Release/libs/openframeworks/utils/ofMath.o: $(OF_LIBS_PATH)/openFrameworks/utils/ofMath.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/utils/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/utils/ofMath.o $(CFLAGS)
+build/Debug/libs/openframeworks/sound/ofSoundPlayer.o build/Release/libs/openframeworks/sound/ofSoundPlayer.o: $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundPlayer.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/sound/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/sound/ofSoundPlayer.o $(CFLAGS)
+build/Debug/libs/openframeworks/app/ofAppRunner.o build/Release/libs/openframeworks/app/ofAppRunner.o: $(OF_LIBS_PATH)/openFrameworks/app/ofAppRunner.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/app/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/app/ofAppRunner.o $(CFLAGS)
+build/Debug/libs/openframeworks/utils/ofUtils.o build/Release/libs/openframeworks/utils/ofUtils.o: $(OF_LIBS_PATH)/openFrameworks/utils/ofUtils.cpp
+	mkdir -p $(OBJ_OUTPUT)libs/openframeworks/utils/
+	$(CC) -c $< -o $(OBJ_OUTPUT)libs/openframeworks/utils/ofUtils.o $(CFLAGS)
+
+clean:
+	-rm bin/emptyExample_debug bin/emptyExample
+	-rm $(OBJS_Debug) $(OBJS_Release)
+	-rmdir --ignore-fail-on-non-empty -p build/Debug/src/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/video/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/app/ build/Debug/libs/openframeworks/video/ build/Debug/libs/openframeworks/sound/ build/Debug/libs/openframeworks/communication/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/communication/ build/Debug/libs/openframeworks/video/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/communication/ build/Debug/libs/openframeworks/graphics/ build/Debug/src/ build/Debug/libs/openframeworks/utils/ build/Debug/libs/openframeworks/sound/ build/Debug/libs/openframeworks/app/ build/Debug/libs/openframeworks/utils/
+	-rm build/Debug/src/main.dep build/Debug/libs/openframeworks/graphics/ofBitmapFont.dep build/Debug/libs/openframeworks/video/ofUCUtils.dep build/Debug/libs/openframeworks/graphics/ofImage.dep build/Debug/libs/openframeworks/app/ofAppGlutWindow.dep build/Debug/libs/openframeworks/video/ofVideoPlayer.dep build/Debug/libs/openframeworks/sound/ofSoundStream.dep build/Debug/libs/openframeworks/communication/ofSerial.dep build/Debug/libs/openframeworks/graphics/ofTrueTypeFont.dep build/Debug/libs/openframeworks/communication/ofStandardFirmata.dep build/Debug/libs/openframeworks/video/ofVideoGrabber.dep build/Debug/libs/openframeworks/graphics/ofGraphics.dep build/Debug/libs/openframeworks/communication/ofArduino.dep build/Debug/libs/openframeworks/graphics/ofTexture.dep build/Debug/src/testApp.dep build/Debug/libs/openframeworks/utils/ofMath.dep build/Debug/libs/openframeworks/sound/ofSoundPlayer.dep build/Debug/libs/openframeworks/app/ofAppRunner.dep build/Debug/libs/openframeworks/utils/ofUtils.dep
+	-rmdir --ignore-fail-on-non-empty -p build/Debug/src/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/video/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/app/ build/Debug/libs/openframeworks/video/ build/Debug/libs/openframeworks/sound/ build/Debug/libs/openframeworks/communication/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/communication/ build/Debug/libs/openframeworks/video/ build/Debug/libs/openframeworks/graphics/ build/Debug/libs/openframeworks/communication/ build/Debug/libs/openframeworks/graphics/ build/Debug/src/ build/Debug/libs/openframeworks/utils/ build/Debug/libs/openframeworks/sound/ build/Debug/libs/openframeworks/app/ build/Debug/libs/openframeworks/utils/
+	-rmdir --ignore-fail-on-non-empty -p bin/
+	-rmdir --ignore-fail-on-non-empty -p build/Release/src/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/video/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/app/ build/Release/libs/openframeworks/video/ build/Release/libs/openframeworks/sound/ build/Release/libs/openframeworks/communication/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/communication/ build/Release/libs/openframeworks/video/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/communication/ build/Release/libs/openframeworks/graphics/ build/Release/src/ build/Release/libs/openframeworks/utils/ build/Release/libs/openframeworks/sound/ build/Release/libs/openframeworks/app/ build/Release/libs/openframeworks/utils/
+	-rm build/Release/src/main.dep build/Release/libs/openframeworks/graphics/ofBitmapFont.dep build/Release/libs/openframeworks/video/ofUCUtils.dep build/Release/libs/openframeworks/graphics/ofImage.dep build/Release/libs/openframeworks/app/ofAppGlutWindow.dep build/Release/libs/openframeworks/video/ofVideoPlayer.dep build/Release/libs/openframeworks/sound/ofSoundStream.dep build/Release/libs/openframeworks/communication/ofSerial.dep build/Release/libs/openframeworks/graphics/ofTrueTypeFont.dep build/Release/libs/openframeworks/communication/ofStandardFirmata.dep build/Release/libs/openframeworks/video/ofVideoGrabber.dep build/Release/libs/openframeworks/graphics/ofGraphics.dep build/Release/libs/openframeworks/communication/ofArduino.dep build/Release/libs/openframeworks/graphics/ofTexture.dep build/Release/src/testApp.dep build/Release/libs/openframeworks/utils/ofMath.dep build/Release/libs/openframeworks/sound/ofSoundPlayer.dep build/Release/libs/openframeworks/app/ofAppRunner.dep build/Release/libs/openframeworks/utils/ofUtils.dep
+	-rmdir --ignore-fail-on-non-empty -p build/Release/src/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/video/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/app/ build/Release/libs/openframeworks/video/ build/Release/libs/openframeworks/sound/ build/Release/libs/openframeworks/communication/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/communication/ build/Release/libs/openframeworks/video/ build/Release/libs/openframeworks/graphics/ build/Release/libs/openframeworks/communication/ build/Release/libs/openframeworks/graphics/ build/Release/src/ build/Release/libs/openframeworks/utils/ build/Release/libs/openframeworks/sound/ build/Release/libs/openframeworks/app/ build/Release/libs/openframeworks/utils/
+	-rmdir --ignore-fail-on-non-empty -p bin/
+
+ifneq ($MAKECMDGOALS,clean)
+build/Debug/src/main.dep: src/main.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/main.o $(CFLAGS) src/main.cpp -MF build/Debug/src/main.dep
+-include build/Debug/src/main.dep
+
+build/Debug/libs/openframeworks/graphics/ofBitmapFont.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofBitmapFont.cpp
+	mkdir -p build/Debug/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Debug/libs/openframeworks/graphics/ofBitmapFont.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofBitmapFont.cpp -MF build/Debug/libs/openframeworks/graphics/ofBitmapFont.dep
+-include build/Debug/libs/openframeworks/graphics/ofBitmapFont.dep
+
+build/Debug/libs/openframeworks/video/ofUCUtils.dep: $(OF_LIBS_PATH)/openFrameworks/video/ofUCUtils.cpp
+	mkdir -p build/Debug/libs/openframeworks/video/
+	$(CC) -M -MT build/Debug/libs/openframeworks/video/ofUCUtils.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/video/ofUCUtils.cpp -MF build/Debug/libs/openframeworks/video/ofUCUtils.dep
+-include build/Debug/libs/openframeworks/video/ofUCUtils.dep
+
+build/Debug/libs/openframeworks/graphics/ofImage.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofImage.cpp
+	mkdir -p build/Debug/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Debug/libs/openframeworks/graphics/ofImage.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofImage.cpp -MF build/Debug/libs/openframeworks/graphics/ofImage.dep
+-include build/Debug/libs/openframeworks/graphics/ofImage.dep
+
+build/Debug/libs/openframeworks/app/ofAppGlutWindow.dep: $(OF_LIBS_PATH)/openFrameworks/app/ofAppGlutWindow.cpp
+	mkdir -p build/Debug/libs/openframeworks/app/
+	$(CC) -M -MT build/Debug/libs/openframeworks/app/ofAppGlutWindow.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/app/ofAppGlutWindow.cpp -MF build/Debug/libs/openframeworks/app/ofAppGlutWindow.dep
+-include build/Debug/libs/openframeworks/app/ofAppGlutWindow.dep
+
+build/Debug/libs/openframeworks/video/ofVideoPlayer.dep: $(OF_LIBS_PATH)/openFrameworks/video/ofVideoPlayer.cpp
+	mkdir -p build/Debug/libs/openframeworks/video/
+	$(CC) -M -MT build/Debug/libs/openframeworks/video/ofVideoPlayer.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/video/ofVideoPlayer.cpp -MF build/Debug/libs/openframeworks/video/ofVideoPlayer.dep
+-include build/Debug/libs/openframeworks/video/ofVideoPlayer.dep
+
+build/Debug/libs/openframeworks/sound/ofSoundStream.dep: $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundStream.cpp
+	mkdir -p build/Debug/libs/openframeworks/sound/
+	$(CC) -M -MT build/Debug/libs/openframeworks/sound/ofSoundStream.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundStream.cpp -MF build/Debug/libs/openframeworks/sound/ofSoundStream.dep
+-include build/Debug/libs/openframeworks/sound/ofSoundStream.dep
+
+build/Debug/libs/openframeworks/communication/ofSerial.dep: $(OF_LIBS_PATH)/openFrameworks/communication/ofSerial.cpp
+	mkdir -p build/Debug/libs/openframeworks/communication/
+	$(CC) -M -MT build/Debug/libs/openframeworks/communication/ofSerial.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/communication/ofSerial.cpp -MF build/Debug/libs/openframeworks/communication/ofSerial.dep
+-include build/Debug/libs/openframeworks/communication/ofSerial.dep
+
+build/Debug/libs/openframeworks/graphics/ofTrueTypeFont.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofTrueTypeFont.cpp
+	mkdir -p build/Debug/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Debug/libs/openframeworks/graphics/ofTrueTypeFont.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofTrueTypeFont.cpp -MF build/Debug/libs/openframeworks/graphics/ofTrueTypeFont.dep
+-include build/Debug/libs/openframeworks/graphics/ofTrueTypeFont.dep
+
+build/Debug/libs/openframeworks/communication/ofStandardFirmata.dep: $(OF_LIBS_PATH)/openFrameworks/communication/ofStandardFirmata.cpp
+	mkdir -p build/Debug/libs/openframeworks/communication/
+	$(CC) -M -MT build/Debug/libs/openframeworks/communication/ofStandardFirmata.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/communication/ofStandardFirmata.cpp -MF build/Debug/libs/openframeworks/communication/ofStandardFirmata.dep
+-include build/Debug/libs/openframeworks/communication/ofStandardFirmata.dep
+
+build/Debug/libs/openframeworks/video/ofVideoGrabber.dep: $(OF_LIBS_PATH)/openFrameworks/video/ofVideoGrabber.cpp
+	mkdir -p build/Debug/libs/openframeworks/video/
+	$(CC) -M -MT build/Debug/libs/openframeworks/video/ofVideoGrabber.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/video/ofVideoGrabber.cpp -MF build/Debug/libs/openframeworks/video/ofVideoGrabber.dep
+-include build/Debug/libs/openframeworks/video/ofVideoGrabber.dep
+
+build/Debug/libs/openframeworks/graphics/ofGraphics.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofGraphics.cpp
+	mkdir -p build/Debug/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Debug/libs/openframeworks/graphics/ofGraphics.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofGraphics.cpp -MF build/Debug/libs/openframeworks/graphics/ofGraphics.dep
+-include build/Debug/libs/openframeworks/graphics/ofGraphics.dep
+
+build/Debug/libs/openframeworks/communication/ofArduino.dep: $(OF_LIBS_PATH)/openFrameworks/communication/ofArduino.cpp
+	mkdir -p build/Debug/libs/openframeworks/communication/
+	$(CC) -M -MT build/Debug/libs/openframeworks/communication/ofArduino.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/communication/ofArduino.cpp -MF build/Debug/libs/openframeworks/communication/ofArduino.dep
+-include build/Debug/libs/openframeworks/communication/ofArduino.dep
+
+build/Debug/libs/openframeworks/graphics/ofTexture.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofTexture.cpp
+	mkdir -p build/Debug/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Debug/libs/openframeworks/graphics/ofTexture.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofTexture.cpp -MF build/Debug/libs/openframeworks/graphics/ofTexture.dep
+-include build/Debug/libs/openframeworks/graphics/ofTexture.dep
+
+build/Debug/src/testApp.dep: src/testApp.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/testApp.o $(CFLAGS) src/testApp.cpp -MF build/Debug/src/testApp.dep
+-include build/Debug/src/testApp.dep
+
+build/Debug/libs/openframeworks/utils/ofMath.dep: $(OF_LIBS_PATH)/openFrameworks/utils/ofMath.cpp
+	mkdir -p build/Debug/libs/openframeworks/utils/
+	$(CC) -M -MT build/Debug/libs/openframeworks/utils/ofMath.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/utils/ofMath.cpp -MF build/Debug/libs/openframeworks/utils/ofMath.dep
+-include build/Debug/libs/openframeworks/utils/ofMath.dep
+
+build/Debug/libs/openframeworks/sound/ofSoundPlayer.dep: $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundPlayer.cpp
+	mkdir -p build/Debug/libs/openframeworks/sound/
+	$(CC) -M -MT build/Debug/libs/openframeworks/sound/ofSoundPlayer.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundPlayer.cpp -MF build/Debug/libs/openframeworks/sound/ofSoundPlayer.dep
+-include build/Debug/libs/openframeworks/sound/ofSoundPlayer.dep
+
+build/Debug/libs/openframeworks/app/ofAppRunner.dep: $(OF_LIBS_PATH)/openFrameworks/app/ofAppRunner.cpp
+	mkdir -p build/Debug/libs/openframeworks/app/
+	$(CC) -M -MT build/Debug/libs/openframeworks/app/ofAppRunner.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/app/ofAppRunner.cpp -MF build/Debug/libs/openframeworks/app/ofAppRunner.dep
+-include build/Debug/libs/openframeworks/app/ofAppRunner.dep
+
+build/Debug/libs/openframeworks/utils/ofUtils.dep: $(OF_LIBS_PATH)/openFrameworks/utils/ofUtils.cpp
+	mkdir -p build/Debug/libs/openframeworks/utils/
+	$(CC) -M -MT build/Debug/libs/openframeworks/utils/ofUtils.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/utils/ofUtils.cpp -MF build/Debug/libs/openframeworks/utils/ofUtils.dep
+-include build/Debug/libs/openframeworks/utils/ofUtils.dep
+
+build/Release/src/main.dep: src/main.cpp
+	mkdir -p build/Release/src/
+	$(CC) -M -MT build/Release/src/main.o $(CFLAGS) src/main.cpp -MF build/Release/src/main.dep
+-include build/Release/src/main.dep
+
+build/Release/libs/openframeworks/graphics/ofBitmapFont.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofBitmapFont.cpp
+	mkdir -p build/Release/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Release/libs/openframeworks/graphics/ofBitmapFont.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofBitmapFont.cpp -MF build/Release/libs/openframeworks/graphics/ofBitmapFont.dep
+-include build/Release/libs/openframeworks/graphics/ofBitmapFont.dep
+
+build/Release/libs/openframeworks/video/ofUCUtils.dep: $(OF_LIBS_PATH)/openFrameworks/video/ofUCUtils.cpp
+	mkdir -p build/Release/libs/openframeworks/video/
+	$(CC) -M -MT build/Release/libs/openframeworks/video/ofUCUtils.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/video/ofUCUtils.cpp -MF build/Release/libs/openframeworks/video/ofUCUtils.dep
+-include build/Release/libs/openframeworks/video/ofUCUtils.dep
+
+build/Release/libs/openframeworks/graphics/ofImage.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofImage.cpp
+	mkdir -p build/Release/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Release/libs/openframeworks/graphics/ofImage.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofImage.cpp -MF build/Release/libs/openframeworks/graphics/ofImage.dep
+-include build/Release/libs/openframeworks/graphics/ofImage.dep
+
+build/Release/libs/openframeworks/app/ofAppGlutWindow.dep: $(OF_LIBS_PATH)/openFrameworks/app/ofAppGlutWindow.cpp
+	mkdir -p build/Release/libs/openframeworks/app/
+	$(CC) -M -MT build/Release/libs/openframeworks/app/ofAppGlutWindow.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/app/ofAppGlutWindow.cpp -MF build/Release/libs/openframeworks/app/ofAppGlutWindow.dep
+-include build/Release/libs/openframeworks/app/ofAppGlutWindow.dep
+
+build/Release/libs/openframeworks/video/ofVideoPlayer.dep: $(OF_LIBS_PATH)/openFrameworks/video/ofVideoPlayer.cpp
+	mkdir -p build/Release/libs/openframeworks/video/
+	$(CC) -M -MT build/Release/libs/openframeworks/video/ofVideoPlayer.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/video/ofVideoPlayer.cpp -MF build/Release/libs/openframeworks/video/ofVideoPlayer.dep
+-include build/Release/libs/openframeworks/video/ofVideoPlayer.dep
+
+build/Release/libs/openframeworks/sound/ofSoundStream.dep: $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundStream.cpp
+	mkdir -p build/Release/libs/openframeworks/sound/
+	$(CC) -M -MT build/Release/libs/openframeworks/sound/ofSoundStream.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundStream.cpp -MF build/Release/libs/openframeworks/sound/ofSoundStream.dep
+-include build/Release/libs/openframeworks/sound/ofSoundStream.dep
+
+build/Release/libs/openframeworks/communication/ofSerial.dep: $(OF_LIBS_PATH)/openFrameworks/communication/ofSerial.cpp
+	mkdir -p build/Release/libs/openframeworks/communication/
+	$(CC) -M -MT build/Release/libs/openframeworks/communication/ofSerial.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/communication/ofSerial.cpp -MF build/Release/libs/openframeworks/communication/ofSerial.dep
+-include build/Release/libs/openframeworks/communication/ofSerial.dep
+
+build/Release/libs/openframeworks/graphics/ofTrueTypeFont.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofTrueTypeFont.cpp
+	mkdir -p build/Release/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Release/libs/openframeworks/graphics/ofTrueTypeFont.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofTrueTypeFont.cpp -MF build/Release/libs/openframeworks/graphics/ofTrueTypeFont.dep
+-include build/Release/libs/openframeworks/graphics/ofTrueTypeFont.dep
+
+build/Release/libs/openframeworks/communication/ofStandardFirmata.dep: $(OF_LIBS_PATH)/openFrameworks/communication/ofStandardFirmata.cpp
+	mkdir -p build/Release/libs/openframeworks/communication/
+	$(CC) -M -MT build/Release/libs/openframeworks/communication/ofStandardFirmata.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/communication/ofStandardFirmata.cpp -MF build/Release/libs/openframeworks/communication/ofStandardFirmata.dep
+-include build/Release/libs/openframeworks/communication/ofStandardFirmata.dep
+
+build/Release/libs/openframeworks/video/ofVideoGrabber.dep: $(OF_LIBS_PATH)/openFrameworks/video/ofVideoGrabber.cpp
+	mkdir -p build/Release/libs/openframeworks/video/
+	$(CC) -M -MT build/Release/libs/openframeworks/video/ofVideoGrabber.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/video/ofVideoGrabber.cpp -MF build/Release/libs/openframeworks/video/ofVideoGrabber.dep
+-include build/Release/libs/openframeworks/video/ofVideoGrabber.dep
+
+build/Release/libs/openframeworks/graphics/ofGraphics.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofGraphics.cpp
+	mkdir -p build/Release/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Release/libs/openframeworks/graphics/ofGraphics.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofGraphics.cpp -MF build/Release/libs/openframeworks/graphics/ofGraphics.dep
+-include build/Release/libs/openframeworks/graphics/ofGraphics.dep
+
+build/Release/libs/openframeworks/communication/ofArduino.dep: $(OF_LIBS_PATH)/openFrameworks/communication/ofArduino.cpp
+	mkdir -p build/Release/libs/openframeworks/communication/
+	$(CC) -M -MT build/Release/libs/openframeworks/communication/ofArduino.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/communication/ofArduino.cpp -MF build/Release/libs/openframeworks/communication/ofArduino.dep
+-include build/Release/libs/openframeworks/communication/ofArduino.dep
+
+build/Release/libs/openframeworks/graphics/ofTexture.dep: $(OF_LIBS_PATH)/openFrameworks/graphics/ofTexture.cpp
+	mkdir -p build/Release/libs/openframeworks/graphics/
+	$(CC) -M -MT build/Release/libs/openframeworks/graphics/ofTexture.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/graphics/ofTexture.cpp -MF build/Release/libs/openframeworks/graphics/ofTexture.dep
+-include build/Release/libs/openframeworks/graphics/ofTexture.dep
+
+build/Release/src/testApp.dep: src/testApp.cpp
+	mkdir -p build/Release/src/
+	$(CC) -M -MT build/Release/src/testApp.o $(CFLAGS) src/testApp.cpp -MF build/Release/src/testApp.dep
+-include build/Release/src/testApp.dep
+
+build/Release/libs/openframeworks/utils/ofMath.dep: $(OF_LIBS_PATH)/openFrameworks/utils/ofMath.cpp
+	mkdir -p build/Release/libs/openframeworks/utils/
+	$(CC) -M -MT build/Release/libs/openframeworks/utils/ofMath.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/utils/ofMath.cpp -MF build/Release/libs/openframeworks/utils/ofMath.dep
+-include build/Release/libs/openframeworks/utils/ofMath.dep
+
+build/Release/libs/openframeworks/sound/ofSoundPlayer.dep: $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundPlayer.cpp
+	mkdir -p build/Release/libs/openframeworks/sound/
+	$(CC) -M -MT build/Release/libs/openframeworks/sound/ofSoundPlayer.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/sound/ofSoundPlayer.cpp -MF build/Release/libs/openframeworks/sound/ofSoundPlayer.dep
+-include build/Release/libs/openframeworks/sound/ofSoundPlayer.dep
+
+build/Release/libs/openframeworks/app/ofAppRunner.dep: $(OF_LIBS_PATH)/openFrameworks/app/ofAppRunner.cpp
+	mkdir -p build/Release/libs/openframeworks/app/
+	$(CC) -M -MT build/Release/libs/openframeworks/app/ofAppRunner.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/app/ofAppRunner.cpp -MF build/Release/libs/openframeworks/app/ofAppRunner.dep
+-include build/Release/libs/openframeworks/app/ofAppRunner.dep
+
+build/Release/libs/openframeworks/utils/ofUtils.dep: $(OF_LIBS_PATH)/openFrameworks/utils/ofUtils.cpp
+	mkdir -p build/Release/libs/openframeworks/utils/
+	$(CC) -M -MT build/Release/libs/openframeworks/utils/ofUtils.o $(CFLAGS) $(OF_LIBS_PATH)/openFrameworks/utils/ofUtils.cpp -MF build/Release/libs/openframeworks/utils/ofUtils.dep
+-include build/Release/libs/openframeworks/utils/ofUtils.dep
+
+endif

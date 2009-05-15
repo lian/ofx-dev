@@ -1,0 +1,104 @@
+# Makefile.linux_shared
+
+APP_NAME = imageSaverExample
+OF_LIBS_PATH = ../../../libs
+OF_ADDONS_PATH = ../../../addons
+
+CC = gcc
+PROJECT_DIR = ./
+CFLAGS += -Wall -fexceptions 
+#= CFLAGS += -I$(OF_LIBS_PATH)/libofw/include 
+
+#= libofw cflags
+CFLAGS += -I$(OF_LIBS_PATH)/openFrameworks/ -I$(OF_LIBS_PATH)/openFrameworks/events -I$(OF_LIBS_PATH)/openFrameworks/app -I$(OF_LIBS_PATH)/openFrameworks/communication -I$(OF_LIBS_PATH)/openFrameworks/graphics -I$(OF_LIBS_PATH)/openFrameworks/video -I$(OF_LIBS_PATH)/openFrameworks/utils -I$(OF_LIBS_PATH)/openFrameworks/sound -I$(OF_LIBS_PATH)/rtAudio/include -I$(OF_LIBS_PATH)/fmodex/inc -I$(OF_LIBS_PATH)/GLee/include -I$(OF_LIBS_PATH)/GLee/ -I$(OF_LIBS_PATH)/freeimage/include -I$(OF_LIBS_PATH)/freeimage -I$(OF_LIBS_PATH)/alsa/include -I$(OF_LIBS_PATH)/alsa/include/alsa -I$(OF_LIBS_PATH)/freetype/include/linux -I$(OF_LIBS_PATH)/freetype/include/linux/freetype2 -I$(OF_LIBS_PATH)/unicap/include -I$(OF_LIBS_PATH)/gstappsink/include -I../../../addons -I$(OF_LIBS_PATH)/poco/include
+
+CFLAGS +=`pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 libavcodec libavformat libavutil libswscale --cflags`
+LDFLAGS += -L$(OF_LIBS_PATH)/libofw/lib -L$(OF_LIBS_PATH)/fmodex/lib/linux -L$(OF_LIBS_PATH)/unicap/lib -L$(OF_LIBS_PATH)/poco/lib/linux
+
+#= libofw libs
+LIBS += -lofw -lfmodex -lraw1394 -lglut -lGL -lGLU -lXxf86vm -lasound -lPocoFoundation -lunicap
+CFLAGS += -DLINUX
+
+OBJS = src/main.o src/testApp.o
+
+Debug: TARGET_NAME = Debug
+Debug: OBJ_OUTPUT = build/Debug/
+Debug: OUTPUT = bin/$(APP_NAME)_debug
+Debug: TARGET_OUTPUT_BASENAME = $(APP_NAME)_debug
+Debug: CC = gcc
+Debug: CFLAGS += -g -MMD
+
+OBJS_Debug = $(addprefix build/Debug/, $(OBJS) )
+
+Release: TARGET_NAME = Release
+Release: OBJ_OUTPUT = build/Release/
+Release: OUTPUT = bin/$(APP_NAME)
+Release: TARGET_OUTPUT_BASENAME = $(APP_NAME)
+Release: CC = gcc
+Release: CFLAGS += -O3 -MMD
+Release: LDFLAGS += -s
+
+OBJS_Release = $(addprefix build/Release/, $(OBJS) )
+
+.PHONY: after
+
+Debug: bin/$(APP_NAME)_debug after
+Release: bin/$(APP_NAME) after
+bin/$(APP_NAME)_debug: $(OBJS_Debug)
+	mkdir -p bin/
+	$(CC) $(LDFLAGS) -o $@ $(OBJS_Debug) $(LIBS)
+
+bin/$(APP_NAME): $(OBJS_Release)
+	mkdir -p bin/
+	$(CC) $(LDFLAGS) -o $@ $(OBJS_Release) $(LIBS)
+
+copy_libs:
+	#	copy libs to bin/libs directory:
+	mkdir -p $(PROJECT_DIR)bin/
+	mkdir -p $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodex.so $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodexp.so $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/libofw/lib/libofw.so $(PROJECT_DIR)bin/libs/libofw.so.1
+	#	ok
+
+after:
+	#	copy shell script to bin directory:
+	mkdir -p $(PROJECT_DIR)bin/
+	mkdir -p $(PROJECT_DIR)bin/libs/
+	cp ../../../other/codeblocks/linux_clickToLaunchApp2.sh $(PROJECT_DIR)bin/$(TARGET_OUTPUT_BASENAME).sh
+	sed -i s/applicationName/$(TARGET_OUTPUT_BASENAME)/g  $(PROJECT_DIR)bin/$(TARGET_OUTPUT_BASENAME).sh
+	#	ok
+
+build/Debug/src/main.o build/Release/src/main.o: src/main.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/main.o $(CFLAGS)
+build/Debug/src/testApp.o build/Release/src/testApp.o: src/testApp.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/testApp.o $(CFLAGS)
+
+clean:
+	-rm $(OBJS_Debug) $(OBJS_Release)
+
+ifneq ($MAKECMDGOALS,clean)
+
+build/Debug/src/main.dep: src/main.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/main.o $(CFLAGS) src/main.cpp -MF build/Debug/src/main.dep
+-include build/Debug/src/main.dep
+
+build/Debug/src/testApp.dep: src/testApp.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/testApp.o $(CFLAGS) src/testApp.cpp -MF build/Debug/src/testApp.dep
+-include build/Debug/src/testApp.dep
+
+build/Release/src/main.dep: src/main.cpp
+	mkdir -p build/Release/src/
+	$(CC) -M -MT build/Release/src/main.o $(CFLAGS) src/main.cpp -MF build/Release/src/main.dep
+-include build/Release/src/main.dep
+
+build/Release/src/testApp.dep: src/testApp.cpp
+	mkdir -p build/Release/src/
+	$(CC) -M -MT build/Release/src/testApp.o $(CFLAGS) src/testApp.cpp -MF build/Release/src/testApp.dep
+-include build/Release/src/testApp.dep
+
+endif
