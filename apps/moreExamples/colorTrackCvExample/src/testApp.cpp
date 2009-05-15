@@ -14,8 +14,8 @@ int yPosition(int pixelNum, int h, int w){
 void testApp::setup(){	 
 	vidGrabber0.setVerbose(true);
 	vidGrabber0.listDevices();
-	vidGrabber0.setDeviceID(3);
-	vidGrabber1.setDeviceID(4);
+	vidGrabber0.setDeviceID(0);
+	vidGrabber1.setDeviceID(1);
 	vidGrabber0.initGrabber(320,240);		
 	vidGrabber1.initGrabber(320,240);
 	colorImg0.allocate(320,240);

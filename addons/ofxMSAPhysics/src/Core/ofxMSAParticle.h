@@ -25,6 +25,8 @@
 
 #include "ofxMSAPhysicsParams.h"
 
+class ofxMSAPhysics;
+
 class ofxMSAParticle : public ofPoint, public ofxObjCPointer {
 public:	
 	friend class ofxMSAPhysics;

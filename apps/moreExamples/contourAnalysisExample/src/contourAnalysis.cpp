@@ -11,7 +11,7 @@ float getOrientation( vector <ofPoint> & contour )
     CvSeq* seq = cvCreateSeq( CV_SEQ_POLYGON, sizeof(CvContour),sizeof(CvPoint), storage );
 
 
-    for( int i = 0; i < contour.size(); i++)
+    for( unsigned int i = 0; i < contour.size(); i++)
     {
         CvPoint pt = cvPoint(contour[i].x,contour[i].y);
         cvSeqPush( seq, &pt );
@@ -44,7 +44,7 @@ float getOrientation( vector <ofPoint> & contour )
 //-----------------------------------------
 int getIndexOfBlobIAmIn( vector<ofxCvBlob> & blobs, ofPoint pt )
 {
-    for( int i = 0; i < blobs.size(); i++)
+    for( unsigned int i = 0; i < blobs.size(); i++)
     {
         if( isPointInsideMe( pt.x, pt.y, blobs[i].pts) )
             return i;
@@ -78,7 +78,7 @@ void fitEllipse( vector <ofPoint>  & contour, CvBox2D32f & box )
     // Alloc memory for contour point set.
     pointArray = (CvPoint2D32f*)malloc( contour.size()*sizeof(CvPoint2D32f) );
 
-    for( int i = 0; i < contour.size(); i++)
+    for( unsigned int i = 0; i < contour.size(); i++)
     {
     	pointArray[i].x = 	contour[i].x;
     	pointArray[i].y =	contour[i].y;
@@ -119,14 +119,14 @@ void drawBlob( float x, float y, ofxCvBlob & blob ) {
 void findLines(vector <ofPoint>  & pts, vector<ofxPoint4f> & lines, float angleThreshold,float minLen, int res)
 {
 
-        float   angleLast   = 0.f;
-        float   angle       = 0.f;
+        //float   angleLast   = 0.f;
+        //float   angle       = 0.f;
         int     startPt     = pts.size()-1;
         int     lastPt      = pts.size()-1;
 
         lines.clear();
 
-        if( pts.size() > res)
+        if( (int)pts.size() > res)
         {
 
             ofxVec2f lineAB, lineCB;

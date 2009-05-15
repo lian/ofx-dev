@@ -11,7 +11,7 @@
 // comment this line out if you don't wanna use the GUI
 // you will need ofxSimpleGuiToo, ofxMSAInteractiveObject & ofxXmlSettings
 // if you don't use the GUI, you won't be able to see the fluid parameters
-#define USE_GUI
+//#define USE_GUI
 
 
 
