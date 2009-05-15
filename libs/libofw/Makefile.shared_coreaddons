@@ -1,0 +1,453 @@
+# builds a 'core-addons' openframeworks shared .so
+OF_LIBS_PATH = ../../libs
+OF_ADDONS_PATH = ../../addons
+
+CC = gcc
+PROJECT_DIR = ./
+CFLAGS += -Wall -fexceptions 
+#= CFLAGS += -I$(OF_LIBS_PATH)/libofw/include # ..
+
+#= libofw cflags
+CFLAGS += -I$(OF_LIBS_PATH)/openFrameworks/ -I$(OF_LIBS_PATH)/openFrameworks/events -I$(OF_LIBS_PATH)/openFrameworks/app -I$(OF_LIBS_PATH)/openFrameworks/communication -I$(OF_LIBS_PATH)/openFrameworks/graphics -I$(OF_LIBS_PATH)/openFrameworks/video -I$(OF_LIBS_PATH)/openFrameworks/utils -I$(OF_LIBS_PATH)/openFrameworks/sound -I$(OF_LIBS_PATH)/rtAudio/include -I$(OF_LIBS_PATH)/fmodex/inc -I$(OF_LIBS_PATH)/GLee/include -I$(OF_LIBS_PATH)/GLee/ -I$(OF_LIBS_PATH)/freeimage/include -I$(OF_LIBS_PATH)/freeimage -I$(OF_LIBS_PATH)/alsa/include -I$(OF_LIBS_PATH)/alsa/include/alsa -I$(OF_LIBS_PATH)/freetype/include/linux -I$(OF_LIBS_PATH)/freetype/include/linux/freetype2 -I$(OF_LIBS_PATH)/unicap/include -I$(OF_LIBS_PATH)/gstappsink/include -I../$(OF_ADDONS_PATH) -I$(OF_LIBS_PATH)/poco/include
+
+#= libofw_coreaddons cflags
+CFLAGS += -I$(OF_ADDONS_PATH) -I$(OF_ADDONS_PATH)/ofxDirList/src -I$(OF_ADDONS_PATH)/ofxNetwork/src -I$(OF_ADDONS_PATH)/ofxOpenCv/src -I$(OF_ADDONS_PATH)/ofxOpenCv/libs/opencv/include -I$(OF_ADDONS_PATH)/ofxOsc/src -I$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/include/ip -I$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/include/osc -I$(OF_ADDONS_PATH)/ofxThread/src -I$(OF_ADDONS_PATH)/ofxVectorGraphics/src -I$(OF_ADDONS_PATH)/ofxVectorGraphics/libs -I$(OF_ADDONS_PATH)/ofxVectorMath/src -I$(OF_ADDONS_PATH)/ofxXmlSettings/src -I$(OF_ADDONS_PATH)/ofxXmlSettings/libs -I$(OF_ADDONS_PATH)/ofx3DModelLoader/src -I$(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS
+
+CFLAGS +=`pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 libavcodec libavformat libavutil libswscale --cflags`
+LDFLAGS += -L$(OF_LIBS_PATH)/libofw/lib -L$(OF_ADDONS_PATH)/ofxOpenCv/libs/opencv/lib/linux -L$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/lib/linux -L$(OF_LIBS_PATH)/fmodex/lib/linux -L$(OF_LIBS_PATH)/unicap/lib -L$(OF_LIBS_PATH)/poco/lib/linux -L./bin/libs
+LIBS += -lofw -lfmodex -lraw1394 -lglut -lGL -lGLU -lXxf86vm -lasound -lPocoFoundation -lunicap -lcv -lcxcore -loscpack
+CFLAGS += -DLINUX
+
+OBJS = addons/ofxOsc/srcofxOscMessage.o addons/ofxVectorMath/src/ofxMatrix3x3.o addons/ofNetwork/srcofxTCPClient.o addons/ofxVectorGraphics/libsCreEPS.o addons/ofx3DModelLoader/src/ofx3dModelLoader.o addons/ofNetwork/srcofxTCPServer.o addons/ofxOpenCv/srcofxCvContourFinder.o addons/ofxOsc/srcofxOscReceiver.o addons/ofXmlSettings/libstinyxmlparser.o addons/ofxVectorMath/src/ofxVec2f.o addons/ofxOsc/srcofxOscSender.o addons/ofxOpenCv/srcofxCvImage.o addons/ofx3DModelLoader/libs/texture3DS.o addons/ofx3DModelLoader/libs/model3DS.o addons/ofxOpenCv/srcofxCvGrayscaleImage.o addons/ofXmlSettings/srcofxXmlSettings.o addons/ofxOpenCv/srcofxCvFloatImage.o addons/ofxVectorMath/src/ofxPoint2f.o addons/ofXmlSettings/libstinyxml.o addons/ofxDirList/srcofxDirList.o addons/ofxVectorMath/src/ofxVec4f.o addons/ofxVectorMath/src/ofxPoint3f.o addons/ofXmlSettings/libstinyxmlerror.o addons/ofxOpenCv/srcofxCvColorImage.o addons/ofNetwork/srcofxTCPManager.o addons/ofxThread/srcofxThread.o addons/ofxVectorMath/src/ofxVec3f.o addons/ofxVectorGraphics/srcofxVectorGraphics.o addons/ofNetwork/srcofxUDPManager.o addons/ofxVectorMath/src/ofxPoint4f.o 
+
+Debug: TARGET_NAME = Debug
+Debug: LIB_NAME = libofw_coreaddons.so
+Debug: OBJ_OUTPUT = build/Debug/
+Debug: CC = gcc
+Debug: CFLAGS += -g -MMD
+
+OBJS_Debug = $(addprefix build/Debug/, $(OBJS) )
+
+Release: TARGET_NAME = Release
+Release: LIB_NAME = libofw_coreaddons.so
+Release: OBJ_OUTPUT = build/Release/
+Release: CC = gcc
+Release: CFLAGS += -O3 -MMD
+Release: LDFLAGS += -s
+
+OBJS_Release = $(addprefix build/Release/, $(OBJS) )
+
+.PHONY: after
+
+Debug: build_lib_debug after
+Release: build_lib after
+build_lib_debug: $(OBJS_Debug)
+	mkdir -p lib
+	$(CC) -shared -Wl,-soname,$(LIB_NAME) $(LDFLAGS) -o lib/$(LIB_NAME) $(OBJS_Debug) $(LIBS)
+
+build_lib: $(OBJS_Release)
+	mkdir -p lib
+	$(CC) -shared -Wl,-soname,$(LIB_NAME) $(LDFLAGS) -o lib/$(LIB_NAME) $(OBJS_Release) $(LIBS)
+
+after:
+	#
+	#     $(LIB_NAME) build (done)
+	du -khs lib/*
+
+
+build/Debug/addons/ofxOsc/srcofxOscMessage.o build/Release/addons/ofxOsc/srcofxOscMessage.o: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscMessage.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOsc
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOsc/srcofxOscMessage.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxMatrix3x3.o build/Release/addons/ofxVectorMath/src/ofxMatrix3x3.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxMatrix3x3.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxMatrix3x3.o $(CFLAGS)
+build/Debug/addons/ofNetwork/srcofxTCPClient.o build/Release/addons/ofNetwork/srcofxTCPClient.o: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPClient.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofNetwork/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofNetwork/srcofxTCPClient.o $(CFLAGS)
+build/Debug/addons/ofxVectorGraphics/libsCreEPS.o build/Release/addons/ofxVectorGraphics/libsCreEPS.o: $(OF_ADDONS_PATH)/ofxVectorGraphics/libs/CreEPS.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorGraphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorGraphics/libsCreEPS.o $(CFLAGS)
+build/Debug/addons/ofx3DModelLoader/src/ofx3dModelLoader.o build/Release/addons/ofx3DModelLoader/src/ofx3dModelLoader.o: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/ofx3dModelLoader.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofx3DModelLoader/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofx3DModelLoader/src/ofx3dModelLoader.o $(CFLAGS)
+build/Debug/addons/ofNetwork/srcofxTCPServer.o build/Release/addons/ofNetwork/srcofxTCPServer.o: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPServer.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofNetwork/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofNetwork/srcofxTCPServer.o $(CFLAGS)
+build/Debug/addons/ofxOpenCv/srcofxCvContourFinder.o build/Release/addons/ofxOpenCv/srcofxCvContourFinder.o: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvContourFinder.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOpenCv/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOpenCv/srcofxCvContourFinder.o $(CFLAGS)
+build/Debug/addons/ofxOsc/srcofxOscReceiver.o build/Release/addons/ofxOsc/srcofxOscReceiver.o: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscReceiver.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOsc/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOsc/srcofxOscReceiver.o $(CFLAGS)
+build/Debug/addons/ofXmlSettings/libstinyxmlparser.o build/Release/addons/ofXmlSettings/libstinyxmlparser.o: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlparser.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofXmlSettings/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofXmlSettings/libstinyxmlparser.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxVec2f.o build/Release/addons/ofxVectorMath/src/ofxVec2f.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec2f.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxVec2f.o $(CFLAGS)
+build/Debug/addons/ofxOsc/srcofxOscSender.o build/Release/addons/ofxOsc/srcofxOscSender.o: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscSender.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOsc/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOsc/srcofxOscSender.o $(CFLAGS)
+build/Debug/addons/ofxOpenCv/srcofxCvImage.o build/Release/addons/ofxOpenCv/srcofxCvImage.o: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvImage.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOpenCv/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOpenCv/srcofxCvImage.o $(CFLAGS)
+build/Debug/addons/ofx3DModelLoader/libs/texture3DS.o build/Release/addons/ofx3DModelLoader/libs/texture3DS.o: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/texture3DS.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofx3DModelLoader/libs/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofx3DModelLoader/libs/texture3DS.o $(CFLAGS)
+build/Debug/addons/ofx3DModelLoader/libs/model3DS.o build/Release/addons/ofx3DModelLoader/libs/model3DS.o: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/model3DS.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofx3DModelLoader/libs/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofx3DModelLoader/libs/model3DS.o $(CFLAGS)
+build/Debug/addons/ofxOpenCv/srcofxCvGrayscaleImage.o build/Release/addons/ofxOpenCv/srcofxCvGrayscaleImage.o: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvGrayscaleImage.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOpenCv/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOpenCv/srcofxCvGrayscaleImage.o $(CFLAGS)
+build/Debug/addons/ofXmlSettings/srcofxXmlSettings.o build/Release/addons/ofXmlSettings/srcofxXmlSettings.o: $(OF_ADDONS_PATH)/ofxXmlSettings/src/ofxXmlSettings.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofXmlSettings/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofXmlSettings/srcofxXmlSettings.o $(CFLAGS)
+build/Debug/addons/ofxOpenCv/srcofxCvFloatImage.o build/Release/addons/ofxOpenCv/srcofxCvFloatImage.o: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvFloatImage.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOpenCv/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOpenCv/srcofxCvFloatImage.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxPoint2f.o build/Release/addons/ofxVectorMath/src/ofxPoint2f.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint2f.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxPoint2f.o $(CFLAGS)
+build/Debug/addons/ofXmlSettings/libstinyxml.o build/Release/addons/ofXmlSettings/libstinyxml.o: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxml.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofXmlSettings/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofXmlSettings/libstinyxml.o $(CFLAGS)
+build/Debug/addons/ofxDirList/srcofxDirList.o build/Release/addons/ofxDirList/srcofxDirList.o: $(OF_ADDONS_PATH)/ofxDirList/src/ofxDirList.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxDirList/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxDirList/srcofxDirList.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxVec4f.o build/Release/addons/ofxVectorMath/src/ofxVec4f.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec4f.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxVec4f.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxPoint3f.o build/Release/addons/ofxVectorMath/src/ofxPoint3f.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint3f.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxPoint3f.o $(CFLAGS)
+build/Debug/addons/ofXmlSettings/libstinyxmlerror.o build/Release/addons/ofXmlSettings/libstinyxmlerror.o: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlerror.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofXmlSettings/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofXmlSettings/libstinyxmlerror.o $(CFLAGS)
+build/Debug/addons/ofxOpenCv/srcofxCvColorImage.o build/Release/addons/ofxOpenCv/srcofxCvColorImage.o: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvColorImage.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxOpenCv/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxOpenCv/srcofxCvColorImage.o $(CFLAGS)
+build/Debug/addons/ofNetwork/srcofxTCPManager.o build/Release/addons/ofNetwork/srcofxTCPManager.o: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPManager.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofNetwork/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofNetwork/srcofxTCPManager.o $(CFLAGS)
+build/Debug/addons/ofxThread/srcofxThread.o build/Release/addons/ofxThread/srcofxThread.o: $(OF_ADDONS_PATH)/ofxThread/src/ofxThread.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxThread/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxThread/srcofxThread.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxVec3f.o build/Release/addons/ofxVectorMath/src/ofxVec3f.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec3f.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxVec3f.o $(CFLAGS)
+build/Debug/addons/ofxVectorGraphics/srcofxVectorGraphics.o build/Release/addons/ofxVectorGraphics/srcofxVectorGraphics.o: $(OF_ADDONS_PATH)/ofxVectorGraphics/src/ofxVectorGraphics.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorGraphics/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorGraphics/srcofxVectorGraphics.o $(CFLAGS)
+build/Debug/addons/ofNetwork/srcofxUDPManager.o build/Release/addons/ofNetwork/srcofxUDPManager.o: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxUDPManager.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofNetwork/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofNetwork/srcofxUDPManager.o $(CFLAGS)
+build/Debug/addons/ofxVectorMath/src/ofxPoint4f.o build/Release/addons/ofxVectorMath/src/ofxPoint4f.o: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint4f.cpp
+	mkdir -p $(OBJ_OUTPUT)addons/ofxVectorMath/src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxVectorMath/src/ofxPoint4f.o $(CFLAGS)
+
+clean:
+	-rm $(OBJS_Debug) $(OBJS_Release)
+
+ifneq ($MAKECMDGOALS,clean)
+build/Debug/addons/ofxOsc/srcofxOscMessage.dep: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscMessage.cpp
+	mkdir -p build/Debug/addons/ofxOsc/
+	$(CC) -M -MT build/Debug/addons/ofxOsc/srcofxOscMessage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscMessage.cpp -MF build/Debug/addons/ofxOsc/srcofxOscMessage.dep
+-include build/Debug/addons/ofxOsc/srcofxOscMessage.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxMatrix3x3.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxMatrix3x3.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxMatrix3x3.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxMatrix3x3.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxMatrix3x3.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxMatrix3x3.dep
+
+build/Debug/addons/ofNetwork/srcofxTCPClient.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPClient.cpp
+	mkdir -p build/Debug/addons/ofNetwork/
+	$(CC) -M -MT build/Debug/addons/ofNetwork/srcofxTCPClient.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPClient.cpp -MF build/Debug/addons/ofNetwork/srcofxTCPClient.dep
+-include build/Debug/addons/ofNetwork/srcofxTCPClient.dep
+
+build/Debug/addons/ofxVectorGraphics/libsCreEPS.dep: $(OF_ADDONS_PATH)/ofxVectorGraphics/libs/CreEPS.cpp
+	mkdir -p build/Debug/addons/ofxVectorGraphics/
+	$(CC) -M -MT build/Debug/addons/ofxVectorGraphics/libsCreEPS.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorGraphics/libs/CreEPS.cpp -MF build/Debug/addons/ofxVectorGraphics/libsCreEPS.dep
+-include build/Debug/addons/ofxVectorGraphics/libsCreEPS.dep
+
+build/Debug/addons/ofx3DModelLoader/src/ofx3dModelLoader.dep: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/ofx3dModelLoader.cpp
+	mkdir -p build/Debug/addons/ofx3DModelLoader/src/
+	$(CC) -M -MT build/Debug/addons/ofx3DModelLoader/src/ofx3dModelLoader.o $(CFLAGS) $(OF_ADDONS_PATH)/ofx3DModelLoader/src/ofx3dModelLoader.cpp -MF build/Debug/addons/ofx3DModelLoader/src/ofx3dModelLoader.dep
+-include build/Debug/addons/ofx3DModelLoader/src/ofx3dModelLoader.dep
+
+build/Debug/addons/ofNetwork/srcofxTCPServer.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPServer.cpp
+	mkdir -p build/Debug/addons/ofNetwork/
+	$(CC) -M -MT build/Debug/addons/ofNetwork/srcofxTCPServer.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPServer.cpp -MF build/Debug/addons/ofNetwork/srcofxTCPServer.dep
+-include build/Debug/addons/ofNetwork/srcofxTCPServer.dep
+
+build/Debug/addons/ofxOpenCv/srcofxCvContourFinder.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvContourFinder.cpp
+	mkdir -p build/Debug/addons/ofxOpenCv/
+	$(CC) -M -MT build/Debug/addons/ofxOpenCv/srcofxCvContourFinder.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvContourFinder.cpp -MF build/Debug/addons/ofxOpenCv/srcofxCvContourFinder.dep
+-include build/Debug/addons/ofxOpenCv/srcofxCvContourFinder.dep
+
+build/Debug/addons/ofxOsc/srcofxOscReceiver.dep: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscReceiver.cpp
+	mkdir -p build/Debug/addons/ofxOsc/
+	$(CC) -M -MT build/Debug/addons/ofxOsc/srcofxOscReceiver.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscReceiver.cpp -MF build/Debug/addons/ofxOsc/srcofxOscReceiver.dep
+-include build/Debug/addons/ofxOsc/srcofxOscReceiver.dep
+
+build/Debug/addons/ofXmlSettings/libstinyxmlparser.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlparser.cpp
+	mkdir -p build/Debug/addons/ofXmlSettings/
+	$(CC) -M -MT build/Debug/addons/ofXmlSettings/libstinyxmlparser.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlparser.cpp -MF build/Debug/addons/ofXmlSettings/libstinyxmlparser.dep
+-include build/Debug/addons/ofXmlSettings/libstinyxmlparser.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxVec2f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec2f.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxVec2f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec2f.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxVec2f.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxVec2f.dep
+
+build/Debug/addons/ofxOsc/srcofxOscSender.dep: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscSender.cpp
+	mkdir -p build/Debug/addons/ofxOsc/
+	$(CC) -M -MT build/Debug/addons/ofxOsc/srcofxOscSender.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscSender.cpp -MF build/Debug/addons/ofxOsc/srcofxOscSender.dep
+-include build/Debug/addons/ofxOsc/srcofxOscSender.dep
+
+build/Debug/addons/ofxOpenCv/srcofxCvImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvImage.cpp
+	mkdir -p build/Debug/addons/ofxOpenCv/
+	$(CC) -M -MT build/Debug/addons/ofxOpenCv/srcofxCvImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvImage.cpp -MF build/Debug/addons/ofxOpenCv/srcofxCvImage.dep
+-include build/Debug/addons/ofxOpenCv/srcofxCvImage.dep
+
+build/Debug/addons/ofx3DModelLoader/libs/texture3DS.dep: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/texture3DS.cpp
+	mkdir -p build/Debug/addons/ofx3DModelLoader/libs/
+	$(CC) -M -MT build/Debug/addons/ofx3DModelLoader/libs/texture3DS.o $(CFLAGS) $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/texture3DS.cpp -MF build/Debug/addons/ofx3DModelLoader/libs/texture3DS.dep
+-include build/Debug/addons/ofx3DModelLoader/libs/texture3DS.dep
+
+build/Debug/addons/ofx3DModelLoader/libs/model3DS.dep: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/model3DS.cpp
+	mkdir -p build/Debug/addons/ofx3DModelLoader/libs/
+	$(CC) -M -MT build/Debug/addons/ofx3DModelLoader/libs/model3DS.o $(CFLAGS) $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/model3DS.cpp -MF build/Debug/addons/ofx3DModelLoader/libs/model3DS.dep
+-include build/Debug/addons/ofx3DModelLoader/libs/model3DS.dep
+
+build/Debug/addons/ofxOpenCv/srcofxCvGrayscaleImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvGrayscaleImage.cpp
+	mkdir -p build/Debug/addons/ofxOpenCv/
+	$(CC) -M -MT build/Debug/addons/ofxOpenCv/srcofxCvGrayscaleImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvGrayscaleImage.cpp -MF build/Debug/addons/ofxOpenCv/srcofxCvGrayscaleImage.dep
+-include build/Debug/addons/ofxOpenCv/srcofxCvGrayscaleImage.dep
+
+build/Debug/addons/ofXmlSettings/srcofxXmlSettings.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/src/ofxXmlSettings.cpp
+	mkdir -p build/Debug/addons/ofXmlSettings/
+	$(CC) -M -MT build/Debug/addons/ofXmlSettings/srcofxXmlSettings.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/src/ofxXmlSettings.cpp -MF build/Debug/addons/ofXmlSettings/srcofxXmlSettings.dep
+-include build/Debug/addons/ofXmlSettings/srcofxXmlSettings.dep
+
+build/Debug/addons/ofxOpenCv/srcofxCvFloatImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvFloatImage.cpp
+	mkdir -p build/Debug/addons/ofxOpenCv/
+	$(CC) -M -MT build/Debug/addons/ofxOpenCv/srcofxCvFloatImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvFloatImage.cpp -MF build/Debug/addons/ofxOpenCv/srcofxCvFloatImage.dep
+-include build/Debug/addons/ofxOpenCv/srcofxCvFloatImage.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxPoint2f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint2f.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxPoint2f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint2f.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxPoint2f.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxPoint2f.dep
+
+build/Debug/addons/ofXmlSettings/libstinyxml.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxml.cpp
+	mkdir -p build/Debug/addons/ofXmlSettings/
+	$(CC) -M -MT build/Debug/addons/ofXmlSettings/libstinyxml.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxml.cpp -MF build/Debug/addons/ofXmlSettings/libstinyxml.dep
+-include build/Debug/addons/ofXmlSettings/libstinyxml.dep
+
+build/Debug/addons/ofxDirList/srcofxDirList.dep: $(OF_ADDONS_PATH)/ofxDirList/src/ofxDirList.cpp
+	mkdir -p build/Debug/addons/ofxDirList/
+	$(CC) -M -MT build/Debug/addons/ofxDirList/srcofxDirList.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxDirList/src/ofxDirList.cpp -MF build/Debug/addons/ofxDirList/srcofxDirList.dep
+-include build/Debug/addons/ofxDirList/srcofxDirList.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxVec4f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec4f.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxVec4f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec4f.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxVec4f.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxVec4f.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxPoint3f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint3f.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxPoint3f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint3f.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxPoint3f.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxPoint3f.dep
+
+build/Debug/addons/ofXmlSettings/libstinyxmlerror.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlerror.cpp
+	mkdir -p build/Debug/addons/ofXmlSettings/
+	$(CC) -M -MT build/Debug/addons/ofXmlSettings/libstinyxmlerror.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlerror.cpp -MF build/Debug/addons/ofXmlSettings/libstinyxmlerror.dep
+-include build/Debug/addons/ofXmlSettings/libstinyxmlerror.dep
+
+build/Debug/addons/ofxOpenCv/srcofxCvColorImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvColorImage.cpp
+	mkdir -p build/Debug/addons/ofxOpenCv/
+	$(CC) -M -MT build/Debug/addons/ofxOpenCv/srcofxCvColorImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvColorImage.cpp -MF build/Debug/addons/ofxOpenCv/srcofxCvColorImage.dep
+-include build/Debug/addons/ofxOpenCv/srcofxCvColorImage.dep
+
+build/Debug/addons/ofNetwork/srcofxTCPManager.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPManager.cpp
+	mkdir -p build/Debug/addons/ofNetwork/
+	$(CC) -M -MT build/Debug/addons/ofNetwork/srcofxTCPManager.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPManager.cpp -MF build/Debug/addons/ofNetwork/srcofxTCPManager.dep
+-include build/Debug/addons/ofNetwork/srcofxTCPManager.dep
+
+build/Debug/addons/ofxThread/srcofxThread.dep: $(OF_ADDONS_PATH)/ofxThread/src/ofxThread.cpp
+	mkdir -p build/Debug/addons/ofxThread/
+	$(CC) -M -MT build/Debug/addons/ofxThread/srcofxThread.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxThread/src/ofxThread.cpp -MF build/Debug/addons/ofxThread/srcofxThread.dep
+-include build/Debug/addons/ofxThread/srcofxThread.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxVec3f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec3f.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxVec3f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec3f.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxVec3f.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxVec3f.dep
+
+build/Debug/addons/ofxVectorGraphics/srcofxVectorGraphics.dep: $(OF_ADDONS_PATH)/ofxVectorGraphics/src/ofxVectorGraphics.cpp
+	mkdir -p build/Debug/addons/ofxVectorGraphics/
+	$(CC) -M -MT build/Debug/addons/ofxVectorGraphics/srcofxVectorGraphics.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorGraphics/src/ofxVectorGraphics.cpp -MF build/Debug/addons/ofxVectorGraphics/srcofxVectorGraphics.dep
+-include build/Debug/addons/ofxVectorGraphics/srcofxVectorGraphics.dep
+
+build/Debug/addons/ofNetwork/srcofxUDPManager.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxUDPManager.cpp
+	mkdir -p build/Debug/addons/ofNetwork/
+	$(CC) -M -MT build/Debug/addons/ofNetwork/srcofxUDPManager.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxUDPManager.cpp -MF build/Debug/addons/ofNetwork/srcofxUDPManager.dep
+-include build/Debug/addons/ofNetwork/srcofxUDPManager.dep
+
+build/Debug/addons/ofxVectorMath/src/ofxPoint4f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint4f.cpp
+	mkdir -p build/Debug/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Debug/addons/ofxVectorMath/src/ofxPoint4f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint4f.cpp -MF build/Debug/addons/ofxVectorMath/src/ofxPoint4f.dep
+-include build/Debug/addons/ofxVectorMath/src/ofxPoint4f.dep
+
+build/Release/addons/ofxOsc/srcofxOscMessage.dep: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscMessage.cpp
+	mkdir -p build/Release/addons/ofxOsc/
+	$(CC) -M -MT build/Release/addons/ofxOsc/srcofxOscMessage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscMessage.cpp -MF build/Release/addons/ofxOsc/srcofxOscMessage.dep
+-include build/Release/addons/ofxOsc/srcofxOscMessage.dep
+
+build/Release/addons/ofxVectorMath/src/ofxMatrix3x3.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxMatrix3x3.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxMatrix3x3.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxMatrix3x3.cpp -MF build/Release/addons/ofxVectorMath/src/ofxMatrix3x3.dep
+-include build/Release/addons/ofxVectorMath/src/ofxMatrix3x3.dep
+
+build/Release/addons/ofNetwork/srcofxTCPClient.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPClient.cpp
+	mkdir -p build/Release/addons/ofNetwork/
+	$(CC) -M -MT build/Release/addons/ofNetwork/srcofxTCPClient.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPClient.cpp -MF build/Release/addons/ofNetwork/srcofxTCPClient.dep
+-include build/Release/addons/ofNetwork/srcofxTCPClient.dep
+
+build/Release/addons/ofxVectorGraphics/libsCreEPS.dep: $(OF_ADDONS_PATH)/ofxVectorGraphics/libs/CreEPS.cpp
+	mkdir -p build/Release/addons/ofxVectorGraphics/
+	$(CC) -M -MT build/Release/addons/ofxVectorGraphics/libsCreEPS.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorGraphics/libs/CreEPS.cpp -MF build/Release/addons/ofxVectorGraphics/libsCreEPS.dep
+-include build/Release/addons/ofxVectorGraphics/libsCreEPS.dep
+
+build/Release/addons/ofx3DModelLoader/src/ofx3dModelLoader.dep: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/ofx3dModelLoader.cpp
+	mkdir -p build/Release/addons/ofx3DModelLoader/src/
+	$(CC) -M -MT build/Release/addons/ofx3DModelLoader/src/ofx3dModelLoader.o $(CFLAGS) $(OF_ADDONS_PATH)/ofx3DModelLoader/src/ofx3dModelLoader.cpp -MF build/Release/addons/ofx3DModelLoader/src/ofx3dModelLoader.dep
+-include build/Release/addons/ofx3DModelLoader/src/ofx3dModelLoader.dep
+
+build/Release/addons/ofNetwork/srcofxTCPServer.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPServer.cpp
+	mkdir -p build/Release/addons/ofNetwork/
+	$(CC) -M -MT build/Release/addons/ofNetwork/srcofxTCPServer.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPServer.cpp -MF build/Release/addons/ofNetwork/srcofxTCPServer.dep
+-include build/Release/addons/ofNetwork/srcofxTCPServer.dep
+
+build/Release/addons/ofxOpenCv/srcofxCvContourFinder.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvContourFinder.cpp
+	mkdir -p build/Release/addons/ofxOpenCv/
+	$(CC) -M -MT build/Release/addons/ofxOpenCv/srcofxCvContourFinder.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvContourFinder.cpp -MF build/Release/addons/ofxOpenCv/srcofxCvContourFinder.dep
+-include build/Release/addons/ofxOpenCv/srcofxCvContourFinder.dep
+
+build/Release/addons/ofxOsc/srcofxOscReceiver.dep: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscReceiver.cpp
+	mkdir -p build/Release/addons/ofxOsc/
+	$(CC) -M -MT build/Release/addons/ofxOsc/srcofxOscReceiver.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscReceiver.cpp -MF build/Release/addons/ofxOsc/srcofxOscReceiver.dep
+-include build/Release/addons/ofxOsc/srcofxOscReceiver.dep
+
+build/Release/addons/ofXmlSettings/libstinyxmlparser.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlparser.cpp
+	mkdir -p build/Release/addons/ofXmlSettings/
+	$(CC) -M -MT build/Release/addons/ofXmlSettings/libstinyxmlparser.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlparser.cpp -MF build/Release/addons/ofXmlSettings/libstinyxmlparser.dep
+-include build/Release/addons/ofXmlSettings/libstinyxmlparser.dep
+
+build/Release/addons/ofxVectorMath/src/ofxVec2f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec2f.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxVec2f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec2f.cpp -MF build/Release/addons/ofxVectorMath/src/ofxVec2f.dep
+-include build/Release/addons/ofxVectorMath/src/ofxVec2f.dep
+
+build/Release/addons/ofxOsc/srcofxOscSender.dep: $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscSender.cpp
+	mkdir -p build/Release/addons/ofxOsc/
+	$(CC) -M -MT build/Release/addons/ofxOsc/srcofxOscSender.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOsc/src/ofxOscSender.cpp -MF build/Release/addons/ofxOsc/srcofxOscSender.dep
+-include build/Release/addons/ofxOsc/srcofxOscSender.dep
+
+build/Release/addons/ofxOpenCv/srcofxCvImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvImage.cpp
+	mkdir -p build/Release/addons/ofxOpenCv/
+	$(CC) -M -MT build/Release/addons/ofxOpenCv/srcofxCvImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvImage.cpp -MF build/Release/addons/ofxOpenCv/srcofxCvImage.dep
+-include build/Release/addons/ofxOpenCv/srcofxCvImage.dep
+
+build/Release/addons/ofx3DModelLoader/libs/texture3DS.dep: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/texture3DS.cpp
+	mkdir -p build/Release/addons/ofx3DModelLoader/libs/
+	$(CC) -M -MT build/Release/addons/ofx3DModelLoader/libs/texture3DS.o $(CFLAGS) $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/texture3DS.cpp -MF build/Release/addons/ofx3DModelLoader/libs/texture3DS.dep
+-include build/Release/addons/ofx3DModelLoader/libs/texture3DS.dep
+
+build/Release/addons/ofx3DModelLoader/libs/model3DS.dep: $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/model3DS.cpp
+	mkdir -p build/Release/addons/ofx3DModelLoader/libs/
+	$(CC) -M -MT build/Release/addons/ofx3DModelLoader/libs/model3DS.o $(CFLAGS) $(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS/model3DS.cpp -MF build/Release/addons/ofx3DModelLoader/libs/model3DS.dep
+-include build/Release/addons/ofx3DModelLoader/libs/model3DS.dep
+
+build/Release/addons/ofxOpenCv/srcofxCvGrayscaleImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvGrayscaleImage.cpp
+	mkdir -p build/Release/addons/ofxOpenCv/
+	$(CC) -M -MT build/Release/addons/ofxOpenCv/srcofxCvGrayscaleImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvGrayscaleImage.cpp -MF build/Release/addons/ofxOpenCv/srcofxCvGrayscaleImage.dep
+-include build/Release/addons/ofxOpenCv/srcofxCvGrayscaleImage.dep
+
+build/Release/addons/ofXmlSettings/srcofxXmlSettings.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/src/ofxXmlSettings.cpp
+	mkdir -p build/Release/addons/ofXmlSettings/
+	$(CC) -M -MT build/Release/addons/ofXmlSettings/srcofxXmlSettings.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/src/ofxXmlSettings.cpp -MF build/Release/addons/ofXmlSettings/srcofxXmlSettings.dep
+-include build/Release/addons/ofXmlSettings/srcofxXmlSettings.dep
+
+build/Release/addons/ofxOpenCv/srcofxCvFloatImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvFloatImage.cpp
+	mkdir -p build/Release/addons/ofxOpenCv/
+	$(CC) -M -MT build/Release/addons/ofxOpenCv/srcofxCvFloatImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvFloatImage.cpp -MF build/Release/addons/ofxOpenCv/srcofxCvFloatImage.dep
+-include build/Release/addons/ofxOpenCv/srcofxCvFloatImage.dep
+
+build/Release/addons/ofxVectorMath/src/ofxPoint2f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint2f.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxPoint2f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint2f.cpp -MF build/Release/addons/ofxVectorMath/src/ofxPoint2f.dep
+-include build/Release/addons/ofxVectorMath/src/ofxPoint2f.dep
+
+build/Release/addons/ofXmlSettings/libstinyxml.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxml.cpp
+	mkdir -p build/Release/addons/ofXmlSettings/
+	$(CC) -M -MT build/Release/addons/ofXmlSettings/libstinyxml.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxml.cpp -MF build/Release/addons/ofXmlSettings/libstinyxml.dep
+-include build/Release/addons/ofXmlSettings/libstinyxml.dep
+
+build/Release/addons/ofxDirList/srcofxDirList.dep: $(OF_ADDONS_PATH)/ofxDirList/src/ofxDirList.cpp
+	mkdir -p build/Release/addons/ofxDirList/
+	$(CC) -M -MT build/Release/addons/ofxDirList/srcofxDirList.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxDirList/src/ofxDirList.cpp -MF build/Release/addons/ofxDirList/srcofxDirList.dep
+-include build/Release/addons/ofxDirList/srcofxDirList.dep
+
+build/Release/addons/ofxVectorMath/src/ofxVec4f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec4f.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxVec4f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec4f.cpp -MF build/Release/addons/ofxVectorMath/src/ofxVec4f.dep
+-include build/Release/addons/ofxVectorMath/src/ofxVec4f.dep
+
+build/Release/addons/ofxVectorMath/src/ofxPoint3f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint3f.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxPoint3f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint3f.cpp -MF build/Release/addons/ofxVectorMath/src/ofxPoint3f.dep
+-include build/Release/addons/ofxVectorMath/src/ofxPoint3f.dep
+
+build/Release/addons/ofXmlSettings/libstinyxmlerror.dep: $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlerror.cpp
+	mkdir -p build/Release/addons/ofXmlSettings/
+	$(CC) -M -MT build/Release/addons/ofXmlSettings/libstinyxmlerror.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxXmlSettings/libs/tinyxmlerror.cpp -MF build/Release/addons/ofXmlSettings/libstinyxmlerror.dep
+-include build/Release/addons/ofXmlSettings/libstinyxmlerror.dep
+
+build/Release/addons/ofxOpenCv/srcofxCvColorImage.dep: $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvColorImage.cpp
+	mkdir -p build/Release/addons/ofxOpenCv/
+	$(CC) -M -MT build/Release/addons/ofxOpenCv/srcofxCvColorImage.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxOpenCv/src/ofxCvColorImage.cpp -MF build/Release/addons/ofxOpenCv/srcofxCvColorImage.dep
+-include build/Release/addons/ofxOpenCv/srcofxCvColorImage.dep
+
+build/Release/addons/ofNetwork/srcofxTCPManager.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPManager.cpp
+	mkdir -p build/Release/addons/ofNetwork/
+	$(CC) -M -MT build/Release/addons/ofNetwork/srcofxTCPManager.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxTCPManager.cpp -MF build/Release/addons/ofNetwork/srcofxTCPManager.dep
+-include build/Release/addons/ofNetwork/srcofxTCPManager.dep
+
+build/Release/addons/ofxThread/srcofxThread.dep: $(OF_ADDONS_PATH)/ofxThread/src/ofxThread.cpp
+	mkdir -p build/Release/addons/ofxThread/
+	$(CC) -M -MT build/Release/addons/ofxThread/srcofxThread.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxThread/src/ofxThread.cpp -MF build/Release/addons/ofxThread/srcofxThread.dep
+-include build/Release/addons/ofxThread/srcofxThread.dep
+
+build/Release/addons/ofxVectorMath/src/ofxVec3f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec3f.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxVec3f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxVec3f.cpp -MF build/Release/addons/ofxVectorMath/src/ofxVec3f.dep
+-include build/Release/addons/ofxVectorMath/src/ofxVec3f.dep
+
+build/Release/addons/ofxVectorGraphics/srcofxVectorGraphics.dep: $(OF_ADDONS_PATH)/ofxVectorGraphics/src/ofxVectorGraphics.cpp
+	mkdir -p build/Release/addons/ofxVectorGraphics/
+	$(CC) -M -MT build/Release/addons/ofxVectorGraphics/srcofxVectorGraphics.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorGraphics/src/ofxVectorGraphics.cpp -MF build/Release/addons/ofxVectorGraphics/srcofxVectorGraphics.dep
+-include build/Release/addons/ofxVectorGraphics/srcofxVectorGraphics.dep
+
+build/Release/addons/ofNetwork/srcofxUDPManager.dep: $(OF_ADDONS_PATH)/ofxNetwork/src/ofxUDPManager.cpp
+	mkdir -p build/Release/addons/ofNetwork/
+	$(CC) -M -MT build/Release/addons/ofNetwork/srcofxUDPManager.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxNetwork/src/ofxUDPManager.cpp -MF build/Release/addons/ofNetwork/srcofxUDPManager.dep
+-include build/Release/addons/ofNetwork/srcofxUDPManager.dep
+
+build/Release/addons/ofxVectorMath/src/ofxPoint4f.dep: $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint4f.cpp
+	mkdir -p build/Release/addons/ofxVectorMath/src/
+	$(CC) -M -MT build/Release/addons/ofxVectorMath/src/ofxPoint4f.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxVectorMath/src/ofxPoint4f.cpp -MF build/Release/addons/ofxVectorMath/src/ofxPoint4f.dep
+-include build/Release/addons/ofxVectorMath/src/ofxPoint4f.dep
+
+endif

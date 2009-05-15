@@ -1,0 +1,252 @@
+# builds a 'core-addons' openframeworks shared .so
+OF_LIBS_PATH = ../../libs
+OF_ADDONS_PATH = ../../addons
+
+CC = gcc
+PROJECT_DIR = ./
+CFLAGS += -Wall -fexceptions 
+#= CFLAGS += -I$(OF_LIBS_PATH)/libofw/include # ..
+#= libofw cflags
+CFLAGS += -I$(OF_LIBS_PATH)/openFrameworks/ -I$(OF_LIBS_PATH)/openFrameworks/events -I$(OF_LIBS_PATH)/openFrameworks/app -I$(OF_LIBS_PATH)/openFrameworks/communication -I$(OF_LIBS_PATH)/openFrameworks/graphics -I$(OF_LIBS_PATH)/openFrameworks/video -I$(OF_LIBS_PATH)/openFrameworks/utils -I$(OF_LIBS_PATH)/openFrameworks/sound -I$(OF_LIBS_PATH)/rtAudio/include -I$(OF_LIBS_PATH)/fmodex/inc -I$(OF_LIBS_PATH)/GLee/include -I$(OF_LIBS_PATH)/GLee/ -I$(OF_LIBS_PATH)/freeimage/include -I$(OF_LIBS_PATH)/freeimage -I$(OF_LIBS_PATH)/alsa/include -I$(OF_LIBS_PATH)/alsa/include/alsa -I$(OF_LIBS_PATH)/freetype/include/linux -I$(OF_LIBS_PATH)/freetype/include/linux/freetype2 -I$(OF_LIBS_PATH)/unicap/include -I$(OF_LIBS_PATH)/gstappsink/include -I../$(OF_ADDONS_PATH) -I$(OF_LIBS_PATH)/poco/include
+
+#= libofw_coreaddons cflags
+CFLAGS += -I$(OF_ADDONS_PATH) -I$(OF_ADDONS_PATH)/ofxDirList/src -I$(OF_ADDONS_PATH)/ofxNetwork/src -I$(OF_ADDONS_PATH)/ofxOpenCv/src -I$(OF_ADDONS_PATH)/ofxOpenCv/libs/opencv/include -I$(OF_ADDONS_PATH)/ofxOsc/src -I$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/include/ip -I$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/include/osc -I$(OF_ADDONS_PATH)/ofxThread/src -I$(OF_ADDONS_PATH)/ofxVectorGraphics/src -I$(OF_ADDONS_PATH)/ofxVectorGraphics/libs -I$(OF_ADDONS_PATH)/ofxVectorMath/src -I$(OF_ADDONS_PATH)/ofxXmlSettings/src -I$(OF_ADDONS_PATH)/ofxXmlSettings/libs -I$(OF_ADDONS_PATH)/ofx3DModelLoader/src -I$(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS
+
+#= libofw_msaaddons cflags
+CFLAGS += -I$(OF_ADDONS_PATH)/ofxMSAInteractiveObject/src -I$(OF_ADDONS_PATH)/ofxMSAFluid/src -I$(OF_ADDONS_PATH)/ofxMSANoise/src -I$(OF_ADDONS_PATH)/ofxMSAPhysics/src -I$(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core -I$(OF_ADDONS_PATH)/ofxMSAPhysics/src/Constraints -I$(OF_ADDONS_PATH)/ofxMSAPhysics/src/Callbacks -I$(OF_ADDONS_PATH)/ofxMSAPhysics/src/serialization  -I$(OF_ADDONS_PATH)/ofxMSAShape3D/src -I$(OF_ADDONS_PATH)/ofxMSASpline/src -I$(OF_ADDONS_PATH)/ofxMSAThread/src -I$(OF_ADDONS_PATH)/ofxMSAUtils/src -I$(OF_ADDONS_PATH)/ofxObjCPointer/src -I$(OF_ADDONS_PATH)/ofxSimpleGuiToo/src/Controls 
+
+#= ofxSimpleGuiToo cflags
+# CFLAGS += -I$(OF_ADDONS_PATH)/ofxSimpleGuiToo/src -I$(OF_ADDONS_PATH)/ofxSimpleGuiToo/src/Controls 
+
+CFLAGS +=`pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 libavcodec libavformat libavutil libswscale --cflags`
+LDFLAGS += -L$(OF_LIBS_PATH)/libofw/lib -L$(OF_ADDONS_PATH)/ofxOpenCv/libs/opencv/lib/linux -L$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/lib/linux -L$(OF_LIBS_PATH)/fmodex/lib/linux -L$(OF_LIBS_PATH)/unicap/lib -L$(OF_LIBS_PATH)/poco/lib/linux -L./bin/libs
+LIBS += -lofw -lofw_coreaddons -lfmodex -lraw1394 -lglut -lGL -lGLU -lXxf86vm -lasound -lPocoFoundation -lunicap -lcv -lcxcore -loscpack
+CFLAGS += -DLINUX
+
+#= ofxMSA* + ofxSimpleGuiToo + ofxObjCPointer
+OBJS = addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.o addons/ofxMSAFluid/src/ofxMSAFluidDrawer.o addons/ofxMSAFluid/src/ofxMSAFluidSolver.o addons/ofxMSANoise/src/ofxPerlin.o addons/ofxMSAPhysics/src/Core/binner.o addons/ofxMSAPhysics/src/Core/ofxMSAParticle.o addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.o addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.o addons/ofxMSASpline/src/ofxMSASpline2D.o addons/ofxMSASpline/src/ofxMSASpline3D.o addons/ofxMSASpline/src/ofxMSASurface3D.o addons/ofxMSAUtils/src/ofxMSAUtils.o addons/ofxObjCPointer/src/ofxObjCPointer.o 
+
+# OBJS += addons/ofxSimpleGuiToo/src/ofxSimpleGuiPage.o addons/ofxSimpleGuiToo/src/ofxSimpleGuiConfig.o addons/ofxSimpleGuiToo/src/ofxSimpleGuiControl.o addons/ofxSimpleGuiToo/src/ofxSimpleGuiToo.o
+
+Debug: TARGET_NAME = Debug
+Debug: LIB_NAME = libofw_msaaddons.so
+Debug: OBJ_OUTPUT = build/Debug/
+Debug: CC = gcc
+Debug: CFLAGS += -g -MMD
+
+OBJS_Debug = $(addprefix build/Debug/, $(OBJS) )
+
+Release: TARGET_NAME = Release
+Release: LIB_NAME = libofw_msaaddons.so
+Release: OBJ_OUTPUT = build/Release/
+Release: CC = gcc
+Release: CFLAGS += -O3 -MMD
+Release: LDFLAGS += -s
+
+OBJS_Release = $(addprefix build/Release/, $(OBJS) )
+
+.PHONY: after
+
+Debug: build_lib_debug after
+Release: build_lib after
+build_lib_debug: $(OBJS_Debug)
+	mkdir -p lib
+	$(CC) -shared -Wl,-soname,$(LIB_NAME) $(LDFLAGS) -o lib/$(LIB_NAME) $(OBJS_Debug) $(LIBS)
+
+build_lib: $(OBJS_Release)
+	mkdir -p lib
+	$(CC) -shared -Wl,-soname,$(LIB_NAME) $(LDFLAGS) -o lib/$(LIB_NAME) $(OBJS_Release) $(LIBS)
+
+after:
+	#
+	#     $(LIB_NAME) build (done)
+	du -khs lib/*
+
+build/Debug/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.o build/Release/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.o: $(OF_ADDONS_PATH)/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAInteractiveObject/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.o build/Release/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.o: $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidDrawer.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAFluid/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAFluid/src/ofxMSAFluidDrawer.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidSolver.o build/Release/addons/ofxMSAFluid/src/ofxMSAFluidSolver.o: $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidSolver.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAFluid/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAFluid/src/ofxMSAFluidSolver.o $(CFLAGS)
+
+build/Debug/addons/ofxMSANoise/src/ofxPerlin.o build/Release/addons/ofxMSANoise/src/ofxPerlin.o: $(OF_ADDONS_PATH)/ofxMSANoise/src/ofxPerlin.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSANoise/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSANoise/src/ofxPerlin.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAPhysics/src/Core/binner.o build/Release/addons/ofxMSAPhysics/src/Core/binner.o: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/binner.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core/binner.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.o build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.o: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAParticle.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core/ofxMSAParticle.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.o build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.o: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysics.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.o build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.o: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.o $(CFLAGS)
+
+build/Debug/addons/ofxMSASpline/src/ofxMSASpline2D.o build/Release/addons/ofxMSASpline/src/ofxMSASpline2D.o: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline2D.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSASpline/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSASpline/src/ofxMSASpline2D.o $(CFLAGS)
+
+build/Debug/addons/ofxMSASpline/src/ofxMSASpline3D.o build/Release/addons/ofxMSASpline/src/ofxMSASpline3D.o: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline3D.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSASpline/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSASpline/src/ofxMSASpline3D.o $(CFLAGS)
+
+build/Debug/addons/ofxMSASpline/src/ofxMSASurface3D.o build/Release/addons/ofxMSASpline/src/ofxMSASurface3D.o: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASurface3D.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSASpline/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSASpline/src/ofxMSASurface3D.o $(CFLAGS)
+
+build/Debug/addons/ofxMSAUtils/src/ofxMSAUtils.o build/Release/addons/ofxMSAUtils/src/ofxMSAUtils.o: $(OF_ADDONS_PATH)/ofxMSAUtils/src/ofxMSAUtils.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxMSAUtils/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxMSAUtils/src/ofxMSAUtils.o $(CFLAGS)
+
+build/Debug/addons/ofxObjCPointer/src/ofxObjCPointer.o build/Release/addons/ofxObjCPointer/src/ofxObjCPointer.o: $(OF_ADDONS_PATH)/ofxObjCPointer/src/ofxObjCPointer.cpp
+		mkdir -p $(OBJ_OUTPUT)addons/ofxObjCPointer/src
+		$(CC) -c $< -o $(OBJ_OUTPUT)addons/ofxObjCPointer/src/ofxObjCPointer.o $(CFLAGS)
+
+clean:
+	-rm $(OBJS_Debug) $(OBJS_Release)
+
+ifneq ($MAKECMDGOALS,clean)
+
+build/Debug/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.dep: $(OF_ADDONS_PATH)/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.cpp
+	mkdir -p build/Debug/addons/ofxMSAInteractiveObject/src
+	$(CC) -M -MT build/Debug/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.cpp -MF build/Debug/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.dep
+-include build/Debug/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.dep
+
+build/Release/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.dep: $(OF_ADDONS_PATH)/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.cpp
+	mkdir -p build/Release/addons/ofxMSAInteractiveObject/src
+	$(CC) -M -MT build/Release/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.cpp -MF build/Release/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.dep
+-include build/Release/addons/ofxMSAInteractiveObject/src/ofxMSAInteractiveObject.dep
+
+build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.dep: $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidDrawer.cpp
+	mkdir -p build/Debug/addons/ofxMSAFluid/src
+	$(CC) -M -MT build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidDrawer.cpp -MF build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.dep
+-include build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.dep
+
+build/Release/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.dep: $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidDrawer.cpp
+	mkdir -p build/Release/addons/ofxMSAFluid/src
+	$(CC) -M -MT build/Release/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidDrawer.cpp -MF build/Release/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.dep
+-include build/Release/addons/ofxMSAFluid/src/ofxMSAFluidDrawer.dep
+
+build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidSolver.dep: $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidSolver.cpp
+	mkdir -p build/Debug/addons/ofxMSAFluid/src
+	$(CC) -M -MT build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidSolver.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidSolver.cpp -MF build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidSolver.dep
+-include build/Debug/addons/ofxMSAFluid/src/ofxMSAFluidSolver.dep
+
+build/Release/addons/ofxMSAFluid/src/ofxMSAFluidSolver.dep: $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidSolver.cpp
+	mkdir -p build/Release/addons/ofxMSAFluid/src
+	$(CC) -M -MT build/Release/addons/ofxMSAFluid/src/ofxMSAFluidSolver.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAFluid/src/ofxMSAFluidSolver.cpp -MF build/Release/addons/ofxMSAFluid/src/ofxMSAFluidSolver.dep
+-include build/Release/addons/ofxMSAFluid/src/ofxMSAFluidSolver.dep
+
+build/Debug/addons/ofxMSANoise/src/ofxPerlin.dep: $(OF_ADDONS_PATH)/ofxMSANoise/src/ofxPerlin.cpp
+	mkdir -p build/Debug/addons/ofxMSANoise/src
+	$(CC) -M -MT build/Debug/addons/ofxMSANoise/src/ofxPerlin.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSANoise/src/ofxPerlin.cpp -MF build/Debug/addons/ofxMSANoise/src/ofxPerlin.dep
+-include build/Debug/addons/ofxMSANoise/src/ofxPerlin.dep
+
+build/Release/addons/ofxMSANoise/src/ofxPerlin.dep: $(OF_ADDONS_PATH)/ofxMSANoise/src/ofxPerlin.cpp
+	mkdir -p build/Release/addons/ofxMSANoise/src
+	$(CC) -M -MT build/Release/addons/ofxMSANoise/src/ofxPerlin.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSANoise/src/ofxPerlin.cpp -MF build/Release/addons/ofxMSANoise/src/ofxPerlin.dep
+-include build/Release/addons/ofxMSANoise/src/ofxPerlin.dep
+
+build/Debug/addons/ofxMSAPhysics/src/Core/binner.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/binner.cpp
+	mkdir -p build/Debug/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Debug/addons/ofxMSAPhysics/src/Core/binner.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/binner.cpp -MF build/Debug/addons/ofxMSAPhysics/src/Core/binner.dep
+-include build/Debug/addons/ofxMSAPhysics/src/Core/binner.dep
+
+build/Release/addons/ofxMSAPhysics/src/Core/binner.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/binner.cpp
+	mkdir -p build/Release/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Release/addons/ofxMSAPhysics/src/Core/binner.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/binner.cpp -MF build/Release/addons/ofxMSAPhysics/src/Core/binner.dep
+-include build/Release/addons/ofxMSAPhysics/src/Core/binner.dep
+
+build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAParticle.cpp
+	mkdir -p build/Debug/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAParticle.cpp -MF build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.dep
+-include build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.dep
+
+build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAParticle.cpp
+	mkdir -p build/Release/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAParticle.cpp -MF build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.dep
+-include build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAParticle.dep
+
+build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysics.cpp
+	mkdir -p build/Debug/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysics.cpp -MF build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.dep
+-include build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.dep
+
+build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysics.cpp
+	mkdir -p build/Release/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysics.cpp -MF build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.dep
+-include build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysics.dep
+
+build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.cpp
+	mkdir -p build/Debug/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.cpp -MF build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.dep
+-include build/Debug/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.dep
+
+build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.dep: $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.cpp
+	mkdir -p build/Release/addons/ofxMSAPhysics/src/Core
+	$(CC) -M -MT build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.cpp -MF build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.dep
+-include build/Release/addons/ofxMSAPhysics/src/Core/ofxMSAPhysicsUtils.dep
+
+build/Debug/addons/ofxMSASpline/src/ofxMSASpline2D.dep: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline2D.cpp
+	mkdir -p build/Debug/addons/ofxMSASpline/src
+	$(CC) -M -MT build/Debug/addons/ofxMSASpline/src/ofxMSASpline2D.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline2D.cpp -MF build/Debug/addons/ofxMSASpline/src/ofxMSASpline2D.dep
+-include build/Debug/addons/ofxMSASpline/src/ofxMSASpline2D.dep
+
+build/Release/addons/ofxMSASpline/src/ofxMSASpline2D.dep: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline2D.cpp
+	mkdir -p build/Release/addons/ofxMSASpline/src
+	$(CC) -M -MT build/Release/addons/ofxMSASpline/src/ofxMSASpline2D.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline2D.cpp -MF build/Release/addons/ofxMSASpline/src/ofxMSASpline2D.dep
+-include build/Release/addons/ofxMSASpline/src/ofxMSASpline2D.dep
+
+build/Debug/addons/ofxMSASpline/src/ofxMSASpline3D.dep: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline3D.cpp
+	mkdir -p build/Debug/addons/ofxMSASpline/src
+	$(CC) -M -MT build/Debug/addons/ofxMSASpline/src/ofxMSASpline3D.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline3D.cpp -MF build/Debug/addons/ofxMSASpline/src/ofxMSASpline3D.dep
+-include build/Debug/addons/ofxMSASpline/src/ofxMSASpline3D.dep
+
+build/Release/addons/ofxMSASpline/src/ofxMSASpline3D.dep: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline3D.cpp
+	mkdir -p build/Release/addons/ofxMSASpline/src
+	$(CC) -M -MT build/Release/addons/ofxMSASpline/src/ofxMSASpline3D.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASpline3D.cpp -MF build/Release/addons/ofxMSASpline/src/ofxMSASpline3D.dep
+-include build/Release/addons/ofxMSASpline/src/ofxMSASpline3D.dep
+
+build/Debug/addons/ofxMSASpline/src/ofxMSASurface3D.dep: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASurface3D.cpp
+	mkdir -p build/Debug/addons/ofxMSASpline/src
+	$(CC) -M -MT build/Debug/addons/ofxMSASpline/src/ofxMSASurface3D.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASurface3D.cpp -MF build/Debug/addons/ofxMSASpline/src/ofxMSASurface3D.dep
+-include build/Debug/addons/ofxMSASpline/src/ofxMSASurface3D.dep
+
+build/Release/addons/ofxMSASpline/src/ofxMSASurface3D.dep: $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASurface3D.cpp
+	mkdir -p build/Release/addons/ofxMSASpline/src
+	$(CC) -M -MT build/Release/addons/ofxMSASpline/src/ofxMSASurface3D.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSASpline/src/ofxMSASurface3D.cpp -MF build/Release/addons/ofxMSASpline/src/ofxMSASurface3D.dep
+-include build/Release/addons/ofxMSASpline/src/ofxMSASurface3D.dep
+
+build/Debug/addons/ofxMSAUtils/src/ofxMSAUtils.dep: $(OF_ADDONS_PATH)/ofxMSAUtils/src/ofxMSAUtils.cpp
+	mkdir -p build/Debug/addons/ofxMSAUtils/src
+	$(CC) -M -MT build/Debug/addons/ofxMSAUtils/src/ofxMSAUtils.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAUtils/src/ofxMSAUtils.cpp -MF build/Debug/addons/ofxMSAUtils/src/ofxMSAUtils.dep
+-include build/Debug/addons/ofxMSAUtils/src/ofxMSAUtils.dep
+
+build/Release/addons/ofxMSAUtils/src/ofxMSAUtils.dep: $(OF_ADDONS_PATH)/ofxMSAUtils/src/ofxMSAUtils.cpp
+	mkdir -p build/Release/addons/ofxMSAUtils/src
+	$(CC) -M -MT build/Release/addons/ofxMSAUtils/src/ofxMSAUtils.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxMSAUtils/src/ofxMSAUtils.cpp -MF build/Release/addons/ofxMSAUtils/src/ofxMSAUtils.dep
+-include build/Release/addons/ofxMSAUtils/src/ofxMSAUtils.dep
+
+build/Debug/addons/ofxObjCPointer/src/ofxObjCPointer.dep: $(OF_ADDONS_PATH)/ofxObjCPointer/src/ofxObjCPointer.cpp
+	mkdir -p build/Debug/addons/ofxObjCPointer/src
+	$(CC) -M -MT build/Debug/addons/ofxObjCPointer/src/ofxObjCPointer.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxObjCPointer/src/ofxObjCPointer.cpp -MF build/Debug/addons/ofxObjCPointer/src/ofxObjCPointer.dep
+-include build/Debug/addons/ofxObjCPointer/src/ofxObjCPointer.dep
+
+build/Release/addons/ofxObjCPointer/src/ofxObjCPointer.dep: $(OF_ADDONS_PATH)/ofxObjCPointer/src/ofxObjCPointer.cpp
+	mkdir -p build/Release/addons/ofxObjCPointer/src
+	$(CC) -M -MT build/Release/addons/ofxObjCPointer/src/ofxObjCPointer.o $(CFLAGS) $(OF_ADDONS_PATH)/ofxObjCPointer/src/ofxObjCPointer.cpp -MF build/Release/addons/ofxObjCPointer/src/ofxObjCPointer.dep
+-include build/Release/addons/ofxObjCPointer/src/ofxObjCPointer.dep
+
+endif

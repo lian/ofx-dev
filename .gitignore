@@ -21,4 +21,10 @@ addons/*/*/build
 apps/*/*/*linux.layout
 apps/*/*/*linux.depend
 
+apps/*/*/obj
+apps/*/*/bin/libs/*.so
+apps/*/*/bin
+
+libs/libofw/lib/*.so
 apps/_tmp
+
