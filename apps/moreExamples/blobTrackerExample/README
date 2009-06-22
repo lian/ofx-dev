@@ -1,0 +1,7 @@
+commit-log: add moreExamples/blobTrackerExample 
+
+	DESC	Persistent blob tracking example - 
+		lets you track blobs over multiple frames by assigning a unique id.
+
+	README	http://lab.impssble.com/blog/?p=265
+	CODE	http://lab.impssble.com/files/misc/blobTracker-XCode-005-FAT.zip
