@@ -1,0 +1,4 @@
+commit-log: add moreExamples/memoVAVBOPS
+
+	README	http://www.openframeworks.cc/forum/viewtopic.php?f=12&t=811
+	DESC	Very simple example of Vertex Arrays, VBO's, Point Sprites
