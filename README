@@ -1,9 +1,26 @@
 ## What?
 openframeworks - unofficial 006 - Development-Bundle
 
-..mostly for tinkering with openframeworks at it's early release stage.
+"tinkering with openframeworks at it's early release stage!"
 
-## current-status
+## todo
+
+-
+split this huge (100m+) repository, make it a virtual base-package with addons and
+examples as submodules. this should open the ability for everyone to just fork add
+app/addon-repos in his personal branch or share it with friends, more lightweight.
+
+-
+cross plattform build-helpers, build/package automation..
+
+-
+autotest/unittest core, opencv-addon (gmock?), benchmarking..
+
+-
+more updated windows examples and build-files..
+
+
+## current-status (before split into submodules)
 
    - libs/openFrameworks frequently updated oF's subversion, check git-log or gitk
    - libs/* => of_preRelease_v0.06_[osx|linux|win32]_FAT
@@ -15,11 +32,8 @@ openframeworks - unofficial 006 - Development-Bundle
 ## platforms
 
   - Mac OSX (xcode)
-  - Windows (codeblocks)
-  - Linux (codeblocks)
-
-## openFrameworks subversion gets merged frequently into this bundle.
-
+  - Linux (make)
+  - Windows (codeblocks) //only a few build-files
 
 
 ## usage/install
