@@ -1,7 +1,7 @@
 #include "App.h"
 
 float			App::camThreshold	= 30;
-float			App::camSilAlpha		= 0.2f;
+float			App::camSilAlpha	= 0.2f;
 bool			App::mirrorVideo	= true;
 
 float		CAM_FLUID_CREATE =		0.01f;							// factor for how much cam movement creates fluid
@@ -18,16 +18,16 @@ void App::setup(){
 
 	ofSetFrameRate(FPS);
 	
-	showVideoColor		= false;
+	showVideoColor		= true;
 	showVideoGrey		= false;
 	showVideoBGDiff		= false;
 	showVideoCurDiff	= true;
-	showPiano			= true;
-	showDebugVideo		= true;
+	showPiano		= false;
+	showDebugVideo		= false;
 	showFluid			= true;
 	showConsole			= true;
-	showGlitter			= true;
-	showBalls			= true;
+	showGlitter			= false;
+	showBalls			= false;
 	doOpticalFlow		= true;
 
 	ofSetBackgroundAuto(true);				// change this to false later

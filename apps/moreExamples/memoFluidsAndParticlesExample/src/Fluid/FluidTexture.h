@@ -24,20 +24,65 @@
 
 #pragma once
 
+#ifndef _FLUID_TEXTURE_H
+#define _FLUID_TEXTURE_H
 
 #include "ofMain.h"
 #include "FluidSolver.h"
+#include "ImageFilters.h"
 
 class FluidTexture : public FluidSolver, public ofTexture {
-	GLint			renderWidth, renderHeight;	// target width and height to render to
+	GLint		renderWidth, renderHeight;	// target width and height to render to
 	unsigned char 	*pixels;		// pixels array to be drawn
-	int				byteCount;		// number of byes in the pixel array (size * 3)
+	int		byteCount;		// number of byes in the pixel array (size * 3)
 	
 public:
-	~FluidTexture();
+//	void init(int w, int h, int NX, int NY, float dt, float visc, float fadeSpeed);
+//	void update();
+//	void draw();
+	~FluidTexture(){
+		if(pixels) delete pixels;
+	}
+	void reset(){ _reset(); }
+
+void draw() {
+	loadData(pixels, _NX+2, _NY+2, GL_RGB);
+
+	glEnable( getTextureData().textureTarget);
+	glBindTexture( getTextureData().textureTarget, (GLuint)getTextureData().textureID );
+	glPushMatrix();
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glBegin( GL_QUADS );
+	glTexCoord2f(0, 0);				glVertex3i(-1, -1, 0);
+	glTexCoord2f(getTextureData().tex_t, 0);			glVertex3i(renderWidth+1, 0, 0);
+	glTexCoord2f(getTextureData().tex_t, getTextureData().tex_u);		glVertex3i(renderWidth+1, renderHeight+1, 0);
+	glTexCoord2f(0, getTextureData().tex_u);			glVertex3i(0, renderHeight+1, 0);
+	glEnd();
+	glPopMatrix();
+	glDisable( getTextureData().textureTarget );
+}
+
+void init(int w, int h, int NX, int NY, float dt, float visc, float fadeSpeed){
+	FluidSolver::init(NX, NY, dt, visc, fadeSpeed);
+	renderWidth = w;
+	renderHeight = h;
+	allocate(_NX+2, _NY+2, GL_RGB);
 	
-	void init(int w, int h, int NX, int NY, float dt, float visc, float fadeSpeed);
-	void update();
-	void draw();
-	void reset();
+	byteCount = _size * 3;
+	pixels = new unsigned char [byteCount];
+}
+
+void update(){
+	solve();
+	for(int i=0, index=0; i<_size; i++, index += 3) {
+		pixels[index]	= MIN(_r[i] * 255, 255);
+		pixels[index+1]	= MIN(_g[i] * 255, 255);
+		pixels[index+2]	= MIN(_b[i] * 255, 255);
+	}
+	boxBlur(pixels, _NX+2, _NY+2, 2);
+}
+
+
 };
+
+#endif

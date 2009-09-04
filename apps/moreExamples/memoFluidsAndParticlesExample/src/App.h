@@ -1,10 +1,11 @@
 #pragma once
 
-//#define			__WINDOWED__
+#define			__WINDOWED__
 
 #define		WIDTH			800
 #define		HEIGHT			600
-#define		FLUID_NX		120
+//#define		FLUID_NX		120
+#define		FLUID_NX		60
 #define		FLUID_NY		(FLUID_NX * HEIGHT / WIDTH)
 
 

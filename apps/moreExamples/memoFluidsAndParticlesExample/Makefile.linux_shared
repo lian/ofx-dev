@@ -1,0 +1,178 @@
+# Makefile.linux_shared
+
+APP_NAME = memoFluidsAndParticlesExample
+OF_LIBS_PATH = ../../../libs
+OF_ADDONS_PATH = ../../../addons
+
+CC = gcc
+PROJECT_DIR = ./
+CFLAGS += -Wall -fexceptions 
+#= CFLAGS += -I$(OF_LIBS_PATH)/libofw/include 
+
+#= libofw cflags
+CFLAGS += -I$(OF_LIBS_PATH)/openFrameworks/ -I$(OF_LIBS_PATH)/openFrameworks/events -I$(OF_LIBS_PATH)/openFrameworks/app -I$(OF_LIBS_PATH)/openFrameworks/communication -I$(OF_LIBS_PATH)/openFrameworks/graphics -I$(OF_LIBS_PATH)/openFrameworks/video -I$(OF_LIBS_PATH)/openFrameworks/utils -I$(OF_LIBS_PATH)/openFrameworks/sound -I$(OF_LIBS_PATH)/rtAudio/include -I$(OF_LIBS_PATH)/fmodex/inc -I$(OF_LIBS_PATH)/GLee/include -I$(OF_LIBS_PATH)/GLee/ -I$(OF_LIBS_PATH)/freeimage/include -I$(OF_LIBS_PATH)/freeimage -I$(OF_LIBS_PATH)/alsa/include -I$(OF_LIBS_PATH)/alsa/include/alsa -I$(OF_LIBS_PATH)/freetype/include/linux -I$(OF_LIBS_PATH)/freetype/include/linux/freetype2 -I$(OF_LIBS_PATH)/unicap/include -I$(OF_LIBS_PATH)/gstappsink/include -I../../../addons -I$(OF_LIBS_PATH)/poco/include
+
+#= libofw_coreaddons cflags
+CFLAGS += -I$(OF_ADDONS_PATH) -I$(OF_ADDONS_PATH)/ofxDirList/src -I$(OF_ADDONS_PATH)/ofxNetwork/src -I$(OF_ADDONS_PATH)/ofxOpenCv/src -I$(OF_ADDONS_PATH)/ofxOpenCv/libs/opencv/include -I$(OF_ADDONS_PATH)/ofxOsc/src -I$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/include/ip -I$(OF_ADDONS_PATH)/ofxOsc/libs/oscpack/include/osc -I$(OF_ADDONS_PATH)/ofxThread/src -I$(OF_ADDONS_PATH)/ofxVectorGraphics/src -I$(OF_ADDONS_PATH)/ofxVectorGraphics/libs -I$(OF_ADDONS_PATH)/ofxVectorMath/src -I$(OF_ADDONS_PATH)/ofxXmlSettings/src -I$(OF_ADDONS_PATH)/ofxXmlSettings/libs -I$(OF_ADDONS_PATH)/ofx3DModelLoader/src -I$(OF_ADDONS_PATH)/ofx3DModelLoader/src/3DS
+
+CFLAGS +=`pkg-config  gstreamer-0.10 gstreamer-video-0.10 gstreamer-base-0.10 libavcodec libavformat libavutil libswscale --cflags`
+LDFLAGS += -L$(OF_LIBS_PATH)/libofw/lib -L$(OF_LIBS_PATH)/fmodex/lib/linux -L$(OF_LIBS_PATH)/unicap/lib -L$(OF_LIBS_PATH)/poco/lib/linux
+
+LDFLAGS += -L$(OF_ADDONS_PATH)/ofxOpenCv/libs/opencv/lib/linux
+
+#= libofw libs
+LIBS += -lofw -lofw_coreaddons -lfmodex -lraw1394 -lglut -lGL -lGLU -lXxf86vm -lasound -lPocoFoundation -lunicap -lcv -lcxcore
+CFLAGS += -DLINUX
+
+CFLAGS += -Isrc/Vision -Isrc/Particles -Isrc/Fluid -Isrc
+
+OBJS = src/main.o src/App.o src/ImageFilters.o src/FluidSolver.o src/FluidTexture.o src/FluidTexture.o src/Balls.o src/Glitter.o src/Particles.o src/MotionTracker.o src/ofxCvOpticalFlowBM.o src/ofxCvOpticalFlowLK.o
+
+Debug: TARGET_NAME = Debug
+Debug: OBJ_OUTPUT = build/Debug/
+Debug: OUTPUT = bin/$(APP_NAME)_debug
+Debug: TARGET_OUTPUT_BASENAME = $(APP_NAME)_debug
+Debug: CC = gcc
+Debug: CFLAGS += -g -MMD
+
+OBJS_Debug = $(addprefix build/Debug/, $(OBJS) )
+
+Release: TARGET_NAME = Release
+Release: OBJ_OUTPUT = build/Release/
+Release: OUTPUT = bin/$(APP_NAME)
+Release: TARGET_OUTPUT_BASENAME = $(APP_NAME)
+Release: CC = gcc
+Release: CFLAGS += -O3 -MMD
+Release: LDFLAGS += -s
+
+OBJS_Release = $(addprefix build/Release/, $(OBJS) )
+
+.PHONY: after
+
+Debug: bin/$(APP_NAME)_debug after
+Release: bin/$(APP_NAME) after
+bin/$(APP_NAME)_debug: $(OBJS_Debug)
+	mkdir -p bin/
+	$(CC) $(LDFLAGS) -o $@ $(OBJS_Debug) $(LIBS)
+
+bin/$(APP_NAME): $(OBJS_Release)
+	mkdir -p bin/
+	$(CC) $(LDFLAGS) -o $@ $(OBJS_Release) $(LIBS)
+
+copy_libs:
+	#	copy libs to bin/libs directory:
+	mkdir -p $(PROJECT_DIR)bin/
+	mkdir -p $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodex.so $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodexp.so $(PROJECT_DIR)bin/libs/
+	cp -p $(OF_LIBS_PATH)/libofw/lib/libofw.so $(PROJECT_DIR)bin/libs/libofw.so
+	cp -p $(OF_LIBS_PATH)/libofw/lib/libofw_coreaddons.so $(PROJECT_DIR)bin/libs/libofw_coreaddons.so
+	#	ok
+
+after:
+	#	copy shell script to bin directory:
+	mkdir -p $(PROJECT_DIR)bin/
+	mkdir -p $(PROJECT_DIR)bin/libs/
+	cp ../../../other/codeblocks/linux_clickToLaunchApp2.sh $(PROJECT_DIR)bin/$(TARGET_OUTPUT_BASENAME).sh
+	sed -i s/applicationName/$(TARGET_OUTPUT_BASENAME)/g  $(PROJECT_DIR)bin/$(TARGET_OUTPUT_BASENAME).sh
+	#	ok
+
+# OBJS = src/App.o src/ImageFilters.o src/FluidSolver.o src/FluidTexture.o src/FluidTexture.o src/Balls.o src/Glitter.o src/Particles.o src/MotionTracker.o src/ofxCvOpticalFlowBM.o src/ofxCvOpticalFlowLK.o
+
+build/Debug/src/main.o build/Release/src/main.o: src/main.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/main.o $(CFLAGS)
+build/Debug/src/App.o build/Release/src/App.o: src/App.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/App.o $(CFLAGS)
+build/Debug/src/ImageFilters.o build/Release/src/ImageFilters.o: src/ImageFilters.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/ImageFilters.o $(CFLAGS)
+build/Debug/src/FluidSolver.o build/Release/src/FluidSolver.o: src/Fluid/FluidSolver.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/FluidSolver.o $(CFLAGS)
+build/Debug/src/FluidTexture.o build/Release/src/FluidTexture.o: src/Fluid/FluidTexture.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/FluidTexture.o $(CFLAGS)
+build/Debug/src/Balls.o build/Release/src/Balls.o: src/Particles/Balls.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/Balls.o $(CFLAGS)
+build/Debug/src/Glitter.o build/Release/src/Glitter.o: src/Particles/Glitter.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/Glitter.o $(CFLAGS)
+build/Debug/src/Particles.o build/Release/src/Particles.o: src/Particles/Particles.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/Particles.o $(CFLAGS)
+build/Debug/src/MotionTracker.o build/Release/src/MotionTracker.o: src/Vision/MotionTracker.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/MotionTracker.o $(CFLAGS)
+build/Debug/src/ofxCvOpticalFlowBM.o build/Release/src/ofxCvOpticalFlowBM.o: src/Vision/ofxCvOpticalFlowBM.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/ofxCvOpticalFlowBM.o $(CFLAGS)
+build/Debug/src/ofxCvOpticalFlowLK.o build/Release/src/ofxCvOpticalFlowLK.o: src/Vision/ofxCvOpticalFlowLK.cpp
+	mkdir -p $(OBJ_OUTPUT)src/
+	$(CC) -c $< -o $(OBJ_OUTPUT)src/ofxCvOpticalFlowLK.o $(CFLAGS)
+
+clean:
+	-rm $(OBJS_Debug) $(OBJS_Release)
+
+ifneq ($MAKECMDGOALS,clean)
+
+# OBJS = src/App.o src/ImageFilters.o src/FluidSolver.o src/FluidTexture.o src/FluidTexture.o src/Balls.o src/Glitter.o src/Particles.o src/MotionTracker.o src/ofxCvOpticalFlowBM.o src/ofxCvOpticalFlowLK.o
+
+build/Debug/src/main.dep: src/main.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/main.o $(CFLAGS) src/main.cpp -MF build/Debug/src/main.dep
+-include build/Debug/src/main.dep
+
+build/Debug/src/App.dep: src/App.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/App.o $(CFLAGS) src/App.cpp -MF build/Debug/src/App.dep
+-include build/Debug/src/App.dep
+
+build/Debug/src/ImageFilters.dep: src/ImageFilters.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/ImageFilters.o $(CFLAGS) src/ImageFilters.cpp -MF build/Debug/src/ImageFilters.dep
+-include build/Debug/src/ImageFilters.dep
+
+build/Debug/src/FluidSolver.dep: src/Fluid/FluidSolver.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/FluidSolver.o $(CFLAGS) src/Fluid/FluidSolver.cpp -MF build/Debug/src/FluidSolver.dep
+-include build/Debug/src/FluidSolver.dep
+
+build/Debug/src/FluidTexture.dep: src/Fluid/FluidTexture.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/FluidTexture.o $(CFLAGS) src/Fluid/FluidTexture.cpp -MF build/Debug/src/FluidTexture.dep
+-include build/Debug/src/FluidTexture.dep
+
+build/Debug/src/Balls.dep: src/Particles/Balls.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/Balls.o $(CFLAGS) src/Particles/Balls.cpp -MF build/Debug/src/Balls.dep
+-include build/Debug/src/Balls.dep
+
+build/Debug/src/Glitter.dep: src/Particles/Glitter.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/Glitter.o $(CFLAGS) src/Particles/Glitter.cpp -MF build/Debug/src/Glitter.dep
+-include build/Debug/src/Glitter.dep
+
+build/Debug/src/Particles.dep: src/Particles/Particles.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/Particles.o $(CFLAGS) src/Particles/Particles.cpp -MF build/Debug/src/Particles.dep
+-include build/Debug/src/Particles.dep
+
+build/Debug/src/MotionTracker.dep: src/Vision/MotionTracker.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/MotionTracker.o $(CFLAGS) src/Vision/MotionTracker.cpp -MF build/Debug/src/MotionTracker.dep
+-include build/Debug/src/MotionTracker.dep
+
+build/Debug/src/ofxCvOpticalFlowBM.dep: src/Vision/ofxCvOpticalFlowBM.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/ofxCvOpticalFlowBM.o $(CFLAGS) src/Vision/ofxCvOpticalFlowBM.cpp -MF build/Debug/src/ofxCvOpticalFlowBM.dep
+-include build/Debug/src/ofxCvOpticalFlowBM.dep
+
+build/Debug/src/ofxCvOpticalFlowLK.dep: src/Vision/ofxCvOpticalFlowLK.cpp
+	mkdir -p build/Debug/src/
+	$(CC) -M -MT build/Debug/src/ofxCvOpticalFlowLK.o $(CFLAGS) src/Vision/ofxCvOpticalFlowLK.cpp -MF build/Debug/src/ofxCvOpticalFlowLK.dep
+-include build/Debug/src/ofxCvOpticalFlowLK.dep
+
+endif

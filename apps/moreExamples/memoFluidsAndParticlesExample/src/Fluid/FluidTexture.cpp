@@ -21,9 +21,11 @@
  
  ***********************************************************************/
 
+#ifndef _FLUID_TEXTURE_CPP
+#define _FLUID_TEXTURE_CPP
 
 #include "FluidTexture.h"
-#include "ImageFilters.h"
+/*#include "ImageFilters.h"
 
 void FluidTexture::init(int w, int h, int NX, int NY, float dt, float visc, float fadeSpeed) {
 	FluidSolver::init(NX, NY, dt, visc, fadeSpeed);
@@ -56,7 +58,6 @@ void FluidTexture::update() {
 	boxBlur(pixels, _NX+2, _NY+2, 2);
 }
 
-
 void FluidTexture::draw() {
 	loadData(pixels, _NX+2, _NY+2, GL_RGB);
 
@@ -73,5 +74,6 @@ void FluidTexture::draw() {
 	glPopMatrix();
 	
 	glDisable( getTextureData().textureTarget );
-}
+}*/
 
+#endif

@@ -26,6 +26,8 @@
 #include "ofxVectorMath.h"
 
 
+class ParticleManager;
+
 class Particle {
 	friend class ParticleManager;
 	
@@ -63,8 +65,8 @@ protected:
 	float coreSizeMult;			// cache these locally
 	FluidTexture *fluid;	
 	
-	void Particle::setLifeSpan(float seconds);
-	void Particle::setLifeSpan(float secondsMin, float secondsMax);
+	void setLifeSpan(float seconds);
+	void setLifeSpan(float secondsMin, float secondsMax);
 	
 public:	
 	Particle(float initX, float initY, float initVelX, float initVelY, float initSize);
