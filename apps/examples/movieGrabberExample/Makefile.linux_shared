@@ -58,7 +58,7 @@ copy_libs:
 	mkdir -p $(PROJECT_DIR)bin/libs/
 	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodex.so $(PROJECT_DIR)bin/libs/
 	cp -p $(OF_LIBS_PATH)/fmodex/lib/linux/libfmodexp.so $(PROJECT_DIR)bin/libs/
-	cp -p $(OF_LIBS_PATH)/libofw/lib/libofw.so $(PROJECT_DIR)bin/libs/libofw.so.1
+	cp -p $(OF_LIBS_PATH)/libofw/lib/libofw.so $(PROJECT_DIR)bin/libs/libofw.so
 	#	ok
 
 after:
